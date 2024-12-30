@@ -6,11 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AdminController {
 	
-	@GetMapping("AdminpageMain")
-	public String AdminpageMain() {
-		return "adminpage/adminpage_main";
-	}
-	
 	@GetMapping("AccountManage")
 	public String accountManagement() {
 		return "adminpage/adminpage_account_manage";
