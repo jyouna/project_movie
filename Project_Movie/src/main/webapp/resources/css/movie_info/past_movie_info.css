@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+#past_movie_info {
+	width: 1000px;
+	color: black;
+}
+
+#page_top {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid;
+	margin-bottom: 20px;
+}
+
+#title {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#page_top div {
+	margin-bottom: 5px;
+}
+
+#movie_search input, #movie_search select {
+	vertical-align: top;
+	height: 30px;
+}
+
+#select_search select{
+	display: inline-block;
+	text-align: center;
+	padding: 0 20px;
+	height: 30px;
+}
+
+#movie_search input[type=button] {
+	font-size: 1em;
+	line-height: 1em;
+	align-content: center;
+	padding: 0 10px;
+	border-radius: 0;
+	margin-right: 10px;
+}
+
+#movie_search, #select_search {
+	display: inline-block;
+}
+
+.movie {
+	margin-bottom: 20px;
+	border-bottom: 1px solid;
+}
+
+.movie b {
+	font-size: 25px;	
+}
+
+.movie img {
+	width: 190px;
+}
+
+.movie_poster {
+	display: inline-block;
+}
+
+.movie_info {
+	width: 80%;
+	padding: 20px;
+	vertical-align: top;
+	display: inline-block;
+}
+
+.movie_info input{
+	height: 30px;
+	font-size: 1em;
+	line-height: 1em;
+	align-content: center;
+	padding: 0 10px;
+	float: right;
+	margin-top: 30px;
+	margin-left: 5px;
+}
+
+#page_button_group {
+	text-align: center;
+}
+
+#page_button_group input[type=button] {
+	height: 30px;
+	font-size: 1em;
+	line-height: 1em;
+	align-content: center;
+	padding: 0 10px;
+}
+
+
+
+
+
+
+
+
+
