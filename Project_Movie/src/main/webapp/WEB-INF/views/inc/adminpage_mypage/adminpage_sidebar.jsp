@@ -60,19 +60,19 @@
 					</a>
 					<div class="collapse" id="collapseMovies" aria-labelledby="headingMovies" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionMovies">
-					        <a class="nav-link" href="">
+					        <a class="nav-link" href="AdminMovieSetList">
 					            영화목록
 					        </a>
-					        <a class="nav-link" href="">
+					        <a class="nav-link" href="AdminMovieSetSchedule">
 					            상영스케줄관리
 					        </a>
-					        <a class="nav-link" href="">
-					            현재상영작
-					        </a>
-					        <a class="nav-link" href="">
+					        <a class="nav-link" href="AdminMovieSetUpcoming">
 					            상영예정작
 					        </a>
-					        <a class="nav-link" href="">
+					        <a class="nav-link" href="AdminMovieSetCurrently">
+					            현재상영작
+					        </a>
+					        <a class="nav-link" href="AdminMovieSetPast">
 					            지난상영작
 					        </a>
 					    </nav>
@@ -85,7 +85,7 @@
 					</a>
 					<div class="collapse" id="collapseVotes" aria-labelledby="headingVotes" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionVotes">
-					        <a class="nav-link" href="">
+					        <a class="nav-link" href="AdminMoviePickSet">
 					            투표설정
 					        </a>
 					    </nav>
