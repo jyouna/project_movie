@@ -7,9 +7,9 @@
 		<div class="navbar"> 
 			<div class="navbar-right"> 
 				<a href="${pageContext.request.contextPath}">홈</a> 
-				<a href="">로그인</a> 
-				<a href="">로그아웃</a> 
-				<a href="">회원가입</a> 
+				<a href="${pageContext.request.contextPath}/MemberLogin">로그인</a> 
+   				<a href="${pageContext.request.contextPath}/MemberLogout">로그아웃</a> 
+    			<a href="${pageContext.request.contextPath}/MemberAgree">회원가입</a> 
 				<a href="#" onclick="openMypage()">마이페이지</a> 
 				<a href="#" onclick="openAdminpage()">관리자페이지</a>
 			</div>

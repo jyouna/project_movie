@@ -1,0 +1,211 @@
+/* ========== 기본 스타일 ========== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* 전체 박스 모델 설정 */
+} 
+/* ========== 레이아웃 ========== */
+.container {
+  display: flex; /* Flexbox로 레이아웃 구성 */
+}
+
+/* ========== 사이드바 스타일 ========== */
+.sidebar {
+  width: 200px; /* 사이드바 너비 */
+  background: #f4f4f4;
+  padding: 15px;
+}
+
+.sidebar ul {
+  list-style: none; /* 리스트 기본 마커 제거 */
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px; /* 리스트 아이템 간 간격 추가 */
+}
+
+/* ========== 메인 콘텐츠 스타일 ========== */
+.content {
+  flex-grow: 1; /* 남은 공간 모두 차지 */
+  padding: 0px;
+}
+
+.content h1 {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgb(33, 33, 33); /* 제목 아래 실선 */
+}
+
+/* ========== 박스 섹션 스타일 ========== */
+.split-box {
+  margin-top: 100px;
+  display: flex; /* Flexbox 사용 */
+  align-items: stretch; /* 세로 길이 통일 */
+  gap: 0px; /* 섹션 간격 제거 */
+}
+
+.login-box, .info-box {
+      flex: 1;
+    padding: 50px;
+    background: #dcdcdc;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(10, 10, 11, 0.1);
+    position: relative;
+}
+
+.login-box {
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1px;
+    flex-wrap: nowrap;
+}
+
+.info-box {
+  margin: 0; /* 바깥 여백 제거 */
+  padding-top: 60px; /* 제목과 이미지 사이 간격 확보 */
+  display: flex; /* Flexbox 적용 */
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  padding: 20px; /* 내부 여백 유지 */
+}
+
+/* ========== 섹션 타이틀 공통 스타일 ========== */
+.section-title {
+  position: absolute;     /* 절대 위치 설정 */
+  top: 20px;              /* 상단 여백 */
+  left: 20px;             /* 좌측 여백 */
+  margin: 0;              /* 기본 마진 제거 */
+  font-size: 18px;        /* 글자 크기 조정 */
+  font-weight: bold;      /* 글자 두껍게 */
+}
+
+/* ========== 입력 필드 스타일 ========== */
+label {
+  align-self: flex-start; /* 라벨 좌측 정렬 */
+}
+
+/* 기존 입력 필드 스타일 유지 */
+input {
+    width: 110%;
+    padding: 10px;
+    margin-bottom: 0px;
+}
+
+/* 플레이스홀더 전용 스타일 추가 */
+input::placeholder {
+  text-align: left; /* 텍스트 정렬 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  white-space: nowrap; /* 줄바꿈 방지 */
+  text-overflow: ellipsis; /* 말줄임표 적용 */
+}
+
+/* ========== 체크박스 스타일 ========== */
+.save-id {
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  gap: 5px; /* 체크박스와 라벨 간격 조정 */
+  width: auto; /* 크기 자동 설정 */
+  margin-top: 10px; /* 상단 여백 추가 */
+  font-size: 14px; /* 글자 크기 조정 */
+}
+
+.save-id input {
+  margin: 0 5px 0 0; /* 체크박스와 라벨 간 간격 축소 */
+}
+
+.save-id label, .link { /* 라벨과 링크 공통 스타일 */
+  margin: 0;
+  padding: 0;
+  white-space: nowrap; /* 줄바꿈 방지 */
+  font-size: 14px; /* 글자 크기 조정 */
+}
+
+/* ========== 소셜 로그인 스타일 ========== */
+.social-login {
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  gap: 10px; /* 버튼 간 간격 */
+  margin-top: 10px; /* 로그인 버튼과의 간격 */
+}
+
+.social-btn {
+  width: 27px; /* 아이콘 너비 */
+  height: 27px; /* 아이콘 높이 */
+  border-radius: 50%; /* 원형 처리 */
+  object-fit: cover; /* 비율 유지 */
+}
+
+/* ========== 버튼 스타일 ========== */
+button {
+  padding: 10px;
+  background: #007BFF; /* 버튼 기본 색상 */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#login-btn {
+  width: 100%; /* 버튼 너비 100% 설정 */
+  height: 50%; /* 버튼 너비 100% 설정 */
+  max-width: 200px; /* 최대 너비 제한 */
+  padding: 0px;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  margin-top: 10px; /* 상단 여백 추가 */
+}
+
+/* ========== 숨김 처리 ========== */
+.hidden {
+  display: none; /* 숨김 처리 클래스 */
+}
+
+/* 링크 스타일 추가 */
+.link {
+  color: #007BFF; /* 파란색 링크 */
+  text-decoration: none; /* 밑줄 제거 */
+  cursor: pointer; /* 마우스 포인터 변경 */
+}
+
+.link:hover {
+  text-decoration: underline; /* 마우스 오버 시 밑줄 표시 */
+}
+
+/* 전체 크기 30% 축소 */
+
+/* 로그인 및 인포 박스 30% 축소 */
+.login-box, .info-box {
+  transform: scale(1); /* 박스 개별 축소 */
+  transform-origin: top left; /* 기준점 좌상단 */
+}
+
+/* 로그인 및 인포 박스 사이 간격 제거 */
+.split-box {
+  margin-top: 100px; /* 상단 여백 유지 */
+  display: flex; /* Flexbox 사용 */
+  align-items: stretch; /* 세로 길이 통일 */
+  gap: 0; /* 사이 간격 완전 제거 */
+}
+
+/* 인포 박스 이미지 크기 축소 */
+.info-box img {
+  width: 70%; /* 이미지 크기 30% 감소 */
+  height: auto; /* 가로 비율 유지 */
+}
+
+.split-box {
+  
+  height: 50vh; /* 화면 전체 높이 */
+}
+
+
+.save-id input[type="checkbox"] {
+  appearance: auto; /* 기본 스타일 복원 */
+  width: 16px; /* 체크박스 크기 */
+  height: 16px; /* 체크박스 크기 */
+  cursor: pointer; /* 클릭 가능하도록 설정 */
+}

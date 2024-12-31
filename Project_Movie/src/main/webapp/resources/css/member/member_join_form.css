@@ -1,0 +1,260 @@
+/* ===== 전체 설정 ===== */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  font-size: 15px;
+}
+
+button {
+   all: initial;
+   min-height: 1em;
+   min-width: unset;
+    height: 1.8em; 
+   line-height: 1em;
+   width: unset;
+   width: 35px;
+   display: inline-block;
+   padding: 0;
+   text-align: inherit;    
+   
+}
+
+/* button { */
+/*    min-height: 1.8em; */
+/*    height: auto;            높이를 자동 조절 */
+/*    width: auto;             너비를 자동 조절 */
+/*    padding: 8px 15px;       내부 여백 추가 */
+/*    border: none;            테두리 제거 */
+/*    border-radius: 4px;      둥근 모서리 적용 */
+/*    background-color: #007BFF; */
+/*    color: white; */
+/*    cursor: pointer; */
+/*    display: inline-block;   인라인 블록 요소로 설정 */
+/*    text-align: center;      텍스트 중앙 정렬 */
+/* } */
+
+
+
+/* ===== 컨테이너 설정 ===== */
+.container {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== 테이블 스타일 ===== */
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.form-table th, .form-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* ===== 입력 필드 및 버튼 크기 조정 ===== */
+input, select, button {
+/*   padding: 8px; */
+  margin-right: 5px;
+
+}
+
+input#username,
+input#password,
+input#confirm-password ,
+input#name,
+input#email,
+input#email-code,
+input#phone,
+input#phone-code{
+    padding: 0 !important; /* 우선순위 강제 적용 */
+}
+
+
+input#username {
+  width: 60%; 
+  height: 30px;
+  
+}
+
+input#password,
+input#confirm-password {
+  width: 90%; 
+  height: 30px;
+  
+}
+
+input#name {
+  width: 35%; 
+  height: 30px;
+  
+}
+
+input#email,
+input#phone{
+  width: 45%; 
+  height: 30px;
+  
+}
+
+input#email-code,
+input#phone-code{
+  width: 30%; 
+  height: 30px;
+  
+}
+
+input#genre{
+   width:80%;
+   height: 30px;
+}
+
+input#captcha{
+   width:40%;
+   height: 15px;
+}
+
+
+
+/* 버튼 스타일 */
+button {
+/*   padding: 8px 15px; */
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  min-height: 1em;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  /*  all: unset;  초기화 */
+  
+   padding: 0;
+   margin: 0;
+   min-height: 1em;
+   display: inline-block;
+   width: unset;
+   min-width: unset;
+   
+/*    height: 2em; */
+   width: 100px;
+}
+
+
+
+/* 라디오 버튼 여백 */
+/* input[type="radio"] { */
+/*   margin-right: 5px; */
+/* } */
+input[type="radio"],
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    vertical-align: middle;
+    
+}
+/* 버튼 그룹 중앙 정렬 */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.cancel-btn {
+  width: 6%;      
+  background-color: #e0e0e0;
+  color: black;
+}
+/* 취소 버튼 스타일 */
+.submit-btn {
+  width: 15%;   
+  background-color: #007BFF;
+  color: #ffffff;
+}
+
+
+
+/* 라벨 사이 여백 */
+label {
+  margin-right: 15px;
+}
+
+
+/* ===== 실선 추가 및 간격 설정 ===== */
+.section-line {
+  border: 0;
+  height: 1px;
+  background: #010101;
+  margin-top: 1px;
+  margin-bottom: 50px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    appearance: none; /* 기본 브라우저 스타일 제거 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    vertical-align: middle;
+
+    /* 기본 테두리 및 배경색 추가 */
+    border: 2px solid #007BFF; /* 테두리 색 */
+    border-radius: 4px; /* 체크박스용 모서리 둥글기 */
+    background-color: white; /* 기본 배경색 */
+}
+
+/* 체크된 상태에 대한 스타일 */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: #007BFF; /* 체크된 배경색 */
+    border: 2px solid #007BFF; /* 체크된 테두리 색 */
+}
+
+/* 체크박스 전용 스타일 */
+input[type="checkbox"] {
+    border-radius: 4px; /* 체크박스는 사각형 */
+}
+
+/* 라디오 버튼 전용 스타일 */
+input[type="radio"] {
+    border-radius: 50%; /* 라디오는 원형 */
+}
+
+/* 포커스 시 스타일 */
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+    outline: 2px solid #80bdff; /* 포커스 시 파란색 외곽선 */
+    outline-offset: 2px;
+}
+
+.gender-options {
+    display: flex;          /* 가로 정렬 */
+    flex-direction: row;    /* 기본값: 가로 방향 배치 */
+    gap: 15px;              /* 라디오 버튼 사이의 간격 설정 */
+}
+
+.gender-options label {
+    display: flex;
+    align-items: center;    /* 라디오 버튼과 텍스트 수직 정렬 */
+}
+
+.gender-options input[type="radio"] {
+    margin-right: 5px;      /* 라디오 버튼과 텍스트 사이의 여백 */
+}
