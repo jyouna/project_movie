@@ -16,22 +16,22 @@
 					</a>
 					<div class="collapse" id="collapseAccounts" aria-labelledby="headingAccounts" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionAccounts">
-					        <a class="nav-link" href="AccountManage">
+					        <a class="nav-link" href="AdminAccountManage">
 					            관리자계정관리
 					        </a>
 					    </nav>
 					</div>
 <!-- 					회원목록 탭 -->
-					<a class="nav-link collapsed" href="memberList" data-bs-toggle="collapse" data-bs-target="#collapseMembers" aria-expanded="false" aria-controls="collapseMembers">
+					<a class="nav-link collapsed" href="MemberList" data-bs-toggle="collapse" data-bs-target="#collapseMembers" aria-expanded="false" aria-controls="collapseMembers">
 					    회원목록
 					    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 					</a>
 					<div class="collapse" id="collapseMembers" aria-labelledby="headingMembers" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionMembers">
-					        <a class="nav-link" href="memberList">
+					        <a class="nav-link" href="MemberList">
 					            회원목록
 					        </a>
-					        <a class="nav-link" href="AccountManage">
+					        <a class="nav-link" href="AdminAccountManage">
 					            관리자 권한 관리
 					        </a>
 					    </nav>
@@ -130,13 +130,13 @@
 					</a>
 					<div class="collapse" id="collapseEvents" aria-labelledby="headingEvents" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionEvents">
-					        <a class="nav-link" href="event_board_manage">
+					        <a class="nav-link" href="EventBoardManage">
 					            이벤트관리
 					        </a>
-					        <a class="nav-link" href="coupon_board_manage">
+					        <a class="nav-link" href="CouponBoardManage">
 					            쿠폰관리
 					        </a>
-					        <a class="nav-link" href="point_board_manage">
+					        <a class="nav-link" href="PointBoardManage">
 					            포인트관리
 					        </a>
 					    </nav>
@@ -162,16 +162,16 @@
 					</a>
 					<div class="collapse" id="collapseStatistics" aria-labelledby="headingStatistics" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionStatistics">
-					        <a class="nav-link" href="statics_visitors">
+					        <a class="nav-link" href="StaticsVisitors">
 					            방문자통계
 					        </a>
-					        <a class="nav-link" href="statics_sales">
+					        <a class="nav-link" href="StaticsSales">
 					            매출통계
 					        </a>
-					        <a class="nav-link" href="statics_voteResult">
+					        <a class="nav-link" href="StaticsVoteResult">
 					            선호영화통계
 					        </a>
-					        <a class="nav-link" href="statics_newMembers">
+					        <a class="nav-link" href="StaticsNewMembers">
 					            가입자통계
 					        </a>
 					    </nav>

@@ -12,96 +12,11 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<style>
-h3 {
-	margin-left: 30px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
-#divTop>div {
-	display: inline-block;
-	width: 45%;
-}
-
-#divTopLeft {
-	margin-left: 30px;
-	margin-bottom: 5px;
-	text-align: left;
-}
-
-#divTopRight {
-	margin-left: 30px;
-	margin-bottom: 5px;
-	text-align: right;
-}
-.topRight {
-	margin-left: 6px;
-}
-
-#tableDiv {
-	border: 2;
-	hieght: 70%;
-	width: 100%;
-	margin-left: 30px;
-/* 	overflow-x: auto; */
-}
-
-#tr01 {
-	background-color: lightgrey;
-	text-align: center;
-	font-size: 0.8em;
-}
-
-#mainTable tr {
-	background-color: white;
-    border: 1px solid #ddd; /* 격자선 표시 */
-}
-
-.tdtr {
-    line-height: 30px;	
-}
-
-#divBottom {
-	text-align: center;
-}
-
-#divBottom>a {
-	padding: 0.2em;
-	text-decoration: none;
-}
-
-#divBottom>a:hover {
-	background-color: lightgrey;
-}
-
-#mainTable th, #mainTable td {
-   text-align: center; /* 텍스트 가운데 정렬 */
-   vertical-align: middle; /* 수직 가운데 정렬 */
-   padding: 5px; /* 셀 안쪽 여백 */
-}
-
-#mainTable {
-	width: 90%; /* 테이블이 화면의 100% 너비에 맞게 조정 */
-	max-width: 1600px; /* 테이블 최대 너비 제한 */
-	border-collapse: collapse; /* 경계선 겹침 제거 */
-}
-
-/* 호버 효과 */
-tr:hover {
-    background-color: #f9f9f9;
-}
-
-input[type="button"] {
-	padding:5px;
-	border-radius: 20px;
-	border: 3px;
-}
-
-</style>
+	<script src="${pageContext.request.contextPath}/resources/js/adminpage/event.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -156,33 +71,33 @@ input[type="button"] {
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
 	<script type="text/javascript">
-	$(function(){
-		$("#board_regis").on("click", function(){
-			window.open(                
-				'event_board_regis', // 팝업 창에 로드할 파일
-	            '이벤트 등록',    // 팝업 창 이름
-	            'width=850,height=500,scrollbars=no,resizable=no');
-		});	
+// 	$(function(){
+// 		$("#board_regis").on("click", function(){
+// 			window.open(                
+// 				'EventBoardRegis', // 팝업 창에 로드할 파일
+// 	            '이벤트 등록',    // 팝업 창 이름
+// 	            'width=850,height=500,scrollbars=no,resizable=no');
+// 		});	
 		
-		$("#selectAll").on("click", function(){
-			alert("전체 선택 클릭됨");
-		});
+// 		$("#selectAll").on("click", function(){
+// 			alert("전체 선택 클릭됨");
+// 		});
 		
-		$("#searchBtn").on("click", function(){
-			alert("검색 버튼 클릭됨");
-		});
+// 		$("#searchBtn").on("click", function(){
+// 			alert("검색 버튼 클릭됨");
+// 		});
 
-		$("#board_modify").on("click", function(){
-			window.open(                
-				'event_board_modify', // 팝업 창에 로드할 파일
-	            '이벤트 수정',    // 팝업 창 이름
-	            'width=850,height=500,scrollbars=no,resizable=no');
-		});
+// 		$("#board_modify").on("click", function(){
+// 			window.open(                
+// 				'EventBoardModify', // 팝업 창에 로드할 파일
+// 	            '이벤트 수정',    // 팝업 창 이름
+// 	            'width=850,height=500,scrollbars=no,resizable=no');
+// 		});
 
-		$("#delete").on("click", function(){
-			confirm("삭제하시겠습니까?");
-		});
-	});
+// 		$("#delete").on("click", function(){
+// 			confirm("삭제하시겠습니까?");
+// 		});
+// 	});
 	</script>
 </body>
 </html>

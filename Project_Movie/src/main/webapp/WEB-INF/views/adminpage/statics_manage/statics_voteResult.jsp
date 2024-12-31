@@ -12,8 +12,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/adminpage/statics.js"></script>
 <style>
 h3 {
 	padding: 10px;
@@ -68,8 +68,13 @@ input {
 	width: 130px;
 	margin-bottom: 5px;
 	margin-top: 5px;
-}
+}	
 
+input[type="button"] {
+	border-radius: 5px;
+	border: 1px;
+	padding: 0.3em;
+}
 </style>
 </head>
 <body>
@@ -135,25 +140,5 @@ input {
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
-	
-	<script type="text/javascript">
-	$(function(){
-		$("#totalPeriodSearch").on("click",function(){
-			alert("전체 기간 조회");
-		});
-
-		$("#monthlySearch").on("click",function(){
-			alert("월 단위 조회");
-		});
-		
-		$("#specificPeriodSearch").on("click",function(){
-			window.open(
-				'specificPeriodSearch', // 팝업 창에 로드할 파일
-    	        '상세기간 조회',    // 팝업 창 이름
-        	    'width=300,height=200,scrollbars=no,resizable=no');
-		});
-	});
-	
-	</script>
 </body>
 </html>

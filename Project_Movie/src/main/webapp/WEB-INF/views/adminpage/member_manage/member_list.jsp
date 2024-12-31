@@ -12,78 +12,10 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_member_list.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<style>
-h3 {
-	margin-left: 30px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
-#divTop>div {
-	display: inline-block;
-	width: 45%;
-}
-
-#divTopLeft {
-	margin-left: 30px;
-	margin-bottom: 5px;
-	text-align: left;
-}
-
-#divTopRight {
-	margin-left: 30px;
-	margin-bottom: 5px;
-	text-align: right;
-}
-.topRight {
-	margin-left: 6px;
-}
-
-#tableDiv {
-	border: 2;
-	hieght: 70%;
-	width: 100%;
-	margin-left: 30px;
-	overflow-x: auto;
-}
-
-#mainTable tr {
-    border: 1px solid #ddd; /* 격자선 표시 */
-}
-
-#mainTable th, #mainTable td {
-   text-align: center; /* 텍스트 가운데 정렬 */
-   vertical-align: middle; /* 수직 가운데 정렬 */
-   padding: 5px; /* 셀 안쪽 여백 */
-}
-
-.tdtr {
-    line-height: 30px;	
-}
-
-#divBottom {
-	text-align: center;
-}
-
-#divBottom>a {
-	padding: 0.2em;
-	text-decoration: none;
-}
-
-/* 호버 효과 */
-tr:hover {
-    background-color: #f9f9f9;
-}
-
-input[type="button"] {
-	border-radius: 20px;
-	border:3px;
-	padding: 5px;
-}
-</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -162,7 +94,7 @@ input[type="button"] {
 		
 		$("#idSearch").on("click", function(){
 			window.open(                
-				'idSearch', // 팝업 창에 로드할 파일
+				'IdSearch', // 팝업 창에 로드할 파일
 	            'ID 조회',    // 팝업 창 이름
 	            'width=300,height=150,scrollbars=no,resizable=no');
 		});	

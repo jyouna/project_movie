@@ -12,14 +12,33 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_regis.css" rel="stylesheet" />
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <style>
 .btn {
 	padding:10px;
 	border-radius: 20px;
+	background-color: lightgrey;
 	border: 3px;
+}
+
+#mainTable {
+	border: 1px solid red;
+}
+
+#tr01 {
+	background-color: lightgrey;
+}
+
+/* 호버 효과 */
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+#mainTable th, #mainTable td {
+   text-align: center; /* 텍스트 가운데 정렬 */
+   vertical-align: middle; /* 수직 가운데 정렬 */
+   padding: 5px; /* 셀 안쪽 여백 */
 }
 </style>
 <body>
@@ -28,8 +47,8 @@
 	<article id="accountRegis">
 	<h3>관리자 계정 생성</h3>
 		<form action="accountRegis" name="joinForm" method="post">
-			<table id="formTable">
-				<tr>
+			<table id="mainTable">
+				<tr id="tr01">
 					<th>ID</th>
 					<td width="300">
 						<input type="text" name="id" id="id" required>
@@ -87,10 +106,7 @@
 			</table>
 		</form>
 	</article>
-	
-	
 		<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-	
 </body>
 </html>
 

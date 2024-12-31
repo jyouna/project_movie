@@ -1,0 +1,84 @@
+@charset "EUC-KR";
+h3 {
+	margin-left: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#divTop>div {
+	display: inline-block;
+	width: 45%;
+}
+
+#divTopLeft {
+	margin-left: 30px;
+	margin-bottom: 5px;
+	text-align: left;
+}
+
+#divTopRight {
+	margin-left: 30px;
+	margin-bottom: 5px;
+	text-align: right;
+}
+.topRight {
+	margin-left: 6px;
+}
+
+#tableDiv {
+	border: 2;
+	hieght: 70%;
+	width: 100%;
+	margin-left: 30px;
+/* 	overflow-x: auto; */
+}
+
+#tr01 {
+	background-color: lightgrey;
+	text-align: center;
+}
+
+#mainTable tr {
+	background-color: white;
+    border: 1px solid #ddd; /* 격자선 표시 */
+}
+
+.tdtr {
+    line-height: 30px;	
+}
+
+#divBottom {
+	text-align: center;
+}
+
+#divBottom>a {
+	padding: 0.2em;
+	text-decoration: none;
+}
+
+#divBottom>a:hover {
+	background-color: lightgrey;
+}
+
+#mainTable th, #mainTable td {
+   text-align: center; /* 텍스트 가운데 정렬 */
+   vertical-align: middle; /* 수직 가운데 정렬 */
+   padding: 5px; /* 셀 안쪽 여백 */
+}
+
+#mainTable {
+	width: 90%; /* 테이블이 화면의 100% 너비에 맞게 조정 */
+	max-width: 1600px; /* 테이블 최대 너비 제한 */
+	border-collapse: collapse; /* 경계선 겹침 제거 */
+}
+
+/* 호버 효과 */
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+input[type="button"] {
+	padding:5px;
+	border-radius: 20px;
+	border: 3px;
+}
