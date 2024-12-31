@@ -6,6 +6,6 @@
 	    <a href="SeatingInfo" class="menu-item">좌석배치도</a>
 	    <a href="DirectionsInfo" class="menu-item">오시는길</a>
 </div>
-
-<div class="col-8 col-12-medium imp-medium"></div>
-	<div id="content"></div>
+</div>
+<div class="col-8 col-12-medium imp-medium">
+	<div id="content">

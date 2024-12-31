@@ -25,11 +25,11 @@
 			<nav id="nav">
 				<ul>
 					<li>
-						<a href="#">영화관안내</a>
+						<a href="TheaterInfo">영화관안내</a>
 						<ul>
-							<li><a href="">영화관안내</a></li>
-							<li><a href="">좌석배치도</a></li>
-							<li><a href="">오시는길</a></li>
+							<li><a href="TheaterInfo">영화관안내</a></li>
+							<li><a href="SeatingInfo">좌석배치도</a></li>
+							<li><a href="DirectionsInfo">오시는길</a></li>
 						</ul>
 					</li>
 					<li>
@@ -58,17 +58,17 @@
 						</ul>
 					</li>
 					<li>
-						<a href="#">이벤트</a>
+						<a href="EventList">이벤트</a>
 						<ul>
-							<li><a href="#">이벤트목록</a></li>
-							<li><a href="#">당첨자발표</a></li>
+							<li><a href="EventList">이벤트목록</a></li>
+							<li><a href="EventWinner">당첨자발표</a></li>
 						</ul>
 					</li>
 					<li>
-						<a href="#">고객센터</a>
+						<a href="NoticeList">고객센터</a>
 						<ul>
-							<li><a href="#">공지사항</a></li>
-							<li><a href="#">자주하는문의</a></li>
+							<li><a href="NoticeList">공지사항</a></li>
+							<li><a href="FaqList">자주하는문의</a></li>
 						</ul>
 					</li>
 				</ul>
