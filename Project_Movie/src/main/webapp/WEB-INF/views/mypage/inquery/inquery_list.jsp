@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -9,7 +9,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_winner.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/inquery/inquery_list.css" />
 </head>
 <body class="left-sidebar is-preload">
 
@@ -17,37 +17,37 @@
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
 	
 	<article>
-		<h1>당첨자 발표</h1>
+		<h1>전체 이벤트</h1>
 	    <div class="search-bar">
-	      <select>
-	        <option>제목</option>
+	      <select >
+	        <option>제목▼</option>
 	        <option>내용</option>
 	      </select>
 	      <input type="text">
-	      <button>검색</button>
+	      <button >검색</button>
 	    </div>
 		<section id="listForm">
 			<table>
 				<tr id="tr_top">
-					<td width="100px">구분</td>
-					<td>제목</td>
-					<td width="150px">당첨자 발표일</td>
+					<td width="50px">상태</td>
+					<td width="150px" >제목</td>
+					<td width="100px">당첨자 발표일</td>
 				</tr>
 					
 				<c:choose>
-					<c:when test="${empty winnerList}"> 
+					<c:when test="${empty eventList}"> 
 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="winner" items="${winnerList}" varStatus="status">
+						<c:forEach var="event" items="${eventList}" varStatus="status">
 							<tr>
-								<td class="winner_num">${winner.winner_num}</td>
-								<td class="winner_subject">${winner.winner_subject}</td>
-								<td>${winner.winner_name}</td>
+								<td class="event_num">${event.event_num}</td>
+								<td class="event_subject">${event.event_subject}</td>
+								<td>${event.event_name}</td>
 								<td>
-									<fmt:formatDate value="${winner.winner_date}" pattern="yy-MM-dd"/>
+									<fmt:formatDate value="${event.event_date}" pattern="yy-MM-dd - yy-MM-dd"/>
 								</td>
-								<td>${winner.winner_readcount}</td>
+								<td>${event.event_readcount}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>					
@@ -56,7 +56,7 @@
 		</section>
 				<section id="pageList">
 			<input type="button" value="&lt" 
-				onclick="location.href='WinnerList?pageNum=${pageInfo.pageNum - 1}'" 
+				onclick="location.href='EventList?pageNum=${pageInfo.pageNum - 1}'" 
 				 <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 			
 			<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -66,29 +66,26 @@
 					
 					</c:when>
 					<c:otherwise>
-						<a href="WinnerList?pageNum=${i}">${i}</a>
+						<a href="EventList?pageNum=${i}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			
 			
 			<input type="button" value="&gt" 
-				onclick="location.href='WinnerList?pageNum=${pageInfo.pageNum + 1}'" 
+				onclick="location.href='EventList?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
 	
 	<script type="text/javascript">
-		$(".winner_subject").on("click", function(event) {
+		$(".event_subject").on("click", function(event) {
 			console.log(event.target);
-			let board_num = $(event.target).siblings(".winner_num").text();
-			console.log("siblings " + winner_num);
-			location.href = "WinnerDetail?board_num=" + Winner_num + "&pageNum=${pageInfo.pageNum}";
+			let event_num = $(event.target).siblings(".event_num").text();
+			console.log("siblings " + event_num);
+			location.href = "EventDetail?event_num=" + event_num + "&pageNum=${pageInfo.pageNum}";
 		
 		});
 	</script>
 	</article>
-
-	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	
 </body>
 </html>

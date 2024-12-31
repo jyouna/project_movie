@@ -1,0 +1,82 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+
+#articleForm {
+    background-color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+
+#articleForm h1 {
+    color: #666;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+#basicInfoArea table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#basicInfoArea th {
+    background-color: #666;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#basicInfoArea td {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Content area styling */
+#articleContentArea {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Command buttons styling */
+#commandCell {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#commandCell input[type="button"] {
+    background-color: #a5a5a5;
+    color: #030303;
+    border: none;
+    padding: 1px 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 9px;
+}
+
+#commandCell input[type="button"]:hover {
+    background-color: #a5a5a5;
+}
+
+#commandCell input[type="button"][disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

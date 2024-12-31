@@ -1,0 +1,97 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Article container styling */
+article.box.post {
+    background-color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+}
+
+article.box.post h1 {
+    color: #444;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Table styling */
+#listForm table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#listForm th, #listForm td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+#listForm th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+#listForm td {
+    background-color: #fff;
+}
+
+#listForm tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+/* Pagination buttons */
+#pageList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+#pageList input[type="button"] {
+    background-color: #666;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 7px;
+    display: flex; /* Flexbox로 레이아웃 설정 */
+    justify-content: center; /* 오른쪽 정렬 */
+}
+
+#pageList input[type="button"]:hover {
+    background-color: #555;
+}
+
+#pageList input[type="button"][disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#pageList strong {
+    font-size: 7px;
+    color: #444;
+}
+
+#pageList a {
+    font-size: 7px;
+    color: #666;
+    text-decoration: none;
+}
+
+#pageList a:hover {
+    text-decoration: underline;
+}

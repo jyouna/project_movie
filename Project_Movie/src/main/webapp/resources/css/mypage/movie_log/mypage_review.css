@@ -1,0 +1,97 @@
+/* General Reset */
+body, h1, table, td, th, button {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Article Styling */
+article.box.post {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+article.box.post h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+#listForm table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#listForm table th, #listForm table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px;
+}
+
+#listForm table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+#listForm table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Buttons Styling */
+topButton{
+    display: flex; /* Flexbox로 레이아웃 설정 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin: 10px; /* 필요시 외부 여백 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+button, input[type="button"] {
+    background-color: #a5a5a5;
+    color: #fff;
+    border: none;
+    padding: 3px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 7px;
+    margin-right: 5px;
+}
+
+button:hover, input[type="button"]:hover {
+    background-color: #888;
+}
+
+/* Pagination Styling */
+#pageList {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#pageList input[type="button"], #pageList a {
+    margin: 0 2px;
+    padding: 3px 6px;
+    text-decoration: none;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 7px;
+}
+
+#pageList a:hover, #pageList input[type="button"]:hover {
+    background-color: #ddd;
+}
+
+#pageList strong {
+    margin: 0 2px;
+    padding: 3px 6px;
+    background-color: #555;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 7px;
+}

@@ -1,0 +1,122 @@
+/* General Reset */
+body, h1, table, td, th, button, select, input {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Article Styling */
+article.box.post {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+article.box.post h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Search Bar Styling */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 5px;
+}
+
+.search-bar button {
+    background-color: #a5a5a5;
+    color: #fff;
+    border: none;
+    padding: 2px 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 7px;
+}
+
+.search-bar button:hover {
+    background-color: #888;
+}
+
+.search-bar select, .search-bar input[type="text"] {
+    padding: 2px 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Table Styling */
+#listForm table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#listForm table th, #listForm table td {
+    border: 1px solid #ddd;
+    padding: 4px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#listForm table th {
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+#listForm table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+/* Buttons Styling */
+button, input[type="button"] {
+    background-color: #a5a5a5;
+    color: #fff;
+    border: none;
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 7px;
+    margin: 1px;
+}
+
+button:hover, input[type="button"]:hover {
+    background-color: #888;
+}
+
+/* Pagination Styling */
+#pageList {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#pageList input[type="button"], #pageList a {
+    margin: 0 1px;
+    padding: 2px 4px;
+    text-decoration: none;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 7px;
+}
+
+#pageList a:hover, #pageList input[type="button"]:hover {
+    background-color: #ddd;
+}
+
+#pageList strong {
+    margin: 0 1px;
+    padding: 2px 4px;
+    background-color: #555;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 7px;
+}

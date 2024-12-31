@@ -1,0 +1,110 @@
+/* General Reset */
+body, h1, table, td, th, button {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Article Styling */
+selectBox{
+    display: flex; /* Flexbox로 레이아웃 설정 */
+    justify-content: flex-start; /* 요소들을 왼쪽 정렬 */
+    align-items: center; /* 요소들의 세로 정렬 */
+    gap: 10px; /* 요소 간 간격 */
+    margin: 5px;
+}
+
+article.box.post {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+/*     text-align: center !important; */
+}
+
+article.box.post h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+/* Table Styling */
+
+
+
+#listForm table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#listForm table th, #listForm table td {
+    border: 1px solid #ddd;
+    padding: 4px; /* Reduced padding */
+    text-align: left;
+    font-size: 14px;
+}
+
+#listForm table th {
+    background-color: #f4f4f4;
+    color: #000000;
+}
+
+#listForm table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Buttons Styling */
+/* 상세정보, 예매취소 버튼임  */
+button, input[type="button"] {
+    background-color: #a5a5a5;
+    color: #fff;
+    border: none;
+    padding: 5px 7px; /* Minimal padding */
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 7px;
+    margin: 5px; /* Minimal margin */
+}
+
+button:hover, input[type="button"]:hover {
+    background-color: #888;
+}
+/* 상세정보, 예매취소 버튼  */
+#underButton {
+    display: flex; /* Flexbox로 레이아웃 설정 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    margin: 10px; /* 필요시 외부 여백 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+
+/* Pagination Styling */
+#pageList {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#pageList input[type="button"], #pageList a {
+    margin: 0 1px; /* Reduced margin */
+    padding: 2px 4px; /* Reduced padding */
+    text-decoration: none;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 7px;
+}
+
+#pageList a:hover, #pageList input[type="button"]:hover {
+    background-color: #ddd;
+}
+
+#pageList strong {
+    margin: 0 1px; /* Reduced margin */
+    padding: 2px 4px; /* Reduced padding */
+    background-color: #555;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 7px;
+}
