@@ -1,8 +1,16 @@
+@charset "UTF-8";
+#title {
+	font-size: 1000px;
+	font-weight: bold;
+	color: black;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
+	color: black;
 }
 
 .sidebar {
@@ -11,20 +19,24 @@ body {
   padding: 20px;
   height: 100vh;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+	color: black;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+	color: black;
 }
 
 .sidebar ul li {
   margin-bottom: 15px;
+	color: black;
 }
 
 .content {
   flex: 1;
   padding: 20px;
+	color: black;
 }
 
 .menu-bar {
@@ -32,6 +44,7 @@ body {
   justify-content: space-around;
   background-color: #ccc;
   padding: 10px 0;
+	color: black;
 }
 
 .menu-bar a {
@@ -40,11 +53,6 @@ body {
   font-weight: bold;
 }
 
-h1 {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 24px;
-}
 
 .table-container {
   margin-top: 20px;
@@ -53,18 +61,36 @@ h1 {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  border: 1px solid black; 
 }
 
 th, td {
-  border: 1px solid #ddd;
-  text-align: center;
-  padding: 10px;
+  border: 1px solid black; 
+  text-align: center; 
+  color: black;
+  padding: 8px;
 }
 
 th {
-  background-color: #f9f9f9;
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: black;
 }
+
+#theaterInfo {
+  margin-bottom: 5px; /* 아래쪽 간격 */
+}
+
+p {
+  margin-top: 5px; /* 위쪽 간격 */
+}
+
+
+.centered {
+  text-align: center; /* 가로 중앙 정렬 */
+  vertical-align: middle; /* 세로 중앙 정렬 */
+}
+
 
 .list-container {
   margin-top: 20px;

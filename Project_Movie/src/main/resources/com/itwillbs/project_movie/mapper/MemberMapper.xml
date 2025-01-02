@@ -2,6 +2,98 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.itwillbs.project_movie.mapper.MemberMapper">
- 
- </mapper>
+<mapper namespace="com.itwillbs.project_movie.mapper.MemberMapper">
+<!-- 민기 -->
+	<!-- 회원 가입 - INSERT -->
+	<insert id="insertMember">
+		INSERT INTO member VALUES (
+			#{member_id},
+			#{member_passwd},
+			#{member_name},
+			#{birth_date},
+			#{email},
+			#{phone},
+			#{gender},
+			#{gerne},
+			#{text_receive},
+			#{email_receive},
+			#{info_open},
+			#{point},
+			#{member_type},
+			#{email_auth_status},
+			#{phone_auth_status},
+			#{member_status}
+		)
+	</insert>
+
+	<!-- 회원 로그인을 위한 아이디, 패스워드 판별 - SELECT -->
+	<select id="selectMemberIdForLogin" resultType="string">
+		SELECT member_id
+		FROM member
+		WHERE member_id = #{member_id} AND member_passwd = #{member_passwd}
+	</select>
+
+	<!-- 회원 상세정보 조회 - SELECT -->
+	<select id="selectMember" resultType="com.itwillbs.project_movie.vo.MemberVO">
+		SELECT *
+		FROM member
+		WHERE member_id = #{member_id}
+	</select>
+
+	<!-- 회원 정보 수정 - UPDATE -->
+	<update id="updateMember">
+		UPDATE member
+		SET
+			member_passwd = #{member_passwd},
+			member_name = #{member_name},
+			birth_date = #{birth_date},
+			email = #{email},
+			phone = #{phone},
+			gender = #{gender},
+			gerne = #{gerne},
+			text_receive = #{text_receive},
+			email_receive = #{email_receive},
+			info_open = #{info_open},
+			point = #{point},
+			member_type = #{member_type},
+			email_auth_status = #{email_auth_status},
+			phone_auth_status = #{phone_auth_status},
+			member_status = #{member_status}
+		WHERE member_id = #{member_id}
+	</update>
+
+	<!-- 메일 인증 정보 조회 - SELECT -->
+	<select id="selectMailAuthInfo" resultType="com.itwillbs.project_movie.vo.EmailAuthVO">
+		SELECT *
+		FROM mail_auth_info
+		WHERE email = #{email}
+	</select>
+
+	<!-- 신규 인증 정보 등록 - INSERT -->
+	<insert id="insertMailAuthInfo">
+		INSERT INTO mail_auth_info VALUES (
+			#{email},
+			#{mail_auth_code}
+		)
+	</insert>
+
+	<!-- 기존 인증 정보 수정 - UPDATE -->
+	<update id="updateMailAuthInfo">
+		UPDATE mail_auth_info
+		SET mail_auth_code = #{mail_auth_code}
+		WHERE email = #{email}
+	</update>
+
+	<!-- 메일 인증 상태 갱신 - UPDATE -->
+	<update id="updateMailAuthStatus">
+		UPDATE member
+		SET email_auth_status = 1
+		WHERE email = #{email}
+	</update>
+
+	<!-- 메일 인증 정보 삭제 - DELETE -->
+	<delete id="deleteMailAuthInfo">
+		DELETE FROM mail_auth_info
+		WHERE email = #{email}
+	</delete>
+</mapper>

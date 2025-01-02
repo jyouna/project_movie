@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Insert title here</title>
+	<title>event page</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
@@ -16,45 +16,48 @@
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
 	
-	<article>
 		<h1>전체 이벤트</h1>
-<!-- 	    얘들 오른쪽 정렬 -->
 	    <div class="search-bar">
-	      <select >
+	      <select>
 	        <option>제목▼</option>
 	        <option>내용</option>
 	      </select>
 	      <input type="text">
 	      <button style="width: 100px; height: 50px;" >검색</button>
 	    </div>
-		<section id="listForm">
-			<table>
-				<tr id="tr_top">
-					<td width="50px">상태</td>
+		<div id="listForm">
+			<table id="eventForm" border="1">
+				<tr id="tr_top" align="center">
+					<td width="75px">상태</td>
 					<td width="150px" >제목</td>
-					<td width="100px">당첨자 발표일</td>
+					<td width="125px">이벤트 기간</td>
 				</tr>
-					
-				<c:choose>
-					<c:when test="${empty eventList}"> 
-						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="event" items="${eventList}" varStatus="status">
-							<tr>
-								<td class="event_num">${event.event_num}</td>
-								<td class="event_subject">${event.event_subject}</td>
-								<td>${event.event_name}</td>
-								<td>
-									<fmt:formatDate value="${event.event_date}" pattern="yy-MM-dd - yy-MM-dd"/>
-								</td>
-								<td>${event.event_readcount}</td>
-							</tr>
-						</c:forEach>
-					</c:otherwise>					
-				</c:choose>
+				<tr>
+					<td>진행중</td>
+					<td>수험생 관람료 할인</td>
+					<td>2024.11.14 - 2024.12.31</td>
+				</tr>
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${empty eventList}">  --%>
+<!-- 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr> -->
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
+<%-- 						<c:forEach var="event" items="${eventList}" varStatus="status"> --%>
+<!-- 							<tr> -->
+<%-- 								<td class="event_num">${event.event_num}</td> --%>
+<%-- 								<td class="event_subject">${event.event_subject}</td> --%>
+<%-- 								<td>${event.event_name}</td> --%>
+<!-- 								<td> -->
+<%-- 									<fmt:formatDate value="${event.event_date}" pattern="yy-MM-dd - yy-MM-dd"/> --%>
+<!-- 								</td> -->
+<%-- 								<td>${event.event_readcount}</td> --%>
+<!-- 							</tr> -->
+<%-- 						</c:forEach> --%>
+<%-- 					</c:otherwise>					 --%>
+<%-- 				</c:choose> --%>
 			</table>
-		</section>
+		</div>
+		
 				<section id="pageList">
 			<input type="button" value="&lt" 
 				onclick="location.href='EventList?pageNum=${pageInfo.pageNum - 1}'" 
@@ -87,7 +90,7 @@
 		
 		});
 	</script>
-	</article>
+
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	

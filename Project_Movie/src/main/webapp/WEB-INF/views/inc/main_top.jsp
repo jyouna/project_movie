@@ -7,9 +7,9 @@
 		<div class="navbar"> 
 			<div class="navbar-right"> 
 				<a href="${pageContext.request.contextPath}">홈</a> 
-				<a href="">로그인</a> 
-				<a href="">로그아웃</a> 
-				<a href="">회원가입</a> 
+				<a href="${pageContext.request.contextPath}/MemberLogin">로그인</a> 
+   				<a href="${pageContext.request.contextPath}/MemberLogout">로그아웃</a> 
+    			<a href="${pageContext.request.contextPath}/MemberAgree">회원가입</a> 
 				<a href="#" onclick="openMypage()">마이페이지</a> 
 				<a href="#" onclick="openAdminpage()">관리자페이지</a>
 			</div>
@@ -42,10 +42,10 @@
 						</ul>
 					</li>
 					<li>
-						<a href="#">예매하기</a>
+						<a href="BookTickets">예매하기</a>
 						<ul>
 							<li><a href="#">상영시간표</a></li>
-							<li><a href="#">예매하기</a></li>
+							<li><a href="BookTickets">예매하기</a></li>
 							<li><a href="#">예매확인/취소</a></li>
 						</ul>
 					</li>

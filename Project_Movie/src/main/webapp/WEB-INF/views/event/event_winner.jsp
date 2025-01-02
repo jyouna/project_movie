@@ -16,7 +16,7 @@
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
 	
-	<article>
+
 		<h1>당첨자 발표</h1>
 	    <div class="search-bar">
 	      <select>
@@ -24,34 +24,38 @@
 	        <option>내용</option>
 	      </select>
 	      <input type="text">
-	      <button>검색</button>
+	      <button style="width: 100px; height: 50px;">검색</button>
 	    </div>
 		<section id="listForm">
-			<table>
-				<tr id="tr_top">
+			<table id="eventWinnerForm" border="1">
+				<tr id="tr_top" align="center">
 					<td width="100px">구분</td>
-					<td>제목</td>
-					<td width="150px">당첨자 발표일</td>
+					<td width="150px">제목</td>
+					<td width="100px">당첨자 발표일</td>
 				</tr>
-					
-				<c:choose>
-					<c:when test="${empty winnerList}"> 
-						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="winner" items="${winnerList}" varStatus="status">
-							<tr>
-								<td class="winner_num">${winner.winner_num}</td>
-								<td class="winner_subject">${winner.winner_subject}</td>
-								<td>${winner.winner_name}</td>
-								<td>
-									<fmt:formatDate value="${winner.winner_date}" pattern="yy-MM-dd"/>
-								</td>
-								<td>${winner.winner_readcount}</td>
-							</tr>
-						</c:forEach>
-					</c:otherwise>					
-				</c:choose>
+				<tr>
+					<td>시사회 / 무대인사</td>
+					<td>소방관 시사회 당첨자 발표</td>
+					<td>2024.11.25</td>
+				</tr>	
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${empty winnerList}">  --%>
+<!-- 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr> -->
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
+<%-- 						<c:forEach var="winner" items="${winnerList}" varStatus="status"> --%>
+<!-- 							<tr> -->
+<%-- 								<td class="winner_num">${winner.winner_num}</td> --%>
+<%-- 								<td class="winner_subject">${winner.winner_subject}</td> --%>
+<%-- 								<td>${winner.winner_name}</td> --%>
+<!-- 								<td> -->
+<%-- 									<fmt:formatDate value="${winner.winner_date}" pattern="yy-MM-dd"/> --%>
+<!-- 								</td> -->
+<%-- 								<td>${winner.winner_readcount}</td> --%>
+<!-- 							</tr> -->
+<%-- 						</c:forEach> --%>
+<%-- 					</c:otherwise>					 --%>
+<%-- 				</c:choose> --%>
 			</table>
 		</section>
 				<section id="pageList">
@@ -86,7 +90,7 @@
 		
 		});
 	</script>
-	</article>
+
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
