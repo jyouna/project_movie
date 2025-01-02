@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>이벤트관리</title>
+	<title>이벤트 당첨자 관리</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
@@ -22,16 +22,11 @@
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<h3>이벤트 관리</h3>
+	<h3>이벤트 당첨자 명단</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
 			<input type="button" value="전체선택" id="selectAll">
-			<input type="button" value="등록하기" id="board_regis">
-<!-- 			<input type="button" value="수정하기" id="board_modify"> -->
-<!-- 			<input type="button" value="삭제하기" id="delete"> -->
-			<input type="button" id="eventStart" value="이벤트 시작">
-			<input type="button" id="eventEnd" value="이벤트 종료">
-			<input type="button" id="chooseEventWinner" value="이벤트 당첨자 추첨">
+			<input type="button" id="give_prize" value="경품지급">
 		</div>	
 		<div id="divTopRight">
 			<select>
@@ -45,48 +40,48 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
+				<th width="70">번호</th>
 				<th width="50">선택</th>
-<!-- 				<th width="70">번호</th> -->
-				<th width="50">번호</th>
-				<th width="350">제목</th>
-				<th width="150">등록일자</th>
-				<th width="150">시작일자</th>
-				<th width="150">종료일자</th>
-				<th width="150">등록계정</th>
-				<th width="150">상태</th>
+				<th width="150">이벤트코드</th>
+				<th width="100">아이디</th>
+				<th width="150">지급상태</th>
+				<th width="150">지급일자</th>
+				<th width="150">포인트금액</th>
+				<th width="150">쿠폰종류</th>
 			</tr>
-			<c:choose>
-				<c:when test="${empty eventVo}">
-					<tr>
-						<th colspan="8">"작성된 게시글이 없습니다."</th>
-					</tr>
-				</c:when>
-				<c:otherwise>
-					<c:forEach var="eventBoard" items="${eventVo}" varStatus="status">
-						<tr>
-							<td><input type="checkbox" class="eventSetCheckbox" value="${eventBoard.event_code}"></td>
+		
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${empty eventVo}"> --%>
+<!-- 					<tr> -->
+<!-- 						<th colspan="8">"작성된 게시글이 없습니다."</th> -->
+<!-- 					</tr> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<%-- 					<c:forEach var="eventBoard" items="${eventVo}" varStatus="status"> --%>
+<!-- 						<tr> -->
 <%-- 							<td>${status.count}</td> --%>
-							<td>${eventBoard.event_code}</td>	
-							<td><a href="updateEventBoard?event_code=${eventBoard.event_code}">${eventBoard.event_subject}</a></td>	
-							<td>${eventBoard.regis_date}</td>	
-							<td>${eventBoard.event_start_date}</td>	
-							<td>${eventBoard.event_end_date}</td>	
-							<td>${eventBoard.event_writer}</td>	
-							<td>
-								<c:if test="${eventBoard.event_status == 0}">
-										미진행
-								</c:if>
-								<c:if test="${eventBoard.event_status == 1}">
-										진행중
-								</c:if>
-								<c:if test="${eventBoard.event_status == 2}">
-										종료
-								</c:if>
-							</td>	
-						</tr>	
-					</c:forEach>
-				</c:otherwise>
-			</c:choose> 
+<%-- 							<td><input type="checkbox" class="eventSetCheckbox" value="${eventBoard.event_code}"></td> --%>
+<%-- 							<td>${eventBoard.event_code}</td>	 --%>
+<%-- 							<td><a href="updateEventBoard?event_code=${eventBoard.event_code}">${eventBoard.event_subject}</a></td>	 --%>
+<%-- 							<td>${eventBoard.regis_date}</td>	 --%>
+<%-- 							<td>${eventBoard.event_start_date}</td>	 --%>
+<%-- 							<td>${eventBoard.event_end_date}</td>	 --%>
+<%-- 							<td>${eventBoard.event_writer}</td>	 --%>
+<!-- 							<td> -->
+<%-- 								<c:if test="${eventBoard.event_status == 0}"> --%>
+<!-- 										미진행 -->
+<%-- 								</c:if> --%>
+<%-- 								<c:if test="${eventBoard.event_status == 1}"> --%>
+<!-- 										진행중 -->
+<%-- 								</c:if> --%>
+<%-- 								<c:if test="${eventBoard.event_status == 2}"> --%>
+<!-- 										종료 -->
+<%-- 								</c:if> --%>
+<!-- 							</td>	 -->
+<!-- 						</tr>	 -->
+<%-- 					</c:forEach> --%>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose>  --%>
 		</table>
 	</div>
 	<br>

@@ -132,13 +132,60 @@ public class AdminSettingController {
 		eventVo.setEvent_writer(sId);
 		System.out.println(eventVo);
 		adminService.regisEventBoard(eventVo);
+		
+		return "redirect:/EventBoardManage";
+	}
+	
+	@GetMapping("StartEvent") // 선택한 이벤트 시작 상태로 변경
+	public String startEvent(@RequestParam("event_code") int[] event_codes) {
+		for(int code : event_codes) {
+			System.out.println("시작할 이벤트 코드 : " + code);
+		}
+		
+		adminService.setEventStart(event_codes);
+		
+		return "redirect:/EventBoardManage";
+	}
+	
+	@GetMapping("EndEvent") // 선택한 이벤트 종료 상태로 변경
+	public String endEvent(@RequestParam("event_code") int[] event_codes) {
+		for(int code : event_codes) {
+			System.out.println("종료할 이벤트 코드 : " + code);
+		}
+		
+		adminService.setEventEnd(event_codes);
+		
 		return "redirect:/EventBoardManage";
 	}
 
-	@GetMapping("EventBoardModify")
-	public String eventBoardModify() {
+	@GetMapping("updateEventBoard")
+	public String updateEventBoard(int event_code, EventBoardVO eventVo, Model model) {
+		eventVo = adminService.updateEventBoard(event_code);
+		model.addAttribute("eventVo", eventVo);
+		
 		return "adminpage/event_manage/event_board_modify";
 	}
-
+	
+	@PostMapping("updateEventBoard")
+	public String eventBoardModify(EventBoardVO eventVo) {
+		return "";
+	}
+	
+	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 - 이벤트 관리 페이지에서 선택
+	public String chooseEventWinner() {
+		return "";
+	}
+	
+	@GetMapping("GivePrizeForm") // 이벤트 당첨자에게 경품 지급 버튼 클릭 시 해당 폼으로 이동. 이벤트 당첨자 관리 페이지에서 선택
+	public String givePrizeForm() {
+	
+		return "";
+	}
+	
+	@GetMapping("EventWinnerManage")
+	public String eventWinnerPage() {
+		
+		return "adminpage/event_manage/event_winner_manage";
+	}
 }
 

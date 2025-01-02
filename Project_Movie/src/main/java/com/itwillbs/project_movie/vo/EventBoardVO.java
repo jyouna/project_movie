@@ -15,4 +15,7 @@ public class EventBoardVO {
 	private String event_writer;
 	private Date regis_date;
 	private int view_count;
+	private int event_status;
+	private Date event_start_date;
+	private Date event_end_date;
 }

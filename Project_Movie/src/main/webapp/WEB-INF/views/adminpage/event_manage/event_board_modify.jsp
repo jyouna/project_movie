@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트 내용 수정</title>
+<title>이벤트 게시글 수정</title>
 <style type="text/css">
 form>div {
 	background-color: lightgrey;
@@ -50,17 +50,16 @@ textarea {
 </style>
 </head>
 <body>
-	<form action="submit">
-		<h3>이벤트 내용 수정</h3>
+	<form action="updateEventBoard" method="post">
+		<h3>이벤트 게시글 수정</h3>
 		<div>
-			제목 <input type="text" placeholder="제목을 입력하세요">
-			<br>
-			시작일 <input type="date"> <input type="button" value="선택" class="date">
-	 		<br>
-	 		종료일 <input type="date"> <input type="button" value="선택" class="date">
-	 		<br>
-			<textarea rows="10" cols="100">내용을 입력하세요</textarea>
-			<input type="file" value="파일">
+			제목 <input type="text" value="${eventVo.event_subject}" name="event_subject"><br>
+			시작일 <input type="date" value="${eventVo.event_start_date}" name="event_start_date"><br>
+			종료일 <input type="date" value="${eventVo.event_end_date}" name="event_end_date"><br>
+			<textarea rows="10" cols="100" name="event_content">"${eventVo.event_content}"</textarea>
+			<input type="file" name="event_file1" value="${eventVo.event_file1}"><br>
+			<input type="file" name="event_file2" value="${eventVo.event_file2}"><br>
+			<input type="file" name="event_file3" value="${eventVo.event_file3}">
 		</div>
 		<div id="divBottom">
 			<input type="submit" value="수정" class="bottom">

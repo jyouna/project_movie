@@ -16,7 +16,21 @@ $(function(){
 	});	
 	
 	$("#selectAll").on("click", function(){
-		alert("전체 선택 클릭됨");
+	    let checkboxes = $(".eventSetCheckbox");
+	    let isChecked = $(this).data("checked") || false; // 현재 버튼 상태를 확인 (기본값은 false)
+	    
+	    // 체크 상태를 반전시킴
+	    checkboxes.prop("checked", !isChecked);
+
+	    // 버튼 상태를 업데이트
+	    $(this).data("checked", !isChecked);
+
+	    // 버튼 텍스트 변경
+	    if (!isChecked) {
+	        $(this).val("전체해제");
+	    } else {
+	        $(this).val("전체선택");
+	    }
 	});
 	
 	$("#board_modify").on("click", function(){
@@ -27,5 +41,43 @@ $(function(){
 		confirm("삭제하시겠습니까?");
 	});
 	
+	$("#eventStart").on("click", function(){
+	let eventSetCheckbox = $(".eventSetCheckbox:checked");
 	
+	if(eventSetCheckbox.length > 0) {
+		let eventStartList = [];
+		eventSetCheckbox.each(function (){
+			eventStartList.push($(this).val());	
+		});
+		if(confirm("해당 이벤트를 진행 상태로 변경하시겠습니까?")) {
+			location.href="StartEvent?event_code=" + eventStartList.join(",");
+		}
+		} else {
+			alert("삭제할 계정을 선택하세요.");
+		}
+	});
+	
+	$("#eventEnd").on("click", function(){
+		let eventSetCheckbox = $(".eventSetCheckbox:checked");
+		
+		if(eventSetCheckbox.length > 0) {
+			let eventEndList = [];
+			eventSetCheckbox.each(function (){
+				eventEndList.push($(this).val());	
+			});
+			if(confirm("해당 이벤트를 진행 상태로 변경하시겠습니까?")) {
+				location.href="EndEvent?event_code=" + eventEndList.join(",");
+			}
+		} else {
+			alert("삭제할 계정을 선택하세요.");
+		}
+	});
+	
+	$("#chooseEventWinner").on("click",function(){
+		location.href="ChooseEventWinner";
+	});
+	
+	$("#give_prize").on("click", function(){
+		location.href="GivePrizeForm";
+	});
 });

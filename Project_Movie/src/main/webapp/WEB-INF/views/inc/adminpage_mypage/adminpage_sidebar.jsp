@@ -133,6 +133,9 @@
 					        <a class="nav-link" href="EventBoardManage">
 					            이벤트관리
 					        </a>
+					        <a class="nav-link" href="EventWinnerManage">
+					            이벤트당첨자관리
+					        </a>
 					        <a class="nav-link" href="CouponBoardManage">
 					            쿠폰관리
 					        </a>

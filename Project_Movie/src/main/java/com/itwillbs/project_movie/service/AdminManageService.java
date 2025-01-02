@@ -40,5 +40,22 @@ public class AdminManageService {
 	public List<EventBoardVO> eventBoardList() {
 		return manageMapper.selectEventBoardList();
 	}
+
+	public void setEventStart(int[] event_codes) {
+		for(int event_code : event_codes) {
+			manageMapper.updateEventStatusStart(event_code);
+		}
+	}
+
+	public void setEventEnd(int[] event_codes) {
+		for(int event_code : event_codes) {
+			manageMapper.updateEventStatusEnd(event_code);
+		}
+	}
+
+	public EventBoardVO updateEventBoard(int event_code) {
+		// TODO Auto-generated method stub
+		return manageMapper.getEventBoardContent(event_code);
+	}
 	
 }

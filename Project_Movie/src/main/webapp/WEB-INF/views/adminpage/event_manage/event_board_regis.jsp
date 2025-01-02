@@ -53,8 +53,10 @@ textarea {
 	<form action="EventBoardRegisSubmit" method="get">
 		<h3>신규 이벤트 등록</h3>
 		<div>
-			제목 <input type="text" placeholder="제목을 입력하세요" name="event_subject">
-			<br>
+			제목 <input type="text" placeholder="제목을 입력하세요" name="event_subject"><br>
+			시작일 <input type="date" name="event_start_date"><br>
+			종료일 <input type="date" name="event_end_date"><br>
+			<input type="hidden" name="event_status" value="0">
 			<textarea rows="10" cols="100" name="event_content">내용을 입력하세요</textarea>
 			<input type="file" name="event_file1"><br>
 			<input type="file" name="event_file2"><br>

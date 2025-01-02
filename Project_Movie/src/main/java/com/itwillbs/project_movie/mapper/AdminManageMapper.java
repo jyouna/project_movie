@@ -22,4 +22,10 @@ public interface AdminManageMapper {
 	void insertEventBoard(EventBoardVO eventVo);
 
 	List<EventBoardVO> selectEventBoardList();
+
+	void updateEventStatusStart(@Param("event_code") int event_code);
+
+	void updateEventStatusEnd(@Param("event_code") int event_code);
+
+	EventBoardVO getEventBoardContent(@Param("event_code") int event_code);
 }

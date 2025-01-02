@@ -47,13 +47,34 @@
 			#{event_file3},
 			#{event_writer},
 			now(),
-			0
+			#{view_count},
+			#{event_status},
+			#{event_start_date},
+			#{event_end_date}
 		)
 	</insert>
 	
 	<select id="selectEventBoardList" resultType="eventboard">
 		select *
 		from event_board
+		order by event_code desc
 	</select>
 	
+	<update id="updateEventStatusStart">
+		UPDATE event_board
+		SET event_status = 1
+		WHERE event_code = #{event_code}
+	</update>
+	
+	<update id="updateEventStatusEnd">
+		UPDATE event_board
+		SET event_status = 2
+		WHERE event_code = #{event_code}
+	</update>
+	
+	<select id="getEventBoardContent" resultType="eventboard">
+		SELECT *
+		FROM event_board
+		WHERE event_code = #{event_code}
+	</select> 
  </mapper>
