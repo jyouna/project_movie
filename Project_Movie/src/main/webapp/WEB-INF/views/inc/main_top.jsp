@@ -44,7 +44,7 @@
 					<li>
 						<a href="BookTickets">예매하기</a>
 						<ul>
-							<li><a href="#">상영시간표</a></li>
+							<li><a href="MovieScheduleInfo">상영시간표</a></li>
 							<li><a href="BookTickets">예매하기</a></li>
 							<li><a href="#">예매확인/취소</a></li>
 						</ul>
