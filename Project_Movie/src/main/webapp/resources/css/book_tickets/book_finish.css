@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+.modal {
+/* 	display: none; */
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	max-height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 2px solid grey;
+	border-radius: 5px;
+	z-index: 1; 
+}
+
+.modal_content {
+/* 	display: none; */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+/* 	width: 50%; */
+/* 	height: 60%; */
+	width: 1000px;
+	height: 750px;
+	padding: 40px;
+	border-radius: 5px;
+	overflow-y: auto;
+}
+
+.modal_content h2 {
+    position: relative; /* position 속성을 absolute에서 relative로 변경 */
+    margin: 0 auto; /* 수평 중앙 정렬 */
+    top: 0; /* 위치 조정 */
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal_close {
+	position: absolute;
+	z-index: 9999;
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	text-align: center;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+}
+
+.msg_fin {
+	display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+	display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    text-align: center;
+    margin: 30px; /* 아래 콘텐츠와 간격 */
+}
+
+.msg_fin h2 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.poster {
+    background-color: gray;
+    width: 200px;
+    height: 300px;
+    flex-shrink: 0; /* 포스터 크기가 줄어들지 않도록 설정 */
+}
+
+.book_info {
+	display: flex;
+    align-items: flex-start; /* 수직 정렬 */
+    justify-content: center; /* 수평 정렬 */
+    gap: 30px; /* 포스터와 정보 간격 */
+    margin: 70px 10px; /* 버튼과 간격 */
+    font-size: 14px; /* 텍스트 크기 조정 */
+}
+
+.book_details {
+    display: flex;
+    flex-direction: column; /* 텍스트를 위에서 아래로 정렬 */
+    justify-content: flex-start; /* 상단에 텍스트 정렬 */
+    font-size: 16px; /* 텍스트 크기 조정 */
+    line-height: 1.7; /* 텍스트 간 간격 조정 */
+}
+
+.row .header {
+	float: left;
+	margin-right: 10px; 
+	padding: 0;
+	width: 70px;
+	font-weight: bold;
+	color: #484D55;
+	font-size: 16px;
+	letter-spacing: 0;
+}
+
+.row .data {
+	float: left;
+	margin-right: 30px; 
+	padding: 0;
+	font-size: 16px;
+}
+
+
+.row {
+	line-height: 30px;
+	padding: 0;
+	margin: 0;
+} 
+
+.fin_btn {
+	text-align: center;
+    margin-top: 80px;
+    min-width: unset;
+    font-size: 12px;
+    border: none;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
+    
+}
+
+.fin_btn button {
+	display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    min-width: unset;
+    width: 120px;
+    height: 60px;
+/*     margin: 0 10px; */
+    padding: 10px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

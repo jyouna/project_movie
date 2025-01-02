@@ -1,0 +1,590 @@
+@charset "UTF-8";
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	max-height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 2px solid grey;
+	border-radius: 5px;
+	z-index: 1; 
+}
+
+.modal_content {
+	display: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	width: 1000px;
+	height: 750px;
+	padding: 40px;
+	border-radius: 5px;
+	overflow-y: auto;
+}
+
+.modal_content h2 {
+    position: relative; /* position 속성을 absolute에서 relative로 변경 */
+    margin: 0 auto; /* 수평 중앙 정렬 */
+    top: 0; /* 위치 조정 */
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal_close {
+	position: absolute;
+	z-index: 9999;
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	text-align: center;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+h4 {
+/* 	margin: 5px 0; */
+	font-size: 18px;
+	font-weight: 550;
+	text-align: center;
+}
+
+
+.header_mv, .header_date, .header_time {
+    background-color: #f4f4f4;
+    padding: 5px;
+    text-align: center;
+}
+
+/* 헤더 스타일 */
+.header_mv {
+    color: white;
+    text-align: center;
+    border-top-left-radius: 5px;
+}
+
+.mv_sel {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mv_sel select {
+		color: black;
+/* 	display:block; */
+/*     float: left; */
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+     appearance: auto; /* 기본 드롭다운 스타일 복원 */
+    -moz-appearance: auto;
+    -webkit-appearance: auto;
+    -ms-appearance: auto;
+}
+
+
+.mv_list_container {
+	overflow-y: auto;
+	margin-top: 10px;
+}
+
+.mv_list {
+    display: flex;
+    align-items: center;
+/*     border-bottom: 1px solid #e0e0e0; */
+    cursor: pointer;
+    height: 40px; /* 영화 항목 높이 조정 */
+    justify-content: flex-start;
+    color: black;
+    transition: background-color 0.3s ease;
+    padding: 3px;
+    margin: 2px 10px;
+}
+
+.mv_list:last-child {
+    border-bottom: none;
+}
+
+.mv_list.selected {
+	background-color: #444444;
+	transition: background-color 0.3s ease;
+}
+
+.mv_list.selected .mv_title {
+	color: #fff;
+}
+
+.mv_list a {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	text-decoration: none;
+	
+    color: black;
+    transition: background-color 0.3s ease;
+    padding: 3px;
+    margin: 0;
+}
+
+.mv_age {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #ffcc00;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.mv_title {
+	display: inline-block;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* 섹션 전체 */
+.all_section {
+	display: flex;
+    align-items: stretch; /* 모든 섹션의 높이를 동일하게 */
+    justify-content: center;
+    flex-direction: row;
+	margin-top: 40px;
+	width: 100%;
+}
+
+/* 각 섹션 */
+.left_section, .mid_section, .right_section {
+	min-width: unset;
+	line-height: unset;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    border: 1px solid #ddd;
+	border-collapse: collapse; /* 테두리 겹침 방지 */
+	box-sizing: border-box; /* 테두리와 패딩 포함하여 크기 계산 */
+	flex: 1; /* 각 섹션이 동일한 높이를 가지도록 */
+}
+
+/* 왼쪽 섹션 */
+.left_section {
+	 width: 300px;
+	 flex: none;
+}
+
+/* 중앙 섹션 */
+.mid_section {
+    width: 150px;
+    border-left: none; /* 왼쪽 테두리 제거 */
+    border-right: none; /* 오른쪽 테두리 제거 */
+	flex: none;
+}
+
+/* 오른쪽 섹션 */
+.right_section {
+    width: auto;
+/*     height: 500px; */
+}
+
+
+/* 날짜 리스트 스타일 */
+.date_list {
+    padding: 10px;
+    min-width: unset;
+	line-height: unset;
+	overflow-y: auto;
+}
+
+/* 년도와 월 스타일 */
+.year_month {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+/* 날짜 항목 스타일 */
+.date_item {
+    margin: 5px 0;
+}
+
+.date_item a {
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 60px;
+    color: black;
+    transition: background-color 0.3s ease;
+    padding: 3px;
+    padding-left: 10px;
+    margin: 0;
+}
+
+
+.date_item span {
+    font-size: 16px;
+}
+
+.date_item strong {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 오늘 날짜 강조 */
+.date_item.today a {
+    background-color: #333;
+    color: white;
+}
+
+/* 선택된 날짜 강조 */
+.date_item.selected a, .date_item.selected strong {
+    background-color: #444444;
+    color: white;
+}
+
+
+
+/* 영화 시간표 예매정보 */
+
+/* 영화 제목과 이용가 표시 */
+.movie_schedule_info {
+/* 	margin: 30px; */
+	width: auto; /* 부모 요소 크기 상속 */
+    margin: 0 auto; /* 중앙 정렬 */
+    overflow-y: auto;
+    height: 500px;
+}
+
+.sec01 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px;
+    margin-bottom: 50px;
+    font-family: Arial, sans-serif;
+}
+
+.movie_container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.right_section .mv_age {
+    background-color: #f4c542;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+	    width: 30px; /* 고정된 너비 설정 */
+	    height: 30px; /* 고정된 높이 설정 */
+	    display: flex; /* Flexbox 활성화 */
+	    align-items: center; /* 수직 중앙 정렬 */
+	    justify-content: center; /* 수평 중앙 정렬 */
+	    margin: 0;
+}
+
+.right_section .mv_title {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+/* 시간/좌석 버튼들 */
+.time_seat_container {
+    width: 100%; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+   	padding: 0; /* 내부 여백 제거 */
+    margin: 0; /* 외부 여백 제거 */
+    box-sizing: border-box; /* 크기 계산에 패딩 포함 */
+}
+
+.time_seat_btn {
+ 	flex-direction: column; /* 세로 정렬 */
+	line-height: unset;
+	min-height: unset;
+	min-width: unset;
+	letter-spacing: 0.15em;
+	line-height: 1.7; /* 줄 간격 고정 */
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 60px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background: #f8f8f8;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+	    text-align: center; /* 텍스트 중앙 정렬 */
+	    box-sizing: border-box; /* 크기 계산에 패딩 포함 */
+	    gap: 0; /* 내부 간격을 없애고 고정 */
+	    text-decoration: none;
+}
+
+
+.time-seat_btn:hover {
+    background-color: #ddd;
+}
+
+.mv_time {
+	font-weight: bold;
+    font-size: 16px;
+    color: #000;
+}
+
+.details {
+    display: flex; /* 나란히 배치 */
+    justify-content: space-between; /* 양쪽 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    width:90%; /* 버튼 내부 가로 전체 사용 */
+    font-size: 12px; /* 글자 크기 */
+    color: #555; /* 텍스트 색상 */
+/*     gap: 5px; 좌석과 관 이름 간 고정 간격 */
+}
+
+/* 좌석 수 스타일 */
+.details .seat {
+    text-align: left; /* 좌측 정렬 */
+	font-size: 12px;
+}
+
+/* 관 이름 스타일 */
+.details .hall {
+    text-align: right; /* 우측 정렬 */
+    font-weight: bold; /* 강조 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 하단 예매정보 */
+
+.mv_info_container {
+    display: flex; /* 가로로 정렬 */
+    justify-content: space-between; /* 양쪽 버튼을 중앙 내용 양쪽 끝으로 배치 */
+    align-items: center; /* 모든 항목의 상단 정렬 */
+    width: 100%; /* 전체 너비 사용 */
+    margin: 10px 0;
+    flex-direction: column; /* 세로 방향으로 배치 */
+}
+
+.bottom_btn {
+	line-height: unset;
+	min-width: unset;
+	display: flex; /* 버튼을 포함한 컨테이너를 가로로 정렬 */
+    justify-content: space-between; /* 버튼 내부 텍스트 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+    width: 100px; /* 버튼 컨테이너의 고정 너비 */
+    flex-shrink: 0; /* 크기 줄어들지 않도록 설정 */
+/*     margin: 0 20px; */
+}
+
+.bottom_btn button {
+/* 	line-height: unset; */
+	min-width: unset;
+	line-height: normal;
+	letter-spacing: 0.15em;
+	width: 80px;
+    height: 60px;
+    font-size: 14px;
+    padding: 0 20px;
+    display: flex; /* 버튼을 포함한 컨테이너를 가로로 정렬 */
+    justify-content: center; /* 버튼 내부 텍스트 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+    color: white;
+}
+
+.bottom_btn .back_btn {
+	background-color: #ccc;
+	color: #000;
+}
+
+.bottom_btn .back_btn:hover {
+	background-color: #999;
+}
+
+.bottom_btn .pay_btn{
+	background-color: #f98780;
+	color: #fff;
+}
+
+.bottom_btn .pay_btn:hover {
+	background-color: #e8756d;
+/* 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 그림자 효과 */
+}
+
+.tnb {
+		flex: 1;
+    display: flex; /* 가로 방향 정렬 */
+    flex-wrap: nowrap; /* 줄바꿈 방지 */
+    justify-content: center; /* 내부 섹션 간의 간격 */
+    align-items: flex-start; /* 섹션을 위쪽 기준으로 정렬 */
+    padding: 0 15px 10px 15px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+    width: 845.95px;
+}
+
+.poster {
+	display: flex; /* 포스터와 텍스트를 가로로 배치 */
+    align-items: flex-start; /* 세로로 중앙 정렬 */
+	margin: 0 30px;
+	gap: 10px; /* 포스터와 제목 간 간격 */
+}
+
+.mv_poster {
+	background-color: gray;
+    width: 80px;
+    height: 100px;
+    flex-shrink: 0; /* 크기가 줄어들지 않도록 설정 */
+    font-size: 14px;
+}
+
+.mv_title {
+	text-align: center;
+	font-weight: bold;
+    font-size: 14px;
+	color: #666666;
+}
+
+.tnb .mv_info .row .header, .tnb .ticket_info .row .header {
+	float: left;
+	margin-right: 10px; 
+	padding: 0;
+	width: 50px;
+	min-width: 50px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #666666;
+}
+
+.tnb .mv_info .row .data, .tnb .ticket_info .row .data {
+	float: left;
+	margin-right: 30px; 
+	padding: 0;
+	font-size: 14px;
+}
+
+
+.tnb .mv_info .row, .tnb .ticket_info .row {
+	line-height: 20px;
+	padding: 0;
+	margin: 0;
+} 
+
+.mv_info {
+	flex-direction: column;
+	flex: 3;
+}
+
+.ticket_info {
+	flex: 1;
+}
+
+
+/* 상단 텍스트 정렬 */
+.top_info {
+    display: flex;
+    justify-content: flex-start; /* 양쪽 정렬 */
+    align-items: center; /* 텍스트 수직 중앙 정렬 */
+    margin-bottom: 10px; /* 아래 섹션과 간격 */
+    box-sizing: border-box;
+    font-size: 16px; /* 텍스트 크기 */
+    font-weight: bold;
+    color: #333;
+	gap: 230px; 
+}
+
+/* 텍스트 스타일 */
+.top_info .book_info, .top_info .pay_info {
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.space_line {
+	display: block;
+	margin: 10px auto;
+	width: 800px;
+	height: 0.5px;
+	background-color: #ddd;
+	text-align: center;
+}
+
+
+
+/* 전체 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+    height: 8px; /* 가로 스크롤바 높이 */
+}
+
+/* 스크롤바 트랙 (배경) 스타일 */
+::-webkit-scrollbar-track {
+    background: #f5f5f5; /* 트랙의 배경색 */
+    border-radius: 10px; /* 둥근 모서리 */
+}
+
+/* 스크롤바 슬라이더 (thumb) 스타일 */
+::-webkit-scrollbar-thumb {
+    background: #ccc; /* 슬라이더의 색상 */
+    border-radius: 10px; /* 둥근 모서리 */
+    border: 2px solid #f5f5f5; /* 슬라이더와 트랙 사이 여백 */
+}
+
+/* 스크롤바 슬라이더에 마우스를 올렸을 때 스타일 */
+::-webkit-scrollbar-thumb:hover {
+    background: #999; /* 슬라이더 색상 변화 */
+}
+
+/* 스크롤바 슬라이더를 클릭 중일 때 스타일 */
+::-webkit-scrollbar-thumb:active {
+    background: #666; /* 슬라이더 색상 변화 */
+}
+
+
+
+

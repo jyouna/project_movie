@@ -1,0 +1,207 @@
+@charset "UTF-8";
+
+.box h2 {
+    position: relative; /* position 속성을 absolute에서 relative로 변경 */
+    margin: 0 auto; /* 수평 중앙 정렬 */
+    top: 0; /* 위치 조정 */
+    text-align: left;
+    font-size: 30px;
+    padding-bottom: 30px;
+}
+
+/* 날짜 리스트 스타일 */
+.date_list {
+    display: flex; /* 가로 방향으로 배치 */
+    flex-wrap: nowrap; /* 한 줄로 유지 (필요시 wrap으로 변경 가능) */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center; /* 세로 정렬 중앙 */
+    gap: 10px; /* 항목 간 간격 */
+    padding: 0; /* 내부 여백 제거 */
+    margin: 0; /* 외부 여백 제거 */
+    list-style: none; /* 불필요한 리스트 스타일 제거 */
+    overflow-x: auto; /* 가로 스크롤 활성화 (항목이 넘칠 경우) */
+    padding-bottom: 30px;
+}
+
+/* 년도와 월 스타일 */
+.year_month {
+	display: inline-block; /* 가로 크기 조정 가능 */
+    width: 100px; /* 원하는 가로 크기 설정 */
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 날짜 항목 스타일 */
+.date_item {
+    margin: 5px 0;
+}
+
+.date_item a {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    transition: background-color 0.3s ease;
+    padding: 3px;
+    margin: 0;
+    
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+
+.date_item span {
+    font-size: 16px;
+    padding-right: 10px;
+}
+
+.date_item strong {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 오늘 날짜 강조 */
+.date_item.today a {
+    background-color: #333;
+    color: white;
+}
+
+/* 선택된 날짜 강조 */
+.date_item.selected a, .date_item.selected a strong {
+    background-color: #444444;
+    color: white;
+}
+
+.date_item.selected a {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+     box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 계산 */
+}
+
+
+/* 영화 제목과 이용가 표시 */
+.movie_schedule_info {
+/* 	margin: 30px; */
+	width: auto; /* 부모 요소 크기 상속 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+.sec01 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px 20px 50px 0;
+    font-family: Arial, sans-serif;
+}
+
+.movie_container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.mv_age {
+    background-color: #f4c542;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+	    width: 30px; /* 고정된 너비 설정 */
+	    height: 30px; /* 고정된 높이 설정 */
+	    display: flex; /* Flexbox 활성화 */
+	    align-items: center; /* 수직 중앙 정렬 */
+	    justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.mv_title {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+/* 시간/좌석 버튼들 */
+.time_seat_container {
+	    width: 100%; 
+	    max-width: 800px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+   	padding: 0; /* 내부 여백 제거 */
+    margin: 0; /* 외부 여백 제거 */
+/*     width: auto;  */
+    /* 컨테이너 크기를 고정 */
+    box-sizing: border-box; /* 크기 계산에 패딩 포함 */
+}
+
+.time_seat_btn {
+	 	flex-direction: column; /* 세로 정렬 */
+	line-height: unset;
+	min-height: unset;
+	min-width: unset;
+	letter-spacing: 0.15em;
+	line-height: 1.7; /* 줄 간격 고정 */
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 60px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background: #f8f8f8;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
+	    text-align: center; /* 텍스트 중앙 정렬 */
+	    box-sizing: border-box; /* 크기 계산에 패딩 포함 */
+	    gap: 0; /* 내부 간격을 없애고 고정 */
+	    text-decoration: none;
+}
+
+
+.time-seat_btn:hover {
+    background-color: #ddd;
+}
+
+.time {
+	font-weight: bold;
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.seat {
+	font-size: 12px;
+}
+
+.details {
+    display: flex; /* 나란히 배치 */
+    justify-content: space-between; /* 양쪽 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    width:90%; /* 버튼 내부 가로 전체 사용 */
+    font-size: 12px; /* 글자 크기 */
+    color: #555; /* 텍스트 색상 */
+/*     gap: 5px; 좌석과 관 이름 간 고정 간격 */
+}
+
+/* 좌석 수 스타일 */
+.details .seat {
+    text-align: left; /* 좌측 정렬 */
+}
+
+/* 관 이름 스타일 */
+.details .hall {
+    text-align: right; /* 우측 정렬 */
+    font-weight: bold; /* 강조 */
+}
+
+

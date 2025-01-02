@@ -1,0 +1,376 @@
+@charset "UTF-8";
+
+.modal {
+/* 	display: none; */
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	max-height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 2px solid grey;
+	border-radius: 5px;
+	z-index: 1; 
+}
+
+.modal_content {
+/* 	display: none; */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+/* 	width: 50%; */
+/* 	height: 60%; */
+	width: 1000px;
+	height: 750px;
+	padding: 40px;
+	border-radius: 5px;
+	overflow-y: auto;
+}
+
+.modal_content h2 {
+    position: relative; /* position 속성을 absolute에서 relative로 변경 */
+    margin: 0 auto; /* 수평 중앙 정렬 */
+    top: 0; /* 위치 조정 */
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal_close {
+	position: absolute;
+	z-index: 9999;
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	text-align: center;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+}
+
+/* 전체 리스트 스타일 */
+ul {
+  list-style-type: none;
+/*   padding: 0; */
+  margin-top: 40px;
+  margin-bottom: 10px;
+  display: flex; /* li 항목을 가로로 나란히 배치 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center;
+  gap: 20px; /* 항목 간의 간격 */
+}
+
+/* 리스트 항목 스타일 */
+li {
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* 제목 (성인, 청소년 등) 스타일 */
+li strong {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+/* 컨트롤 박스 스타일 (버튼 + 숫자) */
+li .ctrl_box {
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+   flex-direction: row; /* 버튼과 숫자를 가로로 배치 */
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+/* 버튼 스타일 */
+ul li button {
+	color: #919499;
+	line-height: normal;
+		min-width: unset;
+		width: 30px;
+		height: 35px;
+		font-size: 16px;
+	display: flex; /* 버튼 내부 내용 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	background-color: transparent;
+	/*   border: none; */
+	font-size: 15px;
+	cursor: pointer;
+	padding: 0;
+	user-select: none;
+}
+
+
+ul li button:hover {
+  background-color: #f5f5f5;
+  border-radius: 3px;
+}
+
+ul li button:active {
+  background-color: #e0e0e0;
+}
+
+/* 숫자 카운트 스타일 */
+.count {
+	color: black;
+	display: flex; /* 숫자 내부 내용 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	width: 30px;
+	height: 35px;
+	font-size: 14px;
+	text-align: center;
+}
+
+.msg {
+	font-size: 11px;
+	text-align: center;
+	margin: 7px 0 5px 0;
+}
+
+.space_line {
+	display: block;
+	margin: 10px auto;
+	width: 800px;
+	height: 0.5px;
+	background-color: #ddd;
+	text-align: center;
+}
+
+
+.screen {
+	display: flex; /* 숫자 내부 내용 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	text-align: center;
+	background-color: #ddd;
+	font-size: 14px;
+	width: 550px;
+	height: 30px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+.seat_container {
+	margin: 15px 0;
+}
+
+.seat{
+	min-width: unset;
+	display: flex; /* 숫자 내부 내용 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+    background-color: #444451;
+    font-size: 15px;
+    width: 15px;
+    height: 12px;
+    padding: 15px;
+    margin: 3px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    color: #919499;
+    line-height: 1.75em;
+    letter-spacing: 0.025em;
+}
+
+.seat:hover {
+	color: #444451;
+}
+
+.seat:nth-of-type(3) {
+	margin-right: 30px;
+}
+.seat:nth-of-type(7) {
+	margin-right: 30px;
+}
+
+.seat_row{
+    display: flex;
+	justify-content: center; 
+	align-items: center; 
+}
+
+.mv_info_container {
+    display: flex; /* 가로로 정렬 */
+    justify-content: space-between; /* 양쪽 버튼을 중앙 내용 양쪽 끝으로 배치 */
+    align-items: center; /* 모든 항목의 상단 정렬 */
+    width: 100%; /* 전체 너비 사용 */
+    margin: 10px 0;
+    flex-direction: column; /* 세로 방향으로 배치 */
+}
+
+.bottom_btn {
+	line-height: unset;
+	min-width: unset;
+	display: flex; /* 버튼을 포함한 컨테이너를 가로로 정렬 */
+    justify-content: space-between; /* 버튼 내부 텍스트 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+    width: 100px; /* 버튼 컨테이너의 고정 너비 */
+    flex-shrink: 0; /* 크기 줄어들지 않도록 설정 */
+/*     margin: 0 20px; */
+}
+
+.bottom_btn button {
+/* 	line-height: unset; */
+	min-width: unset;
+	line-height: normal;
+	letter-spacing: 0.15em;
+	width: 80px;
+    height: 60px;
+    font-size: 14px;
+    padding: 0 20px;
+    display: flex; /* 버튼을 포함한 컨테이너를 가로로 정렬 */
+    justify-content: center; /* 버튼 내부 텍스트 중앙 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+    color: white;
+}
+
+.bottom_btn .back_btn {
+	background-color: #ccc;
+	color: #000;
+}
+
+.bottom_btn .back_btn:hover {
+	background-color: #999;
+}
+
+.bottom_btn .pay_btn{
+	background-color: #f98780;
+	color: #fff;
+}
+
+.bottom_btn .pay_btn:hover {
+	background-color: #e8756d;
+/* 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 그림자 효과 */
+}
+
+.tnb {
+		flex: 1;
+    display: flex; /* 가로 방향 정렬 */
+    flex-wrap: nowrap; /* 줄바꿈 방지 */
+    justify-content: center; /* 내부 섹션 간의 간격 */
+    align-items: flex-start; /* 섹션을 위쪽 기준으로 정렬 */
+    padding: 0 15px 10px 15px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.poster {
+	display: flex; /* 포스터와 텍스트를 가로로 배치 */
+    align-items: flex-start; /* 세로로 중앙 정렬 */
+	margin: 0 30px;
+	gap: 10px; /* 포스터와 제목 간 간격 */
+}
+
+.mv_poster {
+	background-color: gray;
+    width: 80px;
+    height: 100px;
+    flex-shrink: 0; /* 크기가 줄어들지 않도록 설정 */
+    font-size: 14px;
+}
+
+.mv_title {
+	text-align: center;
+	margin-top: 10px;
+	font-weight: bold;
+    font-size: 14px;
+	color: #666666;
+}
+
+.tnb .mv_info .row .header, .tnb .ticket_info .row .header {
+	float: left;
+	margin-right: 10px; 
+	padding: 0;
+	width: 50px;
+	min-width: 50px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #666666;
+}
+
+.tnb .mv_info .row .data, .tnb .ticket_info .row .data {
+	float: left;
+	margin-right: 30px; 
+	padding: 0;
+	font-size: 14px;
+}
+
+
+.tnb .mv_info .row, .tnb .ticket_info .row {
+	line-height: 20px;
+	padding: 0;
+	margin: 0;
+} 
+
+.mv_info {
+	flex-direction: column;
+}
+
+/* 상단 텍스트 정렬 */
+.top_info {
+    display: flex;
+    justify-content: flex-start; /* 양쪽 정렬 */
+    align-items: center; /* 텍스트 수직 중앙 정렬 */
+    margin-bottom: 10px; /* 아래 섹션과 간격 */
+    box-sizing: border-box;
+    font-size: 16px; /* 텍스트 크기 */
+    font-weight: bold;
+    color: #333;
+	gap: 230px;    
+}
+
+/* 텍스트 스타일 */
+.top_info .book_info, .top_info .pay_info {
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+/* 전체 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+    height: 8px; /* 가로 스크롤바 높이 */
+}
+
+/* 스크롤바 트랙 (배경) 스타일 */
+::-webkit-scrollbar-track {
+    background: #f5f5f5; /* 트랙의 배경색 */
+    border-radius: 10px; /* 둥근 모서리 */
+}
+
+/* 스크롤바 슬라이더 (thumb) 스타일 */
+::-webkit-scrollbar-thumb {
+    background: #ccc; /* 슬라이더의 색상 */
+    border-radius: 10px; /* 둥근 모서리 */
+    border: 2px solid #f5f5f5; /* 슬라이더와 트랙 사이 여백 */
+}
+
+/* 스크롤바 슬라이더에 마우스를 올렸을 때 스타일 */
+::-webkit-scrollbar-thumb:hover {
+    background: #999; /* 슬라이더 색상 변화 */
+}
+
+/* 스크롤바 슬라이더를 클릭 중일 때 스타일 */
+::-webkit-scrollbar-thumb:active {
+    background: #666; /* 슬라이더 색상 변화 */
+}
+
+
+
+
+
+
+
+
+
+
+
