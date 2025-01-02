@@ -46,19 +46,25 @@ tr:hover {
 	
 	<article id="accountRegis">
 	<h3>관리자 계정 생성</h3>
-		<form action="accountRegis" name="joinForm" method="post">
+		<form action="AdminAccountRegis" name="joinForm" method="post">
 			<table id="mainTable">
 				<tr id="tr01">
 					<th>ID</th>
 					<td width="300">
-						<input type="text" name="id" id="id" required>
+						<input type="text" name="admin_id" id="id" required>
 						<div id="checkIdResult">중복검사 결과 출력</div>
+					</td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td width="300">
+						<input type="text" name="user_name" required>
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
 					<td>
-						<input type="password" id="passwd" name="passwd" required>
+						<input type="password" id="passwd" name="admin_passwd" required>
 						<div id="checkPasswdResult">비밀번호 검사 결과 출력</div>
 					</td>
 				</tr>
@@ -73,25 +79,22 @@ tr:hover {
 					<th>권한설정</th>
 					<td>
 						<div>
-							<input type="checkbox" id="event_manage" name="set_auth" value="event">
+							<input type="checkbox" id="event_manage" name="notice_board_manage">
 							<label for="event_manage">이벤트관리</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							
-							<input type="checkbox" id="vote_manage" name="set_auth" value="vote">
+							<input type="checkbox" id="vote_manage" name="vote_manage" value="vote">
 							<label for="vote_manage">투표관리</label><br>
 							
-							<input type="checkbox" id="member_manage" name="set_auth" value="member">
+							<input type="checkbox" id="member_manage" name="member_manage">
 							<label for="member_manage">회원목록관리</label>&nbsp;&nbsp;
 							
-							<input type="checkbox" id="theater_manage" name="set_auth" value="theater">
+							<input type="checkbox" id="theater_manage" name="theater_manage">
 							<label for="theater_manage">상영관관리</label><br>
 							
-							<input type="checkbox" id="payment_manage" name="set_auth" value="payment">
+							<input type="checkbox" id="payment_manage" name="payment_manage">
 							<label for="payment_manage">결제관리</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							
-							<input type="checkbox" id="board_manage" name="set_auth" value="board">
-							<label for="board_manage">고객지원관리</label><br>
-							
-							<input type="checkbox" id="movie_manage" name="set_auth" value="movie">
+							<input type="checkbox" id="movie_manage" name="movie_manage">
 							<label for="movie_manage">영화관리</label>
 						</div>
 					</td>
@@ -107,6 +110,7 @@ tr:hover {
 		</form>
 	</article>
 		<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
+
 </body>
 </html>
 

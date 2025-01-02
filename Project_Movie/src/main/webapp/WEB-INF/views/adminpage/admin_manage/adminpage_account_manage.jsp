@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,70 +35,109 @@
 	<div id="tableDiv" class="view">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
+				<th width="70">번호</th>
 				<th width="50">선택</th>
 				<th width="90">ID</th>
 				<th width="90">비밀번호</th>
-				<th width="200">사용시작일</th>
-				<th width="80">사용종료일</th>
-				<th width="80">사용상태</th>
+				<th width="150">등록일</th>
+				<th width="80">상태</th>
 				<th width="80">담당자</th>
-				<th width="80">이벤트관리</th>
 				<th width="90">회원목록관리</th>
 				<th width="80">결제관리</th>
+				<th width="80">게시판관리</th>
 				<th width="80">영화관리</th>
 				<th width="80">상영관관리</th>
 				<th width="80">투표관리</th>
-				<th width="80">게시판관리</th>
 			</tr>
-			<tr align="center" class="tdtr">
-				<td><input type="checkbox"></td>
-				<td>admin01</td>
-				<td>admin01#</td>
-				<td>2024-12-15 09:11:11</td>
-				<td>사용 중</td>
-				<td>사용 중</td>
-				<td>정영훈</td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-			</tr>
-			<tr align="center" class="tdtr">
-				<td><input type="checkbox"></td>
-				<td>admin01</td>
-				<td>admin01#</td>
-				<td>2024-12-15 09:11:11</td>
-				<td>사용 중</td>
-				<td>사용 중</td>
-				<td>정영훈</td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-			</tr>
-			<tr align="center" class="tdtr">
-				<td><input type="checkbox"></td>
-				<td>admin01</td>
-				<td>admin01#</td>
-				<td>2024-12-15 09:11:11</td>
-				<td>사용 중</td>
-				<td>사용 중</td>
-				<td>정영훈</td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-			</tr>
-		
+			<c:choose>
+				<c:when test="${empty voList}">
+					<tr>
+						<th colspan="15">등록된 계정이 없습니다.</th>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="vo" items="${voList}" varStatus="status">
+						<tr>
+							<td>${status.count}</td>
+							<td><input type="checkbox" class="deleteCheck" value="${vo.admin_id}"></td>
+							<td>${vo.admin_id}</td>
+							<td>${vo.admin_passwd}</td>
+							<td>${vo.start_date}</td>
+							<td>
+								<c:choose>
+									<c:when test="${vo.user_status==true}">
+										<input type="checkbox" checked>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox">
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td>${vo.user_name}</td>
+							<td>
+								<c:choose>
+									<c:when test="${vo.member_manage==true}">
+										<input type="checkbox" checked>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox">
+									</c:otherwise>
+								</c:choose>						
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${vo.payment_manage==true}">
+										<input type="checkbox" checked>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox">
+									</c:otherwise>
+								</c:choose>						
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${vo.notice_board_manage==true}">
+										<input type="checkbox" checked>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox">
+									</c:otherwise>
+								</c:choose>						
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${vo.movie_manage==true}">
+										<input type="checkbox" checked>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox">
+									</c:otherwise>
+								</c:choose>						
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${vo.theater_manage==true}">
+										<input type="checkbox" checked>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox">
+									</c:otherwise>
+								</c:choose>						
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${vo.vote_manage==true}">
+										<input type="checkbox" checked>
+									</c:when>
+									<c:otherwise>
+										<input type="checkbox">
+									</c:otherwise>
+								</c:choose>						
+							</td>
+						</tr>	
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</table>
 	</div>
 	<br>
@@ -113,24 +153,47 @@
 	
 	<script type="text/javascript">
 	$(function(){
+		// id조회 창 출력
 		$("#idSearch").on("click", function(){
 			window.open(                
-				'IdSearch', // 팝업 창에 로드할 파일
+				'AdminPageIdSearch', // 팝업 창에 로드할 파일
 	            'ID 조회',    // 팝업 창 이름
 	            'width=300,height=150,scrollbars=no,resizable=no');
 		});	
 		
+		// 권한 설정
 		$("#setAuth").on("click", function(){
 			confirm("권한을 설정하시겠습니까?");
 		});
-
+		
+		// 계정 등록 폼 이동
 		$("#createId").on("click", function(){
 			location.href="AdminAccountRegis";
 		});
-
+		
+		// 선택한 계정 삭제
 		$("#deleteId").on("click", function(){
-			confirm("해당 계정을 삭제하시겠습니까? 되돌릴 수 없습니다.");
+		    // 선택된 체크박스 가져오기
+		    let selectedCheckbox = $(".deleteCheck:checked");
+// 			console.log(selectedCheckbox);
+		    // 체크된 항목이 있는지 확인
+		    if (selectedCheckbox.length > 0) {
+		        let selectedIds = []; // 선택된 ID들을 저장할 배열
+// 		        console.log(selectedIds);
+		        selectedCheckbox.each(function () {
+		            selectedIds.push($(this).val());// 체크박스의 value 값 (admin_id)을 배열에 추가
+// 		        	console.log(selectedIds.push($(this).val()));
+		        });
+
+		        if (confirm("해당 계정을 삭제하시겠습니까? 되돌릴 수 없습니다.")) {
+		            // 선택된 ID를 서버로 전송
+		            location.href = "DeleteAdminAccount?admin_id=" + selectedIds.join(",");
+		        }
+		    } else {
+		        alert("삭제할 계정을 선택하세요.");
+		    }
 		});
+		
 	});
 	
 	</script>

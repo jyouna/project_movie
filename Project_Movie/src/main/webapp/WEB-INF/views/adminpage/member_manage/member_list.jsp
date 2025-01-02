@@ -94,7 +94,7 @@
 		
 		$("#idSearch").on("click", function(){
 			window.open(                
-				'IdSearch', // 팝업 창에 로드할 파일
+				'AdminPageIdSearch', // 팝업 창에 로드할 파일
 	            'ID 조회',    // 팝업 창 이름
 	            'width=300,height=150,scrollbars=no,resizable=no');
 		});	

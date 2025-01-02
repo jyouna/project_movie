@@ -50,17 +50,15 @@ textarea {
 </style>
 </head>
 <body>
-	<form action="submit">
+	<form action="EventBoardRegisSubmit" method="get">
 		<h3>신규 이벤트 등록</h3>
 		<div>
-			제목 <input type="text" placeholder="제목을 입력하세요">
+			제목 <input type="text" placeholder="제목을 입력하세요" name="event_subject">
 			<br>
-			시작일 <input type="date"> <input type="button" value="선택" class="date">
-	 		<br>
-	 		종료일 <input type="date"> <input type="button" value="선택" class="date">
-	 		<br>
-			<textarea rows="10" cols="100">내용을 입력하세요</textarea>
-			<input type="file" value="파일">
+			<textarea rows="10" cols="100" name="event_content">내용을 입력하세요</textarea>
+			<input type="file" name="event_file1"><br>
+			<input type="file" name="event_file2"><br>
+			<input type="file" name="event_file3">
 		</div>
 		<div id="divBottom">
 			<input type="submit" value="등록" class="bottom">

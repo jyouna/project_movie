@@ -1,9 +1,6 @@
 $(function(){
 	$("#give_point").on("click", function(){
-		window.open(                
-			'PointBoardRegis', // 팝업 창에 로드할 파일
-            '포인트 등록',    // 팝업 창 이름
-            'width=800,height=300,scrollbars=no,resizable=no');
+		location.href="PointBoardRegis";
 	});	
 
 	$("#getback_point").on("click", function(){
@@ -15,10 +12,7 @@ $(function(){
 	});
 	
 	$("#board_regis").on("click", function(){
-		window.open(                
-			'EventBoardRegis', // 팝업 창에 로드할 파일
-            '이벤트 등록',    // 팝업 창 이름
-            'width=850,height=500,scrollbars=no,resizable=no');
+		location.href="EventBoardRegis";
 	});	
 	
 	$("#selectAll").on("click", function(){
@@ -26,10 +20,7 @@ $(function(){
 	});
 	
 	$("#board_modify").on("click", function(){
-		window.open(                
-			'EventBoardModify', // 팝업 창에 로드할 파일
-            '이벤트 수정',    // 팝업 창 이름
-            'width=850,height=500,scrollbars=no,resizable=no');
+		location.href="EventBoardModify";
 	});
 
 	$("#delete").on("click", function(){
