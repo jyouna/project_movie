@@ -4,13 +4,13 @@
     font-family: Arial, sans-serif;
     margin: 30px;
     position: relative;
-    height: 650px;
+    height: 680px;
 }
 
 #title {
 	font-size: 24px;
 	font-weight: bold;
-	margin-bottom: 35px;
+	padding-bottom: 25px;
 }
 
 #sec01 div {
@@ -27,6 +27,17 @@
 
 #sec01 input[type="button"] {
     height: 40px;
+    margin-right: 5px;
+    padding: 10px 15px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f4f4f4;
+	cursor: pointer;
+}
+
+#sec01 input[type="button"]:hover {
+	background-color: #e2e2e2;
 }
 
 #sec01 select {
@@ -90,6 +101,10 @@ table th[colspan] {
     margin-top: 10px;
 }
 
+#sec02 div input[type="button"]:hover {
+	background-color: #e2e2e2;
+}
+
 #sec03 {
     display: flex;
     justify-content: space-between;
@@ -102,15 +117,25 @@ table th[colspan] {
     display: flex;
 }
 
-#sec03 input[type="button"] {
+#sec03 input[type="button"], button {
     margin-right: 5px;
-    padding: 5px 10px;
+    padding: 10px 15px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f4f4f4;
+	cursor: pointer;
+}
+
+#sec03 input[type="button"]:hover, button:hover {
+	background-color: #e2e2e2;
 }
 
 .modal {
+	margin-top: 10px;
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
@@ -119,13 +144,13 @@ table th[colspan] {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal_content {
     background-color: #fff;
-    margin: 4% auto; /* 창이 화면 중앙에 위치하도록 설정 */
+    margin: 10px 20%; 
     padding: 20px;
     border: 1px solid #888;
-    width: 25%; /* 모달 창의 가로 크기 설정 */
-    height: 90%; /* 모달 창의 세로 크기 설정 */
+    width: 850px; /* 모달 창의 가로 크기 설정 */
+    height: 800px; /* 모달 창의 세로 크기 설정 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
     overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
 }
@@ -146,20 +171,102 @@ table th[colspan] {
     text-decoration: none;
 }
 
-.modal label {
-	display: inline-block;
-	width: 100px;
-	height: 20px;
-}
-
-.modal-content form input, .modal-content form select,
-.modal-content form textarea, .modal-content form label {
+.modal_content form input, .modal_content form select,
+.modal_content form textarea, .modal_content form label {
 	margin-bottom: 5px;
 	margin-right: 5px;
 }
 
-.modal-content h2, .modal-contetn form button {
+.modal h2 {
+	margin: 0px 0 15px 0;
 	text-align: center;
+}
+
+.btnGroup {
+	margin-top: 10px;
+	text-align: center;
+}
+
+form {
+	vertical-align: top;
+	display: inline-block;
+}
+
+.form01 {
+	padding-right: 20px;
+	width: 430px;
+}
+
+.form02 {
+	border-left: 1px solid;
+	padding-left: 20px;
+}
+
+.form01 label {
+	display: inline-block;
+	width: 140px;
+	height: 20px;
+}
+
+.form01 hr {
+	margin: 16px 0 0 0;
+}
+
+.form02 label {
+	display: inline-block;
+	width: 80px;
+	height: 20px;
+}
+
+#release_year_select1, #release_year_select2 {
+	width: 80px;
+}
+
+#request_movie_info_btn {
+	margin-top: 10px;
+	width: 100%;
+}
+
+.search_table {
+	display: inline-block;
+	width: 420px;
+	height: 65%;
+	vertical-align: top;
+	overflow-y: auto;
+}
+
+.modal_content table {
+	vertical-align: top;
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	font-size: 14px;
+}
+
+.modal_content table th, .modal_content table td {
+	border: 1px solid #ddd;
+	text-align: center;
+	padding: 5px 3px;
+}
+
+.modal_content table th {
+	background-color: #f4f4f4;
+	font-weight: bold;
+}
+
+.modal_content table tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.modal_content table tr:hover {
+	background-color: #f1f1f1;
+}
+
+
+.modal_content input[type=checkbox] {
+	display: inline-block;
+	margin: auto;
+	transform: scale(1.1);
 }
 
 
