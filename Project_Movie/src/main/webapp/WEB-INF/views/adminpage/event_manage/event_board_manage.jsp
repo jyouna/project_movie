@@ -98,6 +98,5 @@
 		<a href="#">5</a>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-	
 </body>
 </html>

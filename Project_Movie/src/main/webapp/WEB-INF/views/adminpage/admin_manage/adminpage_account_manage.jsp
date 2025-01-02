@@ -66,10 +66,10 @@
 							<td>
 								<c:choose>
 									<c:when test="${vo.user_status==true}">
-										<input type="checkbox" checked>
+										<input type="checkbox" class="setAuthCheckBox" checked >
 									</c:when>
 									<c:otherwise>
-										<input type="checkbox">
+										<input type="checkbox" class="setAuthCheckBox">
 									</c:otherwise>
 								</c:choose>
 							</td>
@@ -77,17 +77,17 @@
 							<td>
 								<c:choose>
 									<c:when test="${vo.member_manage==true}">
-										<input type="checkbox" checked>
+										<input type="checkbox" class="setAuthCheckBox" checked>
 									</c:when>
 									<c:otherwise>
-										<input type="checkbox">
+										<input type="checkbox" class="setAuthCheckBox">
 									</c:otherwise>
 								</c:choose>						
 							</td>
 							<td>
 								<c:choose>
 									<c:when test="${vo.payment_manage==true}">
-										<input type="checkbox" checked>
+										<input type="checkbox" checked >
 									</c:when>
 									<c:otherwise>
 										<input type="checkbox">
@@ -97,40 +97,40 @@
 							<td>
 								<c:choose>
 									<c:when test="${vo.notice_board_manage==true}">
-										<input type="checkbox" checked>
+										<input type="checkbox" class="setAuthCheckBox" checked>
 									</c:when>
 									<c:otherwise>
-										<input type="checkbox">
+										<input type="checkbox" class="setAuthCheckBox">
 									</c:otherwise>
 								</c:choose>						
 							</td>
 							<td>
 								<c:choose>
 									<c:when test="${vo.movie_manage==true}">
-										<input type="checkbox" checked>
+										<input type="checkbox" class="setAuthCheckBox" checked>
 									</c:when>
 									<c:otherwise>
-										<input type="checkbox">
+										<input type="checkbox" class="setAuthCheckBox">
 									</c:otherwise>
 								</c:choose>						
 							</td>
 							<td>
 								<c:choose>
 									<c:when test="${vo.theater_manage==true}">
-										<input type="checkbox" checked>
+										<input type="checkbox" class="setAuthCheckBox" checked>
 									</c:when>
 									<c:otherwise>
-										<input type="checkbox">
+										<input type="checkbox" class="setAuthCheckBox">
 									</c:otherwise>
 								</c:choose>						
 							</td>
 							<td>
 								<c:choose>
 									<c:when test="${vo.vote_manage==true}">
-										<input type="checkbox" checked>
+										<input type="checkbox" class="setAuthCheckBox" checked>
 									</c:when>
 									<c:otherwise>
-										<input type="checkbox">
+										<input type="checkbox" class="setAuthCheckBox">
 									</c:otherwise>
 								</c:choose>						
 							</td>
@@ -193,8 +193,8 @@
 		        alert("삭제할 계정을 선택하세요.");
 		    }
 		});
-	});
 	
+	});
 	</script>
 </body>
 </html>
