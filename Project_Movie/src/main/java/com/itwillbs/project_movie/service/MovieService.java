@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,14 @@ public class MovieService {
 	public int getMovieListCount() {
 		return movieMapper.selectMovieListCount();
 	}
-
+	
+	// 페이징 후 페이지에 필요한 만큼의 영화목록 조회
 	public List<MovieVO> getMovieList(int startRow, int listLimit) {
 		return movieMapper.selectMovieList(startRow, listLimit);
+	}
+
+	public List<MovieVO> searchMovie(Map<String, String> map) {
+		return movieMapper.selectSearchMovie(map);
 	}
 	
 }

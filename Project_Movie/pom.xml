@@ -215,7 +215,15 @@
 		    <artifactId>activation</artifactId>
 		    <version>1.1.1</version>
 		</dependency>
-						
+		
+		<!-- ajax 요청을 통해 DB데이터 json 형식으로 응답받기위해 의존성 추가 -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.18.2</version>
+		</dependency>
+		
 		<!-- ============================================== -->
 				
 		<!-- AspectJ -->

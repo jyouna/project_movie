@@ -48,10 +48,21 @@
 	<select id="selectMovieList" resultType="movieVO">
 		SELECT *
 		FROM movie
-		ORDER BY regist_date DESC
+		ORDER BY movie_name ASC
 		LIMIT
 			#{startRow}
 			, #{listLimit}
+	</select>
+	
+	<!-- 검색박스를 통한 영화검색 -->
+	<select id="selectSearchMovie" resultType="movieVO">
+		SELECT *
+		FROM movie
+		<where> 
+			<if test="howSearch != null and searchKeyword != null"> 
+				${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
+			</if>
+		</where>
 	</select>
 	
 	

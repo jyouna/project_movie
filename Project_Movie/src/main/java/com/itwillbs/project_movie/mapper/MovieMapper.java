@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,5 +21,8 @@ public interface MovieMapper {
 	
 	// 영화목록 조회
 	List<MovieVO> selectMovieList(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	
+	// 검색박스를 통한 영화검색
+	List<MovieVO> selectSearchMovie(Map<String, String> map);
 	
 }

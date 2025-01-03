@@ -82,7 +82,8 @@ $(function() {
 			ajaxData = {
 				openStartDt : $("#release_year_select1").val(),
 				openEndDt : $("#release_year_select2").val(),
-				itemPerPage : 100
+				itemPerPage : 100,
+				curPage : 2
 			};
 		}
 		
@@ -109,19 +110,32 @@ $(function() {
 			);
 			
 			for(let movie of result.movieListResult.movieList) {
-				$(".search_table > table").append(
-					"<tr>"
-						+ "<th><input type='radio'name='select_movie'></th>"
-						+ "<td>"+ (movie.movieCd ? movie.movieCd : "") +"</td>"
-						+ "<td>"+ (movie.movieNm ? movie.movieNm : "") +"</td>"
-						+ "<td>"+ (movie.openDt ? movie.openDt : "") +"</td>"
-						+ "<td>"+ (movie.repGenreNm ? movie.repGenreNm : "") +"</td>"
-						// 감독배열이 없는경우 Cannot read properties of undefined 에러 발생
-						// kobis api에 감독이 없는 경우도 있어서 에러발생으로 중간에 조회 멈춤현상 해결
-						// 영화감독배열이 존재하고 배열의 첫번째 요소가 존재하는지 판별후 감독명이 존재하면 출력
-						+ "<td>"+ (movie.directors && movie.directors[0] && movie.directors[0].peopleNm ? movie.directors[0].peopleNm : "") +"</td>"
-					+ "</tr>"
-				);	
+				movie.repGenreNm ? movie.repGenreNm : "";
+				// 성인물 제외 하기 위한 코드
+				let isPassedMovie = true
+			    let checkList = ["성인물", "멜로", "에로", "다큐멘터리", "기타"];
+
+				for(let checkKeyword of checkList) {
+					if(movie.repGenreNm.includes(checkKeyword) || movie.repGenreNm == "") {
+						isPassedMovie = false;
+					}
+				}
+				
+				if(isPassedMovie) {
+					$(".search_table > table").append(
+						"<tr>"
+							+ "<th><input type='radio'name='select_movie'></th>"
+							+ "<td>"+ (movie.movieCd ? movie.movieCd : "") +"</td>"
+							+ "<td>"+ (movie.movieNm ? movie.movieNm : "") +"</td>"
+							+ "<td>"+ (movie.openDt ? movie.openDt : "") +"</td>"
+							+ "<td>"+ movie.repGenreNm +"</td>"
+							// 감독배열이 없는경우 Cannot read properties of undefined 에러 발생
+							// kobis api에 감독이 없는 경우도 있어서 에러발생으로 중간에 조회 멈춤현상 해결
+							// 영화감독배열이 존재하고 배열의 첫번째 요소가 존재하는지 판별후 감독명이 존재하면 출력
+							+ "<td>"+ (movie.directors && movie.directors[0] && movie.directors[0].peopleNm ? movie.directors[0].peopleNm : "") +"</td>"
+						+ "</tr>"
+					);	
+				}
 			}
 			
 		}).fail(function() {
@@ -183,7 +197,14 @@ $(function() {
 				return actorResult;
 			});
 			
-			$("input[name='release_date']").val(movieInfo.openDt);
+			// 개봉일이 String 으로 넘어와서 Date 타입 형식으로 변환
+			let dateStr = movieInfo.openDt;
+			let year = dateStr.substring(0, 4);
+			let month = dateStr.substring(4, 6);
+			let day = dateStr.substring(6,8);
+			let formatDateStr = year + "-" + month + "-" + day;
+			
+			$("input[name='release_date']").val(formatDateStr);
 			$("input[name='running_time']").val(movieInfo.showTm);
 			$("input[name='age_limit']").val(movieInfo.audits[0].watchGradeNm);
 			
@@ -258,9 +279,85 @@ $(function() {
 			alert("영화상세정보를 가져오지 못했습니다");
 		});
 		
+	});
+	
+	// 테이블의 행 클릭시 해당행의 라디오버튼 클릭
+	$("#sec02 > table").on("click", "tr", function() {
+		$(this).find("input[type=radio]").prop("checked", true);
 		
 	});
 	
+	// ajax를 통해 검색어 검색으로 영화목록 요청
+	$("#search02 input[type=button]").click(function() {
+		$.ajax({
+			type : "GET",
+			url : "AdminMovieSetSearchBox",
+			data : {
+				howSearch : $(".search_box").val(),
+				searchKeyword: $("#search02>input[type=text]").val()
+			},
+			dataType : "json"
+		}).done(function(MovieList) {
+			
+			$("#sec02 > div").hide();
+			
+			$("#sec02>table").html(
+				"<tr>"
+					+ "<th><b><input type='radio'name='select_movie' disabled></b></th>"
+					+ "<th>영화코드</th>"
+					+ "<th>영화제목</th>"
+					+ "<th>장르</th>"
+					+ "<th>관람등급</th>"
+					+ "<th>영화상태</th>"
+					+ "<th>등록일자</th>"
+					+ "<th>등록계정</th>"
+				+ "</tr>"
+			);
+			
+			// 조회 내역이 0이면 조회 조건 표시
+			if(MovieList[0] == null) {
+				
+					$("#sec02>table").append(
+							"<tr>"
+								+ "<th  colspan='8'>검색 결과가 없습니다. 검색어를 확인해주세요<br>"
+								+ "(영화상태 : 대기, 투표중, 상영대기중, 상영중, 과거상영작)"
+								+ "</th>"
+							+ "</tr>"
+					);	
+					
+			} else {
+				
+				for(let movie of MovieList) {
+					
+					$("#sec02>table").append(
+							"<tr>"
+								+ "<th><input type='radio'name='select_movie'></th>"
+								+ "<td>" + movie.movie_code + "</td>"
+								+ "<td>" + movie.movie_name + "</td>"
+								+ "<td>" + movie.movie_genre + "</td>"
+								+ "<td>" + movie.age_limit + "</td>"
+								+ "<td>" + movie.movie_status + "</td>"
+								+ "<td>" + movie.str_regist_date +"</td>"
+								+ "<td>" + movie.regist_admin_id  +"</td>"
+							+ "</tr>"
+						);	
+				}
+			}
+			
+		}).fail(function() {
+			alert("검색에 실패하셨습니다")
+		});
+	});
+	
+	// 상영예정작으로 등록 버튼 클릭시 영화 상태 변경
+	$("#regist_upcoming").click(function() {
+//		if($("input[name='movie_radio']:checked")) {
+//			confirm("상영예정작으로 등록 하시겠습니까?");
+//		} else {
+//			alert("영화를 선택해주세요");
+//			
+//		}
+	});
 	
 }); // document ready 끝
 	

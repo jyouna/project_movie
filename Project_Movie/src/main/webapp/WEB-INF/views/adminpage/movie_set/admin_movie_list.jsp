@@ -28,8 +28,10 @@
 				<input type="button" value="조회">
 			</div>
 			<div id="search02">
-				<select>
-					<option>영화제목</option>
+				<select class="search_box">
+					<option selected="selected" value="movie_name">영화제목</option>
+					<option value="movie_genre">장르</option>
+					<option value="movie_status">영화상태</option>
 				</select>
 				<input type="text" placeholder="검색어를 입력하세요">
 				<input type="button" value="검색">
@@ -39,54 +41,61 @@
 		<div id="sec02">
 			<table>
 				<tr>
-					<th><input type="checkbox" name="checkMovie"></th>
+					<th><input type="radio" name="movie_radio" disabled></th>
 	                <th>영화코드</th>
 	                <th>영화제목</th>
 	                <th>장르</th>
 	                <th>관람등급</th>
-	                <th>개봉일</th>
 	                <th>영화상태</th>
 	                <th>등록일자</th>
 	                <th>등록계정</th>
 				</tr>
 				<c:choose>
 					<c:when test="${empty movieList}">
-						<tr><td colspan="8">게시물이 존재하지 않습니다</td><tr>
+						<tr><td colspan="7">게시물이 존재하지 않습니다</td><tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="movie" items="${movieList}">
 							<tr>
-				                <td><input type="checkbox" name="checkMovie"></td>
+				                <td><input type="radio" name="movie_radio"></td>
 				                <td>${movie.movie_code}</td>
 				                <td>${movie.movie_name}</td>
 				                <td>${movie.movie_genre}</td>
 				                <td>${movie.age_limit}</td>
-				                <td>${movie.release_date}</td>
 				                <td>${movie.movie_status}</td>
-				                <td><fmt:formatDate value="${movie.regist_date}" pattern="yyyyMMdd"/></td>
+				                <td><fmt:formatDate value="${movie.regist_date}" pattern="yyyy-MM-dd"/></td>
 				                <td>${movie.regist_admin_id}</td>
 				            </tr>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
 			</table>
-	       	<div>
-	            <input type="button" value="<">
-	            <input type="button" value="1">
-	            <input type="button" value=">">
+	       	<div class="page_btn_group">
+	            <input type="button" value="<" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>
+	            	onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum - 1}'">
+	            <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+	            	<c:choose>
+	            		<c:when test="${pageInfo.pageNum eq i}">
+	            			<b>${i}</b>
+	            		</c:when>
+	            		<c:otherwise>
+	            			<a href="AdminMovieSetList?pageNum=${i}">${i}</a>
+	            		</c:otherwise>
+	            	</c:choose>
+	            </c:forEach>
+	            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
+	            	onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum + 1}'">
 	        </div>
 		</div>
-		
 		<div id="sec03">
 			<div>
 				<input type="button" value="영화등록" id="regist_modal_open">
-				<input type="button" value="영화정보변경">
-				<input type="button" value="영화삭제">
-				<input type="button" value="영화정보">
+				<input type="button" value="영화삭제" id="delete_movie">
+				<input type="button" value="영화정보" id="movie_detail_info">
 			</div>
 			<div>
-				<input type="button" value="투표영화로 등록">
-				<input type="button" value="상영예정작으로 등록">
+				<input type="button" value="투표영화로 등록" id="regist_pick">
+				<input type="button" value="상영예정작으로 등록" id="regist_upcoming">
 			</div>
 		</div>
 	
@@ -106,13 +115,13 @@
 	            <div class="search_table">
 	            </div>
             </form>
-            <form action="AdminMovieInfoRegist" class="form02">
+            <form action="AdminMovieInfoRegist" class="form02" method="post">
                 <label>영화코드</label><input type="text" name="movie_code"><br>
                 <label>영화명</label><input type="text" name="movie_name"><br>
                 <label>장르</label><input type="text" name="movie_genre"><br>
                 <label>감독</label><input type="text" name="movie_director"><br>
                 <label>출연</label><input type="text" name="movie_actor"><br>
-                <label>개봉일</label><input type="text" name="release_date"><br>
+                <label>개봉일</label><input type="date" name="release_date"><br>
                 <label>러닝타임</label><input type="text" name="running_time"><br>
                 <label>관람연령</label><input type="text" name="age_limit"><br>
                 <label>별점</label><input type="text" name="movie_rating"><br>

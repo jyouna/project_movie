@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.vo.MovieVO;
@@ -54,7 +57,7 @@ public class MovieController {
 	@GetMapping("AdminMovieSetList")
 	public String adminMovieSetList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		
-		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
+		int listLimit = 9; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
 		int listCount = movieService.getMovieListCount(); //총 영화 목록수 조회
 		int pageListLimit = 5; // 한페이지당 페이지번호 수
@@ -66,26 +69,41 @@ public class MovieController {
 			endPage = maxPage;
 		}
 		
-		if(pageNum < 1 || pageNum > maxPage) {
+		if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
 			model.addAttribute("targetURL", "AdminMovieSetList?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
 		
 		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit);
-		
 		model.addAttribute("movieList", movieList);
 		
 		return "adminpage/movie_set/admin_movie_list";
 	}
 	
+	// 관리자 영화목록에서 검색어 검색으로 리스트 출력
+	// ajax 요청을 통해 json 형식으로 리턴
+	@ResponseBody
+	@GetMapping("AdminMovieSetSearchBox")
+	public List<MovieVO> adminMovieSetSearchBox(@RequestParam Map<String, String> map) {
+		List<MovieVO> SearchMovieList =  movieService.searchMovie(map);
+		
+		// ajax 응답할때 timestamp 타입으로 반환되는 db의 Date타입 데이터를
+		// String타입으로 변환 후 응답
+		for(MovieVO movieVO : SearchMovieList) {
+			movieVO.setStr_regist_date(movieVO.getRegist_date().toString());
+		}
+		return SearchMovieList;
+	}
+	
 	// 관리자 영화목록에서 영화등록 로직
-	@GetMapping("AdminMovieInfoRegist")
+	@PostMapping("AdminMovieInfoRegist")
 	public String movieInfoRegist(MovieVO movieVO, Model model, HttpSession session) {
-//		String id = (String)session.getAttribute("sId");
+		/* sId 판별식 추가 예정 */
+		String id = (String)session.getAttribute("sId");
 		movieVO.setRegist_admin_id("admin");
 		
 		// 이미 등록된 영화인지 확인을 위해 영화정보 조회
@@ -100,9 +118,9 @@ public class MovieController {
 			}
 			
 			if(resultCount > 0) {
-				model.addAttribute("msg", "영화등록 완료되었습니다");
-				model.addAttribute("targetUrl", "AdminMovieSetList");
-				return "redirect:result/process";
+				model.addAttribute("msg", "영화등록이 완료되었습니다");
+				model.addAttribute("targetURL", "AdminMovieSetList");
+				return "result/process";
 			} else {
 				model.addAttribute("msg", "영화등록 실패");
 				return "result/process";
@@ -112,6 +130,7 @@ public class MovieController {
 			model.addAttribute("msg", "이미 등록된 영화입니다");
 			return "result/process";
 		}
+		
 	}
 	
 	//관리자페이지 영화관리 상영예정작 페이지 맵핑
