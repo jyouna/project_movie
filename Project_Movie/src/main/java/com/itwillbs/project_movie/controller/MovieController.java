@@ -1,10 +1,24 @@
 package com.itwillbs.project_movie.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.itwillbs.project_movie.service.MovieService;
+import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.PageInfo;
 
 @Controller
 public class MovieController {
+	
+	@Autowired
+	private MovieService movieService;
 	
 	// 영화안내 시즌무비 페이지 맵핑
 	@GetMapping("SeasonMovieInfo")
@@ -36,10 +50,68 @@ public class MovieController {
 		return "movie_info/movie_info_detail";
 	}
 	
-	//관리자페이지 영화관리 영화목록 페이지 맵핑
+	//관리자페이지 영화관리 영화목록 페이지 맵핑, 영화리스트 출력
 	@GetMapping("AdminMovieSetList")
-	public String adminMovieSetList() {
+	public String adminMovieSetList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
+		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
+		int listCount = movieService.getMovieListCount(); //총 영화 목록수 조회
+		int pageListLimit = 5; // 한페이지당 페이지번호 수
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
+		int endPage = startPage + pageListLimit - 1; // 각 페이지의 마지막 페이지번호
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
+			model.addAttribute("targetURL", "AdminMovieSetList?pageNum=1");
+			return "result/fail";
+		}
+		
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit);
+		
+		model.addAttribute("movieList", movieList);
+		
 		return "adminpage/movie_set/admin_movie_list";
+	}
+	
+	// 관리자 영화목록에서 영화등록 로직
+	@GetMapping("AdminMovieInfoRegist")
+	public String movieInfoRegist(MovieVO movieVO, Model model, HttpSession session) {
+//		String id = (String)session.getAttribute("sId");
+		movieVO.setRegist_admin_id("admin");
+		
+		// 이미 등록된 영화인지 확인을 위해 영화정보 조회
+		MovieVO dbMovieVO = movieService.searchMovieInfo(movieVO.getMovie_code());
+		if(dbMovieVO == null) {
+			int resultCount = 0;
+			
+			try {
+				resultCount = movieService.registMovie(movieVO);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			if(resultCount > 0) {
+				model.addAttribute("msg", "영화등록 완료되었습니다");
+				model.addAttribute("targetUrl", "AdminMovieSetList");
+				return "redirect:result/process";
+			} else {
+				model.addAttribute("msg", "영화등록 실패");
+				return "result/process";
+			}
+			
+		} else {
+			model.addAttribute("msg", "이미 등록된 영화입니다");
+			return "result/process";
+		}
 	}
 	
 	//관리자페이지 영화관리 상영예정작 페이지 맵핑
@@ -59,4 +131,5 @@ public class MovieController {
 	public String AdminMovieSetPast() {
 		return "adminpage/movie_set/past_movie_set";
 	}
+	
 }

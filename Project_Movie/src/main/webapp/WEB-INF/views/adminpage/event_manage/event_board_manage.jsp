@@ -98,5 +98,25 @@
 		<a href="#">5</a>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
+	
+	<script type="text/javascript">
+// 		$("#chooseEventWinner").on("click", function(){
+// 			let eventSetCheckbox = $(".eventSetCheckbox:checked"); 
+// 			let setWinner = [];
+
+// 			if(eventSetCheckbox.length > 0) {
+// 				eventSetCheckbox.each(function(){
+// 					setWinner.push($(this).val());
+// 					console.log(setWinner);
+// 				});
+// 			}
+// 			if(confirm("당첨자 추첨을 완료하시겠습니까?")) {
+// 				location.href="ChooseEventWinner?event_code=" + setWinner.join(",");
+// 			}
+// 			else {
+// 				alert("당첨자를 선택하세요");
+// 			}
+// 		});
+	</script>
 </body>
 </html>

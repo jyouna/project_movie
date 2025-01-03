@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html lang="en">
 <html>
 <head>
@@ -13,6 +15,8 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/movie_set/admin_movie_list.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_set/admin_movie_list.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -45,116 +49,26 @@
 	                <th>등록일자</th>
 	                <th>등록계정</th>
 				</tr>
-				<tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목1</td>
-	                <td>코미디</td>
-	                <td>전체관람가</td>
-	                <td>2022.11.24</td>
-	                <td>대기</td>
-	                <td>2023.02.14</td>
-	                <td>admin1</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
-	            <tr>
-	                <td><input type="checkbox" name="checkMovie"></td>
-	                <td>ABCDEF</td>
-	                <td>영화제목2</td>
-	                <td>코미디</td>
-	                <td>12세 관람가</td>
-	                <td>2022.11.24</td>
-	                <td>상영중</td>
-	                <td>2023.02.14</td>
-	                <td>admin2</td>
-	            </tr>
+				<c:choose>
+					<c:when test="${empty movieList}">
+						<tr><td colspan="8">게시물이 존재하지 않습니다</td><tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="movie" items="${movieList}">
+							<tr>
+				                <td><input type="checkbox" name="checkMovie"></td>
+				                <td>${movie.movie_code}</td>
+				                <td>${movie.movie_name}</td>
+				                <td>${movie.movie_genre}</td>
+				                <td>${movie.age_limit}</td>
+				                <td>${movie.release_date}</td>
+				                <td>${movie.movie_status}</td>
+				                <td><fmt:formatDate value="${movie.regist_date}" pattern="yyyyMMdd"/></td>
+				                <td>${movie.regist_admin_id}</td>
+				            </tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</table>
 	       	<div>
 	            <input type="button" value="<">
@@ -165,7 +79,7 @@
 		
 		<div id="sec03">
 			<div>
-				<input type="button" value="영화등록" id="openModal">
+				<input type="button" value="영화등록" id="regist_modal_open">
 				<input type="button" value="영화정보변경">
 				<input type="button" value="영화삭제">
 				<input type="button" value="영화정보">
@@ -175,72 +89,58 @@
 				<input type="button" value="상영예정작으로 등록">
 			</div>
 		</div>
-	</div>
 	
-	<div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>영화 등록</h2>
-            <button>영화 API 사용으로 검색</button>
-            <hr>
-            <form>
-                <label>영화코드</label><input type="text"><br>
-                <label>영화명</label><input type="text"><br>
-                <label>장르</label><input type="text"><br>
-                <label>감독</label><input type="text"><br>
-                <label>출연</label><input type="text"><br>
-                <label>개봉일</label><input type="date"><br>
-                <label>러닝타임</label><input type="text"><br>
-                <label>관람연령</label><input type="text"><br>
-                <label>별점</label><input type="text"><br>
-               	<label>줄거리</label><br>
-                <textarea cols="40" rows="5"></textarea><br>
-                <label>스틸컷 파일</label><br>
-                <input type="file" multiple><br>
-                <label>예고편 파일</label><br>
-                <input type="file"><br>
-                <label>영화 상태</label>
-                <select>
-                    <option value="default">대기(Default)</option>
-                </select><br>
-                <button type="submit">등록</button>
-                <button type="reset">초기화</button>
-                <button type="button" id="closeModal">닫기</button>
-            </form>
-        </div>
     </section>
     
-    <script>
-	    let modal = document.getElementById("modal");
-	    let openModalButton = document.getElementById("openModal");
-	    let closeModalButton = document.querySelector(".close");
-	    let closeModalById = document.getElementById("closeModal");
-	
-	    // 모달 열기
-	    openModalButton.onclick = () => {
-	        modal.style.display = "block";
-	    };
-	
-	    // 모달 닫기 (X 버튼)
-	    closeModalButton.onclick = () => {
-	        modal.style.display = "none";
-	    };
-	
-	    // 모달 닫기 (닫기 버튼)
-	    closeModalById.onclick = () => {
-	        modal.style.display = "none";
-	    };
-	
-	    // 모달 외부 클릭 시 닫기
-	    window.onclick = (event) => {
-	        if (event.target === modal) {
-	            modal.style.display = "none";
-	        }
-	    };
-    </script>
-	
-	
-	
+	<div id="regist_movie_modal" class="modal">
+        <div class="modal_content">
+            <h2>영화 등록</h2>
+            <hr>
+            <form action="" class="form01">
+                <label><input type="radio" name="search_method" value="movieNm" >영화명으로 조회</label><input type="text" id="movie_name" disabled><br>
+                <label><input type="radio" name="search_method" value="directorNm" >감독명으로 조회</label><input type="text" id="director_name" disabled><br>
+                <label><input type="radio" name="search_method" value="releaseYear">개봉년도로 조회</label><select id="release_year_select1" disabled><option value="선택">선택</option></select>
+                ~ <select id="release_year_select2" disabled><option value="선택">선택</option></select><br>
+                <input type="button" id="request_movie_info_btn" value="영화조회하기">
+                <hr>
+	            <div class="search_table">
+	            </div>
+            </form>
+            <form action="AdminMovieInfoRegist" class="form02">
+                <label>영화코드</label><input type="text" name="movie_code"><br>
+                <label>영화명</label><input type="text" name="movie_name"><br>
+                <label>장르</label><input type="text" name="movie_genre"><br>
+                <label>감독</label><input type="text" name="movie_director"><br>
+                <label>출연</label><input type="text" name="movie_actor"><br>
+                <label>개봉일</label><input type="text" name="release_date"><br>
+                <label>러닝타임</label><input type="text" name="running_time"><br>
+                <label>관람연령</label><input type="text" name="age_limit"><br>
+                <label>별점</label><input type="text" name="movie_rating"><br>
+               	<label>줄거리</label><br>
+                <textarea cols="40" rows="5" name="movie_synopsis"></textarea><br>
+                <label class="url_label">이미지1</label><input type="text" class="url" name="movie_img1">
+                <label class="url_label">이미지2</label><input type="text" class="url" name="movie_img2"><br>
+                <label class="url_label">이미지3</label><input type="text" class="url" name="movie_img3">
+                <label class="url_label">이미지4</label><input type="text" class="url" name="movie_img4"><br>
+                <label class="url_label">이미지5</label><input type="text" class="url" name="movie_img5">
+                <label class="url_label">예고편</label><input type="text" class="url" name="movie_trailer"><br>
+                <label>영화상태</label>
+                <select name="movie_status">
+                    <option value="대기">대기</option>
+                    <option value="투포중" disabled>투표중</option>
+                    <option value="상영대기중" disabled>상영대기중</option>
+                    <option value="상영중" disabled>상영중</option>
+                    <option value="과거상영작" disabled>과거상영작</option>
+                </select><br>
+                <div class="btnGroup">
+                	<button type="submit">등록</button>
+                	<button type="reset">초기화</button>
+                	<button type="button" id="close_modal">닫기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

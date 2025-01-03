@@ -15,7 +15,10 @@
 	-->
 	<typeAliases>
 		<typeAlias type="com.itwillbs.project_movie.vo.AdminRegisVO" alias="adminmanage"/>
+		
 		<typeAlias type="com.itwillbs.project_movie.vo.EventBoardVO" alias="eventboard"/>
+		
+		<typeAlias type="com.itwillbs.project_movie.vo.MovieVO" alias="movieVO"/>
 	</typeAliases>
 </configuration>
 

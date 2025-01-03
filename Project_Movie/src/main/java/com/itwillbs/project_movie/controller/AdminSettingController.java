@@ -148,12 +148,12 @@ public class AdminSettingController {
 	}
 	
 	@GetMapping("EndEvent") // 선택한 이벤트 종료 상태로 변경
-	public String endEvent(@RequestParam("event_code") int[] event_codes) {
-		for(int code : event_codes) {
+	public String endEvent(@RequestParam("event_code") int[] event_code) {
+		for(int code : event_code) {
 			System.out.println("종료할 이벤트 코드 : " + code);
 		}
 		
-		adminService.setEventEnd(event_codes);
+		adminService.setEventEnd(event_code);
 		
 		return "redirect:/EventBoardManage";
 	}
@@ -172,7 +172,12 @@ public class AdminSettingController {
 	}
 	
 	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 - 이벤트 관리 페이지에서 선택
-	public String chooseEventWinner() {
+	public String chooseEventWinner(@RequestParam("event_code") int[] event_code) {
+//		for(int code : event_code) {
+//			System.out.println("당첨자 : " + code);
+//		}
+//		
+//		adminService.selectWinner(event_code);
 		return "";
 	}
 	

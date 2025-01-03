@@ -57,5 +57,12 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getEventBoardContent(event_code);
 	}
+
+//	public void selectWinner(int[] event_codes) {
+//		
+//		for(int event_code : event_codes) {
+//			manageMapper.selectEventWinner(event_code);
+//		}
+//	}
 	
 }

@@ -58,9 +58,9 @@ $(function(){
 	});
 	
 	$("#eventEnd").on("click", function(){
-		let eventSetCheckbox = $(".eventSetCheckbox:checked");
+		let eventSetCheckbox = $(".eventSetCheckbox:checked"); // 체크된 체크박스들의 값을 eventSetCheckbox(jquery 객체 형태로 저장)
 		
-		if(eventSetCheckbox.length > 0) {
+		if(eventSetCheckbox.length > 0) { // jquery 객체배열 형태에 저장된 값이 1개 이상일 경우 해당 값을 eventEndList라는 배열에 차례로 저장한다.
 			let eventEndList = [];
 			eventSetCheckbox.each(function (){
 				eventEndList.push($(this).val());	
@@ -73,11 +73,9 @@ $(function(){
 		}
 	});
 	
-	$("#chooseEventWinner").on("click",function(){
-		location.href="ChooseEventWinner";
-	});
-	
 	$("#give_prize").on("click", function(){
 		location.href="GivePrizeForm";
 	});
+	
+	
 });

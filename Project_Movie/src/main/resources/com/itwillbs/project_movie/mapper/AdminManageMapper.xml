@@ -77,4 +77,11 @@
 		FROM event_board
 		WHERE event_code = #{event_code}
 	</select> 
+	
+<!-- 	<insert id="selectEventWinner"> -->
+<!-- 		INSERT INTO event_winner -->
+<!-- 		VALUES ( -->
+		
+<!-- 		) -->
+<!-- 	</insert>	 -->
  </mapper>

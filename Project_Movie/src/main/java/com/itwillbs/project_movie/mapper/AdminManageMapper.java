@@ -28,4 +28,6 @@ public interface AdminManageMapper {
 	void updateEventStatusEnd(@Param("event_code") int event_code);
 
 	EventBoardVO getEventBoardContent(@Param("event_code") int event_code);
+
+//	void selectEventWinner(@Param("event_code") int event_code);
 }
