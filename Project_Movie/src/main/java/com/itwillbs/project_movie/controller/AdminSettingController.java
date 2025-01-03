@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +29,7 @@ public class AdminSettingController {
 	public String adminAccountManagement(Model model) {
 		List<AdminRegisVO> voList = new ArrayList<AdminRegisVO>();
 		voList = adminService.queryAdminList();
-		System.out.println(voList);
+		System.out.println("관리자 관리 페이지 에서 호출 : " + voList);
 		model.addAttribute("voList", voList);
 		return "adminpage/admin_manage/adminpage_account_manage";
 	}
@@ -41,7 +42,7 @@ public class AdminSettingController {
 	@PostMapping("AdminAccountRegis") // 관리자 계정 생성 처리
 	public String adminAccountCreate(AdminRegisVO adminVo) {
 		int insertCount = adminService.createAccount(adminVo);
-		System.out.println(insertCount);
+		System.out.println("관리자 계정 등록 완료 : " + insertCount);
 		return "redirect:/AdminAccountManage";
 	}
 	
@@ -60,6 +61,14 @@ public class AdminSettingController {
 	@GetMapping("AdminPageIdSearch")
 	public String idSearch() {
 		return "adminpage/id_search";
+	}
+	
+	@PostMapping("AdminSetAuth") // 관리자 계정 설정
+	public String adminSetAuth(@RequestBody Map<String, String> authRequest) {
+		System.out.println("ajax에서 관리자 계정 설정 컨트롤러 호출!");
+		System.out.println("권한 요청 내역 : "+ authRequest);
+		
+		return "";
 	}
 	
 	@GetMapping("MemberList")

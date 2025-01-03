@@ -64,7 +64,7 @@ textarea {
 		<div id="divBottom">
 			<input type="submit" value="수정" class="bottom">
 			<input type="reset" value="초기화" class="bottom">
-			<input type="button" value="취소" class="bottom" onclick="window.close()">
+			<input type="button" value="취소" class="bottom" onclick="history.back()">
 		</div>
 	</form>
 </body>

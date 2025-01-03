@@ -55,86 +55,24 @@
 						<th colspan="15">등록된 계정이 없습니다.</th>
 					</tr>
 				</c:when>
+	
 				<c:otherwise>
 					<c:forEach var="vo" items="${voList}" varStatus="status">
-						<tr>
-							<td>${status.count}</td>
-							<td><input type="checkbox" class="deleteCheck" value="${vo.admin_id}"></td>
-							<td>${vo.admin_id}</td>
-							<td>${vo.admin_passwd}</td>
-							<td>${vo.start_date}</td>
-							<td>
-								<c:choose>
-									<c:when test="${vo.user_status==true}">
-										<input type="checkbox" class="setAuthCheckBox" checked >
-									</c:when>
-									<c:otherwise>
-										<input type="checkbox" class="setAuthCheckBox">
-									</c:otherwise>
-								</c:choose>
-							</td>
-							<td>${vo.user_name}</td>
-							<td>
-								<c:choose>
-									<c:when test="${vo.member_manage==true}">
-										<input type="checkbox" class="setAuthCheckBox" checked>
-									</c:when>
-									<c:otherwise>
-										<input type="checkbox" class="setAuthCheckBox">
-									</c:otherwise>
-								</c:choose>						
-							</td>
-							<td>
-								<c:choose>
-									<c:when test="${vo.payment_manage==true}">
-										<input type="checkbox" checked >
-									</c:when>
-									<c:otherwise>
-										<input type="checkbox">
-									</c:otherwise>
-								</c:choose>						
-							</td>
-							<td>
-								<c:choose>
-									<c:when test="${vo.notice_board_manage==true}">
-										<input type="checkbox" class="setAuthCheckBox" checked>
-									</c:when>
-									<c:otherwise>
-										<input type="checkbox" class="setAuthCheckBox">
-									</c:otherwise>
-								</c:choose>						
-							</td>
-							<td>
-								<c:choose>
-									<c:when test="${vo.movie_manage==true}">
-										<input type="checkbox" class="setAuthCheckBox" checked>
-									</c:when>
-									<c:otherwise>
-										<input type="checkbox" class="setAuthCheckBox">
-									</c:otherwise>
-								</c:choose>						
-							</td>
-							<td>
-								<c:choose>
-									<c:when test="${vo.theater_manage==true}">
-										<input type="checkbox" class="setAuthCheckBox" checked>
-									</c:when>
-									<c:otherwise>
-										<input type="checkbox" class="setAuthCheckBox">
-									</c:otherwise>
-								</c:choose>						
-							</td>
-							<td>
-								<c:choose>
-									<c:when test="${vo.vote_manage==true}">
-										<input type="checkbox" class="setAuthCheckBox" checked>
-									</c:when>
-									<c:otherwise>
-										<input type="checkbox" class="setAuthCheckBox">
-									</c:otherwise>
-								</c:choose>						
-							</td>
-						</tr>	
+				        <tr>
+				            <td>${status.count}</td>
+				            <td><input type="checkbox" class="deleteCheck" value="${vo.admin_id}"></td>
+				            <td>${vo.admin_id}</td>
+				            <td>${vo.admin_passwd}</td>
+				            <td>${vo.start_date}</td>
+				            <td><input type="checkbox" ${vo.user_status ? 'checked' : ''}></td>
+				            <td>${vo.user_name}</td>
+				            <td><input type="checkbox" class="setAuthCheckBox" ${vo.member_manage ? 'checked' : ''}></td>
+				            <td><input type="checkbox" class="setAuthCheckBox" ${vo.payment_manage ? 'checked' : ''}></td>
+				            <td><input type="checkbox" class="setAuthCheckBox" ${vo.notice_board_manage ? 'checked' : ''}></td>
+				            <td><input type="checkbox" class="setAuthCheckBox" ${vo.movie_manage ? 'checked' : ''}></td>
+				            <td><input type="checkbox" class="setAuthCheckBox" ${vo.theater_manage ? 'checked' : ''}></td>
+				            <td><input type="checkbox" class="setAuthCheckBox" ${vo.vote_manage ? 'checked' : ''}></td>
+				        </tr>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
@@ -162,9 +100,33 @@
 		});	
 		
 		// 권한 설정
-		$("#setAuth").on("click", function(){
-			confirm("권한을 설정하시겠습니까?");
-		});
+	  $("#setAuth").on("click", function () {
+  			const selectedAuth = $(".setAuthCheckBox").map(function () {
+  			// 모든 체크박스의 체크 상태를 저장
+  			// 해당 ID에 속하는 체크박스 체크 상태를 인덱스로 구분하여 저장.
+		        return {
+		            id: $(this).closest("tr").find(".deleteCheck").val(), // 해당 계정 ID
+		            field: $(this).closest("td").index(), // 체크박스 필드 인덱스
+		            checked: $(this).is(":checked") // 체크 상태
+	        	};	
+	        }).get();
+		console.log(selectedAuth);
+  			
+        if (confirm("권한을 설정하시겠습니까?")) {
+            // 권한 설정 정보를 서버로 전송
+            $.ajax({
+                url: "AdminSetAuth", // 권한 설정을 처리할 서버 URL
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(selectedAuth),
+            }). success(function (response) {
+                    alert("권한이 성공적으로 설정되었습니다.");
+                    // 필요하면 페이지를 새로고침하거나 UI를 업데이트
+                }).error(function (response) {
+                    alert("권한 설정에 실패했습니다.");
+                });
+        }
+    });
 		
 		// 계정 등록 폼 이동
 		$("#createId").on("click", function(){
