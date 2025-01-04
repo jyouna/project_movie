@@ -1,4 +1,4 @@
-/* General body styling */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 
-/* Article styling */
+/* 이벤트 - 글  */
 #articleForm {
     background-color: #fff;
     margin: 20px auto;
@@ -20,11 +20,11 @@ body {
 #articleForm h1 {
     color: #666;
     border-bottom: 2px solid #ddd;
-    padding-bottom: 1px;
+    padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-/* Table styling */
+/* Table */
 #basicInfoArea table {
     width: 100%;
     border-collapse: collapse;
@@ -35,24 +35,18 @@ body {
     background-color: #666;
     color: #fff;
     text-align: left;
-    padding: 1px;
+    padding: 5px 3px 5px 3px;
     border: 1px solid #ccc;
 }
 
 #basicInfoArea td {
     background-color: #f9f9f9;
-    padding: 5px;
+    padding: 20px;
     border: 1px solid #ccc;
 }
-
-/* Content area styling */
-#articleContentArea {
-    background-color: #f9f9f9;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    line-height: 1.6;
+#content{
+	padding: 20px;
+	font-size: 15px;
 }
 
 /* Command buttons styling */
@@ -60,16 +54,17 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    margin: 18px;
 }
 
 #commandCell input[type="button"] {
-    background-color: #a5a5a5;
-    color: #030303;
-    border: none;
-    padding: 1px 2px;
-    border-radius: 5px;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 9px;
 }
 
 #commandCell input[type="button"]:hover {
@@ -79,4 +74,31 @@ body {
 #commandCell input[type="button"][disabled] {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+#postList {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border: 1px solid #ccc; /* 테이블 외곽 테두리 */
+}
+
+#postList th {
+    text-align: left;
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #ccc; /* 각 셀의 테두리 */
+}
+
+#postList th:first-child {
+    width: 120px; /* 첫 번째 열의 너비 */
+    color: gray; /* 첫 번째 열의 텍스트 색상 */
+    font-weight: normal;
+}
+
+#postList th:nth-child(2) {
+    font-weight: bold;
+    color: black; /* 두 번째 열의 텍스트 색상 */
 }

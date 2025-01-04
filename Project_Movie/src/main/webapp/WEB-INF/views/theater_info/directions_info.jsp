@@ -17,7 +17,7 @@
 	<article class="box post">
 		<div class="content">
 
-    		<h2>오시는 길</h2>
+    		<h2 style="font-size: 30px;">오시는 길</h2>
     		<h6>여기는 지도 api자리</h6>
 <!-- 			<img src="" alt="지도api 이용"> -->
 	

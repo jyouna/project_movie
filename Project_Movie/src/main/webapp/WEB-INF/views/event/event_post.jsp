@@ -10,6 +10,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_post.css" />
+		<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -31,22 +35,25 @@
 				</tr>	
 			</table>
 			<table>
-				<h6>해당 조사는 파파존스의 공식 주문 채널, 그리고 지정된 지점을 통해서만 주문을 해야 하는 조사입니다. (배달앱 사용 불가)
-				파파존스 공식 주문 채널 ↓
-				
-				- 지점 번호를 통한 직접 전화 주문이 가능한 지점
-				- 파파존스 콜센터 주문(대표번호: 1577-8080로 주문)
-				- 파파존스 홈페이지 온라인 주문
-				- 파파존스 앱(스마트폰) 주문
-				
-				1회 참여가 아닌 주기적으로 반복되는 조사이므로 1년간 이사 계획이 없는 분으로 신청 부탁드립니다.
-				
-				조사는 피자 주문 시 배달 예상 소요 시간, 실제 배달 소요 시간, 피자를 받은 후 사진 촬영 및 업로드 등 조사를 끝까지 참여해주셔야 하며
-				업로드해주신 영수증 기준으로 피자(제품) 비용 + 2,000원(참여 리워드) 한 번에 패널적립금으로 지급될 예정입니다.
-				
-				모집 중인 지점에 해당하시는 분께만 순차적으로 유선상으로 안내드린 후,
-				조사에 선정되시면 확정 안내 문자를 보내드리고 있습니다.
-				확정되시면 조사에 참여해주시는겁니다.</h6>
+				<div id="content">
+					해당 조사는 파파존스의 공식 주문 채널, 그리고 지정된 지점을 통해서만 주문을 해야 하는 조사입니다. (배달앱 사용 불가)
+					파파존스 공식 주문 채널 ↓
+					
+					- 지점 번호를 통한 직접 전화 주문이 가능한 지점
+					- 파파존스 콜센터 주문(대표번호: 1577-8080로 주문)
+					- 파파존스 홈페이지 온라인 주문
+					- 파파존스 앱(스마트폰) 주문
+					
+					1회 참여가 아닌 주기적으로 반복되는 조사이므로 1년간 이사 계획이 없는 분으로 신청 부탁드립니다.
+					
+					조사는 피자 주문 시 배달 예상 소요 시간, 실제 배달 소요 시간, 피자를 받은 후 사진 촬영 및 업로드 등 조사를 끝까지 참여해주셔야 하며
+					업로드해주신 영수증 기준으로 피자(제품) 비용 + 2,000원(참여 리워드) 한 번에 패널적립금으로 지급될 예정입니다.
+					
+					모집 중인 지점에 해당하시는 분께만 순차적으로 유선상으로 안내드린 후,
+					조사에 선정되시면 확정 안내 문자를 보내드리고 있습니다.
+					확정되시면 조사에 참여해주시는겁니다.
+					<br>
+				</div>
 				<tr>
 					<th>첨부파일</th>
 					<td colspan="3" id="board_file"></td>
@@ -59,8 +66,8 @@
 		</section>
 		<section id="commandCell">
 				<c:if test="${sessionScope.sId eq board.board_name || sessionScope.sId eq 'admin' }">
-					<input type="button" value="수정" >
-					<input type="button" value="삭제" onclick="confirmDelete()">
+					<input type="button" value="수정" id="Modify" >
+					<input type="button" value="삭제" id="Delete">
 				</c:if>
 		</section>
 		<table id="postList">
@@ -75,6 +82,19 @@
 		</table>
 
 	</article>
+		<script type="text/javascript">
+		$(function() {
+			$("#Modify").on("click", function () {
+				confirm("수정하시겠습니까?")
+			});
+			
+			$("#Delete").on("click", function () {
+				confirm("삭제하시겠습니까?")
+			});
+		});
+	
+	
+	</script>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>

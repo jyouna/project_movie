@@ -2,18 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE HTML>
+<!DOCTYPE html lang="en">
 <html>
 <head>
-	<title>Insert title here</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>마이페이지</title>
+	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
+	<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/movie_log/mypage_watched_movie.css" />
 </head>
-<body>
+<body class="sb-nav-fixed">
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
 	<article class="box post">
+		<div id="title">
 			<h1>내가 본 영화</h1>
+		</div>
 			<div id="selectBox"> 
 				<select>
 					<option>2024</option>
@@ -22,10 +33,12 @@
 					<option>2021</option>
 					<option>2020</option>
 				</select>
-				<button>조회</button>
+				<input type="button" value="조회" id="inquire">
 			</div>
 	<!-- 			순서 체크하고 리뷰등록 누를경우 작성팝업 생성 -->
-			<input type="button" id="review" value="리뷰 등록">
+			<div style="text-align: right;">
+				<input type="button" value="리뷰 등록" id="reviewRegister" >
+			</div>
 	      <section id="listForm">
 	         <table>
 	            <tr id="tr_top">
@@ -81,8 +94,22 @@
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>
-
-	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	
+	<script type="text/javascript">
+		$(function () {
+			$("#inquire").on("click", function() {
+				confirm("조회 버튼 누르셨습니다.")
+			});
+			
+			$("#reviewRegister").on("click", function() {
+				window.open(
+					'reviewRegister',
+					'리뷰 등록 창',
+					'width=400, height=700, scrollbars=no, resizeable=no');
+			});
+			
+			
+		});
+	</script>
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

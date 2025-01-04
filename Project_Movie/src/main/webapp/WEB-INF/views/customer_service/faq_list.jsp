@@ -16,6 +16,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customer_service/faq_list.css" />
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -23,14 +24,16 @@
 	<jsp:include page="/WEB-INF/views/inc/page/customer_service_sidebar.jsp"></jsp:include>
 	
 	<article>
-		<h1>FAQ</h1>
+		<div id="title">
+			<h1>FAQ</h1>
+		</div>
 		<div class="search-bar">
 			<select>
 				<option>제목</option>
 				<option>내용</option>
 			</select>
-			<input type="text" >
-			<button>검색</button>
+			<input type="text">
+			<input type="button" value="검색" id="searchButton">
 		</div>
 		<section id="listForm">
 			<table>
@@ -42,19 +45,16 @@
 				</tr>
 					
 				<c:choose>
-					<c:when test="${empty boardList}"> 
+					<c:when test="${empty faqList}"> 
 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="board" items="${boardList}" varStatus="status">
+						<c:forEach var="faq_board" items="${faqList}" varStatus="status">
 							<tr>
-								<td class="board_num">${board.board_num}</td>
-								<td class="board_subject">${board.board_subject}</td>
-								<td>${board.board_name}</td>
-								<td>
-									<fmt:formatDate value="${board.board_date}" pattern="yy-MM-dd HH:mm"/>
-								</td>
-								<td>${board.board_readcount}</td>
+								<td class="faq_code">${faq_board.faq_code}</td>
+								<td class="faq_subject">${faq_board.faq_subject}</td>
+								<td><fmt:formatDate value="${faq_board.regis_date}" pattern="yy-MM-dd "/></td>
+								<td>${faq.view_count}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>					
@@ -73,24 +73,30 @@
 					
 					</c:when>
 					<c:otherwise>
-						<a href="BoardList?pageNum=${i}">${i}</a>
+						<a href="FaqList?pageNum=${i}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			
 			
 			<input type="button" value="&gt" 
-				onclick="location.href='BoardList?pageNum=${pageInfo.pageNum + 1}'" 
+				onclick="location.href='FaqList?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
 	</article>
 	<script type="text/javascript">
-		$(".board_subject").on("click", function(event) {
-			console.log(event.target);
-			let board_num = $(event.target).siblings(".board_num").text();
-			console.log("siblings " + board_num);
-			location.href = "BoardDetail?board_num=" + board_num + "&pageNum=${pageInfo.pageNum}";
+		$(function(){
+			$(".faq_subject").on("click", function(event) {
+				console.log(event.target);
+				let faq_code = $(event.target).siblings(".faq_code").text();
+				console.log("siblings " + faq_code);
+				location.href = "BoardDetail?board_num=" + board_num + "&pageNum=${pageInfo.pageNum}";
+			
+			});
 		
+			$("#searchButton").on("click", function () {
+				confirm("검색버튼 눌렸습니다.")
+			});
 		});
 	</script>
 

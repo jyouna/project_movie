@@ -10,6 +10,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_winner_post.css" />
+		<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -42,8 +46,8 @@
 		</section>
 		<section id="commandCell">
 			<c:if test="${sessionScope.sId eq board.board_name || sessionScope.sId eq 'admin' }">
-				<input type="button" value="수정" >
-				<input type="button" value="삭제" onclick="confirmDelete()">
+				<input type="button" value="수정" id="Modify" >
+				<input type="button" value="삭제" id="Delete">
 			</c:if>
 			<%-- 목록 버튼 항상 표시 --%>
 			<input type="button" value="목록" onclick="location.href='BoardList?pageNum=${param.pageNum}'">
@@ -51,7 +55,19 @@
 			<input type="button" value="▽다음글" onclick="">
 		</section>
 	</article>
-
+	<script type="text/javascript">
+		$(function() {
+			$("#Modify").on("click", function () {
+				confirm("수정하시겠습니까?")
+			});
+			
+			$("#Delete").on("click", function () {
+				confirm("삭제하시겠습니까?")
+			});
+		});
+	
+	
+	</script>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>

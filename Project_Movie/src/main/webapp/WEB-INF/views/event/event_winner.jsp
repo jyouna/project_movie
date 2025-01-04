@@ -10,21 +10,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_winner.css" />
+		<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
 	
-
+	<div id="title">
 		<h1>당첨자 발표</h1>
+	</div>
 	    <div class="search-bar">
 	      <select>
 	        <option>제목</option>
 	        <option>내용</option>
 	      </select>
 	      <input type="text">
-	      <button style="width: 100px; height: 50px;">검색</button>
+	      <input type="button" value="검색" id="searchButton">
 	    </div>
 		<section id="listForm">
 			<table id="eventWinnerForm" border="1">
@@ -82,11 +84,17 @@
 		</section>
 	
 	<script type="text/javascript">
-		$(".winner_subject").on("click", function(event) {
-			console.log(event.target);
-			let board_num = $(event.target).siblings(".winner_num").text();
-			console.log("siblings " + winner_num);
-			location.href = "WinnerDetail?board_num=" + Winner_num + "&pageNum=${pageInfo.pageNum}";
+		$(function () {
+			$(".winner_subject").on("click", function(event) {
+				console.log(event.target);
+				let board_num = $(event.target).siblings(".winner_num").text();
+				console.log("siblings " + winner_num);
+				location.href = "WinnerDetail?board_num=" + Winner_num + "&pageNum=${pageInfo.pageNum}";
+			});
+
+			$("#searchButton").on("click", function () {
+				confirm("검색버튼 눌렸습니다.")
+			});
 		
 		});
 	</script>

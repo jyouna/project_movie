@@ -1,122 +1,215 @@
-/* General Reset */
-body, h1, table, td, th, button, select, input {
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
 }
-
-/* Article Styling */
-article.box.post {
-    width: 90%;
-    margin: 20px auto;
+.box {
+	width: 1400px;
+	height: 500px;
+}
+전체 섹션 스타일
+.dateSearch_sec {
+    margin: 20px;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
 }
 
-article.box.post h1 {
-    font-size: 24px;
+제목 스타일
+.dateSearch_sec .haze {
+    font-size: 16px;
+    font-weight: bold;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-/* Search Bar Styling */
-.search-bar {
+/* 검색 리스트 */
+.search_list {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    gap: 5px;
+    gap: 15px;
 }
 
-.search-bar button {
-    background-color: #a5a5a5;
-    color: #fff;
-    border: none;
-    padding: 2px 5px;
-    border-radius: 3px;
+/* 기간 선택 제목 */
+.search_list .tit {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+.select_btn   {
+padding-top: 12px; 
+}
+/* 버튼 스타일 */
+.select_btn ul {
+    display: flex;
+    gap: 10px;
+}
+
+.select_btn ul li {
+    list-style: none;
+}
+
+.select_btn ul li button {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 7px;
 }
 
-.search-bar button:hover {
-    background-color: #888;
+
+.select_btn ul li.on button {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
 }
 
-.search-bar select, .search-bar input[type="text"] {
-    padding: 2px 5px;
+.select_btn ul li button:hover {
+    background-color: #f0f0f0;
+}
+
+
+	
+.inp_datepicker input.text {
+   padding: 10px;
+   font-size: 14px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   background-color: #fff;
+   width: 150px;
+}
+
+	
+.hyphen {
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+}
+/* 조회 버튼 */
+.btn_wrap {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 15px;
+}
+
+.btn_wrap .btn_search {
+   padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn_wrap .btn_search:hover {
+    background-color: #444;
+}
+/* 안내 텍스트 */
+.bul_list {
     font-size: 12px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    color: #666;
+    margin-bottom: 0 !important;
 }
-
-/* Table Styling */
+/* Article styling */
+article {
+    background-color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+#title h1 {
+    color: #444;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+/* Table styling */
 #listForm table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    text-align: center;
+    margin-top: 20px;
 }
 
-#listForm table th, #listForm table td {
-    border: 1px solid #ddd;
-    padding: 4px;
-    text-align: center;
-    font-size: 14px;
-}
-
-#listForm table th {
-    background-color: #f4f4f4;
-    color: #333;
+#listForm table th,
+#listForm table td {
+    border: 1px solid #ccc;
+    padding: 10px;
     text-align: center;
 }
 
 #listForm table tr:nth-child(even) {
     background-color: #f9f9f9;
-    text-align: center;
 }
 
-/* Buttons Styling */
-button, input[type="button"] {
-    background-color: #a5a5a5;
+#listForm table tr:hover {
+    background-color: #eee;
+}
+
+#listForm #tr_top {
+    background-color: #aeaeae;
     color: #fff;
-    border: none;
-    padding: 2px 4px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 7px;
-    margin: 1px;
+    font-weight: bold;
 }
 
-button:hover, input[type="button"]:hover {
-    background-color: #888;
-}
-
-/* Pagination Styling */
+/* Pagination styling */
 #pageList {
-    text-align: center;
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 5px;
 }
 
-#pageList input[type="button"], #pageList a {
-    margin: 0 1px;
-    padding: 2px 4px;
+#pageList input[type="button"] {
+    width: 40px;        /* 너비 */
+    height: 40px;       /* 높이 */
+    line-height: 40px;  /* 세로 중앙 정렬을 위해 텍스트의 높이를 맞춤 */
+    border: 1px;
+    color: #000000;
+    background: #aeaeae;
+    text-align: center; /* 가로 중앙 정렬 */
+    padding: 0;         /* 기본 여백을 없앰 */
+    font-size: 16px;
+}
+
+
+#pageList input[type="button"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#pageList a {
+    color: #000000;
     text-decoration: none;
-    color: #555;
+    padding: 0; 
+    width: 40px; 
+    height: 40px; 
     border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 7px;
+    border-radius: 5px;
+    display: flex; 
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    background-color: #ffffff;
+    cursor: pointer; /* 버튼처럼 클릭할 수 있다는 것을 나타내기 위해 커서 변경 */
 }
 
-#pageList a:hover, #pageList input[type="button"]:hover {
-    background-color: #ddd;
+#pageList a:hover {
+    background-color: #eee;
 }
 
 #pageList strong {
-    margin: 0 1px;
-    padding: 2px 4px;
-    background-color: #555;
+    padding: 10px;
     color: #fff;
-    border-radius: 3px;
-    font-size: 7px;
+    background-color: #aeaeae;
+    border-radius: 5px;
 }

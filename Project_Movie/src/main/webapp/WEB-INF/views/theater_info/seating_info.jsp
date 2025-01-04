@@ -22,7 +22,7 @@
 		<div class="content">
     		<h1>좌석배치도</h1>
     	<div class="seat-layout">
-      		<img src="${pageContext.request.contextPath}/resources/images/seat.jpg" alt="좌석 배치도">
+      		<img src="${pageContext.request.contextPath}/resources/images/seat.png" alt="좌석 배치도">
     	</div>
   		</div>
 	</article>

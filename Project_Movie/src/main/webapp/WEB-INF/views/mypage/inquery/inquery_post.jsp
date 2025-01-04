@@ -2,29 +2,32 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE HTML>
+<!DOCTYPE html lang="en">
 <html>
 <head>
-	<title>Insert title here</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>마이페이지</title>
+	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/inquery/inquery_post.css" />
 </head>
-<body class="left-sidebar is-preload">
-
-	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
+<body class="sb-nav-fixed">
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
 		<article id="articleForm">
 		<h1>1:1문의 - 글 </h1>
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th>제목</th>
-					<td colspan="3">${event.event_subject}</td>
+					<th width="40">제목</th>
+					<td>${event.event_subject}</td>
 				</tr>
 				<tr>
-					<th>등록일</th>
+					<th width="40">등록일</th>
 					<td>
 						<fmt:formatDate value="${event.event_date}" pattern="yyyy-MM-dd"/>
 					</td>
@@ -33,8 +36,8 @@
 			<table>
 				<h6>여기는 글쓰는 자리</h6>
 				<tr>
-					<th>첨부파일</th>
-					<td colspan="3" id="board_file"></td>
+					<th width="40">첨부파일</th>
+					<td id="board_file"></td>
 				</tr>
 			</table>
 		</section>
@@ -56,7 +59,6 @@
 			<input type="button" value="▽다음글" onclick="">
 		</section>
 	</article>
-	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

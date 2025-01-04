@@ -64,7 +64,7 @@
 					</a>
 					
 <!-- 					1:1문의 탭 -->
-					<a class="nav-link" href="InqueryPost">
+					<a class="nav-link" href="InqueryList">
 					    1:1문의
 					</a>
 					

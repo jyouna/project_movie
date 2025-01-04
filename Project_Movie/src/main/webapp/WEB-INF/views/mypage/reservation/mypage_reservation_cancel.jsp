@@ -2,18 +2,26 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE HTML>
+<!DOCTYPE html lang="en">
 <html>
 <head>
-	<title>Insert title here</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>마이페이지</title>
+	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/reservation/mypage_reservation_cancel.css" />
 </head>
-<body>
+<body class="sb-nav-fixed">
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
 <article class="box post">
+	<div id="title">
 		<h1>취소 내역</h1>
+	</div>
       <section id="listForm">
          <table>
             <tr id="tr_top">
@@ -69,7 +77,6 @@
       </section>
 	</article>
 
-	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

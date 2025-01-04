@@ -14,7 +14,6 @@ article.box.post {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
 }
 
 article h2 {
@@ -68,9 +67,3 @@ article h2 {
     background-color: #eee;
 }
 
-/* Sidebar styling */
-.left-sidebar {
-    background-color: #ddd;
-    padding: 15px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}

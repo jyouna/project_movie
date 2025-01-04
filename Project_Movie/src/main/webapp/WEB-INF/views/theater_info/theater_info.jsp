@@ -1,18 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
-<!--
-	Escape Velocity by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
 	<title>Insert title here</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/movie_info/season_movie_info.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theater_info/theater_info.css">
 </head>
 <body class="left-sidebar is-preload">
 
@@ -20,10 +15,10 @@
    <jsp:include page="/WEB-INF/views/inc/page/theater_info_sidebar.jsp"></jsp:include>
    
    <article class="box post">
+		<div id="title">
+			<h1 style="font-size: 2.5em;">itwill 영화관</h1>
+		</div>
      <div class="content">
-     	<div id ="title">
-     		• itwill 영화관
-     	</div>
       	<img src="https://via.placeholder.com/150" alt="영화 포스터" class="movie-poster">
       	<p><strong>• 영화관 설명</strong></p>
        	<p>itwill 영화관은 독립영화란 이윤 확보를 1차 목표로 하는 일반 상업영화와는 달리 창작자의 의도가 우선시되는 영화로 주제와 형식, 제작방식 면에서 차별화됩니다.
@@ -42,7 +37,7 @@
          <table border="1">
 		  <thead>
 		    <tr>
-		      <th rowspan="2">구분</th> 
+		      <th rowspan="2" style="text-align: center;">구분</th> 
 		      <th colspan="1">일반요금</th>
 		      <th colspan="3">할인요금</th> 
 		    </tr>

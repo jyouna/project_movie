@@ -44,15 +44,9 @@ body {
     padding: 20px;
     border: 1px solid #ccc;
 }
-
-/* Content area styling */
-#articleContentArea {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    line-height: 1.6;
+#content{
+	padding: 20px;
+	font-size: 15px;
 }
 
 /* Command buttons styling */
@@ -60,16 +54,17 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    margin: 18px;
 }
 
 #commandCell input[type="button"] {
-    background-color: #a5a5a5;
-    color: #ffffff;
-    border: none;
-    padding: 3px 6px;
-    border-radius: 5px;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 11px;
 }
 
 #commandCell input[type="button"]:hover {

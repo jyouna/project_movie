@@ -2,29 +2,37 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE HTML>
+<!DOCTYPE html lang="en">
 <html>
 <head>
-	<title>Insert title here</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/inquery/inquery_list.css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>마이페이지</title>
+	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquery/inquery_list.css" rel="stylesheet"/>
+		<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
-<body class="left-sidebar is-preload">
+<body class="sb-nav-fixed">
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
 
-	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
-	
 	<article>
-		<h1>전체 이벤트</h1>
+		<div id="title">
+			<h1>1:1 문의 목록</h1>
+		</div>
 	    <div class="search-bar">
 	      <select >
 	        <option>제목▼</option>
 	        <option>내용</option>
 	      </select>
 	      <input type="text">
-	      <button >검색</button>
+   		  <input type="button" value="검색" id="searchButton">
 	    </div>
 		<section id="listForm">
 			<table>
@@ -78,14 +86,22 @@
 		</section>
 	
 	<script type="text/javascript">
-		$(".event_subject").on("click", function(event) {
-			console.log(event.target);
-			let event_num = $(event.target).siblings(".event_num").text();
-			console.log("siblings " + event_num);
-			location.href = "EventDetail?event_num=" + event_num + "&pageNum=${pageInfo.pageNum}";
-		
+		$(function() {
+			$(".event_subject").on("click", function(event) {
+				console.log(event.target);
+				let event_num = $(event.target).siblings(".event_num").text();
+				console.log("siblings " + event_num);
+				location.href = "EventDetail?event_num=" + event_num + "&pageNum=${pageInfo.pageNum}";
+			
+			});
+
+			$("#searchButton").on("click", function () {
+				confirm("검색버튼 눌렸습니다.")
+			});
+			
 		});
 	</script>
 	</article>
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

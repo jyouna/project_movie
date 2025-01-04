@@ -10,20 +10,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_list.css" />
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
-	
-		<h1>전체 이벤트</h1>
+		<div id="title">
+			<h1>전체 이벤트</h1>
+		</div>
 	    <div class="search-bar">
 	      <select>
 	        <option>제목▼</option>
 	        <option>내용</option>
 	      </select>
 	      <input type="text">
-	      <button style="width: 100px; height: 50px;" >검색</button>
+  		  <input type="button" value="검색" id="searchButton">
 	    </div>
 		<div id="listForm">
 			<table id="eventForm" border="1">
@@ -82,6 +84,7 @@
 		</section>
 	
 	<script type="text/javascript">
+	$(function() {
 		$(".event_subject").on("click", function(event) {
 			console.log(event.target);
 			let event_num = $(event.target).siblings(".event_num").text();
@@ -89,6 +92,14 @@
 			location.href = "EventDetail?event_num=" + event_num + "&pageNum=${pageInfo.pageNum}";
 		
 		});
+		
+		$("#searchButton").on("click", function () {
+			confirm("검색버튼 눌렸습니다.")
+		});
+		
+	});
+		// 검색버튼 클릭 시 제목중 일치하는 단어가 있는경우 해당 글들만 추려지도록
+		
 	</script>
 
 
