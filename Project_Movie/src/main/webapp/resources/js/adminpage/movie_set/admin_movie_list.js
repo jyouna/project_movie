@@ -18,16 +18,19 @@ $(function() {
 	
 	// 영화등록 모달에서 영화정보조회 방법 선택시 해당 조회 방법만 활성화
 	$("input[name=search_method]").change(function() {
+		// 영화명으로 조회시 감독명, 개봉년도로 조회 비활성화
 	    if ($("input[name=search_method]:checked").val() == "movieNm") {
 	        $("#movie_name").prop("disabled", false);
 	        $("#director_name").prop("disabled", true);
 	        $("#release_year_select1").prop("disabled", true);
 	        $("#release_year_select2").prop("disabled", true);
+		// 감독명으로 조회시 영화명, 개봉년도로 조회 비활성화
 	    } else if ($("input[name=search_method]:checked").val() == "directorNm") {
 	        $("#movie_name").prop("disabled", true);
 	        $("#director_name").prop("disabled", false);
 	        $("#release_year_select1").prop("disabled", true);
 	        $("#release_year_select2").prop("disabled", true);
+		// 개봉년도로 조회시 감동명, 영화명으로 조회 비활성화
 	    } else if ($("input[name=search_method]:checked").val() == "releaseYear") {
 	        $("#movie_name").prop("disabled", true);
 	        $("#director_name").prop("disabled", true);
@@ -37,17 +40,15 @@ $(function() {
 	});
 	
 	// 영화등록모달의 개봉기간으로 영화정보조회시 사용되는 년도 설렉트박스
-	let startYear = 1960;
+	let startYear = 1970;
 	let endYear = new Date().getFullYear();
 	
 	for(let year = startYear; year <= endYear; year++) {
 		$("#release_year_select1").append("<option value='" + year + "'>" + year + "</option>");
 	}
 	
-	/*
-		조회시작년도 설렉트박스 선택시 조회끝년도 설렉트박스 활성화, 시작년도 보다 높고 현재년도와 낮거나 같은 년도만 선택가능
-		조회시작년도 바뀔때마다 <option>이 추가되므로 중첩안되기위해 반복문 시작전 조회끝년도 설렉트박스 자식요소 삭제
-	*/ 
+	// 조회시작년도 설렉트박스 선택시 조회끝년도 설렉트박스 활성화, 시작년도 보다 높고 현재년도와 낮거나 같은 년도만 선택가능
+	// 조회시작년도 바뀔때마다 <option>이 추가되므로 중첩안되기위해 반복문 시작전 조회끝년도 설렉트박스 옵션요소 삭제
 	$("#release_year_select1").change(function() {
 		if( $("#release_year_select1").val() == "선택" ) {
 			$("#release_year_select2").prop("disabled", true);
@@ -61,9 +62,6 @@ $(function() {
 			}
 		}
 	});
-	
-	
-	
 	
 	// 영화등록모달의 영화조회하기 버튼 클릭시 AJAX사용으로 영화정보 json 데이터 조회
 	$("#request_movie_info_btn").click(function() {
@@ -83,31 +81,31 @@ $(function() {
 				openStartDt : $("#release_year_select1").val(),
 				openEndDt : $("#release_year_select2").val(),
 				itemPerPage : 100,
-				curPage : 2
+				curPage : 3
 			};
 		}
 		
-		// KOBIS OPEN API로 영화정보 조회 후 데이터 테이블 생성
+		// KOBIS OPEN API로 영화정보 조회 후 영화목록 테이블에 입력
 		$.ajax({
 			type : "GET",
 			url : "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json",
-			data: Object.assign({
-       			key: "5b3c2582ad7390e87c71c7d1c30f4f55"
+			data : Object.assign({
+       			key : "5b3c2582ad7390e87c71c7d1c30f4f55"
     		}, ajaxData),
 			dataType : "json"	
 		}).done(function(result) {
 			$(".search_table").append(
-				"<table>"
-					+ "<tr>"
-						+ "<th><b><input type='radio'name='select_movie' disabled></b></th>"
-						+ "<th><b>영화코드</b></th>"
-						+ "<th><b>영화명</b></th>"
-						+ "<th><b>개봉일</b></th>"
-						+ "<th><b>영화장르</b></th>"
-						+ "<th><b>감독명</b></th>"
-					+ "</tr>"
-				+ "</table>"
-			);
+			"<table>"
+				+ "<tr>"
+					+ "<th><b><input type='radio'name='select_movie' disabled></b></th>"
+					+ "<th><b>영화코드</b></th>"
+					+ "<th><b>영화명</b></th>"
+					+ "<th><b>개봉일</b></th>"
+					+ "<th><b>영화장르</b></th>"
+					+ "<th><b>감독명</b></th>"
+				+ "</tr>"
+			+ "</table>"
+			);	
 			
 			for(let movie of result.movieListResult.movieList) {
 				movie.repGenreNm ? movie.repGenreNm : "";
@@ -121,6 +119,7 @@ $(function() {
 					}
 				}
 				
+				// 조회 장르에 checkList에 있는 단어 미포함 영화만 출력
 				if(isPassedMovie) {
 					$(".search_table > table").append(
 						"<tr>"
@@ -144,8 +143,8 @@ $(function() {
 		
 	}); // 영화조회하기 버튼 클릭이벤트 끝
 
-	// 조회된 영화테이블에서 영화선택시 ajax를 통해 영화상세정보를 가져온후 등록form에 입력
-	// document ready 시점에서 table이 없기 때문에 이벤트 위임 사용
+	// 조회된 영화테이블에서 영화선택시 ajax를 통해 영화상세정보를 가져온후 영화등록form에 입력
+	// 이벤트 위임 사용
 	$(".search_table").on("click","tr",function() {
 		$(this).find("input[type=radio]").prop("checked", true);
 		// 선택될때마다 해당영화의 정보를 form에 입력하기위해 form 리셋
@@ -281,82 +280,141 @@ $(function() {
 		
 	});
 	
+	// ajax를 통해 검색어 검색으로 영화목록 요청
+	$("#search02 input[type=button]").click(function() {
+		// 검색어가 ""일경우 모든 영화출력됨으로 ""일경우 검색어 입력 경고창 출력
+		if($("#search02>input[type=text]").val() == "") {
+			alert("검색어를 입력해주세요");
+		} else {
+			$.ajax({
+				type : "GET",
+				url : "AdminMovieSetSearchBox",
+				data : {
+					howSearch : $(".search_box").val(),
+					searchKeyword: $("#search02>input[type=text]").val()
+				},
+				dataType : "json"
+			}).done(function(MovieList) {
+				
+				$("#sec02 > div").hide();
+				
+				$("#sec02>table").html(
+					"<tr>"
+						+ "<th><b><input type='radio'name='select_movie' disabled></b></th>"
+						+ "<th>영화코드</th>"
+						+ "<th>영화제목</th>"
+						+ "<th>장르</th>"
+						+ "<th>관람등급</th>"
+						+ "<th>영화상태</th>"
+						+ "<th>등록일자</th>"
+						+ "<th>등록계정</th>"
+					+ "</tr>"
+				);
+				
+				// 조회 내역이 0이면 조회 조건 표시
+				if(MovieList[0] == null) {
+						$("#sec02>table").append(
+								"<tr>"
+									+ "<th  colspan='8'>검색 결과가 없습니다. 검색어를 확인해주세요<br>"
+									+ "(영화상태 - 대기, 투표영화, 상영예정작, 현재상영작, 과거상영작<br>"
+									+ "영화장르 - 코미디, 드라마, 액션, SF, 범죄,  스릴러, 공포, 판타지<br>"
+									+ "애니메이션, 어드벤처, 미스터리... )"
+									+ "</th>"
+								+ "</tr>"
+						);	
+				} else {
+					for(let movie of MovieList) {
+						$("#sec02>table").append(
+								"<tr>"
+									+ "<th><input type='radio'name='select_movie'></th>"
+									+ "<td>" + movie.movie_code + "</td>"
+									+ "<td>" + movie.movie_name + "</td>"
+									+ "<td>" + movie.movie_genre + "</td>"
+									+ "<td>" + movie.age_limit + "</td>"
+									+ "<td>" + movie.movie_status + "</td>"
+									+ "<td>" + movie.str_regist_date +"</td>"
+									+ "<td>" + movie.regist_admin_id  +"</td>"
+								+ "</tr>"
+						);	
+					}
+				}
+			}).fail(function() {
+				alert("검색에 실패하셨습니다")
+			});
+		}
+	});
+	
+	// 선택된 행의 영화코드, 영화명, 영화상태 저장을 위한 변수(페이지로드시 마다 초기화)
+	// 변수를 이용하여 영화정보조회, 영화삭제, 투표영화로등록, 상영예정작으로등록
+	let selectMovieCode = "";
+	let selectMovieName = "";
+	let selectMovieStatus = "";
+	
 	// 테이블의 행 클릭시 해당행의 라디오버튼 클릭
 	$("#sec02 > table").on("click", "tr", function() {
 		$(this).find("input[type=radio]").prop("checked", true);
-		
+		selectMovieCode = $(this).find("td:eq(1)").text();
+		selectMovieName = $(this).find("td:eq(2)").text();
+		selectMovieStatus = $(this).find("td:eq(5)").text();
 	});
 	
-	// ajax를 통해 검색어 검색으로 영화목록 요청
-	$("#search02 input[type=button]").click(function() {
-		$.ajax({
-			type : "GET",
-			url : "AdminMovieSetSearchBox",
-			data : {
-				howSearch : $(".search_box").val(),
-				searchKeyword: $("#search02>input[type=text]").val()
-			},
-			dataType : "json"
-		}).done(function(MovieList) {
-			
-			$("#sec02 > div").hide();
-			
-			$("#sec02>table").html(
-				"<tr>"
-					+ "<th><b><input type='radio'name='select_movie' disabled></b></th>"
-					+ "<th>영화코드</th>"
-					+ "<th>영화제목</th>"
-					+ "<th>장르</th>"
-					+ "<th>관람등급</th>"
-					+ "<th>영화상태</th>"
-					+ "<th>등록일자</th>"
-					+ "<th>등록계정</th>"
-				+ "</tr>"
-			);
-			
-			// 조회 내역이 0이면 조회 조건 표시
-			if(MovieList[0] == null) {
-				
-					$("#sec02>table").append(
-							"<tr>"
-								+ "<th  colspan='8'>검색 결과가 없습니다. 검색어를 확인해주세요<br>"
-								+ "(영화상태 : 대기, 투표중, 상영대기중, 상영중, 과거상영작)"
-								+ "</th>"
-							+ "</tr>"
-					);	
-					
-			} else {
-				
-				for(let movie of MovieList) {
-					
-					$("#sec02>table").append(
-							"<tr>"
-								+ "<th><input type='radio'name='select_movie'></th>"
-								+ "<td>" + movie.movie_code + "</td>"
-								+ "<td>" + movie.movie_name + "</td>"
-								+ "<td>" + movie.movie_genre + "</td>"
-								+ "<td>" + movie.age_limit + "</td>"
-								+ "<td>" + movie.movie_status + "</td>"
-								+ "<td>" + movie.str_regist_date +"</td>"
-								+ "<td>" + movie.regist_admin_id  +"</td>"
-							+ "</tr>"
-						);	
-				}
-			}
-			
-		}).fail(function() {
-			alert("검색에 실패하셨습니다")
-		});
-	});
 	
 	// 상영예정작으로 등록 버튼 클릭시 영화 상태 변경
 	$("#regist_upcoming").click(function() {
-//		if($("input[name='movie_radio']:checked")) {
-//			confirm("상영예정작으로 등록 하시겠습니까?");
-//		} else {
-//			alert("영화를 선택해주세요");
-//			
-//		}
+		// 영화 선택 여부 판별
+		if(selectMovieCode != "") {
+			// 상영예정작으로 등록 가능 여부 판별
+			if(selectMovieStatus != "대기") {
+				alert("해당영화는 상영예정작으로 등록할 수 없습니다\n(영화상태가 대기인 경우에만 상영예정작으로 등록가능)")
+			} else if(confirm("<" + selectMovieName + ">을 상영예정작으로 등록 하시겠습니까?")){
+				$.ajax({
+					type : "POST",
+					url : "UpdateMovieStatusToUpcoming",
+					data : {
+						movie_code : selectMovieCode,
+						movie_status : "상영예정작",
+						column_name : "movie_status"
+					},
+				}).done(function(result) {
+					console.log(typeof(result));
+					console.log(result);
+					alert(JSON.stringify(result));
+				}).fail(function() {
+					alert("상영예정작으로 등록 실패");
+				});
+			}
+		} else {
+			alert("영화를 선택해주세요");
+		}
+	});
+	
+	// 투표영화로 등록 버튼 클릭시 영화 상태 변경
+	$("#regist_pick").click(function() {
+		// 영화 선택 여부 판별
+		if(selectMovieCode != "") {
+			// 투표영화로 등록 가능 여부 판별
+			if(selectMovieStatus != "대기") {
+				alert("해당영화는 투표영화로 등록할 수 없습니다\n(영화상태가 대기인 경우에만 투표영화로 등록가능)")
+			} else if(confirm("<" + selectMovieName + ">을 투표영화로 등록 하시겠습니까?")){
+				$.ajax({
+					type : "POST",
+					url : "UpdateMovieStatusToPick",
+					data : {
+						movie_code : selectMovieCode,
+						movie_status : "투표영화",
+						column_name : "movie_status"
+					},
+				}).done(function(result) {
+					console.log(typeof(result));
+					console.log(result);
+					alert(JSON.stringify(result));
+				}).fail(function() {
+					alert("투표예정작으로 등록 실패");
+				});
+			}
+		} else {
+			alert("영화를 선택해주세요");
+		}
 	});
 	
 }); // document ready 끝

@@ -52,7 +52,7 @@
 				</tr>
 				<c:choose>
 					<c:when test="${empty movieList}">
-						<tr><td colspan="7">게시물이 존재하지 않습니다</td><tr>
+						<tr><td colspan="8">게시물이 존재하지 않습니다</td><tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="movie" items="${movieList}">
@@ -84,7 +84,8 @@
 	            	</c:choose>
 	            </c:forEach>
 	            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
-	            	onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum + 1}'">
+	            onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum + 1}'">
+	            
 	        </div>
 		</div>
 		<div id="sec03">
@@ -136,9 +137,9 @@
                 <label>영화상태</label>
                 <select name="movie_status">
                     <option value="대기">대기</option>
-                    <option value="투포중" disabled>투표중</option>
-                    <option value="상영대기중" disabled>상영대기중</option>
-                    <option value="상영중" disabled>상영중</option>
+                    <option value="투포중" disabled>투표영화</option>
+                    <option value="상영대기중" disabled>상영대기작</option>
+                    <option value="상영중" disabled>현재상영작</option>
                     <option value="과거상영작" disabled>과거상영작</option>
                 </select><br>
                 <div class="btnGroup">

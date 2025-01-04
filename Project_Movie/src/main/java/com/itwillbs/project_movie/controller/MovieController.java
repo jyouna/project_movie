@@ -3,6 +3,7 @@ package com.itwillbs.project_movie.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,6 +132,52 @@ public class MovieController {
 			return "result/process";
 		}
 		
+	}
+	
+	// 관리자 영화관리에서 영화상태 상영예정작으로 변경
+	// 업데이트 후 alert창에 표시할 문구 리턴
+	@ResponseBody
+	@PostMapping("UpdateMovieStatusToUpcoming")
+	public String updateMovieStatusToUpcoming(@RequestParam Map<String, String> map) {
+		// 결과 전달을 위한 변수
+		String sendMessage = "";
+		
+		// 상영예정작은 9개이상 등록 불가(시즌 별 상영작 9개 제한)
+		// 등록가능 여부 판별을 위해 상영예정작 수 조회
+		int UpcomingMovieCount = movieService.getCountConditionMovie(map);
+		if(UpcomingMovieCount >= 9) {
+			sendMessage = "더이상 상영예정작을 등록할 수 없습니다\\n(현재 상영예정작 : 9개)";
+			return sendMessage;
+		} else {
+			System.out.println(map.toString());
+			int updateResult = movieService.setMovieStatus(map);
+			// 업데이트 결과 판별 후 메세지 전달
+			sendMessage = updateResult > 0 ? "상영예정작으로 등록완료" :"상영예정작으로 등록실패\\n";	
+			return sendMessage;
+		}
+	}
+	
+	// 관리자 영화관리에서 영화상태 상영예정작으로 변경
+	// 업데이트 후 alert창에 표시할 문구 리턴
+	@ResponseBody
+	@PostMapping("UpdateMovieStatusToPick")
+	public String updateMovieStatusToPick(@RequestParam Map<String, String> map) {
+		// 결과 전달을 위한 변수
+		String sendMessage = "";
+		
+		// 투표영화는 5개이상 등록 불가
+		// 등록가능 여부 판별을 위해 투표영화 수 조회
+		int pickMovieCount = movieService.getCountConditionMovie(map);
+		if(pickMovieCount >= 5) {
+			sendMessage = "더이상 투표영화를 등록할 수 없습니다\\n(현재 상영예정작 : 9개)";
+			return sendMessage;
+		} else {
+			System.out.println(map.toString());
+			int updateResult = movieService.setMovieStatus(map);
+			// 업데이트 결과 판별 후 메세지 전달
+			sendMessage = updateResult > 0 ? "투표영화로 등록완료" : "투표영화로 등록실패\\n";	
+			return sendMessage;
+		}
 	}
 	
 	//관리자페이지 영화관리 상영예정작 페이지 맵핑

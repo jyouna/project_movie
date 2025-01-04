@@ -34,9 +34,21 @@ public class MovieService {
 	public List<MovieVO> getMovieList(int startRow, int listLimit) {
 		return movieMapper.selectMovieList(startRow, listLimit);
 	}
-
+	
+	// 검색조건(컬럼명), 검색어를 파라미터로 전달 후 해당 영화리스트 조회
 	public List<MovieVO> searchMovie(Map<String, String> map) {
 		return movieMapper.selectSearchMovie(map);
 	}
+	
+	// 업데이트할 영화코드, 업데이트할 영화상태를 파라미터로 전달 후 해당 영화상태 업데이트
+	public int setMovieStatus(Map<String, String> map) {
+		return movieMapper.updateMovieStatus(map);
+	}
+	
+	// 조건에 해당하는 영화의 수 조회
+	public int getCountConditionMovie(Map<String, String> map) {
+		return movieMapper.selectMovieCount(map);
+	}
+	
 	
 }
