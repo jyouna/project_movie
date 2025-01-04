@@ -3,41 +3,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.itwillbs</groupId>
-	<artifactId>mvc_board</artifactId>
-	<name>Spring_MVC_Board</name>
+	<artifactId>project_movie</artifactId>
+	<name>Project_Movie</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
-	<!-- 이 부분까지는 개발자가 일반적으로 수정할 필요가 없는 부분 -->
-	<!-- ========================================================= -->
-	<!-- 이 부분부터는 개발자가 일반적으로 수정할 필요가 있는 부분 -->
-	<!-- ========================================================= -->
-	<!-- 
-	<properties> 태그는 아래쪽 <dependencies> 태그 등의 각 관리 항목에서
-	가져다 사용할 값들을 변수처럼 태그 형식으로 속성값을 지정하는 영역
-	지정된 속성들은 ${태그명} 형식으로 접근 가능(= 변수처럼 관리)
-	ex) <java-version>1.6</java-version> 지정 시 ${java-version} 형식으로 접근
-	-->
 	<properties>
-		<!-- 자바(JRE)의 기본 버전을 속성으로 관리 -->
 		<java-version>11</java-version>
-		<!-- 스프링의 기본 버전을 속성으로 관리 -->
 <!-- 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version> -->
 		<org.springframework-version>5.3.39</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 <!-- 		<org.slf4j-version>1.6.6</org.slf4j-version> -->
-		<!-- Log4j2 버전 관리를 위한 속성 추가 -->
 		<log4j2-version>2.24.2</log4j2-version>
 	</properties>
 	
-	<!-- Maven 에서 관리하는 의존성 패키지(라이브러리) 를 관리하는 위치 -->
-	<!-- 각 라이브러리는 <dependencies> 태그 내에 각각의 <dependency> 태그로 관리 -->
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<!-- <properties> 태그내의 <org.springframework-version>5.3.39</org.springframework-version> 속성값 지정 -->
-			<!-- 해당 태그 내에 설정된 버전으로 자동으로 변경됨(라이브러리가 자동으로 새 버전으로 적용됨) -->
 			<version>${org.springframework-version}</version>
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
@@ -53,14 +36,6 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 			
-		<!-- ============================================================ -->
-		<!-- 
-		개발자가 별도로 필요한 라이브러리 추가할 경우
-		<dependencies> 태그 내에 <dependency> 태그로 라이브러리 추가(순서 무관)
-		Maven Repository 웹사이트에서 필요한 라이브러리 검색 가능
-		추가된 모든 라이브러리는 [ 프로젝트 - Maven Dependencies ] 항목에서 확인
-		-->
-		<!-- 1. DTO(VO) 클래스 작성을 자동화 해주는 Lombok(롬복) 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
@@ -69,8 +44,6 @@
 		    <scope>provided</scope>
 		</dependency>		
 		
-		<!-- MySQL - JDBC 연동에 필요한 라이브러리 -->
-		<!-- 2. MySQL 연동에 사용되는 MySQL Connector 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
 		    <groupId>com.mysql</groupId>
@@ -78,8 +51,6 @@
 		    <version>8.4.0</version>
 		</dependency>
 		
-		<!-- 3. 스프링에서 JDBC 연동에 필요한 기능을 제공하는 spring-jdbc 라이브러리 -->
-		<!-- 기존 스프링 버전(${org.springframework-version}) 그대로 사용 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
@@ -87,19 +58,12 @@
 		    <version>${org.springframework-version}</version>
 		</dependency>
 		
-		<!-- 4. 커넥션 풀을 관리하는 HikariCP 라이브러리 추가(Tomcat DBCP 대용으로 사용 가능) -->
-		<!-- Tomcat DBCP 에 비해 가볍고, 빠르고, 안정적인 처리가 가능 -->
-		<!-- 단, Maven repository 사이트에서는 최신 버전 없음 -->
-		<!-- https://github.com/brettwooldridge/HikariCP 접속 => Artifacts 부분의 Java 11+ 항목 필요 -->
-		<!-- Java 11 이상일 때 6.x.x(또는 5.x.x) 버전 사용 -->
 		<dependency>
 		   <groupId>com.zaxxer</groupId>
 		   <artifactId>HikariCP</artifactId>
 		   <version>6.2.1</version>
 		</dependency>
 		
-		<!-- 4. MyBatis 활용에 필요한 라이브러리 추가 -->
-		<!-- 4-1) MyBatis 기본 라이브러리(최신 버전 사용) -->
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
@@ -107,8 +71,6 @@
 		    <version>3.5.16</version>
 		</dependency>
 		
-		<!-- 4-2) MyBatis - Spring 연동 라이브러리 -->
-		<!-- 주의! 3.x.x 버전 사용 시 JDK 11 에서 오류 발생함(지원되지 않음) -->
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
@@ -116,9 +78,6 @@
 		    <version>2.1.2</version>
 		</dependency>
 				
-		<!-- ============================================== -->
-		<!-- [ 스프링 - MyBatis SQL 로그 설정 ] -->
-		<!-- 5. SQL 로그에 사용할 log4jdbc 라이브러리 -->		
 		<!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
 		<dependency>
 		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
@@ -126,8 +85,6 @@
 		    <version>1.16</version>
 		</dependency>
 				
-		<!-- 6. Log4j2 관련 라이브러리(+ Slf4j 포함) (Log4j2 는 Log4j 의 2.x 버전을 뜻함) -->
-		<!-- 1) Apache Log4j Core -->
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
@@ -136,7 +93,6 @@
 		    <version>${log4j2-version}</version>
 		</dependency>
 				
-		<!-- 2) Apache Log4j API -->
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
@@ -145,29 +101,14 @@
 		    <version>${log4j2-version}</version>
 		</dependency>
 		
-		<!-- 3) Apache Log4j SLF4J Binding -->
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
-		<!-- 주의! 최신 artifactId 가 log4j-slf4j2-impl 인데, 문제 발생 이슈 있음(log4j-slf4j-impl 사용) -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-slf4j-impl</artifactId>
-<!-- 		    <version>2.24.2</version> -->
 		    <version>${log4j2-version}</version>
-		    <!-- Maven Repository 에서 복사 붙여넣기 시 아래 scope 항목 있으므로 제거 필수! -->
-<!-- 		    <scope>test</scope> -->
 		</dependency>
 				
 				
-		<!-- 7. 암호화에 사용될 BCryptPasswordEncoder 클래스가 포함된 spring-security-web 라이브러리 -->
-		<!--    참고) spring-security-web 대신 spring-security-crypto 라이브러리 추가해도 됨  -->
-		<!--    주의! JDK 11(class file version 55.0) 기준 5.x.x 버전까지만 사용 가능함 -->
-		<!--    오류메세지 : BCryptPasswordEncoder has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>org.springframework.security</groupId> -->
-<!-- 		    <artifactId>spring-security-web</artifactId> -->
-<!-- 		    <version>6.4.1</version> -->
-<!-- 		</dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
@@ -175,25 +116,15 @@
 		    <version>5.8.16</version>
 		</dependency>
 				
-		<!-- ============================================== -->
-		<!-- 
-		8. 스프링 JUnit 테스트에 필요한 라이브러리(junit, spring-test)
-		   단, Junit 라이브러리는 기본적으로 스프링에 포함되어 있음(200번대 라인쯤)
-		   주의! 사용 환경(스프링 버전, 자바 버전 등)에 따라 오류(예외) 발생할 수 있음(버전 확인)
-		   => java.lang.UnsupportedClassVersionError: org/springframework/test/context/junit4/SpringJUnit4ClassRunner has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
-		-->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-test</artifactId>
-		    	<!-- 6.2.1 버전은 JDK 11 에서 사용 불가! 5.x.x 버전 필요(기본 스프링 버전 사용) -->
-<!-- 		    <version>6.2.1</version> -->
 		    <version>${org.springframework-version}</version>
 		    <scope>test</scope>
 		</dependency>
 				
 				
-		<!-- 9. 난수 생성에 활용할 commons-lang3 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
@@ -201,7 +132,6 @@
 		    <version>3.17.0</version>
 		</dependency>
 					
-		<!-- 10. 자바 메일 관련 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
 		    <groupId>javax.mail</groupId>
@@ -224,7 +154,6 @@
 		    <version>2.18.2</version>
 		</dependency>
 		
-		<!-- 파일 업로드를 위해 의존성 추가 -->
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 		    <groupId>commons-io</groupId>
@@ -233,13 +162,14 @@
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
-		<dependency>
+	 	<dependency>
 		    <groupId>commons-fileupload</groupId>
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.5</version>
 		</dependency>
 		
 		
+						
 		<!-- ============================================== -->
 				
 		<!-- AspectJ -->
@@ -249,49 +179,6 @@
 			<version>${org.aspectj-version}</version>
 		</dependency>	
 		
-		<!-- Log4j2 사용으로 인한 Log4j 주석 처리 필요한 부분 -->
-		<!-- Logging -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.slf4j</groupId> -->
-<!-- 			<artifactId>slf4j-api</artifactId> -->
-<!-- 			<version>${org.slf4j-version}</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.slf4j</groupId> -->
-<!-- 			<artifactId>jcl-over-slf4j</artifactId> -->
-<!-- 			<version>${org.slf4j-version}</version> -->
-<!-- 			<scope>runtime</scope> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.slf4j</groupId> -->
-<!-- 			<artifactId>slf4j-log4j12</artifactId> -->
-<!-- 			<version>${org.slf4j-version}</version> -->
-<!-- 			<scope>runtime</scope> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>log4j</groupId> -->
-<!-- 			<artifactId>log4j</artifactId> -->
-<!-- 			<version>1.2.15</version> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>javax.mail</groupId> -->
-<!-- 					<artifactId>mail</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>javax.jms</groupId> -->
-<!-- 					<artifactId>jms</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>com.sun.jdmk</groupId> -->
-<!-- 					<artifactId>jmxtools</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>com.sun.jmx</groupId> -->
-<!-- 					<artifactId>jmxri</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 			<scope>runtime</scope> -->
-<!-- 		</dependency> -->
 
 		<!-- @Inject -->
 		<dependency>
@@ -318,17 +205,6 @@
 		    <scope>provided</scope>
 		</dependency>
 				
-		
-		<!-- Tomcat 10.x 이상에서는 서블릿 버전 5.x 또는 6.x 버전 사용 가능(jakarta.xxx 패키지로 변경됨) -->
-		<!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>jakarta.servlet</groupId> -->
-<!-- 		    <artifactId>jakarta.servlet-api</artifactId> -->
-<!-- 		    <version>6.0.0</version> -->
-<!-- 		    <scope>provided</scope> -->
-<!-- 		</dependency> -->
-				
-
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -341,15 +217,11 @@
 			<version>1.2</version>
 		</dependency>
 	
-		<!-- 단위테스트에 사용할 JUnit 라이브러리(기본적으로 추가되어 있음) -->
-		<!-- 단, 버전에 따른 오류 발생 가능성 있으므로 버전 확인 필요 -->
 		<!-- Caused by: java.lang.IllegalStateException: SpringJUnit4ClassRunner requires JUnit 4.12 or higher. -->
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-<!-- 			<version>4.7</version> -->
-			<!-- 4.12 이상을 요구하므로 버전 변경 -->
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>        
@@ -375,21 +247,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-	                <!-- =========================================== -->
-	                <!-- 자바(JRE) 버전 설정 위치 -->
-	                <!-- 버전 변경 후 Maven Update(Alt + F5) 수행해야 적용됨 -->
-	                <!-- 기본값(1.6 버전) -->
-<!--                     <source>1.6</source> -->
-<!--                     <target>1.6</target> -->
-
-					<!-- 자바 버전 직접 기술할 경우(ex. 1.8 버전으로 변경 시) -->					
-<!--                     <source>1.8</source> -->
-<!--                     <target>1.8</target> -->
-                    
-					<!-- <properties> 태그에 정의된 자바 버전 속성값(11) 을 활용할 경우 -->					
                     <source>${java-version}</source>
                     <target>${java-version}</target>
-	                <!-- =========================================== -->
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
