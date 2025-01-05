@@ -35,7 +35,6 @@
 		<div id="body_main">
 			<div id="season_movie_list">
 				<table>
-					<tr><th colspan="8">Season 영화</th></tr>
 					<tr>
 						<th><input type="checkbox" class="seasonCheck"></th>
 						<th>영화코드</th>
@@ -43,44 +42,25 @@
 						<th>상영예정기간</th>
 						<th>상영시간</th>
 						<th>관람연령</th>
-						<th>등록일자</th>
+						<th>영화분류</th>
 						<th>등록계정</th>
 					</tr>
-					<tr>
-						<th><input type="checkbox" class="seasonCheck"></th>
-						<td>ABCDFD</td>
-						<td>극장판짱구는못말려</td>
-						<td>24.06.17 ~ 24.08.08</td>
-						<td>120분</td>
-						<td>전체관람과</td>
-						<td>24.05.31</td>
-						<td>admin</td>
-					<tr>
-					<tr>
-						<th><input type="checkbox" class="seasonCheck"></th>
-						<td>ABCDFD</td>
-						<td>극장판짱구는못말려</td>
-						<td>24.06.17 ~ 24.08.08</td>
-						<td>120분</td>
-						<td>전체관람과</td>
-						<td>24.05.31</td>
-						<td>admin</td>
-					<tr>
-					<tr>
-						<th><input type="checkbox" class="seasonCheck"></th>
-						<td>ABCDFD</td>
-						<td>극장판짱구는못말려</td>
-						<td>24.06.17 ~ 24.08.08</td>
-						<td>120분</td>
-						<td>전체관람과</td>
-						<td>24.05.31</td>
-						<td>admin</td>
-					<tr>
+					<c:forEach var="i" begin="0" end="2">
+						<tr>
+							<th><input type="checkbox" class="seasonCheck"></th>
+							<td>${movieList[i].movie_code}</td>
+							<td>${movieList[i].movie_name}</td>
+							<td></td>
+							<td>${movieList[i].running_time}</td>
+							<td>${movieList[i].age_limit}</td>
+							<td>${movieList[i].movie_type}</td>
+							<td>${movieList[i].regist_admin_id}</td>
+						<tr>
+					</c:forEach>
 				</table>
 			</div>
 			<div id="movie_list">
 				<table>
-					<tr><th colspan="8">일반영화</th></tr>
 					<tr>
 						<th><input type="checkbox" class="check"></th>
 						<th>영화코드</th>
@@ -88,19 +68,19 @@
 						<th>상영예정기간</th>
 						<th>상영시간</th>
 						<th>관람연령</th>
-						<th>등록일자</th>
+						<th>영화분류</th>
 						<th>등록계정</th>
 					</tr>
-					<c:forEach var="i" begin="1" end="6">
+					<c:forEach var="i" begin="3" end="8">
 						<tr>
-							<th><input type="checkbox" class="check"></th>
-							<td>ABCDFD</td>
-							<td>극장판짱구는못말려</td>
-							<td>24.06.17 ~ 24.08.08</td>
-							<td>120분</td>
-							<td>전체관람과</td>
-							<td>24.05.31</td>
-							<td>admin</td>
+							<th><input type="checkbox" class="seasonCheck"></th>
+							<td>${movieList[i].movie_code}</td>
+							<td>${movieList[i].movie_name}</td>
+							<td></td>
+							<td>${movieList[i].running_time}</td>
+							<td>${movieList[i].age_limit}</td>
+							<td>${movieList[i].movie_type}</td>
+							<td>${movieList[i].regist_admin_id}</td>
 						<tr>
 					</c:forEach>
 				</table>

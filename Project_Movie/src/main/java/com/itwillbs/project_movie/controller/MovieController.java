@@ -1,5 +1,6 @@
 package com.itwillbs.project_movie.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,8 +105,9 @@ public class MovieController {
 	@PostMapping("AdminMovieInfoRegist")
 	public String movieInfoRegist(MovieVO movieVO, Model model, HttpSession session) {
 		/* sId 판별식 추가 예정 */
-		String id = (String)session.getAttribute("sId");
+//		String id = (String)session.getAttribute("sId");
 		movieVO.setRegist_admin_id("admin");
+		System.out.println(movieVO);
 		
 		// 이미 등록된 영화인지 확인을 위해 영화정보 조회
 		MovieVO dbMovieVO = movieService.searchMovieInfo(movieVO.getMovie_code());
@@ -138,51 +140,97 @@ public class MovieController {
 	// 업데이트 후 alert창에 표시할 문구 리턴
 	@ResponseBody
 	@PostMapping("UpdateMovieStatusToUpcoming")
-	public String updateMovieStatusToUpcoming(@RequestParam Map<String, String> map) {
-		// 결과 전달을 위한 변수
-		String sendMessage = "";
+	public Map<String, String> updateMovieStatusToUpcoming(@RequestParam Map<String, String> map) {
+		// 결과 전달을 위한 객체
+		Map<String, String> sendMsgMap = new HashMap<String, String>();
 		
 		// 상영예정작은 9개이상 등록 불가(시즌 별 상영작 9개 제한)
 		// 등록가능 여부 판별을 위해 상영예정작 수 조회
-		int UpcomingMovieCount = movieService.getCountConditionMovie(map);
-		if(UpcomingMovieCount >= 9) {
-			sendMessage = "더이상 상영예정작을 등록할 수 없습니다\\n(현재 상영예정작 : 9개)";
-			return sendMessage;
+		int UpcomingTotalMovieCount = movieService.getCountTotalUpcomingMovie();
+		
+		if(UpcomingTotalMovieCount >= 9) {
+			sendMsgMap.put("msg", "더이상 상영예정작을 등록할 수 없습니다(현재 상영예정작 : 9개)");
+			return sendMsgMap;
 		} else {
-			System.out.println(map.toString());
-			int updateResult = movieService.setMovieStatus(map);
-			// 업데이트 결과 판별 후 메세지 전달
-			sendMessage = updateResult > 0 ? "상영예정작으로 등록완료" :"상영예정작으로 등록실패\\n";	
-			return sendMessage;
+			int generalUpcomingMovieCount = movieService.getCountGeneralUpcomingMovie();
+			int seasonUpcomingMovieCount = movieService.getCountSeasonUpcomingMovie();
+			
+			// 상영예정작 일반영화-6개, 시즌영화-3개 등록가능
+			if (generalUpcomingMovieCount >= 6 || seasonUpcomingMovieCount >= 3) {
+				sendMsgMap.put("msg", "등록초과! 등록가능 상영예정작 일반영화(6개), 시즌영화(3개)");
+				return sendMsgMap;
+			} else {
+				int updateResult = movieService.setMovieStatus(map);
+				// 업데이트 결과 판별 후 메세지 전달
+				if(updateResult > 0) {
+					sendMsgMap.put("msg", "상영예정작으로 등록완료");
+				} else {
+					sendMsgMap.put("msg", "상영예정작으로 등록실패");
+				}
+				return sendMsgMap;
+			}
 		}
 	}
 	
-	// 관리자 영화관리에서 영화상태 상영예정작으로 변경
+	// 관리자 영화관리에서 영화상태 투표영화로 변경
 	// 업데이트 후 alert창에 표시할 문구 리턴
 	@ResponseBody
 	@PostMapping("UpdateMovieStatusToPick")
-	public String updateMovieStatusToPick(@RequestParam Map<String, String> map) {
-		// 결과 전달을 위한 변수
-		String sendMessage = "";
+	public Map<String, String> updateMovieStatusToPick(@RequestParam Map<String, String> map) {
+		// 결과 전달을 위한 객체
+		Map<String, String> sendMsgMap = new HashMap<String, String>();
 		
 		// 투표영화는 5개이상 등록 불가
 		// 등록가능 여부 판별을 위해 투표영화 수 조회
-		int pickMovieCount = movieService.getCountConditionMovie(map);
+		int pickMovieCount = movieService.getCountPickMovie();
 		if(pickMovieCount >= 5) {
-			sendMessage = "더이상 투표영화를 등록할 수 없습니다\\n(현재 상영예정작 : 9개)";
-			return sendMessage;
+			sendMsgMap.put("msg", "더이상 투표영화를 등록할 수 없습니다(현재 투표영화 : 5개)");
+			return sendMsgMap;
 		} else {
-			System.out.println(map.toString());
 			int updateResult = movieService.setMovieStatus(map);
 			// 업데이트 결과 판별 후 메세지 전달
-			sendMessage = updateResult > 0 ? "투표영화로 등록완료" : "투표영화로 등록실패\\n";	
-			return sendMessage;
+			if(updateResult>0) {
+				sendMsgMap.put("msg", "투표영화로 등록완료");
+			} else {
+				sendMsgMap.put("msg", "투표영화로 등록실패");
+			}
+			return sendMsgMap;
 		}
+	}
+	
+	// 관리자 영화관리에서 영화삭제
+	@ResponseBody
+	@PostMapping("DeleteMovieFromDB")
+	public Map<String, String> deleteMovieFromDB(String movie_code) {
+		// 결과 전달을 위한 객체
+		Map<String, String> sendMsgMap = new HashMap<String, String>();
+		
+		int deleteResult = movieService.deleteMovieInfo(movie_code);
+		
+		// 삭제 결과 판별 후 메세지 전달
+		if(deleteResult > 0) {
+			sendMsgMap.put("msg", "영화 삭제 완료");
+		} else {
+			sendMsgMap.put("msg", "영화 삭제 실패");
+		}
+		return sendMsgMap;
+	}
+	
+	// 선택된 영화정보 조회
+	@ResponseBody
+	@GetMapping("SelectMovieInfo")
+	public MovieVO selectMovieInfo(String movie_code) {
+		MovieVO movie =	movieService.searchMovieInfo(movie_code);
+		movie.setStr_regist_date(movie.getRegist_date().toString());
+		movie.setStr_release_date(movie.getRelease_date().toString());
+		return movie;
 	}
 	
 	//관리자페이지 영화관리 상영예정작 페이지 맵핑
 	@GetMapping("AdminMovieSetUpcoming")
-	public String adminMovieSetUpcoming() {
+	public String adminMovieSetUpcoming(Model model) {
+		List<MovieVO> upcomingMovieList = movieService.getUpcomingMovieList();
+		model.addAttribute("movieList", upcomingMovieList);
 		return "adminpage/movie_set/upcoming_movie_set";
 	}
 	

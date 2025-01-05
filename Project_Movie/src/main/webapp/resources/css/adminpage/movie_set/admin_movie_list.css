@@ -91,7 +91,7 @@ table th[colspan] {
 
 #sec02 {
 	z-index: -1;
-	width: 998px;
+	width: 100%;
 	height: 410px;
 	overflow-y: auto;
 }
@@ -162,21 +162,21 @@ table th[colspan] {
     margin: 10px 20%; 
     padding: 20px;
     border: 1px solid #888;
-    width: 850px; /* 모달 창의 가로 크기 설정 */
-    height: 800px; /* 모달 창의 세로 크기 설정 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
+    width: 850px; 
+    height: 800px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto; 
 }
 
-.close {
-    position: absolute; /* 절대 위치 설정 */
-    top: 10px; /* 모달 창 상단에서 10px 떨어짐 */
-    right: 10px; /* 모달 창 오른쪽에서 10px 떨어짐 */
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
+/* .close { */
+/*     position: absolute;  */
+/*     top: 10px;  */
+/*     right: 10px;  */
+/*     color: #aaa; */
+/*     font-size: 28px; */
+/*     font-weight: bold; */
+/*     cursor: pointer; */
+/* } */
 
 .close:hover,
 .close:focus {
@@ -288,4 +288,8 @@ form {
 
 .url_label {
 	width: 60px;
+}
+
+tr {
+	cursor: pointer;
 }

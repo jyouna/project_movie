@@ -24,8 +24,7 @@
 		<div id="sec01">
 			<div id="title">영화목록</div>
 			<div id="search01">
-				<input type="button" value="조회조건선택">
-				<input type="button" value="조회">
+				<input type="button" value="전체 영화 조회" onclick="location.href='AdminMovieSetList'">
 			</div>
 			<div id="search02">
 				<select class="search_box">
@@ -107,7 +106,7 @@
             <h2>영화 등록</h2>
             <hr>
             <form action="" class="form01">
-                <label><input type="radio" name="search_method" value="movieNm" >영화명으로 조회</label><input type="text" id="movie_name" disabled><br>
+                <label><input type="radio" name="search_method" value="movieNm" checked>영화명으로 조회</label><input type="text" id="movie_name"><br>
                 <label><input type="radio" name="search_method" value="directorNm" >감독명으로 조회</label><input type="text" id="director_name" disabled><br>
                 <label><input type="radio" name="search_method" value="releaseYear">개봉년도로 조회</label><select id="release_year_select1" disabled><option value="선택">선택</option></select>
                 ~ <select id="release_year_select2" disabled><option value="선택">선택</option></select><br>
@@ -137,9 +136,9 @@
                 <label>영화상태</label>
                 <select name="movie_status">
                     <option value="대기">대기</option>
-                    <option value="투포중" disabled>투표영화</option>
-                    <option value="상영대기중" disabled>상영대기작</option>
-                    <option value="상영중" disabled>현재상영작</option>
+                    <option value="투표영화" disabled>투표영화</option>
+                    <option value="상영예정작" disabled>상영예정작</option>
+                    <option value="현재상영작" disabled>현재상영작</option>
                     <option value="과거상영작" disabled>과거상영작</option>
                 </select><br>
                 <div class="btnGroup">

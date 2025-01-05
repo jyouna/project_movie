@@ -26,6 +26,7 @@ public class MovieVO {
 	private String movie_trailer;
 	private Date regist_date;
 	private String regist_admin_id;
+	private String movie_type;
 	
 	// json형태로 movieVO 응답할때 timestamp 형태로 응답되서
 	// String 타입으로 변환후 응답하기위해 멤버변수 추가

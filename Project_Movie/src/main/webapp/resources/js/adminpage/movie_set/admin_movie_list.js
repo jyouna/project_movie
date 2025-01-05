@@ -6,18 +6,20 @@ $(function() {
     // 영화 등록 모달 열기
     openModal.on('click', function() {
         modal.css("display", "block");
-		document.querySelector('.form01').reset();
-		document.querySelector('.form02').reset();
+		$(".form01")[0].reset();
+		$(".form02")[0].reset();
 		$(".search_table").empty();
     });
 
-    // 영화 등록 모달 닫기
+    // 모달 닫기
     closeModal.on('click', function() {
         modal.css("display", "none");
+		// 영화등록 모달과 영화정보 모달을 공유하여 사용 하기때문에 닫을때 reload
+		location.reload();
     });
 	
 	// 영화등록 모달에서 영화정보조회 방법 선택시 해당 조회 방법만 활성화
-	$("input[name=search_method]").change(function() {
+	$("input[name=search_method]").click(function() {
 		// 영화명으로 조회시 감독명, 개봉년도로 조회 비활성화
 	    if ($("input[name=search_method]:checked").val() == "movieNm") {
 	        $("#movie_name").prop("disabled", false);
@@ -81,7 +83,7 @@ $(function() {
 				openStartDt : $("#release_year_select1").val(),
 				openEndDt : $("#release_year_select2").val(),
 				itemPerPage : 100,
-				curPage : 3
+				curPage : 4
 			};
 		}
 		
@@ -150,7 +152,7 @@ $(function() {
 		// 선택될때마다 해당영화의 정보를 form에 입력하기위해 form 리셋
 		$(".form02 button[type=reset]").trigger("click");
 		
-		let SearchedMovieCode = $(this).find("td:eq(0)").text();
+		let searchedMovieCode = $(this).find("td:eq(0)").text();
 		
 		$.ajax({
 			
@@ -158,13 +160,13 @@ $(function() {
 			url : "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json",
 			data: {
        			key : "5b3c2582ad7390e87c71c7d1c30f4f55",
-				movieCd : SearchedMovieCode
+				movieCd : searchedMovieCode
     		},
 			dataType : "json"	
 			
 		}).done(function(data) {
 			let movieInfo = data.movieInfoResult.movieInfo;
-			$("input[name='movie_code']").val(SearchedMovieCode);
+			$("input[name='movie_code']").val(searchedMovieCode);
 			$("input[name='movie_name']").val(movieInfo.movieNm);
 			
 			$("input[name='movie_genre']").val(function() {
@@ -187,11 +189,12 @@ $(function() {
 				let actorResult = "";
 				let count = 0;
 				for(let actor of movieInfo.actors) {
-					actorResult += actor.peopleNm + " ";
+					actorResult += actor.peopleNm;
 					count++;
 					if(count == 4) {
 						break;
 					}
+					actorResult += ", ";
 				}
 				return actorResult;
 			});
@@ -373,12 +376,11 @@ $(function() {
 					data : {
 						movie_code : selectMovieCode,
 						movie_status : "상영예정작",
-						column_name : "movie_status"
+						movie_type : "일반"
 					},
 				}).done(function(result) {
-					console.log(typeof(result));
-					console.log(result);
-					alert(JSON.stringify(result));
+					alert(result.msg);
+					location.reload();
 				}).fail(function() {
 					alert("상영예정작으로 등록 실패");
 				});
@@ -405,15 +407,106 @@ $(function() {
 						column_name : "movie_status"
 					},
 				}).done(function(result) {
-					console.log(typeof(result));
-					console.log(result);
-					alert(JSON.stringify(result));
+					alert(result.msg);
+					location.reload();
 				}).fail(function() {
 					alert("투표예정작으로 등록 실패");
 				});
 			}
 		} else {
 			alert("영화를 선택해주세요");
+		}
+	});
+	
+	// 영화삭제 버튼 클릭시 영화 정보 삭제
+	$("#delete_movie").click(function() {
+		// 영화 선택 여부 판별
+		if(selectMovieCode != "") {
+			// 영화삭제 가능 여부 판별
+			if(selectMovieStatus != "대기") {
+				alert("해당 영화는 삭제할 수 없습니다.\n(영화상태가 대기인 경우에만 삭제가능)")
+			} else if(confirm("<" + selectMovieName + ">을 삭제하시겠습니까?")){
+				$.ajax({
+					type : "POST",
+					url : "DeleteMovieFromDB",
+					data : {
+						movie_code : selectMovieCode
+					},
+					dataType : "json"
+				}).done(function(result) {
+					alert(result.msg);
+					location.reload();
+				}).fail(function() {
+					alert("영화삭제 실패!");
+				});
+			}
+		} else {
+			alert("영화를 선택해주세요");
+		}
+	});
+	
+	// 영화선택후 영화정보 조회(기존 모달 창 활용)
+	$("#movie_detail_info").click(function() {
+		if(selectMovieCode == "") {
+			alert("영화를 선택해주세요");
+		} else {
+			modal.css("display", "block");
+			$(".form01").hide();
+			$(".modal_content").css("width", "450px");
+			$(".modal_content").css("margin", "10px 50%");
+			$(".form02").css("border-left", "none");
+			$(".modal_content h2").text("영화정보");
+			$(".form02 input").prop("disabled", true);
+			$(".form02 textarea").prop("disabled", true);
+			$(".modal_content button").not("#close_modal").prop("disabled", true);
+			
+			// 선택된 영화정보 가져오기
+			$.ajax({
+				type : "GET",
+				url : "SelectMovieInfo",
+				data : {
+					movie_code : selectMovieCode
+				}
+			}).done(function(movie) {
+				$("input[name='movie_code']").val(movie.movie_code);
+				$("input[name='movie_name']").val(movie.movie_name);
+				$("input[name='movie_genre']").val(movie.movie_genre);
+				$("input[name='movie_director']").val(movie.movie_director);
+				$("input[name='movie_actor']").val(movie.movie_actor);
+				$("input[name='release_date']").val(movie.str_release_date);
+				$("input[name='running_time']").val(movie.running_time);
+				$("input[name='age_limit']").val(movie.age_limit);
+				$("input[name='movie_rating']").val(movie.movie_rating);
+				$("textarea[name='movie_synopsis']").val(movie.movie_synopsis);
+				$("input[name='movie_img1']").val(movie.movie_img1);
+				$("input[name='movie_img2']").val(movie.movie_img2);
+				$("input[name='movie_img3']").val(movie.movie_img3);
+				$("input[name='movie_img4']").val(movie.movie_img4);
+				$("input[name='movie_img5']").val(movie.movie_img5);
+				$("input[name='movie_trailer']").val(movie.movie_trailer);
+				$("select[name='movie_status']").val(movie.movie_status);
+			}).fail(function() {
+				alert("영화정보를 가져오는데 실패하였습니다.");
+			});
+		}
+	});
+	
+	// 텍스트박스에서 enter 입력시 관련 버튼 클릭 이벤트 발생 메서드
+	$("#movie_name").keypress(function(event){
+		if(event.which == 13) { 
+		 	$("#request_movie_info_btn").click(); 
+		}
+	});
+	
+	$("#director_name").keypress(function(event){
+		if(event.which == 13) { 
+		 	$("#request_movie_info_btn").click(); 
+		}
+	});
+	
+	$("#search02 input[type='text']").keypress(function(event){
+		if(event.which == 13) { 
+		 	$("#search02 input[type='button']").click(); 
 		}
 	});
 	

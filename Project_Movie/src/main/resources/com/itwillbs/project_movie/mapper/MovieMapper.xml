@@ -11,8 +11,8 @@
 		VALUES (
 			#{movie_code}
 			, #{movie_name}
-			, #{movie_genre}
-			, #{movie_director}
+			, TRIM(#{movie_genre})
+			, TRIM(#{movie_director})
 			, #{movie_actor}
 			, #{release_date}
 			, #{running_time}
@@ -28,11 +28,12 @@
 			, #{movie_trailer}
 			, now()
 			, #{regist_admin_id}
+			, null
 		)
 	</insert>
 	
 	<!-- 등록된 영화정보 조회 -->
-	<select id="SelectMovie" resultType="movieVO">
+	<select id="SelectMovieByCode" resultType="movieVO">
 		SELECT *
 		FROM movie
 		WHERE movie_code = #{movie_code}
@@ -54,29 +55,39 @@
 			, #{listLimit}
 	</select>
 	
-	<!-- 검색조건별 영화검색 -->
-	<select id="selectSearchMovie" resultType="movieVO">
+	<!-- 조건별 영화리스트 조회 -->
+	<select id="selectMovieListCheck" resultType="movieVO">
 		SELECT *
 		FROM movie
-		<where> 
-			<if test="howSearch != null and searchKeyword != null"> 
-				${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
-			</if>
-		</where>
+		<if test="howSearch != null and searchKeyword != null"> 
+			WHERE ${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
+		</if>
+		<if test="column_name != null and select_condition != null">
+			WHERE ${column_name} = #{select_condition}
+		</if>
+		<if test="OlderColumn != null and howOlder != null">
+			ORDER BY ${OlderColumn} ${howOlder}
+		</if>
 	</select>
 	
 	<!-- 조회조건 컬럼별 해당 영화 수 검색 -->
 	<select id="selectMovieCount" resultType="int">
 		SELECT COUNT(*)
 		FROM movie
-		WHERE ${column_name} = #{movie_status}
+		WHERE ${column_name} = #{select_condition}
 	</select>
 	
 	<!-- 영화상태 업데이트 -->
 	<update id="updateMovieStatus">
 		UPDATE movie
-		SET movie_status = #{movie_status}
+		SET movie_status = #{movie_status},
+			movie_type = #{movie_type}			
 		WHERE movie_code = #{movie_code}
 	</update>
 	
+	<!-- 영화정보 삭제 -->
+	<delete id="deleteMovie">
+		DELETE FROM movie
+		WHERE movie_code = #{movie_code}
+	</delete>
 </mapper>
