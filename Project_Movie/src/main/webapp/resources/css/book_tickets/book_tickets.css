@@ -101,6 +101,7 @@ h4 {
 .mv_list_container {
 	overflow-y: auto;
 	margin-top: 10px;
+	height: 430px;
 }
 
 .mv_list {
@@ -155,12 +156,17 @@ h4 {
     font-size: 16px;
 }
 
-.mv_title {
-	display: inline-block;
-    font-size: 16px;
+a .mv_title {
+	display: block;
+    font-size: 14px;
     color: #333;
     font-weight: bold;
     text-decoration: none;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 220px;
 }
 
 /* 섹션 전체 */
@@ -202,7 +208,6 @@ h4 {
 /* 오른쪽 섹션 */
 .right_section {
     width: auto;
-/*     height: 500px; */
 }
 
 

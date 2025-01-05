@@ -54,63 +54,17 @@
 								<option>가나다순</option>
 							</select>
 						</div>
-						
+							
 				<!-- 		영화목록 -->
 						<div class="mv_list_container">
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">12</span>
-									<span class="mv_title">해피앤드</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">15</span>
-									<span class="mv_title">소방관</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">ALL</span>
-									<span class="mv_title">모아나</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">12</span>
-									<span class="mv_title">해피앤드</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">15</span>
-									<span class="mv_title">소방관</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">ALL</span>
-									<span class="mv_title">모아나</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">12</span>
-									<span class="mv_title">해피앤드</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">15</span>
-									<span class="mv_title">소방관</span>
-								</a>
-							</div>
-							<div class="mv_list">
-								<a href="">
-									<span class="mv_age">ALL</span>
-									<span class="mv_title">모아나</span>
-								</a>
-							</div>
+							<c:forEach var="movie" items="${movieList}" >
+								<div class="mv_list">
+									<a href="#">
+										<span class="mv_age">${movie.age_limit}</span>
+										<span class="mv_title">${movie.movie_name}</span>
+									</a>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 					
@@ -513,8 +467,6 @@
 				$(".modal").css("display", "none");
 				$(".modal_content").css("display", "none");
 			});
-	        
-			$(".menu-items[href='BookTickets']").length > 0 ? console.log(".menu-items[href='BookTickets'] exists") : console.log(".menu-items[href='BookTickets'] not found");
 	        
 		</script>
 	</article>

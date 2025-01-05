@@ -119,6 +119,7 @@ ul li button:active {
 
 /* 숫자 카운트 스타일 */
 .count {
+	border: none;
 	color: black;
 	display: flex; /* 숫자 내부 내용 중앙 정렬 */
 	justify-content: center; /* 가로 중앙 정렬 */
@@ -178,10 +179,16 @@ ul li button:active {
     cursor: pointer;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
-    color: #919499;
+    color: #bdbfc1;
     line-height: 1.75em;
     letter-spacing: 0.025em;
 }
+
+.seat.selected {
+	background-color: #f98780;
+	color: #444451;
+}
+
 
 .seat:hover {
 	color: #444451;

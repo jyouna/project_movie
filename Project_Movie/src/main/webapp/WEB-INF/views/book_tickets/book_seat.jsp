@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <!--
 	Escape Velocity by HTML5 UP
@@ -14,6 +15,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/book_tickets/book_seat.css">
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/book_tickets/book_seat.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -30,121 +32,31 @@
 				</div>
 				
 				<ul>
-					<li>
-						<strong>성인</strong>
-						<div class="ctrl_box">
-							<button class="minus_btn" onclick="minus()">-</button>
-							<div class="count">0</div>
-							<button class="plus_btn" onclick="plus()">+</button>
-						</div>
-					</li>
-					<li>
-						<strong>청소년</strong>
-						<div class="ctrl_box">
-							<button class="minus_btn" onclick="minus()">-</button>
-							<div class="count">0</div>
-							<button class="plus_btn" onclick="plus()">+</button>
-						</div>
-					</li>
-					<li>
-						<strong>노약자</strong>
-						<div class="ctrl_box">
-							<button class="minus_btn" onclick="minus()">-</button>
-							<div class="count">0</div>
-							<button class="plus_btn" onclick="plus()">+</button>
-						</div>
-					</li>
+					<c:forEach var="type" items="성인, 청소년, 노약자">
+						<li>
+							<strong>${type}</strong>
+							<div class="ctrl_box">
+								<button class="minus_btn">-</button>
+								<input type="text" class="count" value="0" readonly>
+								<button class="plus_btn">+</button>
+							</div>
+						</li>
+					</c:forEach>
 				</ul>
-				<span class="space_line"></span>
 				
+				<span class="space_line"></span>
 				
 				<div class="seat_container">
 					<div class="msg">인원 선택 후 좌석을 선택해주세요</div>
 		            <div class="screen">SCREEN</div>
-		            <div class="seat_row">
-		                <button class="seat">A1</button>
-		                <button class="seat">A2</button>
-		                <button class="seat">A3</button>
-		                <button class="seat">A4</button>
-		                <button class="seat">A5</button>
-		                <button class="seat">A6</button>
-		                <button class="seat">A7</button>
-		                <button class="seat">A8</button>
-		                <button class="seat">A9</button>
-		                <button class="seat">A10</button>
-		            </div>
-		            <div class="seat_row">
-		                <button class="seat">B1</button>
-		                <button class="seat">B2</button>
-		                <button class="seat">B3</button>
-		                <button class="seat">B4</button>
-		                <button class="seat">B5</button>
-		                <button class="seat">B6</button>
-		                <button class="seat">B7</button>
-		                <button class="seat">B8</button>
-		                <button class="seat">B9</button>
-		                <button class="seat">B10</button>
-		            </div>
-		            <div class="seat_row">
-		                <button class="seat">C1</button>
-		                <button class="seat">C2</button>
-		                <button class="seat">C3</button>
-		                <button class="seat">C4</button>
-		                <button class="seat">C5</button>
-		                <button class="seat">C6</button>
-		                <button class="seat">C7</button>
-		                <button class="seat">C8</button>
-		                <button class="seat">C9</button>
-		                <button class="seat">C10</button>
-		            </div>
-		            <div class="seat_row">
-		                <button class="seat">D1</button>
-		                <button class="seat">D2</button>
-		                <button class="seat">D3</button>
-		                <button class="seat">D4</button>
-		                <button class="seat">D5</button>
-		                <button class="seat">D6</button>
-		                <button class="seat">D7</button>
-		                <button class="seat">D8</button>
-		                <button class="seat">D9</button>
-		                <button class="seat">D10</button>
-		            </div>
-		            <div class="seat_row">
-		                <button class="seat">E1</button>
-		                <button class="seat">E2</button>
-		                <button class="seat">E3</button>
-		                <button class="seat">E4</button>
-		                <button class="seat">E5</button>
-		                <button class="seat">E6</button>
-		                <button class="seat">E7</button>
-		                <button class="seat">E8</button>
-		                <button class="seat">E9</button>
-		                <button class="seat">E10</button>
-		            </div>
-		            <div class="seat_row">
-		                <button class="seat">F1</button>
-		                <button class="seat">F2</button>
-		                <button class="seat">F3</button>
-		                <button class="seat">F4</button>
-		                <button class="seat">F5</button>
-		                <button class="seat">F6</button>
-		                <button class="seat">F7</button>
-		                <button class="seat">F8</button>
-		                <button class="seat">F9</button>
-		                <button class="seat">F10</button>
-		            </div>
-		            <div class="seat_row">
-		                <button class="seat">G1</button>
-		                <button class="seat">G2</button>
-		                <button class="seat">G3</button>
-		                <button class="seat">G4</button>
-		                <button class="seat">G5</button>
-		                <button class="seat">G6</button>
-		                <button class="seat">G7</button>
-		                <button class="seat">G8</button>
-		                <button class="seat">G9</button>
-		                <button class="seat">G10</button>
-		            </div>
+		            
+	            	<c:forEach var="row" items="A,B,C,D,E,F,G">
+			            <div class="seat_row">
+				            <c:forEach var="column" begin="1" end="10">
+				                <button class="seat">${row}${column}</button>
+				            </c:forEach>
+			            </div>
+	            	</c:forEach>
 		        </div>
 				
 				<span class="space_line"></span>
