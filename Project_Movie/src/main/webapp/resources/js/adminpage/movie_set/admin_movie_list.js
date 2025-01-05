@@ -1,8 +1,10 @@
 $(function() {
+	
+	// 영화등록, 영화정보조회 모달
    	let modal = $("#regist_movie_modal");
     let openModal = $("#regist_modal_open");
     let closeModal = $("#close_modal");
-
+	
     // 영화 등록 모달 열기
     openModal.on('click', function() {
         modal.css("display", "block");
@@ -11,7 +13,7 @@ $(function() {
 		$(".search_table").empty();
     });
 
-    // 모달 닫기
+    // 영화 등록 모달 닫기
     closeModal.on('click', function() {
         modal.css("display", "none");
 		// 영화등록 모달과 영화정보 모달을 공유하여 사용 하기때문에 닫을때 reload
@@ -364,12 +366,14 @@ $(function() {
 	
 	// 상영예정작으로 등록 버튼 클릭시 영화 상태 변경
 	$("#regist_upcoming").click(function() {
+		
 		// 영화 선택 여부 판별
 		if(selectMovieCode != "") {
 			// 상영예정작으로 등록 가능 여부 판별
 			if(selectMovieStatus != "대기") {
 				alert("해당영화는 상영예정작으로 등록할 수 없습니다\n(영화상태가 대기인 경우에만 상영예정작으로 등록가능)")
 			} else if(confirm("<" + selectMovieName + ">을 상영예정작으로 등록 하시겠습니까?")){
+				
 				$.ajax({
 					type : "POST",
 					url : "UpdateMovieStatusToUpcoming",

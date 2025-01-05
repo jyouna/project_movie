@@ -152,23 +152,29 @@ public class MovieController {
 			sendMsgMap.put("msg", "더이상 상영예정작을 등록할 수 없습니다(현재 상영예정작 : 9개)");
 			return sendMsgMap;
 		} else {
-			int generalUpcomingMovieCount = movieService.getCountGeneralUpcomingMovie();
-			int seasonUpcomingMovieCount = movieService.getCountSeasonUpcomingMovie();
-			
-			// 상영예정작 일반영화-6개, 시즌영화-3개 등록가능
-			if (generalUpcomingMovieCount >= 6 || seasonUpcomingMovieCount >= 3) {
-				sendMsgMap.put("msg", "등록초과! 등록가능 상영예정작 일반영화(6개), 시즌영화(3개)");
-				return sendMsgMap;
-			} else {
-				int updateResult = movieService.setMovieStatus(map);
-				// 업데이트 결과 판별 후 메세지 전달
-				if(updateResult > 0) {
-					sendMsgMap.put("msg", "상영예정작으로 등록완료");
-				} else {
-					sendMsgMap.put("msg", "상영예정작으로 등록실패");
+			// 일반영화인지 시즌영화인지 비교후 상영예정작 등록 간으여부 판별(일반-6, 시즌-3)
+			if(map.get("movie_type").equals("일반")) {
+				int generalUpcomingMovieCount = movieService.getCountGeneralUpcomingMovie();
+				if(generalUpcomingMovieCount >=6) {
+					sendMsgMap.put("msg", "등록초과! 등록가능 상영예정작 일반영화(6개)을 초과했습니다.");
+					return sendMsgMap;
 				}
-				return sendMsgMap;
+			} else {
+				int seasonUpcomingMovieCount = movieService.getCountSeasonUpcomingMovie();
+				if(seasonUpcomingMovieCount >=3) {
+					sendMsgMap.put("msg", "등록초과! 등록가능 상영예정작 시즌영화(3개)를 초과했습니다.");
+					return sendMsgMap;
+				}
 			}
+			
+			int updateResult = movieService.setMovieStatus(map);
+			// 업데이트 결과 판별 후 메세지 전달
+			if(updateResult > 0) {
+				sendMsgMap.put("msg", "상영예정작으로 등록완료");
+			} else {
+				sendMsgMap.put("msg", "상영예정작으로 등록실패");
+			}
+			return sendMsgMap;
 		}
 	}
 	
@@ -232,6 +238,24 @@ public class MovieController {
 		List<MovieVO> upcomingMovieList = movieService.getUpcomingMovieList();
 		model.addAttribute("movieList", upcomingMovieList);
 		return "adminpage/movie_set/upcoming_movie_set";
+	}
+	
+	//상영예정작 페이지에서 상영기간 설정
+	@ResponseBody
+	@PostMapping("UpdateScreeningDate")
+	public Map<String, String> updateScreeningDate(MovieVO movieVO) {
+		Map<String, String> sendMsgMap = new HashMap<String, String>();
+		
+		System.out.println(movieVO);
+		int updateResult = movieService.setScreeningDate(movieVO);
+		
+		if(updateResult > 0) {
+			sendMsgMap.put("msg", "상영기간설정 완료되었습니다");
+			return sendMsgMap;
+		} else {
+			sendMsgMap.put("msg", "상영기간설정 실패");
+			return sendMsgMap;
+		}
 	}
 	
 	//관리자페이지 영화관리 현재상영작 페이지 맵핑

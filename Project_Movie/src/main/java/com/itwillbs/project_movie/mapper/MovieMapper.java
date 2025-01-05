@@ -34,6 +34,9 @@ public interface MovieMapper {
 	
 	// 영화 정보 삭제
 	int deleteMovie(String movie_code);
+	
+	// 상영시작일, 상영종료일 업데이트
+	int updateScreeningPeriod(MovieVO movieVO);
 
 	
 }

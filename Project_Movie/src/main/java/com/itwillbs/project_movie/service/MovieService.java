@@ -93,6 +93,11 @@ public class MovieService {
 		return movieMapper.selectMovieListCheck(conditionMap);
 	}
 	
+	// 영화 상영예정기간 업데이트
+	public int setScreeningDate(MovieVO movieVO) {
+		return movieMapper.updateScreeningPeriod(movieVO);
+	}
+	
 
 	
 	

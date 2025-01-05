@@ -14,6 +14,8 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/movie_set/upcoming_movie_set.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_set/upcoming_movie_set.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -22,7 +24,7 @@
 		<div id="body_top">
 			<div id="title">상영예정작 관리</div>
 			<div id="btnGroup01">
-				<input type="button" value="등록하기">
+				<input type="button" id="set_date_btn" value="상영기간설정">
 				<input type="button" value="상영스케줄설정">
 				<input type="button" value="현재상영작으로등록">
 				<input type="button" value="변경하기">
@@ -36,25 +38,30 @@
 			<div id="season_movie_list">
 				<table>
 					<tr>
-						<th><input type="checkbox" class="seasonCheck"></th>
+						<th><input type="radio" disabled="disabled"></th>
 						<th>영화코드</th>
 						<th>영화제목</th>
 						<th>상영예정기간</th>
 						<th>상영시간</th>
 						<th>관람연령</th>
 						<th>영화분류</th>
-						<th>등록계정</th>
 					</tr>
 					<c:forEach var="i" begin="0" end="2">
 						<tr>
-							<th><input type="checkbox" class="seasonCheck"></th>
+							<th><input type="radio" name="movie_radio"></th>
 							<td>${movieList[i].movie_code}</td>
 							<td>${movieList[i].movie_name}</td>
-							<td></td>
+							<c:choose>
+								<c:when test="${empty movieList[i].start_screening_date or empty movieList[i].end_screening_date}">
+									<td>상영예정기간을 입력해주세요.</td>
+								</c:when>
+								<c:otherwise>
+									<td>${movieList[i].start_screening_date} ~ ${movieList[i].end_screening_date}</td>
+								</c:otherwise>
+							</c:choose>
 							<td>${movieList[i].running_time}</td>
 							<td>${movieList[i].age_limit}</td>
 							<td>${movieList[i].movie_type}</td>
-							<td>${movieList[i].regist_admin_id}</td>
 						<tr>
 					</c:forEach>
 				</table>
@@ -62,30 +69,49 @@
 			<div id="movie_list">
 				<table>
 					<tr>
-						<th><input type="checkbox" class="check"></th>
+						<th><input type="radio" disabled="disabled"></th>
 						<th>영화코드</th>
 						<th>영화제목</th>
 						<th>상영예정기간</th>
 						<th>상영시간</th>
 						<th>관람연령</th>
 						<th>영화분류</th>
-						<th>등록계정</th>
 					</tr>
 					<c:forEach var="i" begin="3" end="8">
 						<tr>
-							<th><input type="checkbox" class="seasonCheck"></th>
+							<th><input type="radio" name="movie_radio"></th>
 							<td>${movieList[i].movie_code}</td>
 							<td>${movieList[i].movie_name}</td>
-							<td></td>
+							<c:choose>
+								<c:when test="${empty movieList[i].start_screening_date or empty movieList[i].end_screening_date}">
+									<td>상영예정기간을 입력해주세요.</td>
+								</c:when>
+								<c:otherwise>
+									<td>${movieList[i].start_screening_date} ~ ${movieList[i].end_screening_date}</td>
+								</c:otherwise>
+							</c:choose>
 							<td>${movieList[i].running_time}</td>
 							<td>${movieList[i].age_limit}</td>
 							<td>${movieList[i].movie_type}</td>
-							<td>${movieList[i].regist_admin_id}</td>
 						<tr>
 					</c:forEach>
 				</table>
 			</div>
 		</div>
+		<div id="screening_date_modal" class="modal">
+		   <div class="modal_content">
+	       	   <h4>상영 예정기간을 설정해주세요</h4>
+		       <hr>
+		       <div>
+		       	   <input type="date" class="start_date">
+		       	   ~ <input type="date" class="end_date">
+		       </div>
+		       <div class="btnGroup">
+		           <input type="button" id="set_btn" value="입력">
+		           <input type="button" class="close_modal" value="닫기">
+		       </div>
+		   </div>
+	   </div>
 	</section>
 	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

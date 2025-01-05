@@ -29,6 +29,8 @@
 			, now()
 			, #{regist_admin_id}
 			, null
+			, null
+			, null
 		)
 	</insert>
 	
@@ -80,8 +82,16 @@
 	<!-- 영화상태 업데이트 -->
 	<update id="updateMovieStatus">
 		UPDATE movie
-		SET movie_status = #{movie_status},
-			movie_type = #{movie_type}			
+		SET movie_status = #{movie_status}
+			, movie_type = #{movie_type}			
+		WHERE movie_code = #{movie_code}
+	</update>
+	
+	<!-- 영화 상영시작일, 상영종료일 업데이트 -->
+	<update id="updateScreeningPeriod">
+		UPDATE movie
+		SET start_screening_date = #{start_screening_date}
+			, end_screening_date = #{end_screening_date}
 		WHERE movie_code = #{movie_code}
 	</update>
 	
