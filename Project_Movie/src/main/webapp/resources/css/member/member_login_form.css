@@ -14,7 +14,7 @@ body {
 .sidebar {
   width: 200px; /* 사이드바 너비 */
   background: #f4f4f4;
-  padding: 15px;
+  padding: 0px;
 }
 
 .sidebar ul {
@@ -39,7 +39,7 @@ body {
 }
 
 /* ========== 박스 섹션 스타일 ========== */
-.split-box {
+.split-box {	
   margin-top: 100px;
   display: flex; /* Flexbox 사용 */
   align-items: stretch; /* 세로 길이 통일 */
@@ -53,6 +53,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(10, 10, 11, 0.1);
     position: relative;
+    height: 500px; /* 높이 증가 */
 }
 
 .login-box {
@@ -151,12 +152,12 @@ button {
 }
 
 #login-btn {
-  width: 100%; /* 버튼 너비 100% 설정 */
-  height: 50%; /* 버튼 너비 100% 설정 */
-  max-width: 200px; /* 최대 너비 제한 */
-  padding: 0px;
-  text-align: center; /* 텍스트 중앙 정렬 */
-  margin-top: 10px; /* 상단 여백 추가 */
+   width: 100%;
+    height: 18%;
+    max-width: 400PX;
+    padding: 0px;
+    text-align: center;
+    margin-top: 10px;
 }
 
 /* ========== 숨김 처리 ========== */

@@ -23,7 +23,8 @@
 	
 	<article class="box post">
 		 <div class="container">
-    <h1>회원가입</h1>
+    <h1>회원가입 ☆☆☆☆☆☆☆☆☆☆☆☆☆ ID)admin PW)1111로 만들어놨습니다  -민기-</h1>
+    
     <hr class="section-line"> <!-- 실선 추가 -->
 
     <!-- 실선 밑 여백 추가 -->
@@ -31,20 +32,20 @@
 
     <!-- 회원가입 폼 -->
 <!--        <form id="registerForm" action="http://localhost:8081/project_movie/" method="post"> -->
-   <form id="registerForm" action="http://localhost:8081/project_movie/" method="get">
+   <form id="registerForm" action="MemberJoin" method="post">
       <!-- 아이디 입력 -->
       <table class="form-table">
         <!-- 아이디 입력 -->
 		<tr>
 		  <th>아이디 *</th> <!-- 필수 입력 항목 -->
 		  <td>
-		    <input type="text" id="username" name="username" placeholder="영문자,숫자,_ 5자리이상" required>
-		    <button type="button">확인</button>
+		    <input type="text" id="username" name="member_id" placeholder="영문자,숫자,_ 5자리이상" required>
+<!-- 		    <button type="button">확인</button> -->
 		  </td>
 		</tr>
         <tr>
           <th>비밀번호 *</th>
-          <td><input type="password" id="password" name="password" placeholder="영문자,숫자,특수문자(!@#$%) 8글자이상" required></td>
+          <td><input type="password" id="password" name="member_passwd" placeholder="영문자,숫자,특수문자(!@#$%) 8글자이상" required></td>
         </tr>
         <tr>
           <th>비밀번호 확인 *</th>
@@ -56,19 +57,19 @@
       <table class="form-table">
         <tr>
           <th>이름 *</th>
-          <td><input type="text" id="name" name="name" placeholder="이름 입력" required></td>
+          <td><input type="text" id="name" name="member_name" placeholder="이름 입력" required></td>
         </tr>
         <tr>
           <th>생년월일 *</th>
-          <td><input type="date" id="birthdate" name="birthdate" required></td>
+          <td><input type="date" id="birthdate" name="birth_date" required></td>
         </tr>
         <tr>
           <th>이메일 *</th>
           <td>
             <input type="email" id="email" name="email" placeholder="이메일 입력" required>
-            <button type="button">발송</button>
-            <input type="text" id="email-code" name="email-code" placeholder="인증번호 입력">
-            <button type="button">확인</button>
+<!--             <button type="button">발송</button> -->
+<!--             <input type="text" id="email-code" name="email-code" placeholder="인증번호 입력"> -->
+<!--             <button type="button">확인</button> -->
           </td>
         </tr>
         
@@ -77,9 +78,9 @@
         <th>전화번호 *</th>
         <td>
           <input type="text" id="phone" name="phone" placeholder="숫자 입력" required>
-          <button type="button">발송</button>
-          <input type="text" id="phone-code" name="phone-code" placeholder="인증번호 입력">
-          <button type="button">확인</button>
+<!--           <button type="button">발송</button> -->
+<!--           <input type="text" id="phone-code" name="phone-code" placeholder="인증번호 입력"> -->
+<!--           <button type="button">확인</button> -->
         </td>
       </tr>
       

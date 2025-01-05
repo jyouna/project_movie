@@ -7,13 +7,32 @@
 		<div class="navbar"> 
 			<div class="navbar-right"> 
 				<a href="${pageContext.request.contextPath}">홈</a> 
-				<a href="${pageContext.request.contextPath}/MemberLogin">로그인</a> 
-   				<a href="${pageContext.request.contextPath}/MemberLogout">로그아웃</a> 
-    			<a href="${pageContext.request.contextPath}/MemberAgree">회원가입</a> 
 				<a href="#" onclick="openMypage()">마이페이지</a> 
 				<a href="#" onclick="openAdminpage()">관리자페이지</a>
+				<c:choose>
+					<c:when test="${empty sessionScope.sMemberId}">
+						<a href="MemberLogin">로그인</a> 
+		    			<a href="MemberAgree">회원가입</a> 
+					</c:when>
+					<c:otherwise>
+						<a href="MemberInfo">${sessionScope.sMemberId}</a>
+		   				<a href="javascript:void(0)" onclick="logout()">로그아웃</a> 
+					
+					</c:otherwise>
+				</c:choose> 
 			</div>
 		</div>
+		
+		<script>
+		   function logout() {
+		      // confirm() 함수 활용하여 "로그아웃하시겠습니까?" 질문을 통해
+		      // 확인 버튼 클릭 시 "MemberLogout" 페이지로 이동 처리
+		      if(confirm("로그아웃하시겠습니까?")) {
+		         location.href = "MemberLogout";
+		      }
+		   }
+		</script>
+				
 
 		<!-- Logo -->
 			<div id="logo">

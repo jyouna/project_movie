@@ -15,7 +15,7 @@ Columns:
 	email varchar(100)
 	phone varchar(20)
 	gender char(1)
-	gerne varchar(100)
+	genre varchar(100)
 	text_receive tinyint
 	email_receive tinyint
 	info_open tinyint
@@ -40,7 +40,7 @@ public class MemberVO {
 	
 	// 기타 정보
 	private char gender;               // 성별 (M/F/)   +N
-	private String gerne;              // 관심 장르 (최대 100자)
+	private String genre;              // 관심 장르 (최대 100자)
 	
 	// 수신 및 공개 설정
 	private boolean text_receive;      // 문자 수신 동의 (0: 미동의, 1: 동의)

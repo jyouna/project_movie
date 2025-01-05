@@ -21,6 +21,10 @@
 		<typeAlias type="com.itwillbs.project_movie.vo.MovieVO" alias="movieVO"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.NoticeBoardVO" alias="notice_board"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.FaqBoardVO" alias="faq_board"/>
+		
+		<typeAlias type="com.itwillbs.project_movie.vo.MemberVO" alias="member"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.EmailAuthVO" alias="EmailAutH"/>
+		
 	</typeAliases>
 </configuration>
 

@@ -5,26 +5,28 @@
 <mapper namespace="com.itwillbs.project_movie.mapper.MemberMapper">
 <!-- 민기 -->
 	<!-- 회원 가입 - INSERT -->
+
+	
+	
 	<insert id="insertMember">
-		INSERT INTO member VALUES (
-			#{member_id},
-			#{member_passwd},
-			#{member_name},
-			#{birth_date},
-			#{email},
-			#{phone},
-			#{gender},
-			#{gerne},
-			#{text_receive},
-			#{email_receive},
-			#{info_open},
-			#{point},
-			#{member_type},
-			#{email_auth_status},
-			#{phone_auth_status},
-			#{member_status}
-		)
+	INSERT INTO member (
+		member_id, member_passwd,
+		member_name, birth_date,
+	    email, phone, gender, genre,
+		text_receive, email_receive, info_open, 
+		point,member_type, email_auth_status, 
+		phone_auth_status, member_status
+		
+	) VALUES (
+		#{member_id}, #{member_passwd},
+	    #{member_name}, #{birth_date},
+	    #{email}, #{phone},
+	    #{gender}, #{genre},
+	    #{text_receive}, #{email_receive}, #{info_open},
+		0,1,0,1,1
+	)
 	</insert>
+	
 
 	<!-- 회원 로그인을 위한 아이디, 패스워드 판별 - SELECT -->
 	<select id="selectMemberIdForLogin" resultType="string">
@@ -39,6 +41,15 @@
 		FROM member
 		WHERE member_id = #{member_id}
 	</select>
+	
+	
+<!-- 	회원 정보중 패스워드만 조회 -->
+	<select id="selectMemberPasswd" resultType="string">
+	    SELECT member_passwd
+	    FROM member
+	    WHERE member_id = #{member_id}
+	</select>
+
 
 	<!-- 회원 정보 수정 - UPDATE -->
 	<update id="updateMember">
@@ -50,7 +61,7 @@
 			email = #{email},
 			phone = #{phone},
 			gender = #{gender},
-			gerne = #{gerne},
+			genre = #{genre},
 			text_receive = #{text_receive},
 			email_receive = #{email_receive},
 			info_open = #{info_open},
@@ -62,24 +73,65 @@
 		WHERE member_id = #{member_id}
 	</update>
 
+
+<!--  회원 정보 수정 (패스워드 제외 기능) -->
+<!-- 	<update id="updateMemberWithoutPasswd"> -->
+<!-- 	   UPDATE member -->
+<!-- 	   SET -->
+<!-- 	      name = #{name}, -->
+<!-- 	      post_code = #{post_code} -->
+<!-- 	   WHERE id = #{id} -->
+<!-- 	</update> -->
+	
+	
+	
+	
+<!--  이메일 인증 상태 업데이트 형식 차이	 -->
+<!-- 	<update id="updateMailAuthStatus"> -->
+<!-- 	   UPDATE member -->
+<!-- 	   SET mail_auth_status = 'Y' -->
+<!-- 	   WHERE email = #{email} -->
+<!-- 	</update> -->
+
+
+
+
+
+
 	<!-- 메일 인증 정보 조회 - SELECT -->
-	<select id="selectMailAuthInfo" resultType="com.itwillbs.project_movie.vo.EmailAuthVO">
-		SELECT *
-		FROM mail_auth_info
-		WHERE email = #{email}
+<!-- 	<select id="selectMailAuthInfo" resultType="com.itwillbs.project_movie.vo.EmailAuthVO"> -->
+<!-- 		SELECT * -->
+<!-- 		FROM email_auth -->
+<!-- 		WHERE email = #{email} -->
+<!-- 	</select> -->
+	
+	<resultMap id="emailAuthResultMap" type="com.itwillbs.project_movie.vo.EmailAuthVO">
+	    <result property="email" column="email"/>
+	    <result property="mail_auth_code" column="mail_auth_code"/>
+	</resultMap> 
+	
+	<select id="selectMailAuthInfo" resultMap="emailAuthResultMap">
+	    SELECT email, mail_auth_code
+	    FROM email_auth
+	    WHERE email = #{email}
 	</select>
+		
 
 	<!-- 신규 인증 정보 등록 - INSERT -->
 	<insert id="insertMailAuthInfo">
-		INSERT INTO mail_auth_info VALUES (
-			#{email},
-			#{mail_auth_code}
-		)
+    INSERT INTO email_auth (
+        email,
+        mail_auth_code
+    ) VALUES (
+        #{email},
+        #{mail_auth_code}
+    )
 	</insert>
+	
 
 	<!-- 기존 인증 정보 수정 - UPDATE -->
 	<update id="updateMailAuthInfo">
-		UPDATE mail_auth_info
+		UPDATE email_auth
 		SET mail_auth_code = #{mail_auth_code}
 		WHERE email = #{email}
 	</update>
@@ -90,10 +142,26 @@
 		SET email_auth_status = 1
 		WHERE email = #{email}
 	</update>
+	
+
+	
 
 	<!-- 메일 인증 정보 삭제 - DELETE -->
 	<delete id="deleteMailAuthInfo">
-		DELETE FROM mail_auth_info
+		DELETE FROM email_auth
 		WHERE email = #{email}
 	</delete>
+	
+	<!-- ============================= -->
+	<!-- 추가 기능: 이메일 인증 상태 확인 - SELECT -->
+	<select id="checkEmailAuthStatus" resultType="int">
+		SELECT email_auth_status
+		FROM member
+		WHERE email = #{email}
+	</select>
+	<!-- ============================= -->
+	
+	
+	
+	
 </mapper>

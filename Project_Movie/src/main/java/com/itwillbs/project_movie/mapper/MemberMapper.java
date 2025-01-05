@@ -23,6 +23,10 @@ public interface MemberMapper {
 
 	// 회원 정보 수정
 	int updateMember(Map<String, String> map);
+	
+	
+	int updateMemberWithoutPasswd(Map<String, String> map);
+
 
 	// 회원 정보 조회(패스워드만)
 	String selectMemberPasswd(String id);
@@ -32,17 +36,27 @@ public interface MemberMapper {
 
 	// ===========================================================
 	// 메일 인증 정보 조회
-	EmailAuthVO selectMailAuthInfo(EmailAuthVO mailAuthInfo); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
+	EmailAuthVO selectMailAuthInfo(EmailAuthVO email_auth); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
 
 	// 신규 인증 정보 등록
-	void insertMailAuthInfo(EmailAuthVO mailAuthInfo); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
+	void insertMailAuthInfo(EmailAuthVO email_auth); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
 
 	// 기존 인증 정보 수정
-	void updateMailAuthInfo(EmailAuthVO mailAuthInfo); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
+	void updateMailAuthInfo(EmailAuthVO email_auth); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
 
 	// 메일 인증 상태 변경
-	void updateMailAuthStatus(EmailAuthVO mailAuthInfo); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
+	void updateMailAuthStatus(EmailAuthVO email_auth); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
 
 	// 메일 인증 정보 삭제
-	void deleteMailAuthInfo(EmailAuthVO mailAuthInfo); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
+	void deleteMailAuthInfo(EmailAuthVO email_auth); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
+	
+	
+	// =============================
+	// 추가 기능: 이메일 인증 상태 확인 메서드
+	// 이메일 인증 여부 확인을 위한 메서드 추가
+	int checkEmailAuthStatus(@Param("email") String email);
+	// ============================
+	
+	
+	
 }

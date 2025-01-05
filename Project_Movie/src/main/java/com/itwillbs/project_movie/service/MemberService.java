@@ -50,35 +50,10 @@ public class MemberService {
 		// MemberMapper - updateMemberStatus()
 		return mapper.updateMemberStatus(id, 3);
 	}
-
-	// =========================================================
-	// 이메일 인증정보 등록 요청
-	public void registMailAuthInfo(EmailAuthVO mailAuthInfo) { 
-		//***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
-		EmailAuthVO dbMailAuthInfo = mapper.selectMailAuthInfo(mailAuthInfo);
-		
-		if(dbMailAuthInfo == null) {
-			mapper.insertMailAuthInfo(mailAuthInfo);
-		} else {
-			mapper.updateMailAuthInfo(mailAuthInfo);
-		}
-	}
-
-	// 메일 인증 처리 요청
-	@Transactional
-	public boolean requestEmailAuth(EmailAuthVO mailAuthInfo) { //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
-		boolean isAuthSuccess = false;
-		
-		EmailAuthVO dbMailAuthInfo = mapper.selectMailAuthInfo(mailAuthInfo);
-		
-		if(dbMailAuthInfo != null) {
-			if(mailAuthInfo.getMail_auth_code().equals(dbMailAuthInfo.getMail_auth_code())) { //***** 수정전: auth_code ----> 수정후: mail_auth_code *****
-				mapper.updateMailAuthStatus(mailAuthInfo);
-				mapper.deleteMailAuthInfo(mailAuthInfo);
-				isAuthSuccess = true;
-			}
-		}
-		
-		return isAuthSuccess;
-	}
+	
+	
+	
+	
+	
+	
 }
