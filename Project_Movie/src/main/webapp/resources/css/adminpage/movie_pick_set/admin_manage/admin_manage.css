@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+input[type="checkbox"] {
+    transform: scale(1.5); /* 1.5배 확대 */
+    margin: 5px;}
+    
+#mainTable {
+    width: 400px; /* 설정할 크기 */
+    max-width: 100%; /* 테이블이 상위 요소를 초과하지 않도록 */
+    table-layout: fixed;}
+
+#mainTable th, 
+#mainTable td {
+    border: 1px solid lightgrey !important;
+    text-align: center !important;
+    padding: 5px !important;
+	vertical-align: middle !important; /* 수직 가운데 정렬 */
+	padding: 5px !important;}
+
+tr:hover {
+    background-color: #f9f9f9 !important;}
+
+#tr01 {
+	background-color: l#f9f9f9 !important;}
+   
+.btns {
+	padding:5px !important;
+	border-radius: 20px !important;
+	border: 3px !important;
+	background-color: lightgrey;}

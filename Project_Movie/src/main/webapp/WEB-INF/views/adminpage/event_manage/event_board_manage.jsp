@@ -25,7 +25,7 @@
 	<h3>이벤트 관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" value="전체선택" id="selectAll">
+<!-- 			<input type="button" value="전체선택" id="selectAll"> -->
 			<input type="button" value="등록하기" id="board_regis">
 <!-- 			<input type="button" value="수정하기" id="board_modify"> -->
 <!-- 			<input type="button" value="삭제하기" id="delete"> -->
@@ -45,7 +45,7 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="50">선택</th>
+				<th width="50"><input type="checkbox" id="selectAll"></th>
 <!-- 				<th width="70">번호</th> -->
 				<th width="50">번호</th>
 				<th width="350">제목</th>

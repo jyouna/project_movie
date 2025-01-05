@@ -24,7 +24,7 @@
 	<h3>쿠폰 관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" value="쿠폰발급" id="board_regis">
+			<input type="button" value="쿠폰발급" id="coupon_regis">
 			<input type="button" value="쿠폰삭제" id="delete">
 		</div>	
 		<div id="divTopRight">

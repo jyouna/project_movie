@@ -110,7 +110,7 @@ tr:hover {
 		<div id="divBottom">
 	 		<input type="submit" value="발급" class="btn">
 	 		<input type="reset" value="초기화" class="btn">
-	 		<input type="button" value="닫기" onclick="window.close()" class="btn">
+	 		<input type="button" value="닫기" onclick="history.back()" class="btn">
 		</div>
 	</form>
 

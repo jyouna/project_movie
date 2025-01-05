@@ -19,17 +19,14 @@ public class AdminManageService {
 		return manageMapper.insertAccount(adminVo);
 	}
 
-	public List<AdminRegisVO> queryAdminList() {
+	public List<AdminRegisVO> queryAdminList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
-		return manageMapper.selectAdminList();
+		return manageMapper.selectAdminList(startRow, listLimit);
 	}
 
-	public void deleteAdminAccount(String[] admin_id) {
+	public int deleteAdminAccount(String id) {
 		// TODO Auto-generated method stub
-		
-		for(String id : admin_id) {
-			manageMapper.deleteAdminAccount(id);
-		}
+		return manageMapper.deleteAdminAccount(id);
 	}
 
 	public void regisEventBoard(EventBoardVO eventVo) {
@@ -56,6 +53,32 @@ public class AdminManageService {
 	public EventBoardVO updateEventBoard(int event_code) {
 		// TODO Auto-generated method stub
 		return manageMapper.getEventBoardContent(event_code);
+	}
+
+	public String checkAdminId(String id) {
+		// TODO Auto-generated method stub
+		String checkIdResult = manageMapper.checkAdminId(id);
+		
+		if(checkIdResult == null) {
+			return "사용 가능한 아이디";
+		} else {
+			return "이미 사용중인 아이디";
+		}
+	}
+
+	public int getBoardListCount() {
+		int listCount = manageMapper.getBoardListCount();
+		return listCount;
+	}
+
+	public AdminRegisVO accountModifyForm(String admin_id) {
+		// TODO Auto-generated method stub
+		return manageMapper.selectAdminAccountInfo(admin_id);
+	}
+
+	public void accountModify(AdminRegisVO modifyVo) {
+		// TODO Auto-generated method stub
+		manageMapper.adminAccountModify(modifyVo);
 	}
 
 //	public void selectWinner(int[] event_codes) {

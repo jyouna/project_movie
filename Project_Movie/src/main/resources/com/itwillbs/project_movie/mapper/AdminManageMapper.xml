@@ -23,13 +23,49 @@
 	
 	<select id="selectAdminList" resultType="adminmanage">
 		SELECT *
-		FROM admin;
+		FROM admin
+		ORDER BY start_date
+		LIMIT
+			#{startRow},
+			#{listLimit}
+	</select>
+	
+	<select id="checkAdminId" resultType="String">
+		SELECT admin_id
+		FROM admin
+		WHERE admin_id = #{id}
 	</select>
 	
 	<delete id="deleteAdminAccount">
 		DELETE FROM admin
 		WHERE admin_id = #{id}
 	</delete>
+	
+	<select id="getBoardListCount">
+		SELECT count(*)
+		FROM admin
+	</select> 
+	
+	<select id="selectAdminAccountInfo" resultType="adminmanage">
+		SELECT *
+		FROM admin
+		WHERE admin_id = #{admin_id}
+	</select>
+	
+	<update id="adminAccountModify">
+		UPDATE admin
+		SET 
+			user_name = #{user_name},
+			admin_passwd = #{admin_passwd},
+			member_manage = #{member_manage},
+			payment_manage = #{payment_manage},
+			notice_board_manage = #{notice_board_manage},
+			movie_manage = #{movie_manage},
+			theater_manage = #{theater_manage},
+			vote_manage = #{vote_manage}
+		WHERE
+			admin_id = #{admin_id}
+	</update>
 	
 	<insert id="insertEventBoard">
 		<selectKey keyProperty="event_code" resultType="int" order="BEFORE">
@@ -77,7 +113,8 @@
 		FROM event_board
 		WHERE event_code = #{event_code}
 	</select> 
-	
+
+
 <!-- 	<insert id="selectEventWinner"> -->
 <!-- 		INSERT INTO event_winner -->
 <!-- 		VALUES ( -->

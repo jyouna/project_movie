@@ -1,12 +1,10 @@
 package com.itwillbs.project_movie.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
+import com.itwillbs.project_movie.vo.PageInfo;
 
 @Controller
 public class AdminSettingController {
@@ -26,13 +24,33 @@ public class AdminSettingController {
 	private AdminManageService adminService;
 	
 	@GetMapping("AdminAccountManage") // 관리자 계정관리 페이지 이동
-	public String adminAccountManagement(Model model) {
+	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		int listLimit = 2;
+		int startRow = (pageNum - 1) * listLimit;
+		int listCount = adminService.getBoardListCount();
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		if(pageNum < 1 || pageNum > maxPage) {
+			return "";
+		}
+		
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
+		System.out.println("페이지 정보 : " + pageInfo);
 		List<AdminRegisVO> voList = new ArrayList<AdminRegisVO>();
-		voList = adminService.queryAdminList();
-		System.out.println("관리자 관리 페이지 에서 호출 : " + voList);
+		voList = adminService.queryAdminList(startRow, listLimit);
 		model.addAttribute("voList", voList);
+		model.addAttribute("pageInfo", pageInfo);
+		
 		return "adminpage/admin_manage/adminpage_account_manage";
-	}
+	}	
 
 	@GetMapping("AdminAccountRegis") // 관리자 계정 생성 폼으로 이동
 	public String adminAccountRegistration() {
@@ -46,77 +64,101 @@ public class AdminSettingController {
 		return "redirect:/AdminAccountManage";
 	}
 	
-	@GetMapping("DeleteAdminAccount") // 관리자 계정 삭제
-	public String adminAccountDelete(@RequestParam("admin_id") String[] admin_id) {
-//		System.out.println("화면에서 받아온 값 : " + admin_id);
-		for (String id : admin_id) {
-			System.out.println(id);
-		}
-		
-		adminService.deleteAdminAccount(admin_id);
-		
-		return "redirect:/AdminAccountManage";
+	@GetMapping("AdminIdCheck") // 아이디 중복체크 ajax 응답
+	@ResponseBody
+	public Map<String, String> adminIdCheck(String id) {
+		String checkId = adminService.checkAdminId(id);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("checkIdResult", checkId);
+		return map;
 	}
 	
-	@GetMapping("AdminPageIdSearch")
+	@GetMapping("DeleteAdminAccount") // 관리자 계정 삭제
+	public String adminAccountDelete(@RequestParam("admin_id") String[] admin_id, Model model) {
+//		System.out.println("화면에서 받아온 값 : " + admin_id);
+		int  deleteCount = 0;
+		
+		for (String id : admin_id) {
+			adminService.deleteAdminAccount(id);
+			deleteCount++;
+		}
+		
+		if(deleteCount > 0) {		
+			return "redirect:/AdminAccountManage";
+		} else {
+			return "";
+		}
+	}
+	
+	@GetMapping("AdminPageIdSearch") // 아이디 조회 버튼
 	public String idSearch() {
 		return "adminpage/id_search";
 	}
 	
-	@PostMapping("AdminSetAuth") // 관리자 계정 설정
-	public String adminSetAuth(@RequestBody Map<String, String> authRequest) {
-		System.out.println("ajax에서 관리자 계정 설정 컨트롤러 호출!");
-		System.out.println("권한 요청 내역 : "+ authRequest);
+	@GetMapping("AdminAccountModify") // 관리자 계정 수정
+	public String adminAccountModifyForm(String admin_id, Model model) {
+		System.out.println("계정 수정 페이지 요청됨!! + " + admin_id);
 		
-		return "";
+		AdminRegisVO modifyVo = adminService.accountModifyForm(admin_id);
+		model.addAttribute("voList", modifyVo);
+		
+		return "adminpage/admin_manage/adminpage_account_modifyForm";
 	}
 	
-	@GetMapping("MemberList")
+	@PostMapping("AdminAccountModify")
+	public String adminAccountModify(AdminRegisVO modifyVo) {
+		System.out.println("수정 폼 전송 완료 : " + modifyVo);
+		adminService.accountModify(modifyVo);
+		
+		return "redirect:/AdminAccountManage";
+	}
+	
+	@GetMapping("MemberList") // 회원 리스트 조회
 	public String memberList() {
 		return "adminpage/member_manage/member_list";
 	}
 	
-	@GetMapping("StaticsVisitors")
+	@GetMapping("StaticsVisitors") // 방문자 통계
 	public String staticsVisitors() {
 		return "adminpage/statics_manage/statics_visitors";
 	}
 
-	@GetMapping("StaticsSales")
+	@GetMapping("StaticsSales") // 매출 통계 
 	public String staticsSales() {
 		return "adminpage/statics_manage/statics_sales";
 	}
 	
-	@GetMapping("StaticsVoteResult")
+	@GetMapping("StaticsVoteResult") // 투표 결과
 	public String staticsVoteResult() {
 		return "adminpage/statics_manage/statics_voteResult";
 	}
 	
-	@GetMapping("StaticsNewMember")
+	@GetMapping("StaticsNewMember") // 신규 가입자 통계
 	public String staticsNewMembers() {
-		return "adminpage/statics_manage/statics_newMembers";
+		return "adminpage/statics_manage/statics_newMember";
 	}
 	
-	@GetMapping("SpecificPeriodSearch")
+	@GetMapping("SpecificPeriodSearch") // 상세 기간 조회 버튼
 	public String specificPeriodSearch() {
 		return "adminpage/specific_period_search";
 	}
 
-	@GetMapping("CouponBoardManage")
+	@GetMapping("CouponBoardManage") // 쿠폰 관리 페이지
 	public String couponBoardManagement() {
 		return "adminpage/coupon_manage/coupon_board_manage";
 	}
 	
-	@GetMapping("CouponBoardRegis")
+	@GetMapping("CouponBoardRegis") // 쿠폰 등록
 	public String couponBoardRegistration() {
 		return "adminpage/coupon_manage/coupon_board_regis";
 	}
 
-	@GetMapping("PointBoardManage")
+	@GetMapping("PointBoardManage") // 포인트 관리 페이지
 	public String pointBoardManagement() {
 		return "adminpage/point_manage/point_board_manage";
 	}
 	
-	@GetMapping("PointBoardRegis")
+	@GetMapping("PointBoardRegis") // 포인트 등록
 	public String pointBoardRegistration() {
 		return "adminpage/point_manage/point_board_regis";
 	}
@@ -129,12 +171,12 @@ public class AdminSettingController {
 		return "adminpage/event_manage/event_board_manage";
 	}
 	
-	@GetMapping("EventBoardRegis")
+	@GetMapping("EventBoardRegis") // 이벤트 게시글 등록폼
 	public String eventBoardRegisForm() {
 		return "adminpage/event_manage/event_board_regis";
 	}
 	
-	@GetMapping("EventBoardRegisSubmit")
+	@GetMapping("EventBoardRegisSubmit") // 이벤트 게시글 등록폼 제출
 	public String eventBoardRegistration(EventBoardVO eventVo, HttpSession session) {
 //		String sId = session.getId();
 		String sId = "admin";
@@ -167,7 +209,7 @@ public class AdminSettingController {
 		return "redirect:/EventBoardManage";
 	}
 
-	@GetMapping("updateEventBoard")
+	@GetMapping("updateEventBoard") // 이벤트 게시글 수정폼 이동
 	public String updateEventBoard(int event_code, EventBoardVO eventVo, Model model) {
 		eventVo = adminService.updateEventBoard(event_code);
 		model.addAttribute("eventVo", eventVo);
@@ -175,7 +217,7 @@ public class AdminSettingController {
 		return "adminpage/event_manage/event_board_modify";
 	}
 	
-	@PostMapping("updateEventBoard")
+	@PostMapping("updateEventBoard") // 이벤트 게시글 수정폼 제출
 	public String eventBoardModify(EventBoardVO eventVo) {
 		return "";
 	}
@@ -196,7 +238,7 @@ public class AdminSettingController {
 		return "";
 	}
 	
-	@GetMapping("EventWinnerManage")
+	@GetMapping("EventWinnerManage") // 이벤트 당첨자 관리 페이지
 	public String eventWinnerPage() {
 		
 		return "adminpage/event_manage/event_winner_manage";

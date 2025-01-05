@@ -15,14 +15,18 @@ $(function(){
 		location.href="EventBoardRegis";
 	});	
 	
+	$("#coupon_regis").on("click", function(){
+		location.href="CouponBoardRegis";
+	});
+	
 	$("#selectAll").on("click", function(){
 	    let checkboxes = $(".eventSetCheckbox");
-	    let isChecked = $(this).data("checked") || false; // 현재 버튼 상태를 확인 (기본값은 false)
+	    let isChecked = $(this).data("checked") || false; // 현재 체크 상태 (기본값은 false)
 	    
-	    // 체크 상태를 반전시킴
+	    // 체크 상태를 반전
 	    checkboxes.prop("checked", !isChecked);
 
-	    // 버튼 상태를 업데이트
+	    // 체크 박스 
 	    $(this).data("checked", !isChecked);
 
 	    // 버튼 텍스트 변경

@@ -31,9 +31,9 @@
 					        <a class="nav-link" href="MemberList">
 					            회원목록
 					        </a>
-					        <a class="nav-link" href="AdminAccountManage">
-					            관리자 권한 관리
-					        </a>
+<!-- 					        <a class="nav-link" href="AdminAccountManage"> -->
+<!-- 					            관리자 권한 관리 -->
+<!-- 					        </a> -->
 					    </nav>
 					</div>
 						
@@ -174,7 +174,7 @@
 					        <a class="nav-link" href="StaticsVoteResult">
 					            선호영화통계
 					        </a>
-					        <a class="nav-link" href="StaticsNewMembers">
+					        <a class="nav-link" href="StaticsNewMember">
 					            가입자통계
 					        </a>
 					    </nav>
