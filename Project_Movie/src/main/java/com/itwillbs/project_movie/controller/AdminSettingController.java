@@ -23,6 +23,29 @@ public class AdminSettingController {
 	@Autowired
 	private AdminManageService adminService;
 	
+	@GetMapping("AdminLogin")
+	public String adminLogigForm() {
+		return "adminpage/admin_manage/adminpage_login_form";
+	}
+	
+	@PostMapping("AdminLogin")
+	public String adminLogin(AdminRegisVO adminLoginInfo, HttpSession session, Model model) {
+		System.out.println("입력한 아이디 : " + adminLoginInfo.getAdmin_id());
+		System.out.println("입력한 비밀번호" + adminLoginInfo.getAdmin_passwd());
+		
+		AdminRegisVO adminInfo = adminService.adminLogin(adminLoginInfo);
+		
+		if(adminInfo == null) {
+			model.addAttribute("msg", "로그인 정보가 일치하지 않습니다.");
+			return "result/process";
+		} else {
+			session.setAttribute("admin_sId", adminInfo.getAdmin_id());
+			return "redirect:/AdminpageMain";
+		}
+		
+	}
+	
+	
 	@GetMapping("AdminAccountManage") // 관리자 계정관리 페이지 이동
 	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		int listLimit = 2;

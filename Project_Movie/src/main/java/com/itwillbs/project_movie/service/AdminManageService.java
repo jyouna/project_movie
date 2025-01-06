@@ -81,6 +81,11 @@ public class AdminManageService {
 		manageMapper.adminAccountModify(modifyVo);
 	}
 
+	public AdminRegisVO adminLogin(AdminRegisVO adminLoginInfo) {
+		// TODO Auto-generated method stub
+		return manageMapper.adminLogin(adminLoginInfo);
+	}
+
 //	public void selectWinner(int[] event_codes) {
 //		
 //		for(int event_code : event_codes) {

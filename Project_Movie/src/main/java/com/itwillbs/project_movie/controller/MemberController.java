@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.service.MailService;
 import com.itwillbs.project_movie.service.MemberService;
 import com.itwillbs.project_movie.vo.EmailAuthVO; //*****수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
@@ -82,6 +83,7 @@ public class MemberController {
 	// 연결된 서비스: registMember(), sendAuthMail(), registMailAuthInfo()
 	@PostMapping("MemberJoin")
 	public String memberJoin(MemberVO member, Model model, BCryptPasswordEncoder passwordEncoder) {
+		
 		//***** 수정전: passwd ----> 수정후: member_passwd *****
 		String securedPasswd = passwordEncoder.encode(member.getMember_passwd());
 		
@@ -131,8 +133,6 @@ public class MemberController {
 //	            return "member/member_join_form";
 //	        }
 //		}	
-
-	
 	
 	int insertCount = 0;
     
@@ -209,6 +209,7 @@ public class MemberController {
 			HttpSession session,Model model,
 			BCryptPasswordEncoder passwordEncoder,
 			HttpServletResponse response) {
+	
 	// MemberService - loginMember() 메서드 호출하여 로그인 여부 판별 요청
 	// => 파라미터 : MemberVO 객체   리턴타입 : String(조회 성공 시 아이디 리턴)
 	//				String result = service.loginMember(member);
@@ -335,7 +336,6 @@ public class MemberController {
 						// 메인페이지로 리다이렉트
 			
 			return "redirect:/"; // 연결된 뷰: main.jsp
-			
 		} //else
 	} //memberLogin
 	
