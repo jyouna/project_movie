@@ -37,6 +37,8 @@ public interface AdminManageMapper {
 
 	void adminAccountModify(AdminRegisVO modifyVo);
 
+	AdminRegisVO adminLogin(AdminRegisVO adminLoginInfo);
+
 
 //	void selectEventWinner(@Param("event_code") int event_code);
 }

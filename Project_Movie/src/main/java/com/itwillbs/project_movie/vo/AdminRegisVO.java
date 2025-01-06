@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.vo;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import lombok.Data;
 public class AdminRegisVO {
 	private String admin_id;
 	private String admin_passwd;
-	private Date start_date;
+	private LocalDate start_date;
 	private Boolean user_status;
 	private String user_name;
 	private Boolean member_manage;

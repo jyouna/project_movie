@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.project_movie.service.AdminManageService;
@@ -22,6 +21,34 @@ import com.itwillbs.project_movie.vo.PageInfo;
 public class AdminSettingController {
 	@Autowired
 	private AdminManageService adminService;
+	
+	@GetMapping("AdminLogin")
+	public String adminLogigForm(HttpSession session) {
+		System.out.println("관리자 로그인 세션 : " + session.getAttribute("admin_sId"));
+		if(session.getAttribute("admin_sId") == null) {
+			return "adminpage/admin_manage/adminpage_login_form";
+		} else {
+			return "redirect:/AdminpageMain";
+		}
+	}
+	
+	@PostMapping("AdminLogin")
+	public String adminLogin(AdminRegisVO adminLoginInfo, HttpSession session, Model model) {
+		System.out.println("입력한 아이디 : " + adminLoginInfo.getAdmin_id());
+		System.out.println("입력한 비밀번호" + adminLoginInfo.getAdmin_passwd());
+		
+		AdminRegisVO adminInfo = adminService.adminLogin(adminLoginInfo);
+		
+		if(adminInfo == null) {
+			model.addAttribute("msg", "로그인 정보가 일치하지 않습니다.");
+			return "result/process";
+		} else {
+			session.setAttribute("admin_sId", adminInfo.getAdmin_id());
+			return "redirect:/AdminpageMain";
+		}
+		
+	}
+	
 	
 	@GetMapping("AdminAccountManage") // 관리자 계정관리 페이지 이동
 	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, Model model) {

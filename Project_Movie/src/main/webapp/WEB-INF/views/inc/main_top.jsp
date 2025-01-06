@@ -32,8 +32,6 @@
 		      }
 		   }
 		</script>
-				
-
 		<!-- Logo -->
 			<div id="logo">
 				<h1><a href="${pageContext.request.contextPath}">Escape Velocity</a></h1>
@@ -101,6 +99,6 @@
     }
     
     function openAdminpage() {
-        window.open("AdminpageMain", "Adminpage", "width=1300,height=800, top=150, left=300, resizable=no");
+        window.open("AdminLogin", "AdminLoginpage", "width=1300,height=800, top=150, left=300, resizable=no");
     }
 </script>
