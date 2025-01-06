@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/book_tickets/book_tickets.css">
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/book_tickets/book_tickets.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -60,7 +61,22 @@
 							<c:forEach var="movie" items="${movieList}" >
 								<div class="mv_list">
 									<a href="#">
-										<span class="mv_age">${movie.age_limit}</span>
+										<span class="mv_age">
+											<c:choose>
+												<c:when test="${movie.age_limit eq '12세이상관람가'}">
+													<img src="${pageContext.request.contextPath}/resources/images/mv_age(12).png">
+												</c:when>
+												<c:when test="${movie.age_limit eq '15세이상관람가'}">
+													<img src="${pageContext.request.contextPath}/resources/images/mv_age(15).png">
+												</c:when>
+												<c:when test="${movie.age_limit eq '청소년관람불가'}">
+													<img src="${pageContext.request.contextPath}/resources/images/mv_age(19).png">
+												</c:when>
+												<c:otherwise>
+													<img src="${pageContext.request.contextPath}/resources/images/mv_age(all).png">
+												</c:otherwise>
+											</c:choose>
+										</span>
 										<span class="mv_title">${movie.movie_name}</span>
 									</a>
 								</div>

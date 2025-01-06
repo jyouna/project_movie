@@ -24,7 +24,7 @@ public class MovieVO {
 	private String movie_img4;
 	private String movie_img5;
 	private String movie_trailer;
-	private Date regist_date;
+	private Timestamp regist_date;
 	private String regist_admin_id;
 	private String movie_type;
 	private Date start_screening_date;
