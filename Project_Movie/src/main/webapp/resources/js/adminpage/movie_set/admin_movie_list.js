@@ -201,7 +201,7 @@ $(function() {
 				return actorResult;
 			});
 			
-			// 개봉일이 String 으로 넘어와서 Date 타입 형식으로 변환
+			// API에서 개봉일이 String 으로 넘어와서 Date 타입 형식으로 변환
 			let dateStr = movieInfo.openDt;
 			let year = dateStr.substring(0, 4);
 			let month = dateStr.substring(4, 6);

@@ -82,7 +82,6 @@ public class MovieController {
 		
 		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit);
 		model.addAttribute("movieList", movieList);
-		
 		return "adminpage/movie_set/admin_movie_list";
 	}
 	
@@ -93,10 +92,10 @@ public class MovieController {
 	public List<MovieVO> adminMovieSetSearchBox(@RequestParam Map<String, String> map) {
 		List<MovieVO> SearchMovieList =  movieService.searchMovie(map);
 		
-		// ajax 응답할때 timestamp 타입으로 반환되는 db의 Date타입 데이터를
-		// String타입으로 변환 후 응답
+		// db의 timestamp타입 데이터를 String타입으로 변환 후 응답
 		for(MovieVO movieVO : SearchMovieList) {
-			movieVO.setStr_regist_date(movieVO.getRegist_date().toString());
+			String[] formatDateString = movieVO.getRegist_date().toString().split(" ");
+			movieVO.setStr_regist_date(formatDateString[0]);
 		}
 		return SearchMovieList;
 	}

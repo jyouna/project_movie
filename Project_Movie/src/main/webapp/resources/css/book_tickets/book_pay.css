@@ -266,11 +266,16 @@ table tr th, table tr td {
     border-bottom: 1px solid #ddd;
     border-left: none;
     border-right: none;
-    
+	
 }
 
 table tr td {
 	padding: 2px;
+}
+
+table input[type="checkbox"] {
+	vertical-align: middle;
+	margin-bottom: 3px;
 }
 
 table tr th:not(:last-child),
