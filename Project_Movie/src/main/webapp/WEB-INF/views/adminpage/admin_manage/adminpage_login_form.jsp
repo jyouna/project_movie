@@ -11,9 +11,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_login_form.css" />
 </head>
 <body class="left-sidebar is-preload">
-
-	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/inc/page/member_sidebar.jsp"></jsp:include>
 	
 	<article class="box post">
 		<div class="container">
@@ -49,7 +46,5 @@
 
 	</article>
 
-	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	<script src="${pageContext.request.contextPath}/resources/js/member/member_login_form.js"></script>
 </body>
 </html>

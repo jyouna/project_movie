@@ -24,8 +24,13 @@ public class AdminSettingController {
 	private AdminManageService adminService;
 	
 	@GetMapping("AdminLogin")
-	public String adminLogigForm() {
-		return "adminpage/admin_manage/adminpage_login_form";
+	public String adminLogigForm(HttpSession session) {
+		System.out.println("관리자 로그인 세션 : " + session.getAttribute("admin_sId"));
+		if(session.getAttribute("admin_sId") == null) {
+			return "adminpage/admin_manage/adminpage_login_form";
+		} else {
+			return "redirect:/AdminpageMain";
+		}
 	}
 	
 	@PostMapping("AdminLogin")
