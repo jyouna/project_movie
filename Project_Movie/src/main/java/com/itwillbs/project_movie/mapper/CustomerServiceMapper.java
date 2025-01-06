@@ -10,17 +10,23 @@ import com.itwillbs.project_movie.vo.NoticeBoardVO;
 
 @Mapper
 public interface CustomerServiceMapper {
-
+	// 공지사항 게시물 수 조회
 	int selectNoticeListCount();
-
+	// 공지사항 목록 조회
 	List<NoticeBoardVO> selectNoticeList(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
-
+	// 공지사항 상세정보 조회
 	NoticeBoardVO selectNotice(int notice_code);
-
-	void updateReadCount(NoticeBoardVO notice);
-
+	// 공지사항 조회수 증가
+	void updateNoticeReadCount(NoticeBoardVO notice);
+	// 자주하는 문의 게시물 수 조회
 	int selectFaqListCount();
 
-	List<FaqBoardVO> selectFaqList(int startRow, int listLimit);
+	List<FaqBoardVO> selectFaqList(@Param("startRow") int startRow,@Param("listLimit") int listLimit);
+
+	FaqBoardVO selectFaq(int faq_code);
+
+	void updateFaqReadCount(FaqBoardVO faq);
+
+	int deleteNotice(NoticeBoardVO notice);
 	
 }

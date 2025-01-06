@@ -20,10 +20,13 @@
 	
 	<article class="box post">
 		<div class="content">
-    		<h1>좌석배치도</h1>
+    		<h1 style="font-size: 1.5em;">좌석배치도</h1>
+    		<hr>
     	<div class="seat-layout">
-      		<img src="${pageContext.request.contextPath}/resources/images/seat.png" alt="좌석 배치도">
-    	</div>
+				<img
+					src="${pageContext.request.contextPath}/resources/images/seat.png"
+					alt="좌석 배치도" width="779.5" height="451">
+			</div>
   		</div>
 	</article>
 

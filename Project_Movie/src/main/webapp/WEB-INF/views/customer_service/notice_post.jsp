@@ -44,29 +44,14 @@
 			${notice.notice_content}
 		</section>
 		<section id="commandCell">
-			<c:if test="${sessionScope.sId eq notice_board.notice_writer || sessionScope.sId eq 'admin' }">
-				<input type="button" value="수정" id="Modify" >
-				<input type="button" value="삭제" id="Delete">
-			</c:if>
+
 			<%-- 목록 버튼 항상 표시 --%>
 			<input type="button" value="목록" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
-			<input type="button" value="△이전글" onclick="">
-			<input type="button" value="▽다음글" onclick="">
+			<input type="button" value="△이전글" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'">
+			<input type="button" value="▽다음글" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'">
 		</section>
 	</article>
-	<script type="text/javascript">
-		$(function() {
-			$("#Modify").on("click", function () {
-				confirm("수정하시겠습니까?")
-			});
-			
-			$("#Delete").on("click", function () {
-				confirm("삭제하시겠습니까?")
-			});
-		});
-	
-	
-	</script>
+
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>

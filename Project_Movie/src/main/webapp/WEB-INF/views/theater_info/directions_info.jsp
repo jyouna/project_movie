@@ -17,18 +17,24 @@
 	<article class="box post">
 		<div class="content">
 
-    		<h2 style="font-size: 30px;">오시는 길</h2>
-    		<h6>여기는 지도 api자리</h6>
-<!-- 			<img src="" alt="지도api 이용"> -->
-	
- 
+    		<h1 style="font-size: 1.5em;">오시는 길</h1>
+    		<br>
+    		<div id = "map" style="width: 750px; height:400px;"></div>
+    		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c5b5e9afc6d3af813d2e295bea48e20"></script>
+    		<script type="text/javascript">
+    			var container = document.getElementById('map');
+    			var options = {
+    					center: new kakao.maps.LatLng(33.450701,126.570667),
+    					level:3
+    			};
+ 				var map = new kakao.maps.Map(container, options);   		
+    		</script>
 
     	<div class="list-container">
      	 <p><strong>• 도로명 주소 : (48513) 부산광역시 남구 용소로 45 </strong></p>
      	 <p><strong>• 지번 주소 : 부산광역시 남구 용소로 45</strong></p>
      	 <p><strong>• 대표 전화 : ☎ (051)629-4114</strong></p>
      	 	<ul>
-
 	       	 	<li><h4>버스 이용시</h4> 10, 20, 22, 24, 27, 39, 40, 41, 42, 51, 83, 83-1, 108-1, 131, 139, 155, 583, 1003 </li>
 	        	<li><h4>지하철 이용시</h4>1호선 : 부산역에서 학교로 부산역 → 서면(환승) → 경성대,부경대역 3번 출구<br>
 						   2호선 : 서부시외버스터미널에서 학교로 사상 → 서면 → 경성대,부경대역 3번 출구</li>

@@ -49,21 +49,21 @@
 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="faq_board" items="${faqList}" varStatus="status">
+						<c:forEach var="faq_board" items="${faqList}" >
 							<tr>
 								<td class="faq_code">${faq_board.faq_code}</td>
 								<td class="faq_subject">${faq_board.faq_subject}</td>
-								<td><fmt:formatDate value="${faq_board.regis_date}" pattern="yy-MM-dd "/></td>
-								<td>${faq.view_count}</td>
+								<td><fmt:formatDate value="${faq_board.regis_date}" pattern="yy-MM-dd"/></td>
+								<td>${faq_board.view_count}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>					
 				</c:choose>
 			</table>
 		</section>
-				<section id="pageList">
+		<section id="pageList">
 			<input type="button" value="&lt" 
-				onclick="location.href='BoardList?pageNum=${pageInfo.pageNum - 1}'" 
+				onclick="location.href='FaqList?pageNum=${pageInfo.pageNum - 1}'" 
 				 <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 			
 			<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -90,7 +90,7 @@
 				console.log(event.target);
 				let faq_code = $(event.target).siblings(".faq_code").text();
 				console.log("siblings " + faq_code);
-				location.href = "BoardDetail?board_num=" + board_num + "&pageNum=${pageInfo.pageNum}";
+				location.href = "FaqPost?faq_code=" + faq_code + "&pageNum=${pageInfo.pageNum}";
 			
 			});
 		

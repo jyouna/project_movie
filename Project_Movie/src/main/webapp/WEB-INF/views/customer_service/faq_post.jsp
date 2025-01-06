@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Insert title here</title>
+	<title>faq post</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
@@ -26,47 +26,30 @@
 			<table>
 				<tr>
 					<th>제목</th>
-					<td colspan="3">${board.board_subject}</td>
+					<td colspan="3">${faq.faq_subject}</td>
 				</tr>
 				<tr>
 					<th>등록일</th>
 					<td>
-						<fmt:formatDate value="${board.board_date}" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${faq.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>
-					<td colspan="3" id="board_file"></td>
+					<td colspan="3" id="faq_file1"></td>
 				</tr>
 			</table>
 		</section>
 		<section id="articleContentArea">
-			${board.board_content}
+			${faq.faq_content}
 		</section>
 		<section id="commandCell">
-			<c:if test="${sessionScope.sId eq board.board_name || sessionScope.sId eq 'admin' }">
-				<input type="button" value="수정" id="Modify" >
-				<input type="button" value="삭제" id="Delete">
-			</c:if>
 			<%-- 목록 버튼 항상 표시 --%>
-			<input type="button" value="목록" onclick="location.href='BoardList?pageNum=${param.pageNum}'">
-			<input type="button" value="△이전글" onclick="">
-			<input type="button" value="▽다음글" onclick="">
+			<input type="button" value="목록" onclick="location.href='FaqList?pageNum=${param.pageNum}'">
+			<input type="button" value="△이전글" onclick="location.href='FaqPost?faq_code=${param.faq_code-1}&pageNum=${param.pageNum}'">
+			<input type="button" value="▽다음글" onclick="location.href='FaqPost?faq_code=${param.faq_code+1}&pageNum=${param.pageNum}'">
 		</section>
 	</article>
-	<script type="text/javascript">
-		$(function() {
-			$("#Modify").on("click", function () {
-				confirm("수정하시겠습니까?")
-			});
-			
-			$("#Delete").on("click", function () {
-				confirm("삭제하시겠습니까?")
-			});
-		});
-	
-	
-	</script>
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	

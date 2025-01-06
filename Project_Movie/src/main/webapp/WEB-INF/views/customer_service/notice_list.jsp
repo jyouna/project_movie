@@ -10,7 +10,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customer_service/notice_list.css" />
-	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+		<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -43,7 +46,7 @@
 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="notice_board" items="${noticeList}">
+						<c:forEach var="notice_board" items="${noticeList}" varStatus="status">
 							<tr>
 								<td class="notice_code">${notice_board.notice_code}</td>
 								<td class="notice_subject">${notice_board.notice_subject}</td>
@@ -82,7 +85,6 @@
 	$(function() {
 		
 		$(".notice_subject").on("click", function(event) {
-			console.log(event.target);
 			let notice_code = $(event.target).siblings(".notice_code").text();
 			console.log("siblings " + notice_code);
 			location.href = "NoticePost?notice_code=" + notice_code + "&pageNum=${pageInfo.pageNum}";

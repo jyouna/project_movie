@@ -4,21 +4,23 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.itwillbs.project_movie.mapper.CustomerServiceMapper">
  
- 	<select id= "selectNoticeListCount" resultType="int">
+ 	<select id="selectNoticeListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM notice_board
- 	
  	</select>
  	<select id="selectNoticeList" resultType="notice_board">
  		SELECT *
  		FROM notice_board
+		LIMIT 
+			#{startRow}
+			, #{listLimit}
  	</select>
- 	<select id="selectNotice">
+ 	<select id="selectNotice" resultType="notice_board">
  		SELECT *
  		FROM notice_board
  		WHERE notice_code = #{notice_code}
  	</select>
- 	<update id="updateReadCount">
+ 	<update id="updateNoticeReadCount">
  		<selectKey keyProperty = "view_count" resultType="int" order="AFTER">
  			SELECT view_count
  			FROM notice_board
@@ -28,6 +30,12 @@
  		SET view_count = view_count + 1
  		WHERE notice_code = #{notice_code}
  	</update>
+ 	<delete id="deleteNotice">
+ 		DELETE 
+ 		FROM notice_board
+ 		WHERE notice_code = #{notice_code}
+ 	</delete>
+<!--  	faq xml -->
  	<select id="selectFaqListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM faq_board
@@ -35,10 +43,25 @@
  	<select id="selectFaqList" resultType="faq_board">
  		SELECT *
  		FROM faq_board
+		LIMIT 
+			#{startRow}
+			, #{listLimit}
  	</select>
- 	
- 
- 
+ 	<select id="selectFaq" resultType="faq_board">
+ 		SELECT *
+ 		FROM faq_board
+ 		WHERE faq_code = #{faq_code}
+ 	</select>
+ 	<update id="updateFaqReadCount">
+<!--  		<selectKey keyProperty ="view_count" resultType="int" order="AFTER"> -->
+<!--  			SELECT view_count -->
+<!--  			FROM faq_board -->
+<!--  			WHERE faq_code = #{faq_code} -->
+<!--  		</selectKey> -->
+ 		UPDATE faq_board 
+ 		SET view_count = view_count + 1
+ 		WHERE faq_code = #{faq_code}
+	</update>
  
  
  

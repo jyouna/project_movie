@@ -12,6 +12,7 @@ public class FaqBoardVO {
 	private String faq_file1;
 	private String faq_file2;
 	private String faq_file3;
+	private String faq_writer;
 	private Timestamp regis_date;
 	private int view_count;
 	

@@ -16,7 +16,7 @@
 	<Loggers>
 		<!-- Root Logger 설정 -->
 		<!-- 기본 출력되는 시스템 로그를 담당하며, level 의 심각도 변경을 통해 로그 출력 범위 지정 가능 -->
-		<Root level="DEBUG">
+		<Root level="INFO">
 			<AppenderRef ref="console"></AppenderRef>
 		</Root>
 		
