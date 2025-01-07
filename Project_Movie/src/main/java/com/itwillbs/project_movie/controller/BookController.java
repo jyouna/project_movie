@@ -13,6 +13,7 @@ import com.itwillbs.project_movie.vo.MovieVO;
 
 @Controller
 public class BookController {
+
 	@Autowired private BookService service;
 	
 	@GetMapping("MovieScheduleInfo")
