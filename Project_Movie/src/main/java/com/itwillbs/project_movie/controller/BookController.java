@@ -28,6 +28,8 @@ public class BookController {
 		
 		System.out.println("movieList : " + movieList);
 		
+		
+		
 		return "book_tickets/book_tickets";
 	}
 	

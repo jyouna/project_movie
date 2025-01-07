@@ -205,11 +205,21 @@ p {
 	margin: 15px;
 }
 
-.coupon_form {
+.coupon .coupon_form {
 	margin: 0 10px;
 	min-width: unset;
 	width: 300px;
 	border: 1px solid #ddd;
+	background-color: white;
+}
+
+.coupon .coupon_form.clicked {
+	
+	background-color: white;
+}
+
+form input[type="text"] {
+	all: unset;
 }
 
 .coupon_container .submit_btn {

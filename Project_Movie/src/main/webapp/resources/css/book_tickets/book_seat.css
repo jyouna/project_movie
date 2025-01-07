@@ -117,8 +117,12 @@ ul li button:active {
   background-color: #e0e0e0;
 }
 
+form input[type="text"] {
+	all: unset;
+}
+
 /* 숫자 카운트 스타일 */
-.count {
+form input[type="text"].count {
 	border: none;
 	color: black;
 	display: flex; /* 숫자 내부 내용 중앙 정렬 */
@@ -129,6 +133,7 @@ ul li button:active {
 	font-size: 14px;
 	text-align: center;
 }
+
 
 .msg {
 	font-size: 11px;
