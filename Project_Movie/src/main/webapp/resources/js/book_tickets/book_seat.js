@@ -82,6 +82,7 @@ $(function () {
 		} 
 	});
 	
+	// 수정 필요
 	$(".pay_btn").click(function(event) {
 		event.preventDefault(); // 기본 동작 방지
 		

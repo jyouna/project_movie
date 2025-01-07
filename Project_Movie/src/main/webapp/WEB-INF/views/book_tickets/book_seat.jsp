@@ -37,7 +37,7 @@
 								<strong>${type}</strong>
 								<div class="ctrl_box">
 									<button type="button" class="minus_btn">-</button>
-									<input type="text" class="count" value="0" readonly>
+									<input type="text" class="count" name="count" value="0" readonly>
 									<button type="button" class="plus_btn">+</button>
 								</div>
 							</li>
@@ -68,7 +68,7 @@
 						</div>
 						<div class="tnb">
 							<div class="bottom_btn">
-								<button class="back_btn" onclick="history.back()">이전</button>
+								<button type="button" class="back_btn" onclick="history.back()">이전</button>
 							</div>
 							<div class="poster">
 								<div class="mv_poster">영화포스터</div>
