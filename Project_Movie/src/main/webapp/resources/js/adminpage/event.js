@@ -89,6 +89,7 @@ $(function(){
 	
 	$("#givePoint").on("click", function(){
 		let eventSetCheckbox = $(".eventSetCheckbox:checked"); // 체크된 체크박스들의 값을 eventSetCheckbox(jquery 객체 형태로 저장)
+		let event_code = $("#event_code").val();
 		
 		if(eventSetCheckbox.length > 0) { // jquery 객체배열 형태에 저장된 값이 1개 이상일 경우 해당 값을 eventEndList라는 배열에 차례로 저장한다.
 			let eventEndList = [];
@@ -96,7 +97,7 @@ $(function(){
 				eventEndList.push($(this).val());	
 			});
 			if(confirm("포인트를 지급하시겠습니까?")) {
-				location.href="GivePoint?member_id=" + eventEndList.join(",");
+				location.href="GivePoint?member_id=" + eventEndList.join(",") + "&event_code=" + event_code;
 			}
 		} else {
 			alert("대상자를 선택하세요");

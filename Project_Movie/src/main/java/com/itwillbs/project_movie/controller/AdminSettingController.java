@@ -403,10 +403,13 @@ public class AdminSettingController {
 	}
 	
 	@GetMapping("GivePoint") // 이벤트 당첨자 선택 후 포인트 지급 화면 이동
-	public String givePoint(@RequestParam("member_id") String[] member_id) {
+	public String givePoint(@RequestParam("member_id") String[] member_id, int event_code) {
+		System.out.println("이벤트 코드 : " + event_code);
+		
 		for(String id : member_id) {
 			System.out.println("쿠폰 증정 대상자 : " + id);
 		}
+		
 		return "redirect:/EventWinnerManage";
 	}
 	

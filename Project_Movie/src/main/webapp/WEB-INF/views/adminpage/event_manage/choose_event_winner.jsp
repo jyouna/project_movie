@@ -23,7 +23,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<h3>이벤트 당첨자 관리</h3>
+	<h3>이벤트 당첨자 - 임시로 회원 전체 목록 출력</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
 <!-- 			<input type="button" value="전체선택" id="selectAll"> -->
@@ -60,7 +60,7 @@
 						<tr>
 							<td><input type="checkbox" class="eventSetCheckbox" value="${member.member_id}"></td>
 							<td>${member.member_id}</td>	
-							<td>${eventVo.event_code}</td>	
+							<td><input type="hidden" id="event_code" value="${eventVo.event_code}">${eventVo.event_code}</td>	
 							<td>${eventVo.event_subject}</td>	
 							<td>${eventVo.event_start_date}</td>	
 							<td>${eventVo.event_end_date}</td>	
@@ -79,8 +79,6 @@
 		<a href="#">5</a>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-	
-	<script type="text/javascript">
-	</script>
+
 </body>
 </html>
