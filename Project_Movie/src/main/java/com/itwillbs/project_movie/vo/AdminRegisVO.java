@@ -1,5 +1,6 @@
 package com.itwillbs.project_movie.vo;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -9,13 +10,13 @@ import lombok.Data;
 public class AdminRegisVO {
 	private String admin_id;
 	private String admin_passwd;
-	private LocalDate start_date;
-	private Boolean user_status;
+	private Timestamp start_date;
+	private Boolean user_status = true;
 	private String user_name;
-	private Boolean member_manage;
-	private Boolean payment_manage;
-	private Boolean notice_board_manage;
-	private Boolean movie_manage;
-	private Boolean theater_manage;
-	private Boolean vote_manage;
+	private Boolean member_manage = false; // 관리자 계정, 회원목록 및 통계관리 및 이벤트, 포인트, 쿠폰관리 권한
+	private Boolean payment_manage = false; // 결제관리 권한
+	private Boolean notice_board_manage = false;  // 고객지원(공지사항, FAQ, 1:1 문의) 관리 권한
+	private Boolean movie_manage = false; // 영화관리 권한
+	private Boolean theater_manage = false; // 영화관 관리 권한
+	private Boolean vote_manage = false; // 투표 관리 권한
 }

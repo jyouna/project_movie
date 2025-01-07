@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +69,9 @@ input[type="checkbox"] {
 				            <td>${status.count}</td>
 				            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}">${vo.admin_id}</a></td>
 				            <td>${vo.admin_passwd}</td>
-				            <td>${vo.start_date}</td>
+				            <td>
+				            	<fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/>
+				            </td>
 				            <td>${vo.user_status ? '사용중' : '비사용'}</td>
 				            <td>${vo.user_name}</td>
 				            <td>${vo.member_manage ? 'O' : 'X'}</td>

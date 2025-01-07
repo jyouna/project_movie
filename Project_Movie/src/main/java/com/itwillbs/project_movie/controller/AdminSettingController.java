@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
 import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
@@ -22,9 +24,11 @@ public class AdminSettingController {
 	@Autowired
 	private AdminManageService adminService;
 	
-	@GetMapping("AdminLogin")
+	@GetMapping("AdminLogin") // 관리자 계정 로그인 폼 이동
+	// 세션 admin_sId가 있을 시 바로 접속, 그렇지 않을 경우 관리자 로그인 페이지 이동
 	public String adminLogigForm(HttpSession session) {
-		System.out.println("관리자 로그인 세션 : " + session.getAttribute("admin_sId"));
+		System.out.println("관리자 로그인 세션 : " + session.getAttribute("admin_sId"));  
+		
 		if(session.getAttribute("admin_sId") == null) {
 			return "adminpage/admin_manage/adminpage_login_form";
 		} else {
@@ -32,7 +36,7 @@ public class AdminSettingController {
 		}
 	}
 	
-	@PostMapping("AdminLogin")
+	@PostMapping("AdminLogin") // 관리자 로그인
 	public String adminLogin(AdminRegisVO adminLoginInfo, HttpSession session, Model model) {
 		System.out.println("입력한 아이디 : " + adminLoginInfo.getAdmin_id());
 		System.out.println("입력한 비밀번호" + adminLoginInfo.getAdmin_passwd());
@@ -44,27 +48,54 @@ public class AdminSettingController {
 			return "result/process";
 		} else {
 			session.setAttribute("admin_sId", adminInfo.getAdmin_id());
+			session.setMaxInactiveInterval(600);
 			return "redirect:/AdminpageMain";
 		}
 		
 	}
 	
+	@GetMapping("AdminLogout") // 관리자 로그아웃 -> ajax로 리턴
+	public Boolean adminLogout(HttpSession session) {
+		System.out.println("로그아웃 컨트롤러 호출됨");
+		session.invalidate();
+		
+		return true;
+	}
+	
 	
 	@GetMapping("AdminAccountManage") // 관리자 계정관리 페이지 이동
-	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
+		
+		// 관리자 로그인 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
 		int listLimit = 2;
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListCount();
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
+		
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit - 1;
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}
+		
 		if(pageNum < 1 || pageNum > maxPage) {
 			return "";
 		}
@@ -132,7 +163,7 @@ public class AdminSettingController {
 		return "adminpage/admin_manage/adminpage_account_modifyForm";
 	}
 	
-	@PostMapping("AdminAccountModify")
+	@PostMapping("AdminAccountModify") // 관리자 계정 수정폼 전송
 	public String adminAccountModify(AdminRegisVO modifyVo) {
 		System.out.println("수정 폼 전송 완료 : " + modifyVo);
 		adminService.accountModify(modifyVo);
@@ -141,27 +172,90 @@ public class AdminSettingController {
 	}
 	
 	@GetMapping("MemberList") // 회원 리스트 조회
-	public String memberList() {
+	public String memberList(HttpSession session, Model model) {
+		// 관리자 로그인 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 		return "adminpage/member_manage/member_list";
 	}
 	
 	@GetMapping("StaticsVisitors") // 방문자 통계
-	public String staticsVisitors() {
+	public String staticsVisitors(HttpSession session, Model model) {
+		// 관리자 로그인 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
 		return "adminpage/statics_manage/statics_visitors";
 	}
 
 	@GetMapping("StaticsSales") // 매출 통계 
-	public String staticsSales() {
+	public String staticsSales(HttpSession session, Model model) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 		return "adminpage/statics_manage/statics_sales";
 	}
 	
-	@GetMapping("StaticsVoteResult") // 투표 결과
-	public String staticsVoteResult() {
-		return "adminpage/statics_manage/statics_voteResult";
+	@GetMapping("StaticsVoteResult") // 투표 결과(통계)
+	public String staticsVoteResult(HttpSession session, Model model) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		return "\"adminpage/statics_manage/statics_voteResult";
 	}
 	
 	@GetMapping("StaticsNewMember") // 신규 가입자 통계
-	public String staticsNewMembers() {
+	public String staticsNewMembers(HttpSession session, Model model) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 		return "adminpage/statics_manage/statics_newMember";
 	}
 	
@@ -205,9 +299,9 @@ public class AdminSettingController {
 	
 	@GetMapping("EventBoardRegisSubmit") // 이벤트 게시글 등록폼 제출
 	public String eventBoardRegistration(EventBoardVO eventVo, HttpSession session) {
-//		String sId = session.getId();
-		String sId = "admin";
-		eventVo.setEvent_writer(sId);
+		String admin_sId = session.getId();
+//		String sId = "admin";
+		eventVo.setEvent_writer(admin_sId);
 		System.out.println(eventVo);
 		adminService.regisEventBoard(eventVo);
 		
