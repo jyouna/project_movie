@@ -22,9 +22,9 @@
 	
 	<section>
 		<div id="body_top">
-			<div id="title">스케줄 상세페이지</div>
+			<div id="title">스케줄 상세</div>
 			<div id="btnGroup01">
-				<input type="date" placeholder="날짜선택">
+				<input type="date" value="${select_date}">
 				<input type="button" id="regist_schedule_btn" value="스케줄등록">
 				<input type="button" value="스케줄변경">
 				<input type="button" value="스케줄삭제">
@@ -60,13 +60,15 @@
 					</select>	
 				    <br>
 				    <label>상영날짜</label>
-				    <input type="date" name="str_schedule_date"><br>
+				    <input type="date" name="show_date" required readonly><br>
 				    <label>상영시작시간</label>
-				    <input type="time" name="str_start_time"><br>
+				    <input type="time" name="s_time" min="09:00" max="23:00" required><br>
+				    <input type="datetime-local" name="str_start_time">
 				    <label>상영종료시간</label>
-				    <input type="time" name="str_end_time" readonly="readonly"><br>
-				    <label>청소 및 준비시간</label>
-				    <input type="text" value="30분" readonly="readonly"><br>
+				    <input type="time" name="e_time" readonly="readonly"><br>
+				    <input type="datetime-local" name="str_end_time">
+				    <label>청소 및 준비(분)</label>
+				    <input type="number" value="30" readonly="readonly"><br>
 				    <label>상영시간대</label>
 				    <select name="showtime_type">
 				        <option value="" selected="selected" >선택</option>

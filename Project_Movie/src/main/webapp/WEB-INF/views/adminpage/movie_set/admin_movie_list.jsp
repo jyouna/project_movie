@@ -116,25 +116,25 @@
 	            </div>
             </form>
             <form action="AdminMovieInfoRegist" class="form02" method="post">
-                <label>영화코드</label><input type="text" name="movie_code"><br>
-                <label>영화명</label><input type="text" name="movie_name"><br>
-                <label>장르</label><input type="text" name="movie_genre"><br>
-                <label>감독</label><input type="text" name="movie_director"><br>
-                <label>출연</label><input type="text" name="movie_actor"><br>
-                <label>개봉일</label><input type="date" name="release_date"><br>
-                <label>러닝타임</label><input type="text" name="running_time"><br>
-                <label>관람연령</label><input type="text" name="age_limit"><br>
-                <label>별점</label><input type="text" name="movie_rating"><br>
+                <label>영화코드</label><input type="text" name="movie_code" required><br>
+                <label>영화명</label><input type="text" name="movie_name" required><br>
+                <label>장르</label><input type="text" name="movie_genre" required><br>
+                <label>감독</label><input type="text" name="movie_director" required><br>
+                <label>출연</label><input type="text" name="movie_actor" required><br>
+                <label>개봉일</label><input type="date" name="release_date" required><br>
+                <label>러닝타임</label><input type="text" name="running_time" required><br>
+                <label>관람연령</label><input type="text" name="age_limit" required><br>
+                <label>별점</label><input type="text" name="movie_rating" required><br>
                	<label>줄거리</label><br>
-                <textarea cols="40" rows="5" name="movie_synopsis"></textarea><br>
-                <label class="url_label">이미지1</label><input type="text" class="url" name="movie_img1">
-                <label class="url_label">이미지2</label><input type="text" class="url" name="movie_img2"><br>
-                <label class="url_label">이미지3</label><input type="text" class="url" name="movie_img3">
-                <label class="url_label">이미지4</label><input type="text" class="url" name="movie_img4"><br>
-                <label class="url_label">이미지5</label><input type="text" class="url" name="movie_img5">
-                <label class="url_label">예고편</label><input type="text" class="url" name="movie_trailer"><br>
+                <textarea cols="40" rows="5" name="movie_synopsis" required="required"></textarea><br>
+                <label class="url_label">이미지1</label><input type="text" class="url" name="movie_img1" required>
+                <label class="url_label">이미지2</label><input type="text" class="url" name="movie_img2" required><br>
+                <label class="url_label">이미지3</label><input type="text" class="url" name="movie_img3" required>
+                <label class="url_label">이미지4</label><input type="text" class="url" name="movie_img4" required><br>
+                <label class="url_label">이미지5</label><input type="text" class="url" name="movie_img5" required>
+                <label class="url_label">예고편</label><input type="text" class="url" name="movie_trailer" required><br>
                 <label>영화상태</label>
-                <select name="movie_status">
+                <select name="movie_status" required="required">
                     <option value="대기">대기</option>
                     <option value="투표영화" disabled>투표영화</option>
                     <option value="상영예정작" disabled>상영예정작</option>

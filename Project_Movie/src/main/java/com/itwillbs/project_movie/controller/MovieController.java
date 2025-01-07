@@ -1,5 +1,6 @@
 package com.itwillbs.project_movie.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.protobuf.Timestamp;
 import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.PageInfo;
@@ -265,7 +267,8 @@ public class MovieController {
 	
 	//관리자페이지 영화관리 상영스케줄 상세 페이지 맵핑
 	@GetMapping("AdminMovieSetScheduleDetail")
-	public String adminMovieSetScheduleDetail() {
+	public String adminMovieSetScheduleDetail(Date select_date, Model model) {
+		model.addAttribute("select_date", select_date);
 		return "adminpage/movie_set/movie_schedule_info_detail";
 	}
 	
