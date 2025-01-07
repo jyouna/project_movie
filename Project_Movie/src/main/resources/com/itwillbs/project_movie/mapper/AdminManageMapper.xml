@@ -120,7 +120,17 @@
 		FROM event_board
 		WHERE event_code = #{event_code}
 	</select> 
-
+	
+	<select id="getEndEventList" resultType="eventboard">
+		SELECT *
+		FROM event_board
+		WHERE event_status = 2
+	</select>
+	
+	<select id="selectMemberInfoForEvent" resultType="member">
+		SELECT *
+		FROM member; 
+	</select>
 
 <!-- 	<insert id="selectEventWinner"> -->
 <!-- 		INSERT INTO event_winner -->

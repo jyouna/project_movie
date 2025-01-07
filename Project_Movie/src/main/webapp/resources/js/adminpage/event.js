@@ -46,22 +46,48 @@ $(function(){
 	});
 	
 	$("#eventStart").on("click", function(){
-	let eventSetCheckbox = $(".eventSetCheckbox:checked");
-	
-	if(eventSetCheckbox.length > 0) {
-		let eventStartList = [];
-		eventSetCheckbox.each(function (){
-			eventStartList.push($(this).val());	
-		});
-		if(confirm("해당 이벤트를 진행 상태로 변경하시겠습니까?")) {
-			location.href="StartEvent?event_code=" + eventStartList.join(",");
-		}
+		let eventCode = $(".eventSetRadio:checked").val();
+		if(eventCode == null) {
+	        alert("이벤트를 선택하세요.");
+	        return;
 		} else {
-			alert("삭제할 계정을 선택하세요.");
+			console.log("이벤트 코드 : " + eventCode);
+		}
+		if(confirm("해당 이벤트를 진행 상태로 변경하시겠습니까?")) {
+			location.href="StartEvent?event_code=" + eventCode;
 		}
 	});
 	
 	$("#eventEnd").on("click", function(){
+		let eventCode = $(".eventSetRadio:checked").val();
+		if(eventCode == null) {
+	        alert("이벤트를 선택하세요.");
+	        return;
+		} else {
+			console.log("이벤트 코드 : " + eventCode);
+		}
+		if(confirm("해당 이벤트를 종료 상태로 변경하시겠습니까?")) {
+			location.href="EndEvent?event_code=" + eventCode;
+		}
+	});
+
+	$("#giveCoupon").on("click", function(){
+		let eventSetCheckbox = $(".eventSetCheckbox:checked");
+		
+		if(eventSetCheckbox.length > 0) {
+			let eventStartList = [];
+			eventSetCheckbox.each(function (){
+				eventStartList.push($(this).val());	
+			});
+			if(confirm("선택한 대상자들에게 쿠폰을 발급하시겠습니까?")) {
+				location.href="GiveCoupon?member_id=" + eventStartList.join(",");
+			}
+			} else {
+				alert("대상자를 선택하세요");
+			}
+	});
+	
+	$("#givePoint").on("click", function(){
 		let eventSetCheckbox = $(".eventSetCheckbox:checked"); // 체크된 체크박스들의 값을 eventSetCheckbox(jquery 객체 형태로 저장)
 		
 		if(eventSetCheckbox.length > 0) { // jquery 객체배열 형태에 저장된 값이 1개 이상일 경우 해당 값을 eventEndList라는 배열에 차례로 저장한다.
@@ -69,17 +95,17 @@ $(function(){
 			eventSetCheckbox.each(function (){
 				eventEndList.push($(this).val());	
 			});
-			if(confirm("해당 이벤트를 진행 상태로 변경하시겠습니까?")) {
-				location.href="EndEvent?event_code=" + eventEndList.join(",");
+			if(confirm("포인트를 지급하시겠습니까?")) {
+				location.href="GivePoint?member_id=" + eventEndList.join(",");
 			}
 		} else {
-			alert("삭제할 계정을 선택하세요.");
+			alert("대상자를 선택하세요");
 		}
 	});
-	
-	$("#give_prize").on("click", function(){
-		location.href="GivePrizeForm";
+		
+	$("#chooseEventWinner").on("click", function(){
+//		console.log("이벤트 당첨자 버튼 클릭됨");
+		let eventCode = $(".eventSetRadio:checked").val();
+		location.href="ChooseEventWinner?event_code=" + eventCode;
 	});
-	
-	
 });

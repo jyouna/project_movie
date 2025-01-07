@@ -79,7 +79,7 @@ input[type="checkbox"] {
 				</td>
 			</tr>
 			<tr>
-				<th>회원목록관리</th>
+				<th>계정|<br>통계관리</th>
 				<td><input type="checkbox" name="member_manage" ${voList.member_manage ? 'checked' : ''}></td>
 			</tr>
 			<tr>
@@ -99,7 +99,7 @@ input[type="checkbox"] {
 				<td><input type="checkbox" name="theater_manage" ${voList.theater_manage ? 'checked' : ''}></td>
 			</tr>
 			<tr>
-				<th>투표관리</th>
+				<th>이벤트|<br>투표관리</th>
 				<td><input type="checkbox" name="vote_manage" ${voList.vote_manage ? 'checked' : ''}></td>
 			</tr>
 			<tr>

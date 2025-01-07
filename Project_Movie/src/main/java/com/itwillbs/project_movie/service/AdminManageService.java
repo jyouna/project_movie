@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.itwillbs.project_movie.mapper.AdminManageMapper;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
+import com.itwillbs.project_movie.vo.EventWinnerVO;
+import com.itwillbs.project_movie.vo.MemberVO;
 
 @Service
 public class AdminManageService {
@@ -86,11 +88,21 @@ public class AdminManageService {
 		return manageMapper.adminLogin(adminLoginInfo);
 	}
 
-//	public void selectWinner(int[] event_codes) {
-//		
-//		for(int event_code : event_codes) {
-//			manageMapper.selectEventWinner(event_code);
-//		}
-//	}
+	public List<AdminRegisVO> showEndEvent() {
+		// TODO Auto-generated method stub
+		return manageMapper.getEndEventList();
+	}
+
+	public EventBoardVO selectWinner(int event_code) {
+		// TODO Auto-generated method stub
+		return manageMapper.getEventBoardContent(event_code);
+	}
+
+	public List<MemberVO> getMemberList() {
+		// TODO Auto-generated method stub
+		return manageMapper.selectMemberInfoForEvent();
+	}
+
+
 	
 }

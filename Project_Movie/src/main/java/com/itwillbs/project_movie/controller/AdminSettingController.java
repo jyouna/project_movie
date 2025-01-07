@@ -1,5 +1,6 @@
 package com.itwillbs.project_movie.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,8 @@ import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
 import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
+import com.itwillbs.project_movie.vo.EventWinnerVO;
+import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 
 @Controller
@@ -40,7 +43,6 @@ public class AdminSettingController {
 	public String adminLogin(AdminRegisVO adminLoginInfo, HttpSession session, Model model) {
 		System.out.println("입력한 아이디 : " + adminLoginInfo.getAdmin_id());
 		System.out.println("입력한 비밀번호" + adminLoginInfo.getAdmin_passwd());
-		
 		AdminRegisVO adminInfo = adminService.adminLogin(adminLoginInfo);
 		
 		if(adminInfo == null) {
@@ -51,7 +53,6 @@ public class AdminSettingController {
 			session.setMaxInactiveInterval(600);
 			return "redirect:/AdminpageMain";
 		}
-		
 	}
 	
 	@GetMapping("AdminLogout") // 관리자 로그아웃 -> ajax로 리턴
@@ -61,7 +62,6 @@ public class AdminSettingController {
 		
 		return true;
 	}
-	
 	
 	@GetMapping("AdminAccountManage") // 관리자 계정관리 페이지 이동
 	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
@@ -265,17 +265,42 @@ public class AdminSettingController {
 	}
 
 	@GetMapping("CouponBoardManage") // 쿠폰 관리 페이지
-	public String couponBoardManagement() {
+	public String couponBoardManagement(HttpSession session, Model model) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 		return "adminpage/coupon_manage/coupon_board_manage";
 	}
 	
 	@GetMapping("CouponBoardRegis") // 쿠폰 등록
 	public String couponBoardRegistration() {
+		
 		return "adminpage/coupon_manage/coupon_board_regis";
 	}
 
 	@GetMapping("PointBoardManage") // 포인트 관리 페이지
-	public String pointBoardManagement() {
+	public String pointBoardManagement(HttpSession session, Model model) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 		return "adminpage/point_manage/point_board_manage";
 	}
 	
@@ -285,7 +310,20 @@ public class AdminSettingController {
 	}
 	
 	@GetMapping("EventBoardManage") // 이벤트 게시판 관리 + 리스트 출력
-	public String eventBoardManagement(EventBoardVO eventVo, Model model) {
+	public String eventBoardManagement(EventBoardVO eventVo, Model model, HttpSession session) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
 		List<EventBoardVO> eventList = new ArrayList<EventBoardVO>();
 		eventList = adminService.eventBoardList();
 		model.addAttribute("eventVo", eventList);
@@ -299,7 +337,7 @@ public class AdminSettingController {
 	
 	@GetMapping("EventBoardRegisSubmit") // 이벤트 게시글 등록폼 제출
 	public String eventBoardRegistration(EventBoardVO eventVo, HttpSession session) {
-		String admin_sId = session.getId();
+		String admin_sId = (String) session.getAttribute("admin_sId");
 //		String sId = "admin";
 		eventVo.setEvent_writer(admin_sId);
 		System.out.println(eventVo);
@@ -324,7 +362,6 @@ public class AdminSettingController {
 		for(int code : event_code) {
 			System.out.println("종료할 이벤트 코드 : " + code);
 		}
-		
 		adminService.setEventEnd(event_code);
 		
 		return "redirect:/EventBoardManage";
@@ -343,26 +380,65 @@ public class AdminSettingController {
 		return "";
 	}
 	
-	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 - 이벤트 관리 페이지에서 선택
-	public String chooseEventWinner(@RequestParam("event_code") int[] event_code) {
-//		for(int code : event_code) {
-//			System.out.println("당첨자 : " + code);
-//		}
-//		
-//		adminService.selectWinner(event_code);
+	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 폼 이동
+	public String chooseEventWinner(int event_code, Model model) {
+		System.out.println("이벤트 당첨 컨트롤러 이동");
+		EventBoardVO eventVo = adminService.selectWinner(event_code);
+		System.out.println("이벤트Vo : " + eventVo);
+		List<MemberVO> memberVo = adminService.getMemberList();
+		System.out.println("멤버Vo : " + memberVo);
+
+		model.addAttribute("eventVo", eventVo);
+		model.addAttribute("memberVo", memberVo);
+		
+		return "adminpage/event_manage/choose_event_winner";
+	}
+	
+	@GetMapping("GiveCoupon") // 이벤트 당첨자 선택 후 쿠폰 지급 화면 이동
+	public String giveCoupon(@RequestParam("member_id") String[] member_id) {
+		for(String id : member_id) {
+			System.out.println("쿠폰 증정 대상자 : " + id);
+		}
 		return "";
 	}
 	
-	@GetMapping("GivePrizeForm") // 이벤트 당첨자에게 경품 지급 버튼 클릭 시 해당 폼으로 이동. 이벤트 당첨자 관리 페이지에서 선택
-	public String givePrizeForm() {
-	
-		return "";
+	@GetMapping("GivePoint") // 이벤트 당첨자 선택 후 포인트 지급 화면 이동
+	public String givePoint(@RequestParam("member_id") String[] member_id) {
+		for(String id : member_id) {
+			System.out.println("쿠폰 증정 대상자 : " + id);
+		}
+		return "redirect:/EventWinnerManage";
 	}
 	
 	@GetMapping("EventWinnerManage") // 이벤트 당첨자 관리 페이지
-	public String eventWinnerPage() {
+	public String eventWinnerPage(HttpSession session, Model model) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
 		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		List<AdminRegisVO> eventVo = adminService.showEndEvent();
+		model.addAttribute("eventVo", eventVo);
 		return "adminpage/event_manage/event_winner_manage";
 	}
+	
+//	@GetMapping("compareDate") // 시작일, 종료일 비교
+//	public Boolean compareDate(LocalDate startDate, LocalDate endDate) {
+//		System.out.println("시작일 : " + startDate);
+//		System.out.println("종료일 : " + endDate);
+////		if(startDate > endDate) {
+////			return false;
+////		}
+//		return true;
+//	}
+	
 }
 

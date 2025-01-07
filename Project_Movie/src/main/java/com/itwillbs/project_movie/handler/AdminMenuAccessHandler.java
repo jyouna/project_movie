@@ -25,7 +25,7 @@ public class AdminMenuAccessHandler {
 	// 2. 권한 정보 확인
 	public static Boolean adminMenuAccessCheck(String menu_name, HttpSession session, AdminManageService adminService) {
 		AdminRegisVO adminVo = adminService.accountModifyForm((String)session.getAttribute("admin_sId"));
-		Boolean member_manage = adminVo.getMember_manage(); // 관리자 계정, 회원목록 및 통계관리 및 이벤트, 포인트, 쿠폰관리  권한
+		Boolean member_manage = adminVo.getMember_manage(); // 관리자 계정, 회원목록 및 통계관리 및 이벤트, 포인트, 쿠폰관리 권한
 		Boolean movie_manage = adminVo.getMovie_manage(); // 영화관리 권한
 		Boolean board_manage = adminVo.getNotice_board_manage(); // 고객지원(공지사항, FAQ, 1:1 문의) 관리 권한
 		Boolean payment_manage = adminVo.getPayment_manage(); // 결제관리 권한

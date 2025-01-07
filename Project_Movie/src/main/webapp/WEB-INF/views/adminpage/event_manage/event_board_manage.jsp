@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,8 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="50"><input type="checkbox" id="selectAll"></th>
+<!-- 				<th width="50"><input type="checkbox" id="selectAll"></th> -->
+				<th width="50">선택</th>
 <!-- 				<th width="70">번호</th> -->
 				<th width="50">번호</th>
 				<th width="350">제목</th>
@@ -64,11 +66,14 @@
 				<c:otherwise>
 					<c:forEach var="eventBoard" items="${eventVo}" varStatus="status">
 						<tr>
-							<td><input type="checkbox" class="eventSetCheckbox" value="${eventBoard.event_code}"></td>
+<%-- 							<td><input type="checkbox" class="eventSetCheckbox" value="${eventBoard.event_code}"></td> --%>
+							<td><input type="radio" name="selectedEvent" class="eventSetRadio" value="${eventBoard.event_code}"></td>
 <%-- 							<td>${status.count}</td> --%>
 							<td>${eventBoard.event_code}</td>	
 							<td><a href="updateEventBoard?event_code=${eventBoard.event_code}">${eventBoard.event_subject}</a></td>	
-							<td>${eventBoard.regis_date}</td>	
+							<td>
+								<fmt:formatDate value="${eventBoard.regis_date}" pattern="yyyy-MM-dd"/>
+							</td>	
 							<td>${eventBoard.event_start_date}</td>	
 							<td>${eventBoard.event_end_date}</td>	
 							<td>${eventBoard.event_writer}</td>	

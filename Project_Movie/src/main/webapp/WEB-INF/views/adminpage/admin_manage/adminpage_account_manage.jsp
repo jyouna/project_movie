@@ -23,6 +23,9 @@
 input[type="checkbox"] {
     transform: scale(1.5); /* 1.5배 확대 */
     margin: 5px;}
+   
+/* #tableDiv { */
+/* 	border: 1px solid red !important;} */
 </style>
 
 </head>
@@ -49,12 +52,12 @@ input[type="checkbox"] {
 				<th width="150">등록일</th>
 				<th width="80">상태</th>
 				<th width="80">담당자</th>
-				<th width="90">회원목록관리</th>
+				<th width="90">계정|<br>통계관리</th>
 				<th width="80">결제관리</th>
 				<th width="80">게시판관리</th>
 				<th width="80">영화관리</th>
 				<th width="80">상영관관리</th>
-				<th width="80">투표관리</th>
+				<th width="80">이벤트|<br>투표관리</th>
 			</tr>
 			<c:choose>		
 				<c:when test="${empty voList}">

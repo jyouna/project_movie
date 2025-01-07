@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
+import com.itwillbs.project_movie.vo.MemberVO;
 
 @Mapper
 public interface AdminManageMapper {
@@ -38,6 +39,10 @@ public interface AdminManageMapper {
 	void adminAccountModify(AdminRegisVO modifyVo);
 
 	AdminRegisVO adminLogin(AdminRegisVO adminLoginInfo);
+
+	List<AdminRegisVO> getEndEventList();
+
+	List<MemberVO> selectMemberInfoForEvent();
 
 
 //	void selectEventWinner(@Param("event_code") int event_code);
