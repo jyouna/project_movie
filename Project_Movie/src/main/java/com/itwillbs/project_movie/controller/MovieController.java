@@ -257,6 +257,19 @@ public class MovieController {
 		}
 	}
 	
+	//관리자페이지 영화관리 상영스케줄관리 페이지 맵핑
+	@GetMapping("AdminMovieSetSchedule")
+	public String adminMovieSetSchedule() {
+		return "adminpage/movie_set/movie_schedule_info";
+	}
+	
+	//관리자페이지 영화관리 상영스케줄 상세 페이지 맵핑
+	@GetMapping("AdminMovieSetScheduleDetail")
+	public String adminMovieSetScheduleDetail() {
+		return "adminpage/movie_set/movie_schedule_info_detail";
+	}
+	
+	
 	//관리자페이지 영화관리 현재상영작 페이지 맵핑
 	@GetMapping("AdminMovieSetCurrently")
 	public String aminMovieSetCurrently() {
@@ -268,5 +281,6 @@ public class MovieController {
 	public String AdminMovieSetPast() {
 		return "adminpage/movie_set/past_movie_set";
 	}
+	
 	
 }

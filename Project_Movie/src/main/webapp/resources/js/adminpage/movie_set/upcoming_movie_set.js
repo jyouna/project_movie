@@ -26,15 +26,28 @@ $(function() {
 		}
     });
 
-    // 상영기간설정 모달 닫기
+    // 모든 모달 닫기
     $(".close_modal").on("click", function() {
-        $("#screening_date_modal").css("display", "none");
 		location.reload();
     });
+
+	// 테이블 선택여부 판별 메서드
+	function isClicked() {
+		if(movie_code == "") {
+			alert("영화를 선택해 주세요");
+			return false;
+		}
+		return true;
+	}
 	
 	// 상영기간설정 입력 버튼 클릭시 해당 기간으로 영화db정보 업데이트
 	// 및 모달창닫고 reload
 	$("#set_btn").click(function() {
+		// 영화선택 여부 판별
+		if(!isClicked()) {
+			return;
+		}
+		
 		// ajax를 통해 movie테이블의 상영시작일, 상영종요일 업데이트
 		$.ajax({
 			type : "post",
@@ -52,6 +65,49 @@ $(function() {
 			alert("상영일자설정 실패")
 		});
 
+	});
+	
+	// 영화정보 버튼 클릭시 ajax를 통해 DB영화정보 모달창에 출력
+	$("#btnGroup02 input[type=button]").click(function() {
+		
+		if(!isClicked()) {
+			return;
+		}
+		
+		$("#movie_info_modal").css("display", "block");
+		
+		$.ajax({
+			type : "GET",
+			url : "SelectMovieInfo",
+			data : {
+				movie_code : movie_code
+			}
+		}).done(function(movie) {
+			$("input[name='movie_code']").val(movie.movie_code);
+				$("input[name='movie_name']").val(movie.movie_name);
+				$("input[name='movie_genre']").val(movie.movie_genre);
+				$("input[name='movie_director']").val(movie.movie_director);
+				$("input[name='movie_actor']").val(movie.movie_actor);
+				$("input[name='release_date']").val(movie.str_release_date);
+				$("input[name='running_time']").val(movie.running_time);
+				$("input[name='age_limit']").val(movie.age_limit);
+				$("input[name='movie_rating']").val(movie.movie_rating);
+				$("textarea[name='movie_synopsis']").val(movie.movie_synopsis);
+				$("input[name='movie_img1']").val(movie.movie_img1);
+				$("input[name='movie_img2']").val(movie.movie_img2);
+				$("input[name='movie_img3']").val(movie.movie_img3);
+				$("input[name='movie_img4']").val(movie.movie_img4);
+				$("input[name='movie_img5']").val(movie.movie_img5);
+				$("input[name='movie_trailer']").val(movie.movie_trailer);
+				$("select[name='movie_status']").val(movie.movie_status);
+		}).fail(function() {
+			alert("영화정보를 가져오는데 실패하였습니다.");
+		});
+		
+	});
+	
+	$("#remove_from_upcoming_btn").click(function() {
+		
 	});
 }); // document ready 끝
 	

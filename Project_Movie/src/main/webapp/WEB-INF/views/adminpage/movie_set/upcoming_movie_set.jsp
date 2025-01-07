@@ -27,8 +27,7 @@
 				<input type="button" id="set_date_btn" value="상영기간설정">
 				<input type="button" value="상영스케줄설정">
 				<input type="button" value="현재상영작으로등록">
-				<input type="button" value="변경하기">
-				<input type="button" value="삭제하기">
+				<input type="button" id="remove_from_upcoming_btn" value="상영예정작에서 삭제">
 			</div>
 			<div id="btnGroup02">
 				<input type="button" value="영화정보">
@@ -99,19 +98,53 @@
 			</div>
 		</div>
 		<div id="screening_date_modal" class="modal">
-		   <div class="modal_content">
-	       	   <h4>상영 예정기간을 설정해주세요</h4>
-		       <hr>
-		       <div>
-		       	   <input type="date" class="start_date">
-		       	   ~ <input type="date" class="end_date">
-		       </div>
-		       <div class="btnGroup">
-		           <input type="button" id="set_btn" value="입력">
-		           <input type="button" class="close_modal" value="닫기">
-		       </div>
-		   </div>
-	   </div>
+			<div class="modal_content">
+			   	   <h4>상영 예정기간을 설정해주세요</h4>
+			    <hr>
+			    <div>
+			    	   <input type="date" class="start_date">
+			    	   ~ <input type="date" class="end_date">
+			    </div>
+			    <div class="btnGroup">
+			        <input type="button" id="set_btn" value="입력">
+			        <input type="button" class="close_modal" value="닫기">
+			    </div>
+			</div>
+		</div>
+		<div id="movie_info_modal" class="modal">
+			<div class="modal_content2">
+			    <h2>영화 정보</h2>
+			    <hr>
+		        <label>영화코드</label><input type="text" name="movie_code"><br>
+		        <label>영화명</label><input type="text" name="movie_name"><br>
+		        <label>장르</label><input type="text" name="movie_genre"><br>
+		        <label>감독</label><input type="text" name="movie_director"><br>
+		        <label>출연</label><input type="text" name="movie_actor"><br>
+		        <label>개봉일</label><input type="date" name="release_date"><br>
+		        <label>러닝타임</label><input type="text" name="running_time"><br>
+		        <label>관람연령</label><input type="text" name="age_limit"><br>
+		        <label>별점</label><input type="text" name="movie_rating"><br>
+		       	<label>줄거리</label><br>
+		        <textarea cols="40" rows="5" name="movie_synopsis"></textarea><br>
+		        <label class="url_label">이미지1</label><input type="text" class="url" name="movie_img1">
+		        <label class="url_label">이미지2</label><input type="text" class="url" name="movie_img2"><br>
+		        <label class="url_label">이미지3</label><input type="text" class="url" name="movie_img3">
+		        <label class="url_label">이미지4</label><input type="text" class="url" name="movie_img4"><br>
+		        <label class="url_label">이미지5</label><input type="text" class="url" name="movie_img5">
+		        <label class="url_label">예고편</label><input type="text" class="url" name="movie_trailer"><br>
+		        <label>영화상태</label>
+		        <select name="movie_status">
+		            <option value="대기" disabled>대기</option>
+		            <option value="투표영화" disabled>투표영화</option>
+		            <option value="상영예정작">상영예정작</option>
+		            <option value="현재상영작" disabled>현재상영작</option>
+		            <option value="과거상영작" disabled>과거상영작</option>
+		        </select><br>
+		        <div class="btnGroup">
+		        	<button type="button" class="close_modal">닫기</button>
+		        </div>
+			</div>
+		</div>
 	</section>
 	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

@@ -113,6 +113,17 @@ table th[colspan] {
 	margin-bottom: 10px;
 }
 
+.modal_content2 {
+    background-color: #fff;
+    margin: 10px 50%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    height: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
 #season_movie_list th input[type="radio"] {
     background-color: #f4f4f4;
     transform: scale(1.3);
@@ -134,3 +145,25 @@ table th[colspan] {
 tr {
 	cursor: pointer;
 }
+
+label:not(.url_label) {
+	width: 80px;
+}
+
+.url_label {
+	width: 70px;
+}
+
+.url {
+	width: 100px;
+}
+
+laber, input, textarea, select {
+	margin-bottom: 5px;
+}
+
+.btnGroup {
+	text-align: center;
+}
+
+

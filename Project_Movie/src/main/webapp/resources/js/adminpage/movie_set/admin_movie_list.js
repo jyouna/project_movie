@@ -331,7 +331,7 @@ $(function() {
 					for(let movie of MovieList) {
 						$("#sec02>table").append(
 								"<tr>"
-									+ "<th><input type='radio'name='select_movie'></th>"
+									+ "<td><input type='radio'name='select_movie'></td>"
 									+ "<td>" + movie.movie_code + "</td>"
 									+ "<td>" + movie.movie_name + "</td>"
 									+ "<td>" + movie.movie_genre + "</td>"
