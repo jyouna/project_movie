@@ -27,14 +27,6 @@
 		<div id="title">
 			<h1>FAQ</h1>
 		</div>
-		<div class="search-bar">
-			<select>
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text">
-			<input type="button" value="검색" id="searchButton">
-		</div>
 		<section id="listForm">
 			<table>
 				<tr id="tr_top">
@@ -94,9 +86,6 @@
 			
 			});
 		
-			$("#searchButton").on("click", function () {
-				confirm("검색버튼 눌렸습니다.")
-			});
 		});
 	</script>
 

@@ -15,6 +15,7 @@
 			#{startRow}
 			, #{listLimit}
  	</select>
+<!--  	게시글 선택 시  -->
  	<select id="selectNotice" resultType="notice_board">
  		SELECT *
  		FROM notice_board

@@ -21,10 +21,10 @@
 		</div>
 	    <div class="search-bar">
 	      <select>
-	        <option>제목▼</option>
+	        <option>제목</option>
 	        <option>내용</option>
 	      </select>
-	      <input type="text">
+	      <input type="text" placeholder="검색어를 입력하세요.">
   		  <input type="button" value="검색" id="searchButton">
 	    </div>
 		<div id="listForm">
@@ -33,34 +33,31 @@
 					<td width="75px">상태</td>
 					<td width="150px" >제목</td>
 					<td width="125px">이벤트 기간</td>
+					<td width="45px">조회수</td>
 				</tr>
-				<tr>
-					<td>진행중</td>
-					<td>수험생 관람료 할인</td>
-					<td>2024.11.14 - 2024.12.31</td>
-				</tr>
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${empty eventList}">  --%>
-<!-- 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr> -->
-<%-- 					</c:when> --%>
-<%-- 					<c:otherwise> --%>
-<%-- 						<c:forEach var="event" items="${eventList}" varStatus="status"> --%>
-<!-- 							<tr> -->
-<%-- 								<td class="event_num">${event.event_num}</td> --%>
-<%-- 								<td class="event_subject">${event.event_subject}</td> --%>
-<%-- 								<td>${event.event_name}</td> --%>
-<!-- 								<td> -->
-<%-- 									<fmt:formatDate value="${event.event_date}" pattern="yy-MM-dd - yy-MM-dd"/> --%>
-<!-- 								</td> -->
-<%-- 								<td>${event.event_readcount}</td> --%>
-<!-- 							</tr> -->
-<%-- 						</c:forEach> --%>
-<%-- 					</c:otherwise>					 --%>
-<%-- 				</c:choose> --%>
+				<c:choose>
+					<c:when test="${empty eventList}"> 
+						<tr><td colspan="4">게시물이 존재하지 않습니다</td></tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="event_board" items="${eventList}" varStatus="status">
+							<tr>
+								<td class="event_code">${event_board.event_code}</td>
+								<td class="event_subject">${event_board.event_subject}</td>
+								<td>
+									<p>${event_board.event_start_date} - ${event_board.event_end_date}</p>
+<%-- 									<fmt:formatDate value="${event_board.event_start_date} " pattern="yy-MM-dd "/> --%>
+<%-- 									- ${event_board.event_end_date}- yy-MM-dd --%>
+								</td>
+								<td>${event_board.view_count}</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>					
+				</c:choose>
 			</table>
 		</div>
 		
-				<section id="pageList">
+		<section id="pageList">
 			<input type="button" value="&lt" 
 				onclick="location.href='EventList?pageNum=${pageInfo.pageNum - 1}'" 
 				 <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
@@ -82,26 +79,6 @@
 				onclick="location.href='EventList?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
-	
-	<script type="text/javascript">
-	$(function() {
-		$(".event_subject").on("click", function(event) {
-			console.log(event.target);
-			let event_num = $(event.target).siblings(".event_num").text();
-			console.log("siblings " + event_num);
-			location.href = "EventDetail?event_num=" + event_num + "&pageNum=${pageInfo.pageNum}";
-		
-		});
-		
-		$("#searchButton").on("click", function () {
-			confirm("검색버튼 눌렸습니다.")
-		});
-		
-	});
-		// 검색버튼 클릭 시 제목중 일치하는 단어가 있는경우 해당 글들만 추려지도록
-		
-	</script>
-
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	

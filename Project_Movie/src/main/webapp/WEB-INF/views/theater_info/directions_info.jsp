@@ -18,7 +18,7 @@
 		<div class="content">
 
     		<h1 style="font-size: 1.5em;">오시는 길</h1>
-    		<br>
+    		<hr>
     		<div id = "map" style="width: 750px; height:400px;"></div>
     		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2c5b5e9afc6d3af813d2e295bea48e20"></script>
     		<script type="text/javascript">

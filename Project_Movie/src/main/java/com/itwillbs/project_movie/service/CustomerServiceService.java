@@ -20,7 +20,7 @@ public class CustomerServiceService {
 		return mapper.selectNoticeListCount();
 	}
 	// 공지사항 
-	public List<NoticeBoardVO> getNoticeList(@Param("startRow") int startRow, @Param("listLimit") int listLimit) {
+	public List<NoticeBoardVO> getNoticeList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
 		return mapper.selectNoticeList(startRow, listLimit);
 	}

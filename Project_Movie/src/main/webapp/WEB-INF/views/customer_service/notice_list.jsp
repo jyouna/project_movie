@@ -14,6 +14,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/customer_service/notice_list.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -24,13 +25,13 @@
 		<div id="title">
 			<h1>공지사항</h1>
 		</div>
-		<div class="search-bar">
-			<select>
+		<div id="search-bar" style="text-align: right;">
+			<select id="search_box">
 				<option>제목</option>
 				<option>내용</option>
 			</select>
-			<input type="text">
-			<input type="button" value="검색" id="searchButton">
+			<input type="text" placeholder="검색어를 입력하세요.">
+			<input type="button" value="검색">
 		</div>
 		<section id="listForm">
 			<table>
@@ -81,22 +82,6 @@
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
 	</article>
-	<script type="text/javascript">
-	$(function() {
-		
-		$(".notice_subject").on("click", function(event) {
-			let notice_code = $(event.target).siblings(".notice_code").text();
-			console.log("siblings " + notice_code);
-			location.href = "NoticePost?notice_code=" + notice_code + "&pageNum=${pageInfo.pageNum}";
-		
-		});
-		
-
-		$("#searchButton").on("click", function () {
-			confirm("검색버튼 눌렸습니다.")
-		});
-	});
-	</script>
 
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>

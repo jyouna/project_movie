@@ -29,10 +29,6 @@ public class CustomerServiceController {
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
 		int listCount = service.getNoticeListCount();
 		int pageListLimit = 5;
-		System.out.println("NOtice전체 게시물 수 = " + listCount);
-		System.out.println("조회할 게시물의 DB 행 번호 = " + startRow);
-		System.out.println("한 페이지 당 표시할 게시물 수 = " + listLimit);
-		System.out.println("하단에 표시되는 번호 = " + pageListLimit);
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
 		if (maxPage == 0) {
 			maxPage = 1;
@@ -75,10 +71,6 @@ public class CustomerServiceController {
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
 		int listCount = service.getNoticeListCount();
 		int pageListLimit = 5;
-		System.out.println("FAQ 전체 게시물 수 = " + listCount);
-		System.out.println("조회할 게시물의 DB 행 번호 = " + startRow);
-		System.out.println("하단에 표시되는 번호 = " + pageListLimit);
-		System.out.println("한 페이지 당 표시할 게시물 수 = " + listLimit);
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0); // 최대 페이지
 		if (maxPage == 0) {
 			maxPage = 1;
