@@ -1,4 +1,6 @@
-/* General body styling */
+/* 
+General body styling */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -85,6 +87,9 @@ article {
     font-weight: bold;
 }
 
+p{
+	margin-bottom: 0em;
+}
 /* Pagination styling */
 #pageList {
     display: flex;

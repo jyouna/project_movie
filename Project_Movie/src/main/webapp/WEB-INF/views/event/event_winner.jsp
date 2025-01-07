@@ -34,11 +34,13 @@
 					<td width="100px">구분</td>
 					<td width="150px">제목</td>
 					<td width="100px">당첨자 발표일</td>
+					<td width="45px">조회수</td>
 				</tr>
 				<tr>
 					<td>시사회 / 무대인사</td>
 					<td>소방관 시사회 당첨자 발표</td>
 					<td>2024.11.25</td>
+					<td>0</td>
 				</tr>	
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${empty winnerList}">  --%>

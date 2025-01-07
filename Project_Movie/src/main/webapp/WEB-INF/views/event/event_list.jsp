@@ -30,8 +30,8 @@
 		<div id="listForm">
 			<table id="eventForm" border="1">
 				<tr id="tr_top" align="center">
-					<td width="75px">상태</td>
-					<td width="150px" >제목</td>
+					<td width="45px">상태</td>
+					<td width="200px" >제목</td>
 					<td width="125px">이벤트 기간</td>
 					<td width="45px">조회수</td>
 				</tr>
@@ -42,7 +42,10 @@
 					<c:otherwise>
 						<c:forEach var="event_board" items="${eventList}" varStatus="status">
 							<tr>
-								<td class="event_code">${event_board.event_code}</td>
+								<td class="event_status">
+									<c:if test="${event_board.event_status == 0}"> 미진행</c:if>
+									<c:if test="${event_board.event_status == 1}"> 진행중</c:if>
+									<c:if test="${event_board.event_status == 2}"> 종료</c:if></td>
 								<td class="event_subject">${event_board.event_subject}</td>
 								<td>
 									<p>${event_board.event_start_date} - ${event_board.event_end_date}</p>
