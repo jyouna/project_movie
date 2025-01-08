@@ -49,14 +49,13 @@
 					<div class="seat_container">
 						<div class="msg">인원 선택 후 좌석을 선택해주세요</div>
 			            <div class="screen">SCREEN</div>
-			            
-		            	<c:forEach var="row" items="A,B,C,D,E,F,G">
-				            <div class="seat_row">
-					            <c:forEach var="column" begin="1" end="10">
-					                <button type="button" class="seat" name="seatName">${row}${column}</button>
-					            </c:forEach>
-				            </div>
-		            	</c:forEach>
+				            <c:forEach var="j" begin="0" end="${rowCount-1}">
+					            <div class="seat_row">
+					            	<c:forEach var="i" begin="0" end="${colCount-1}">
+						                <button type="button" class="seat" name="seatName">${seatList[i + j*10].seat_code}</button>
+					            	</c:forEach>
+					            </div>
+				            </c:forEach>
 			        </div>
 					
 					<span class="space_line"></span>

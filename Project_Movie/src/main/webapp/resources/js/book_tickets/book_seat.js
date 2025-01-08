@@ -102,7 +102,7 @@ $(function () {
 	
 	
 	
-	
+//	if($(".seat").text() == "A9", $(".seat").text() == "A9", $(".seat").text() == "A10")
 	
 	
 	

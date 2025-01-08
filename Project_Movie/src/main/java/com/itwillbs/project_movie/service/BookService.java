@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.project_movie.mapper.BookMapper;
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.SeatVO;
 
 @Service
 public class BookService {
@@ -14,5 +15,9 @@ public class BookService {
 
 	public List<MovieVO> getMovieList() {
 		return mapper.selectMovieList();
+	}
+
+	public List<SeatVO> getSeat() {
+		return mapper.selectSeat();
 	}
 }

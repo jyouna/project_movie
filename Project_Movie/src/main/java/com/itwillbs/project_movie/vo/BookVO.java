@@ -1,5 +1,8 @@
 package com.itwillbs.project_movie.vo;
 
+import lombok.Data;
+
+@Data
 public class BookVO {
 	/*
 	CREATE TABLE booking (

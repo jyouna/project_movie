@@ -4,10 +4,16 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itwillbs.project_movie.mapper.BookMapper">
 	
-	<select id="selectMovieList">
+	<select id="selectMovieList" resultType="movieVO">
 		SELECT age_limit, movie_name
 		FROM movie
-<!-- 		WHERE movie_code = #{movie_code} -->
+	</select>
+	
+	<select id="selectSeat" resultType="seat">
+		SELECT SUBSTR(seat_code, 4) AS seat_code
+		FROM seat
+		WHERE theater_code = 'T1'
+		ORDER BY seat_row ASC, seat_col ASC;
 	</select>
 
 </mapper>

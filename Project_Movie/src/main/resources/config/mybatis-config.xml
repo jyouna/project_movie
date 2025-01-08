@@ -25,7 +25,7 @@
 		
 		<typeAlias type="com.itwillbs.project_movie.vo.MemberVO" alias="member"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.EmailAuthVO" alias="EmailAutH"/>
-		
+		<typeAlias type="com.itwillbs.project_movie.vo.SeatVO" alias="seat"/>
 	</typeAliases>
 </configuration>
 
