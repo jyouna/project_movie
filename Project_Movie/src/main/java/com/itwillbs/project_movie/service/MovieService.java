@@ -49,32 +49,32 @@ public class MovieService {
 	// 총 상영예정작 수 조회
 	public int getCountTotalUpcomingMovie() {
 		Map<String, String> conditionMap = new HashMap<String, String>();
-		conditionMap.put("column_name", "movie_status");
-		conditionMap.put("select_condition", "상영예정작");
+		conditionMap.put("columnName", "movie_status");
+		conditionMap.put("selectCondition", "상영예정작");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
 	
 	// 일반 상영예정작 수 조회
 	public int getCountGeneralUpcomingMovie() {
 		Map<String, String> conditionMap = new HashMap<String, String>();
-		conditionMap.put("column_name", "movie_type");
-		conditionMap.put("select_condition", "일반");
+		conditionMap.put("columnName", "movie_type");
+		conditionMap.put("selectCondition", "일반");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
 	
 	// 시즌 상영예정작 수 조회
 	public int getCountSeasonUpcomingMovie() {
 		Map<String, String> conditionMap = new HashMap<String, String>();
-		conditionMap.put("column_name", "movie_type");
-		conditionMap.put("select_condition", "시즌");
+		conditionMap.put("columnName", "movie_type");
+		conditionMap.put("selectCondition", "시즌");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
 	
 	// 투표 영화 수 조회
 	public int getCountPickMovie() {
 		Map<String, String> conditionMap = new HashMap<String, String>();
-		conditionMap.put("column_name", "movie_status");
-		conditionMap.put("select_condition", "투표영화");
+		conditionMap.put("columnName", "movie_status");
+		conditionMap.put("selectCondition", "투표영화");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
 	
@@ -86,9 +86,9 @@ public class MovieService {
 	// 상영예정작 리스트 조회
 	public List<MovieVO> getUpcomingMovieList() {
 		Map<String, String> conditionMap = new HashMap<String, String>();
-		conditionMap.put("column_name", "movie_status");
-		conditionMap.put("select_condition", "상영예정작");
-		conditionMap.put("OlderColumn", "movie_type");
+		conditionMap.put("columnName", "movie_status");
+		conditionMap.put("selectCondition", "상영예정작");
+		conditionMap.put("olderColumn", "movie_type");
 		conditionMap.put("howOlder", "ASC");
 		return movieMapper.selectMovieListCheck(conditionMap);
 	}

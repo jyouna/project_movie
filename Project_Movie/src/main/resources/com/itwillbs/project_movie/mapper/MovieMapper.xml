@@ -66,19 +66,25 @@
 				WHERE ${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
 			</when>
 			<when test="column_name != null and select_condition != null">
-				WHERE ${column_name} = #{select_condition}
+				WHERE ${columnName} = #{selectCondition}
 			</when>
-			<when test="OlderColumn != null and howOlder != null">
-				ORDER BY ${OlderColumn} ${howOlder}
+			<when test="columName != null and in1 != null and in2 != null">
+				WHERE ${columName} IN ( #{in1}, #{in2} )
 			</when>
 		</choose>
+		<if test="olderColumn != null and howOlder != null">
+			ORDER BY ${olderColumn} ${howOlder}
+		</if>
+		<if test="olderColumn2 != null and howOlder2 != null">
+			, ${olderColumn2} ${howOlder2}
+		</if>
 	</select>
 	
 	<!-- 조회조건 컬럼별 해당 영화 수 검색 -->
 	<select id="selectMovieCount" resultType="int">
 		SELECT COUNT(*)
 		FROM movie
-		WHERE ${column_name} = #{select_condition}
+		WHERE ${columnName} = #{selectCondition}
 	</select>
 	
 	<!-- 영화상태 업데이트 -->

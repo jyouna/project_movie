@@ -83,7 +83,7 @@
 							<td>${movieList[i].movie_name}</td>
 							<c:choose>
 								<c:when test="${empty movieList[i].start_screening_date or empty movieList[i].end_screening_date}">
-									<td>상영예정기간을 입력해주세요.</td>
+									<td></td>
 								</c:when>
 								<c:otherwise>
 									<td>${movieList[i].start_screening_date} ~ ${movieList[i].end_screening_date}</td>

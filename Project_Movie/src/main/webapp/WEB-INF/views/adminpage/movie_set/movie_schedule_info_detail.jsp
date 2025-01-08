@@ -24,13 +24,13 @@
 		<div id="body_top">
 			<div id="title">스케줄 상세</div>
 			<div id="btnGroup01">
-				<select>
+				<select class="changeScheduleTable">
 					<option value="T1" <c:if test="${theater_code eq 'T1'}">selected</c:if>>1관</option>
 					<option value="T2" <c:if test="${theater_code eq 'T2'}">selected</c:if>>2관</option>
 					<option value="T3" <c:if test="${theater_code eq 'T3'}">selected</c:if>>3관</option>
 				</select>
 				<br>
-				<input type="date" value="${select_date}">
+				<input type="date" class="changeScheduleTable" value="${select_date}">
 				<input type="button" id="regist_schedule_btn" value="스케줄등록">
 				<input type="button" value="스케줄변경">
 				<input type="button" value="스케줄삭제">
@@ -49,6 +49,8 @@
 					   <label>영화선택</label>
 					<select name="selected_movie">
 						<option value="" selected="selected">선택</option>
+						<optgroup label="상영예정작"></optgroup>
+						<optgroup label="현재상영작"></optgroup>
 					</select>
 					<br>
 				    <label>영화코드</label>
@@ -66,7 +68,7 @@
 					<input type="hidden" name="theater_code" required>	
 				    <br>
 				    <label>상영날짜</label>
-				    <input type="date" name="show_date" value="${select_date}" required readonly><br>
+				    <input type="date" name="select_date" value="${select_date}" required readonly><br>
 				    <label>상영시작시간</label>
 				    <input type="time" name="s_time" min="09:00" max="22:30" required><br>
 				    <input type="hidden" name="str_start_time">
@@ -78,7 +80,10 @@
 				    <label>상영시간대</label>
 				    <input type="text" name="showtime_type" readonly><br>
 				    <label>예매가능여부</label>
-				    <input type="text" name="booking_avail" value="예매불가" readonly>
+				    <select name="booking_avail">
+				    	<option value="0">예매불가</option>
+				    	<option value="1">예매가능</option>
+				    </select>
 				    <div class="form_btnGroup">
 				    	<input type="submit" value="등록">
 				    	<input type="reset" value="초기화">

@@ -1,8 +1,13 @@
 package com.itwillbs.project_movie.controller;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.protobuf.Timestamp;
 import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.PageInfo;
+import com.itwillbs.project_movie.vo.ScheduleVO;
 
 @Controller
 public class MovieController {
@@ -108,7 +113,6 @@ public class MovieController {
 		/* sId 판별식 추가 예정 */
 //		String id = (String)session.getAttribute("sId");
 		movieVO.setRegist_admin_id("admin");
-		System.out.println(movieVO);
 		
 		// 이미 등록된 영화인지 확인을 위해 영화정보 조회
 		MovieVO dbMovieVO = movieService.searchMovieInfo(movieVO.getMovie_code());
@@ -246,8 +250,6 @@ public class MovieController {
 	@PostMapping("UpdateScreeningDate")
 	public Map<String, String> updateScreeningDate(MovieVO movieVO) {
 		Map<String, String> sendMsgMap = new HashMap<String, String>();
-		
-		System.out.println(movieVO);
 		int updateResult = movieService.setScreeningDate(movieVO);
 		
 		if(updateResult > 0) {
@@ -268,16 +270,16 @@ public class MovieController {
 	// 관리자페이지 영화관리 상영스케줄 상세페이지 맵핑
 	@GetMapping("AdminMovieSetScheduleDetail")
 	public String adminMovieSetScheduleDetail(String theater_code, Date select_date, Model model) {
-		System.out.println(theater_code);
-		System.out.println(select_date);
 		model.addAttribute("select_date", select_date);
 		model.addAttribute("theater_code", theater_code);
 		return "adminpage/movie_set/movie_schedule_info_detail";
 	}
 	
-	// 스케줄 등록 비즈니스 로직
+	// 스케줄상세페이지에서 스케줄등록 비즈니스 로직
 	@PostMapping("ScheduleRegistForm")
-	public String scheduleRegistForm() {
+	public String scheduleRegistForm(ScheduleVO schedule, String select_date) {
+//		System.out.println(schedule.getStr_end_time().replace(" (한국 표준시)", ""));
+//		System.out.println(stringToTimestamp(schedule.getStr_end_time().replace(" (한국 표준시)", "").trim()));
 		return "";
 	}
 	
@@ -293,5 +295,25 @@ public class MovieController {
 		return "adminpage/movie_set/past_movie_set";
 	}
 	
+	// 스트링타입의 날짜(한국 표준시 패턴)를 timestamp("yyyy-MM-dd HH:mm")패턴으로 변환하는 메서드
+	private Timestamp stringToTimestamp(String strDateTime) {
+		// 한국 표준시를 ZoneDateTime으로 파싱
+		DateTimeFormatter firstFormatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'");
+		ZonedDateTime zoneDateTime = ZonedDateTime.parse(strDateTime, firstFormatter);
+		
+		// ZonDateTime을 LocalDateTime 으로 변환
+		LocalDateTime localDateTime = zoneDateTime.toLocalDateTime();
+		
+		// LocalDateTime를 원하는 패턴으로 변환
+		DateTimeFormatter secondFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		String strFormat = localDateTime.format(secondFormatter);
+		
+		//변환된 문자열과 패턴을 사용하여 LocalDateTime으로 파싱
+		LocalDateTime formatLocalDateTime = LocalDateTime.parse(strFormat, secondFormatter);
+		
+		// LocalDateTime 타입을 Timestamp타입을 변환;
+		Timestamp convertedLDT = Timestamp.valueOf(formatLocalDateTime);
+		return convertedLDT;
+	}
 	
 }
