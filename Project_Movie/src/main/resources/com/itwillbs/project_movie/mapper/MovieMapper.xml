@@ -61,15 +61,17 @@
 	<select id="selectMovieListCheck" resultType="movieVO">
 		SELECT *
 		FROM movie
-		<if test="howSearch != null and searchKeyword != null"> 
-			WHERE ${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
-		</if>
-		<if test="column_name != null and select_condition != null">
-			WHERE ${column_name} = #{select_condition}
-		</if>
-		<if test="OlderColumn != null and howOlder != null">
-			ORDER BY ${OlderColumn} ${howOlder}
-		</if>
+		<choose>
+			<when test="howSearch != null and searchKeyword != null"> 
+				WHERE ${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
+			</when>
+			<when test="column_name != null and select_condition != null">
+				WHERE ${column_name} = #{select_condition}
+			</when>
+			<when test="OlderColumn != null and howOlder != null">
+				ORDER BY ${OlderColumn} ${howOlder}
+			</when>
+		</choose>
 	</select>
 	
 	<!-- 조회조건 컬럼별 해당 영화 수 검색 -->

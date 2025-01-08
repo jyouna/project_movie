@@ -3,6 +3,8 @@ $(function() {
 	let movie_code = "";
 	let movie_name = "";
 	let screening_date = "";
+	let start_screening_date = "";
+	let	end_screening_date = "";
 	
 	// 테이블 행 클릭시 해당행 라디오버튼 클릭 및 변수에 값 저장
 	$("table").on("click", "tr", function() {
@@ -30,15 +32,6 @@ $(function() {
     $(".close_modal").on("click", function() {
 		location.reload();
     });
-
-	// 테이블 선택여부 판별 메서드
-	function isClicked() {
-		if(movie_code == "") {
-			alert("영화를 선택해 주세요");
-			return false;
-		}
-		return true;
-	}
 	
 	// 상영기간설정 입력 버튼 클릭시 해당 기간으로 영화db정보 업데이트
 	// 및 모달창닫고 reload
@@ -54,8 +47,8 @@ $(function() {
 			url : "UpdateScreeningDate",
 			data : {
 				movie_code : movie_code,
-				start_screening_date : $(".start_date").val(),
-				end_screening_date : $(".end_date").val()
+				start_screening_date : start_screening_date,
+				end_screening_date : end_screening_date
 			}
 		}).done(function(result) {
 			$("#screening_date_modal").css("display", "none");
@@ -109,6 +102,28 @@ $(function() {
 	$("#remove_from_upcoming_btn").click(function() {
 		
 	});
+	
+	// 상영스케줄 설정버튼 클릭시 해당영화의 상영시작날짜의 1관 스케줄 상세 페이지로 포워딩
+	$("#to_schedule_regist").click(function() {
+		// 영화 선택여부 판별
+		if(!isClicked()) {return};
+		// 영화 상영기간 설정 여부 판별
+		if(start_screening_date == "" || end_screening_date == "") {
+			alert("상영기간을 설정해 주세요");
+		} else {
+//			location.href = "AdminMovieSetScheduleDetail?theater_code=T1&select_date=" + start_screening_date;
+			console.log(start_screening_date);
+		}
+	});
+	
+	// 테이블 선택여부 판별 메서드
+	function isClicked() {
+		if(movie_code == "") {
+			alert("영화를 선택해 주세요");
+			return false;
+		}
+		return true;
+	}
 }); // document ready 끝
 	
 	

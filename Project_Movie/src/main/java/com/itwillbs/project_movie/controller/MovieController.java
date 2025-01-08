@@ -265,13 +265,21 @@ public class MovieController {
 		return "adminpage/movie_set/movie_schedule_info";
 	}
 	
-	//관리자페이지 영화관리 상영스케줄 상세 페이지 맵핑
+	// 관리자페이지 영화관리 상영스케줄 상세페이지 맵핑
 	@GetMapping("AdminMovieSetScheduleDetail")
-	public String adminMovieSetScheduleDetail(Date select_date, Model model) {
+	public String adminMovieSetScheduleDetail(String theater_code, Date select_date, Model model) {
+		System.out.println(theater_code);
+		System.out.println(select_date);
 		model.addAttribute("select_date", select_date);
+		model.addAttribute("theater_code", theater_code);
 		return "adminpage/movie_set/movie_schedule_info_detail";
 	}
 	
+	// 스케줄 등록 비즈니스 로직
+	@PostMapping("ScheduleRegistForm")
+	public String scheduleRegistForm() {
+		return "";
+	}
 	
 	//관리자페이지 영화관리 현재상영작 페이지 맵핑
 	@GetMapping("AdminMovieSetCurrently")

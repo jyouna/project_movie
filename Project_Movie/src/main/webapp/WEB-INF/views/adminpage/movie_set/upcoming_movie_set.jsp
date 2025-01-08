@@ -25,7 +25,7 @@
 			<div id="title">상영예정작 관리</div>
 			<div id="btnGroup01">
 				<input type="button" id="set_date_btn" value="상영기간설정">
-				<input type="button" value="상영스케줄설정">
+				<input type="button" id="to_schedule_regist" value="상영스케줄설정">
 				<input type="button" value="현재상영작으로등록">
 				<input type="button" id="remove_from_upcoming_btn" value="상영예정작에서 삭제">
 			</div>
@@ -115,23 +115,23 @@
 			<div class="modal_content2">
 			    <h2>영화 정보</h2>
 			    <hr>
-		        <label>영화코드</label><input type="text" name="movie_code"><br>
-		        <label>영화명</label><input type="text" name="movie_name"><br>
-		        <label>장르</label><input type="text" name="movie_genre"><br>
-		        <label>감독</label><input type="text" name="movie_director"><br>
-		        <label>출연</label><input type="text" name="movie_actor"><br>
-		        <label>개봉일</label><input type="date" name="release_date"><br>
-		        <label>러닝타임</label><input type="text" name="running_time"><br>
-		        <label>관람연령</label><input type="text" name="age_limit"><br>
-		        <label>별점</label><input type="text" name="movie_rating"><br>
+		        <label>영화코드</label><input type="text" name="movie_code" readonly><br>
+		        <label>영화명</label><input type="text" name="movie_name" readonly><br>
+		        <label>장르</label><input type="text" name="movie_genre" readonly><br>
+		        <label>감독</label><input type="text" name="movie_director" readonly><br>
+		        <label>출연</label><input type="text" name="movie_actor" readonly><br>
+		        <label>개봉일</label><input type="date" name="release_date" readonly><br>
+		        <label>러닝타임</label><input type="text" name="running_time" readonly><br>
+		        <label>관람연령</label><input type="text" name="age_limit" readonly><br>
+		        <label>별점</label><input type="text" name="movie_rating" readonly><br>
 		       	<label>줄거리</label><br>
 		        <textarea cols="40" rows="5" name="movie_synopsis"></textarea><br>
-		        <label class="url_label">이미지1</label><input type="text" class="url" name="movie_img1">
-		        <label class="url_label">이미지2</label><input type="text" class="url" name="movie_img2"><br>
-		        <label class="url_label">이미지3</label><input type="text" class="url" name="movie_img3">
-		        <label class="url_label">이미지4</label><input type="text" class="url" name="movie_img4"><br>
-		        <label class="url_label">이미지5</label><input type="text" class="url" name="movie_img5">
-		        <label class="url_label">예고편</label><input type="text" class="url" name="movie_trailer"><br>
+		        <label class="url_label">이미지1</label><input type="text" class="url" name="movie_img1" readonly>
+		        <label class="url_label">이미지2</label><input type="text" class="url" name="movie_img2" readonly><br>
+		        <label class="url_label">이미지3</label><input type="text" class="url" name="movie_img3" readonly>
+		        <label class="url_label">이미지4</label><input type="text" class="url" name="movie_img4" readonly><br>
+		        <label class="url_label">이미지5</label><input type="text" class="url" name="movie_img5" readonly>
+		        <label class="url_label">예고편</label><input type="text" class="url" name="movie_trailer" readonly><br>
 		        <label>영화상태</label>
 		        <select name="movie_status">
 		            <option value="대기" disabled>대기</option>
