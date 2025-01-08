@@ -142,3 +142,7 @@ p{
     background-color: #aeaeae;
     border-radius: 5px;
 }
+
+.event_subject {
+	cursor: pointer;
+}

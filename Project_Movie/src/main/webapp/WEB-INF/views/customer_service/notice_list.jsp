@@ -82,8 +82,20 @@
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
 	</article>
-
-
+	<script type="text/javascript">
+	$(function () {
+	    // 제목 클릭 이벤트
+	    $(".notice_subject").on("click", function (event) {
+	        let notice_code = $(event.target).siblings(".notice_code").text();
+	        console.log("siblings " + notice_code);
+	        location.href = "NoticePost?notice_code=" + notice_code + "&pageNum=${pageInfo.pageNum}";
+	    });
+    });
+	
+	
+	
+	
+	</script>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>

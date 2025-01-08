@@ -51,7 +51,13 @@ public class EventController {
 	}
 	// 이벤트 - 글 내용
 	@GetMapping("EventPost")
-	public String eventPost() {
+	public String eventPost(EventBoardVO event, int event_code, Model model) {
+		event = service.getEvent(event_code, true);
+		if(event == null) {
+			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
+			return "result/fail";
+		}
+		model.addAttribute("event", event);
 		return "event/event_post";
 	}
 	

@@ -52,6 +52,7 @@ public class CustomerServiceController {
 		model.addAttribute("noticeList", noticeList);
 		return "customer_service/notice_list";
 	}
+	
 	// 공지사항 - 글 내용
 	@GetMapping("NoticePost")
 	public String noticePost(NoticeBoardVO notice, int notice_code, Model model) {
@@ -61,6 +62,7 @@ public class CustomerServiceController {
 			return "result/fail";
 		}
 		model.addAttribute("notice", notice);
+		
 		return "customer_service/notice_post";
 	}
 

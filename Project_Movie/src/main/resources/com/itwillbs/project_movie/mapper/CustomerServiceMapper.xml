@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.itwillbs.project_movie.mapper.CustomerServiceMapper">
- 
+<!--  공지사항  -->
  	<select id="selectNoticeListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM notice_board
@@ -15,12 +15,13 @@
 			#{startRow}
 			, #{listLimit}
  	</select>
-<!--  	게시글 선택 시  -->
+<!--  공지사항 게시물 눌렸을때 해당 게시글 뜨도록  -->
  	<select id="selectNotice" resultType="notice_board">
  		SELECT *
  		FROM notice_board
  		WHERE notice_code = #{notice_code}
  	</select>
+<!--  공지사항 게시물 눌렸을때 조회수 증가  -->
  	<update id="updateNoticeReadCount">
  		<selectKey keyProperty = "view_count" resultType="int" order="AFTER">
  			SELECT view_count

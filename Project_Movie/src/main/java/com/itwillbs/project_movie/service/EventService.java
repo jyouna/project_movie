@@ -20,5 +20,12 @@ private EventMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectEventList(startRow,listLimit);
 	}
+	public EventBoardVO getEvent(int event_code, boolean isIncreaseReadcount) {
+		EventBoardVO event = mapper.selectEvent(event_code);
+		if(event != null && isIncreaseReadcount) {
+			mapper.updateEventReadCount(event);
+		}
+		return event;
+	}
 
 }

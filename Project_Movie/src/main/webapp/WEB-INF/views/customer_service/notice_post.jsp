@@ -25,17 +25,17 @@
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th>제목</th>
+					<th width="120px">제목 </th>
 					<td>${notice.notice_subject}</td>
 				</tr>
 				<tr>
-					<th>등록일</th>
+					<th width="120px">등록일</th>
 					<td>
 						<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 				<tr>
-					<th>첨부파일</th>
+					<th width="120px">첨부파일</th>
 					<td colspan="3" id="notice_file"></td>
 				</tr>
 			</table>
@@ -43,13 +43,27 @@
 		<section id="articleContentArea">
 			${notice.notice_content}
 		</section>
-		<section id="commandCell">
+		<input type="button" value="목록" id="listButton" style="float: right;" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
+		<hr>
+<!-- 		다음글이 없을 경우 if문 사용해서 해당 글이 존재하지 x 라고 표시 -->
+		<table border="1">
+			<tr>
+				<td>
+					<input type="button" value="△이전글" id="tableButton" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
+					<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다")</c:if>>
+				</td>
+<!-- 				이전글 제목 가져오기 -->
+				<td>${param.notice_code-1}</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="button" value="▽다음글" id="tableButton" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
+					>
+				</td>
+				<td><a href="onclick=location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'">${notice.notice_subject}</a></td>
+			</tr>
+		</table>		
 
-			<%-- 목록 버튼 항상 표시 --%>
-			<input type="button" value="목록" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
-			<input type="button" value="△이전글" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'">
-			<input type="button" value="▽다음글" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'">
-		</section>
 	</article>
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>

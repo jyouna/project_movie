@@ -12,4 +12,8 @@ public interface EventMapper {
 
 	List<EventBoardVO> selectEventList(@Param("startRow") int startRow,@Param("listLimit") int listLimit);
 
+	EventBoardVO selectEvent(int event_code);
+
+	void updateEventReadCount(EventBoardVO event);
+
 }

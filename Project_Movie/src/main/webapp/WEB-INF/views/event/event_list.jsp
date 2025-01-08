@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_list.css" />
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/event/event_list.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -30,10 +31,11 @@
 		<div id="listForm">
 			<table id="eventForm" border="1">
 				<tr id="tr_top" align="center">
+					<td width="35px">번호</td>
 					<td width="45px">상태</td>
 					<td width="200px" >제목</td>
 					<td width="125px">이벤트 기간</td>
-					<td width="45px">조회수</td>
+					<td width="35px">조회수</td>
 				</tr>
 				<c:choose>
 					<c:when test="${empty eventList}"> 
@@ -42,15 +44,15 @@
 					<c:otherwise>
 						<c:forEach var="event_board" items="${eventList}" varStatus="status">
 							<tr>
+								<td class="event_code">${event_board.event_code }</td>
 								<td class="event_status">
-									<c:if test="${event_board.event_status == 0}"> 미진행</c:if>
-									<c:if test="${event_board.event_status == 1}"> 진행중</c:if>
-									<c:if test="${event_board.event_status == 2}"> 종료</c:if></td>
+									<c:if test="${event_board.event_status == 0}"> 미진행 </c:if>
+									<c:if test="${event_board.event_status == 1}"> 진행중 </c:if>
+									<c:if test="${event_board.event_status == 2}"> 종료 </c:if></td>
+<%-- 								<td class="event_subject"><a href="eventPost?event_code=${event_board.event_code}">${event_board.event_subject}</a></td> --%>
 								<td class="event_subject">${event_board.event_subject}</td>
 								<td>
 									<p>${event_board.event_start_date} - ${event_board.event_end_date}</p>
-<%-- 									<fmt:formatDate value="${event_board.event_start_date} " pattern="yy-MM-dd "/> --%>
-<%-- 									- ${event_board.event_end_date}- yy-MM-dd --%>
 								</td>
 								<td>${event_board.view_count}</td>
 							</tr>
@@ -82,7 +84,19 @@
 				onclick="location.href='EventList?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
-
+		<script type="text/javascript">
+		$(function() {
+			$(".event_subject").on("click", function(event) {
+				let event_code = $(event.target).siblings(".event_code").text(); //.은 클래스 가져오는거 
+				console.log("siblings " + event_code);
+				location.href = "EventPost?event_code=" + event_code + "&pageNum=${pageInfo.pageNum}";
+			
+			});
+		});
+				
+		
+		
+		</script>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>
