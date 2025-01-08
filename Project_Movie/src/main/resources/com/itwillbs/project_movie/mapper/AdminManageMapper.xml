@@ -112,7 +112,8 @@
 	
 	<update id="updateEventStatusEnd">
 		UPDATE event_board
-		SET event_status = 2
+		SET event_status = 2, 
+			event_end_date = now()
 		WHERE event_code = #{event_code}
 	</update>
 	

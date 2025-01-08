@@ -146,4 +146,5 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.checkEventStatus(event_code);
 	}
+
 }

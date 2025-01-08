@@ -80,11 +80,7 @@
 	</div>
 	<br>
 	<div id="divBottom" class="view">
-		<a href="#">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
+		<input type="button" value="돌아가기" onclick="history.back()">
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 

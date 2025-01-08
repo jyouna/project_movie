@@ -56,12 +56,26 @@ $(function(){
 			console.log("이벤트 코드 : " + eventCode);
 		}
 		if(confirm("해당 이벤트를 진행 상태로 변경하시겠습니까?")) {
-			location.href="StartEvent?event_code=" + eventCode;
+			
+			$.ajax({
+				url : "checkStatusBeforeStart",
+				type : "post",
+				data : {
+					event_code : eventCode
+				},
+				success : function(result){
+					if(result){
+						location.href="StartEvent?event_code=" + eventCode;
+					} else {
+						alert("대기 상태인 이벤트만 가능합니다");
+					}
+				}
+			});
 		}
 	});
 	
 	$("#eventEnd").on("click", function(){
-		// 이미 종료된 경우 종료되었다고 alert 뜨게 하기
+		// 진행 중인 경우에만 사용 가능하다고 alert 작성
 		let eventCode = $(".eventSetRadio:checked").val();
 		if(eventCode == null) {
 	        alert("이벤트를 선택하세요.");
@@ -69,8 +83,22 @@ $(function(){
 		} else {
 			console.log("이벤트 코드 : " + eventCode);
 		}
-		if(confirm("해당 이벤트를 종료 상태로 변경하시겠습니까?")) {
-			location.href="EndEvent?event_code=" + eventCode;
+		
+		if(confirm("해당 이벤트를 진행 상태로 변경하시겠습니까?")) {
+			$.ajax({
+				url : "checkStatusBeforeEnd",
+				type : "post",
+				data : {
+					event_code : eventCode
+				},
+				success : function(result){
+					if(result){
+						location.href="EndEvent?event_code=" + eventCode;
+					} else {
+						alert("진행 상태인 이벤트만 가능합니다");
+					}
+				}
+			});
 		}
 	});
 

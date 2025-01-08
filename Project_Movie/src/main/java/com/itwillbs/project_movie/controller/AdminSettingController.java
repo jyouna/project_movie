@@ -339,6 +339,12 @@ public class AdminSettingController {
 	
 	@GetMapping("EventBoardRegisSubmit") // 이벤트 게시글 등록폼 제출
 	public String eventBoardRegistration(EventBoardVO eventVo, HttpSession session) {
+		/* 1. 시작일 > 등록일(now())
+		 * 2. 종료일 > 시작일
+		 * 
+		 * 날짜 선택 시 위 두가지 반드시 적용되어야 함
+		 * 
+		 */
 		String admin_sId = (String) session.getAttribute("admin_sId");
 //		String sId = "admin";
 		eventVo.setEvent_writer(admin_sId);
@@ -400,6 +406,32 @@ public class AdminSettingController {
 		}
 	}
 	
+	@PostMapping("checkStatusBeforeStart")
+	@ResponseBody
+	public Boolean checkEventStatusBeforeStart(int event_code) {
+		EventBoardVO statusResult = adminService.selectWinner(event_code);
+		int checkEventStatus = statusResult.getEvent_status();
+		
+		if(checkEventStatus == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@PostMapping("checkStatusBeforeEnd")
+	@ResponseBody
+	public Boolean checkEventStatusBeforeEnd(int event_code) {
+		EventBoardVO statusResult = adminService.selectWinner(event_code);
+		int checkEventStatus = statusResult.getEvent_status();
+		
+		if(checkEventStatus == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 폼 이동
 	public String chooseEventWinner(int event_code, Model model) {
 		System.out.println("이벤트 당첨 컨트롤러 이동");
@@ -427,20 +459,25 @@ public class AdminSettingController {
 	
 	@PostMapping("GiveCoupon")
 	public String giveCouponToWinner(GetGiveCouponInfoVO vo) {
-		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
-		System.out.println("받아온 값 : " + vo);
-		System.out.println("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
-		
 		adminService.insertCoupon(vo);
 		return "redirect:/EventWinnerManage";
 	}
 	
 	@GetMapping("GivePoint") // 이벤트 당첨자 선택 후 포인트 지급 화면 이동
-	public String givePoint(@RequestParam("member_id") String[] member_id, int event_code) {
-		System.out.println("이벤트 코드 : " + event_code);
+	public String givePoint(@RequestParam("member_id") List<String> member_id, int event_code, Model model) {
 		for(String id : member_id) {
-			System.out.println("포인트 증정 대상자 : " + id);
+			System.out.println("쿠폰 증정 대상자 : " + id);
 		}
+		model.addAttribute("member_id", member_id);
+		model.addAttribute("event_code", event_code);
+		
+		return "adminpage/point_manage/point_regis";
+	}
+	
+	@PostMapping("GivePoint")
+	public String givePointToWinner(int point) {
+		// point 테이블 이용하여 구현하기.
+//		adminService.insertPoint(point);
 		return "redirect:/EventWinnerManage";
 	}
 	
