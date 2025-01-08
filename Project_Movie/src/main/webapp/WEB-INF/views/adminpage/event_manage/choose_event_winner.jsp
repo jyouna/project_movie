@@ -10,11 +10,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
+	
 	<title>이벤트 당첨자</title>
+	
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
+
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -43,8 +46,8 @@
 		<table id="mainTable">
 			<tr align="center" id="tr01">
 				<th width="50"><input type="checkbox" id="selectAll"></th>
+				<th width="50">이벤트코드</th>
 				<th width="100">대상자</th>
-				<th width="100">이벤트코드</th>
 				<th width="150">이벤트제목</th>
 				<th width="100">시작일자</th>
 				<th width="100">종료일자</th>
@@ -59,8 +62,13 @@
 					<c:forEach var="member" items="${memberVo}" varStatus="status">
 						<tr>
 							<td><input type="checkbox" class="eventSetCheckbox" value="${member.member_id}"></td>
-							<td>${member.member_id}</td>	
-							<td><input type="hidden" id="event_code" value="${eventVo.event_code}">${eventVo.event_code}</td>	
+							<td>${eventVo.event_code}</td>
+							<td>
+								${member.member_id}	
+<%-- 							<input type="hidden" id="event_code" value="${eventVo.event_code}">	 --%>
+								<!--  파라미터에서도 아래 방식으로 바로 가져올 수 있음!! -->
+								<input type="hidden" id="event_code" value="${param.event_code}">	
+							</td>
 							<td>${eventVo.event_subject}</td>	
 							<td>${eventVo.event_start_date}</td>	
 							<td>${eventVo.event_end_date}</td>	

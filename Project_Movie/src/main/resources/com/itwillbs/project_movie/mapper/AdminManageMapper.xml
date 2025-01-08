@@ -93,7 +93,8 @@
 			#{view_count},
 			#{event_status},
 			#{event_start_date},
-			#{event_end_date}
+			#{event_end_date},
+			DEFAULT
 		)
 	</insert>
 	
@@ -115,7 +116,7 @@
 		WHERE event_code = #{event_code}
 	</update>
 	
-	<select id="getEventBoardContent" resultType="eventboard">
+	<select id="getEventBoardList" resultType="eventboard">
 		SELECT *
 		FROM event_board
 		WHERE event_code = #{event_code}
@@ -131,11 +132,49 @@
 		SELECT *
 		FROM member; 
 	</select>
-
-<!-- 	<insert id="selectEventWinner"> -->
-<!-- 		INSERT INTO event_winner -->
-<!-- 		VALUES ( -->
+	
+<!-- 	<select id="checkEventStatus" resultType="eventboard"> -->
+<!-- 		SELECT event_status, set_winner_status -->
+<!-- 		FROM event_board -->
+<!-- 		WHERE event_code = #{event_code} -->
+<!-- 	</select> -->
+	
+	<insert id="insertCoupon">
+		<selectKey keyProperty="coupon_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(coupon_code), 0)
+			FROM coupon;
+		</selectKey>
 		
-<!-- 		) -->
-<!-- 	</insert>	 -->
+		INSERT INTO coupon
+		VALUES (
+			#{coupon_code}+1,
+			#{coupon_type},
+			#{discount_amount},
+			#{discount_rate},
+			now(),
+			#{expired_date},
+			#{coupon_status},
+			#{member_id},
+			#{event_code}
+		)
+	</insert>
+	
+	<select id="selectAllEventWinner" resultType="EventWinner">
+		SELECT 
+			c.event_code AS event_code, 
+			c.member_id AS winner_id, 
+			e.event_subject AS event_subject, 
+			e.event_start_date AS event_start_date, 
+			e.event_end_date AS event_end_date,
+			c.coupon_type AS coupon_type,
+			c.discount_amount AS discount_amount,
+			c.discount_rate AS discount_rate
+		FROM 
+			event_board e 
+		JOIN 
+			coupon c
+		ON 
+			e.event_code = c.event_code
+	</select>
+
  </mapper>

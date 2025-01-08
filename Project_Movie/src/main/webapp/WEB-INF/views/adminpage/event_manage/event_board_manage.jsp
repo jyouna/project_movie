@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>이벤트관리</title>
+	<title>이벤트 관리</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
@@ -34,7 +34,7 @@
 			<input type="button" id="eventEnd" value="이벤트 종료">
 			<input type="button" id="chooseEventWinner" value="이벤트 당첨자 추첨">
 		</div>	
-		<div id="divTopRight">
+		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<select>
 				<option>제목+내용</option>
 				<option>제목</option>
@@ -55,7 +55,8 @@
 				<th width="150">시작일자</th>
 				<th width="150">종료일자</th>
 				<th width="150">등록계정</th>
-				<th width="150">상태</th>
+				<th width="150">진행상태</th>
+				<th width="150">당첨상태</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty eventVo}">
@@ -87,7 +88,15 @@
 								<c:if test="${eventBoard.event_status == 2}">
 										종료
 								</c:if>
-							</td>	
+							</td>
+							<td>
+								<c:if test="${eventBoard.set_winner_status == true}">
+									완료
+								</c:if>
+								<c:if test="${eventBoard.set_winner_status == false}">
+									미진행
+								</c:if>
+							</td>
 						</tr>	
 					</c:forEach>
 				</c:otherwise>
@@ -104,24 +113,5 @@
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
-	<script type="text/javascript">
-// 		$("#chooseEventWinner").on("click", function(){
-// 			let eventSetCheckbox = $(".eventSetCheckbox:checked"); 
-// 			let setWinner = [];
-
-// 			if(eventSetCheckbox.length > 0) {
-// 				eventSetCheckbox.each(function(){
-// 					setWinner.push($(this).val());
-// 					console.log(setWinner);
-// 				});
-// 			}
-// 			if(confirm("당첨자 추첨을 완료하시겠습니까?")) {
-// 				location.href="ChooseEventWinner?event_code=" + setWinner.join(",");
-// 			}
-// 			else {
-// 				alert("당첨자를 선택하세요");
-// 			}
-// 		});
-	</script>
 </body>
 </html>

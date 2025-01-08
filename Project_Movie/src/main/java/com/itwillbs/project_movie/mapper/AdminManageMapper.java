@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.itwillbs.project_movie.vo.AdminRegisVO;
+import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
+import com.itwillbs.project_movie.vo.EventWinnerVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 
 @Mapper
@@ -28,7 +30,7 @@ public interface AdminManageMapper {
 
 	void updateEventStatusEnd(@Param("event_code") int event_code);
 
-	EventBoardVO getEventBoardContent(@Param("event_code") int event_code);
+	EventBoardVO getEventBoardList(@Param("event_code") int event_code);
 
 	String checkAdminId(@Param("id") String id);
 
@@ -44,6 +46,10 @@ public interface AdminManageMapper {
 
 	List<MemberVO> selectMemberInfoForEvent();
 
+	int insertCoupon(CouponVO coupon);
 
-//	void selectEventWinner(@Param("event_code") int event_code);
+	List<EventWinnerVO> selectAllEventWinner();
+
+	EventBoardVO checkEventStatus(@Param("event_code") int event_code);
+
 }

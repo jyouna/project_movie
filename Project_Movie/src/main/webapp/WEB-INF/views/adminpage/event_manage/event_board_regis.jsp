@@ -6,25 +6,23 @@
 <meta charset="UTF-8">
 <title>신규 이벤트 등록</title>
 <style type="text/css">
+
 form>div {
 	background-color: lightgrey;
 	padding: 30px;
 	width: 800px;
-	border: 1px solid red;
-}
+	border: 1px solid red;}
 
 input[type="text"] {
 	width: 600px;
 	height: 30px;
-	margin-bottom: 5px;
-}
+	margin-bottom: 5px;}
 
 .bottom {
 	padding: 10px;
 	width: 100px;
 	border-radius: 20px;
-	border: 3px;
-}
+	border: 3px;}
 
 textarea {
      width: 100%; /* 너비 */
@@ -33,20 +31,17 @@ textarea {
      box-sizing: border-box; /* 패딩과 보더를 포함한 크기 계산 */
      font-size: 16px; /* 폰트 크기 */
      line-height: 1.5; /* 줄 간격 */
-     vertical-align: top; /* 상단 정렬 */
-}
+     vertical-align: top; /* 상단 정렬 */}
 
 #divBottom {
 	text-align: center;
-	border: 1px solid red;
-}
+	border: 1px solid red;}
 
 .date {
 	border-radius: 20px;
 	border: 3px;
 	margin-left: 2px;
-	margin-bottom: 5px;
-}
+	margin-bottom: 5px;}
 </style>
 </head>
 <body>

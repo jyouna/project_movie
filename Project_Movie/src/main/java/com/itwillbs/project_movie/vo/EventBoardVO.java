@@ -18,7 +18,8 @@ public class EventBoardVO {
 	private String event_writer;
 	private Timestamp regis_date;
 	private int view_count;
-	private int event_status;
+	private int event_status; // 0-대기  1-진행   2-종료
 	private Date event_start_date;
 	private Date event_end_date;
+	private Boolean set_winner_status = false;
 }

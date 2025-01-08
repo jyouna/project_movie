@@ -17,4 +17,5 @@ public class CouponVO {
 	private Date expired_date; // 만료일
 	private Boolean coupon_status; // 쿠폰 상태 0 미사용 1 사용완료
 	private String member_id; // 쿠폰 소유 계정
+	private int event_code; // 이벤트 코드 참조
 }

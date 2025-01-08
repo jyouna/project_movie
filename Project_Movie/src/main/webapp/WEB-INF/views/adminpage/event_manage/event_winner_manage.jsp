@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>이벤트 당첨자 관리</title>
+	<title>이벤트 당첨자</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
@@ -23,13 +23,11 @@
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<h3>당첨자 추첨 관리</h3>
+	<h3>이벤트 당첨자 목록</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" value="전체선택" id="selectAll">
-			<input type="button" id="give_prize" value="경품지급">
 		</div>	
-		<div id="divTopRight">
+		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<select>
 				<option>제목+내용</option>
 				<option>제목</option>
@@ -41,39 +39,45 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="50">선택</th>
-				<th width="50">코드</th>
-				<th width="200">이벤트명</th>
-				<th width="100">이벤트시작일</th>
-				<th width="100">이벤트종료일</th>
-				<th width="100">지급상태</th>
-				<th width="100">지급일자</th>
+				<th width="50">이벤트번호</th>
+				<th width="150">이벤트제목</th>
+				<th width="150">시작일자</th>
+				<th width="150">종료일자</th>
+				<th width="150">당첨자</th>
+				<th width="150">쿠폰종류</th>
+				<th width="150">쿠폰상세</th>
 			</tr>
 			<c:choose>
-				<c:when test="${empty eventVo}">
+				<c:when test="${empty event_winner}">
 					<tr>
-						<th colspan="8">"작성된 게시글이 없습니다."</th>
+						<th colspan="7">"작성된 게시글이 없습니다."</th>
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="eventBoard" items="${eventVo}" varStatus="status">
+					<c:forEach var="winner" items="${event_winner}" varStatus="status">
 						<tr>
-							<td><input type="radio"></td>
+							<td>${winner.event_code}</td>	
+							<td>${winner.event_subject}</td>	
+							<td>${winner.event_start_date}</td>	
+							<td>${winner.event_end_date}</td>	
+							<td>${winner.winner_id}</td>	
+							<c:choose>
+								<c:when test="${winner.coupon_type eq false}">
+									<td>금액할인</td>
+									<td>${winner.discount_amount}원</td>
+								</c:when>
+								<c:otherwise>
+									<td>할인율</td>
+									<td>${winner.discount_rate}%</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>	
 					</c:forEach>
 				</c:otherwise>
-			</c:choose>
-		
+			</c:choose> 
 		</table>
 	</div>
 	<br>
-	<div id="divBottom" class="view">
-		<a href="#">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
-	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
 </body>
