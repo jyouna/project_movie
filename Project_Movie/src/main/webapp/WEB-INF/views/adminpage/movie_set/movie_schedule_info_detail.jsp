@@ -80,6 +80,7 @@
 				    <label>상영시간대</label>
 				    <input type="text" name="showtime_type" readonly><br>
 				    <label>예매가능여부</label>
+				    <input type="hidden" name="str_next_schedule">
 				    <select name="booking_avail">
 				    	<option value="0">예매불가</option>
 				    	<option value="1">예매가능</option>

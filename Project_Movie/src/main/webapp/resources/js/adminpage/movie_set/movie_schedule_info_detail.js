@@ -20,7 +20,7 @@ $(function() {
 		type : "GET",
 		url : "AdminMovieSetSearchBox", // 기존 컨트롤러 매핑메서드 재사용
 		data : {
-			columName : "movie_status",
+			columnName : "movie_status",
 			in1 : "상영예정작",
 			in2 : "현재상영작",
 			olderColumn : "movie_status",
@@ -104,17 +104,20 @@ $(function() {
 			$(this).val("");
 		} else {
 			let runningTime = $("input[name=running_time]").val();
-			let startTime = scheduleDate + " " + $(this).val();
+			let startDateTime = scheduleDate + " " + $(this).val();
 			
 			// 선택한시간에 러닝타임을 더해 상영종료 시간 계산 후 스케줄 입력 폼요소에 입력
-			$("input[name='str_start_time']").val(startTime);
+			$("input[name='str_start_time']").val(startDateTime);
+			
 			//String 타입을 날짜시간 계산을위해 Date 타입으로 변환
-			let dateTime = new Date(startTime);
+			let startDateTime2 = new Date(startDateTime);
+			
 			// 시작 시간을 기준으로 영화타입 "조조", "일반", "심야" 판별 후 폼요소에 입력
+			// 아래에 상영시간을 더하는 코드보다 위에 위치 해야 시작시간을 가지고 판별 가능
 			let showtimeType = "";
-			if(dateTime.getHours() < 10) {
+			if(startDateTime2.getHours() < 10) {
 				showtimeType = "조조"
-			} else if(dateTime.getHours() >= 22) {
+			} else if(startDateTime2.getHours() >= 22) {
 				showtimeType = "심야"
 			} else {
 				showtimeType = "일반"
@@ -124,18 +127,33 @@ $(function() {
 			$("input[name='showtime_type']").val(showtimeType);
 			
 			// 변환된 Date에 러닝타임 더하기 계산
-			dateTime.setMinutes(dateTime.getMinutes() + Number(runningTime));
-			// 계산된 Date form에 입력, 스트링타입으로 form 요청 후 자바에서 원하는형식으로 변환후 스케줄 insert 예정
-			$("input[name='str_end_time']").val(dateTime);
-			// 계산된 시간을 보여주기위해 HH:mm 형식으로 변환 후 input type="time"에 입력
-			calHour = dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()
-			calMinute = dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()
-			calTime = calHour + ":" + calMinute;
-			$("input[name='e_time']").val(calTime);
+			startDateTime2.setMinutes(startDateTime2.getMinutes() + Number(runningTime));
+			// yyyy-MM-dd HH:mm 형태로 포맷
+			formatEndDateTime = dateFormatter(startDateTime2);
 			
+			// 영화 끝 시간에 청소시간을 계산하여 다음 스케줄 가능시간 계산후 포맷
+			startDateTime2.setMinutes(startDateTime2.getMinutes() + 30);
+			formatNextScheduleTime = dateFormatter(startDateTime2);
+			
+			// 변환 된 날짜 시간을 폼요소에 입력
+			$("input[name='str_end_time']").val(formatEndDateTime);
+			$("input[name='str_next_schedule']").val(formatNextScheduleTime);
+			// 계산된 시간을 보여주기위해 상영종료 시간 input type="time"에 입력
+			endTime = formatEndDateTime.split(" ")[1];
+			$("input[name='e_time']").val(endTime);
 			
 		}
 	});
+	
+	// 날짜 변환 메서드
+	function dateFormatter(startDateTime2) {
+		formatYear = startDateTime2.getFullYear();
+		formatMonth = startDateTime2.getMonth() + 1 < 10 ? '0' + (startDateTime2.getMonth() + 1) : startDateTime2.getMonth() + 1;
+		formatDate = startDateTime2.getDate() < 10 ? '0' + startDateTime2.getDate() : startDateTime2.getDate()
+		formatHour = startDateTime2.getHours() < 10 ? '0' + startDateTime2.getHours() : startDateTime2.getHours()
+		formatMinute = startDateTime2.getMinutes() < 10 ? '0' + startDateTime2.getMinutes() : startDateTime2.getMinutes()
+		return `${formatYear}-${formatMonth}-${formatDate} ${formatHour}:${formatMinute}`;
+	}
 	
 	// 날짜 비교 메서드
 	// 파라미터1 <= 파라미터2 <= 파라미터3 이면 true 리턴

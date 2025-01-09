@@ -18,6 +18,7 @@ public class ScheduleVO {
 		private int avail_seat;				// 예매가능 좌석수
 		private String showtime_type;		// 상영시간대 타입(조조, 일반, 심야)
 		
-		private String str_start_time;		// 날짜 시간 변환을 위한 String 타입 날짜
+		private String str_start_time;
 		private String str_end_time;		
+		private String str_next_schedule;		
 }

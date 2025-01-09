@@ -261,28 +261,6 @@ public class MovieController {
 		}
 	}
 	
-	//관리자페이지 영화관리 상영스케줄관리 페이지 맵핑
-	@GetMapping("AdminMovieSetSchedule")
-	public String adminMovieSetSchedule() {
-		return "adminpage/movie_set/movie_schedule_info";
-	}
-	
-	// 관리자페이지 영화관리 상영스케줄 상세페이지 맵핑
-	@GetMapping("AdminMovieSetScheduleDetail")
-	public String adminMovieSetScheduleDetail(String theater_code, Date select_date, Model model) {
-		model.addAttribute("select_date", select_date);
-		model.addAttribute("theater_code", theater_code);
-		return "adminpage/movie_set/movie_schedule_info_detail";
-	}
-	
-	// 스케줄상세페이지에서 스케줄등록 비즈니스 로직
-	@PostMapping("ScheduleRegistForm")
-	public String scheduleRegistForm(ScheduleVO schedule, String select_date) {
-//		System.out.println(schedule.getStr_end_time().replace(" (한국 표준시)", ""));
-//		System.out.println(stringToTimestamp(schedule.getStr_end_time().replace(" (한국 표준시)", "").trim()));
-		return "";
-	}
-	
 	//관리자페이지 영화관리 현재상영작 페이지 맵핑
 	@GetMapping("AdminMovieSetCurrently")
 	public String aminMovieSetCurrently() {
@@ -293,27 +271,6 @@ public class MovieController {
 	@GetMapping("AdminMovieSetPast")
 	public String AdminMovieSetPast() {
 		return "adminpage/movie_set/past_movie_set";
-	}
-	
-	// 스트링타입의 날짜(한국 표준시 패턴)를 timestamp("yyyy-MM-dd HH:mm")패턴으로 변환하는 메서드
-	private Timestamp stringToTimestamp(String strDateTime) {
-		// 한국 표준시를 ZoneDateTime으로 파싱
-		DateTimeFormatter firstFormatter = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'");
-		ZonedDateTime zoneDateTime = ZonedDateTime.parse(strDateTime, firstFormatter);
-		
-		// ZonDateTime을 LocalDateTime 으로 변환
-		LocalDateTime localDateTime = zoneDateTime.toLocalDateTime();
-		
-		// LocalDateTime를 원하는 패턴으로 변환
-		DateTimeFormatter secondFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		String strFormat = localDateTime.format(secondFormatter);
-		
-		//변환된 문자열과 패턴을 사용하여 LocalDateTime으로 파싱
-		LocalDateTime formatLocalDateTime = LocalDateTime.parse(strFormat, secondFormatter);
-		
-		// LocalDateTime 타입을 Timestamp타입을 변환;
-		Timestamp convertedLDT = Timestamp.valueOf(formatLocalDateTime);
-		return convertedLDT;
 	}
 	
 }

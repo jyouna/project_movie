@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.project_movie.mapper.ScheduleMapper">
+
+	<!-- schedule 테이블에 스케줄 insert -->
+	<insert id="insertSchedule">
+		INSERT INTO schedule
+		VALUES (
+			#{schedule_code}
+			, #{movie_code}
+			, #{str_start_time}
+			, #{str_end_time}
+			, #{str_next_schedule}
+			, #{booking_avail}
+			, #{theater_code}
+			, #{avail_seat}
+			, #{showtime_type}
+		)
+	</insert>
+	
+</mapper>

@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itwillbs.project_movie.mapper.BookMapper">
 	
-	<select id="selectMovieList" resultType="movieVO">
+	<select id="selectMovieList" resultType="movie">
 		SELECT age_limit, movie_name
 		FROM movie
 	</select>
