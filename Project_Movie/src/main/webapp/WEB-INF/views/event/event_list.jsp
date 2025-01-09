@@ -39,7 +39,7 @@
 				</tr>
 				<c:choose>
 					<c:when test="${empty eventList}"> 
-						<tr><td colspan="4">게시물이 존재하지 않습니다</td></tr>
+						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="event_board" items="${eventList}" varStatus="status">

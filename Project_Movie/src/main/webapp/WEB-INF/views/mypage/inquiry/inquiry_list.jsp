@@ -13,7 +13,7 @@
 	<title>마이페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquery/inquery_list.css" rel="stylesheet"/>
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_list.css" rel="stylesheet"/>
 		<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
@@ -22,40 +22,41 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
 
-	<article>
+	<article class="box">
 		<div id="title">
 			<h1>1:1 문의 목록</h1>
 		</div>
-	    <div class="search-bar">
-	      <select >
-	        <option>제목▼</option>
+	    <div class="search-bar" style="text-align: right;">
+	      <select>
+	        <option>제목</option>
 	        <option>내용</option>
 	      </select>
-	      <input type="text">
+	      <input type="text" placeholder="검색어를 입력하세요.">
    		  <input type="button" value="검색" id="searchButton">
 	    </div>
+	    <input type="button" value="글쓰기" id ="writeButton" style="text-align: right;">
 		<section id="listForm">
-			<table>
-				<tr id="tr_top">
-					<td width="50px">상태</td>
-					<td width="150px" >제목</td>
-					<td width="100px">당첨자 발표일</td>
+			<table id="inquiryForm" border="1">
+				<tr id="tr_top" align="center">
+					<td width="35px">번호</td>
+					<td width="45px">상태</td>
+					<td width="200px" >제목</td>
+					<td width="100px">등록일</td>
 				</tr>
 					
 				<c:choose>
-					<c:when test="${empty eventList}"> 
-						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
+					<c:when test="${empty inquiryList}"> 
+						<tr><td colspan="4">게시글이 존재하지 않습니다. </td></tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="event" items="${eventList}" varStatus="status">
+						<c:forEach var="inquiry" items="${inquiryList}" varStatus="status">
 							<tr>
-								<td class="event_num">${event.event_num}</td>
-								<td class="event_subject">${event.event_subject}</td>
-								<td>${event.event_name}</td>
+								<td class="inquiry_code">${inquiry.inquiry_code}</td>
+								<td>${inquiry.response_status}</td>
+								<td class="inquiry_subject">${inquiry.inquiry_subject}</td>
 								<td>
-									<fmt:formatDate value="${event.event_date}" pattern="yy-MM-dd - yy-MM-dd"/>
+									<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yy-MM-dd"/>
 								</td>
-								<td>${event.event_readcount}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>					
@@ -64,34 +65,31 @@
 		</section>
 				<section id="pageList">
 			<input type="button" value="&lt" 
-				onclick="location.href='EventList?pageNum=${pageInfo.pageNum - 1}'" 
+				onclick="location.href='InquiryList?pageNum=${pageInfo.pageNum - 1}'" 
 				 <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 			
 			<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
 				<c:choose>
 					<c:when test="${i eq pageInfo.pageNum }">
 						<strong>${i}</strong>
-					
 					</c:when>
 					<c:otherwise>
-						<a href="EventList?pageNum=${i}">${i}</a>
+						<a href="InquiryList?pageNum=${i}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			
 			
 			<input type="button" value="&gt" 
-				onclick="location.href='EventList?pageNum=${pageInfo.pageNum + 1}'" 
+				onclick="location.href='InquiryList?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
 	
 	<script type="text/javascript">
 		$(function() {
-			$(".event_subject").on("click", function(event) {
-				console.log(event.target);
-				let event_num = $(event.target).siblings(".event_num").text();
-				console.log("siblings " + event_num);
-				location.href = "EventDetail?event_num=" + event_num + "&pageNum=${pageInfo.pageNum}";
+			$(".inquiry_subject").on("click", function(event) {
+				let inquiry_code = $(event.target).siblings(".inquiry_code").text();
+				location.href = "InquiryPost?inquiry_code=" + inquiry_code + "&pageNum=${pageInfo.pageNum}";
 			
 			});
 
@@ -99,6 +97,12 @@
 				confirm("검색버튼 눌렸습니다.")
 			});
 			
+			$("#writeButton").on("click", function () {
+				window.open(
+						'InquiryWrite',
+						'1:1문의 글 작성',
+						'width=400, height=700, scrollbars=no, resizeable=no'); 
+			});
 		});
 	</script>
 	</article>

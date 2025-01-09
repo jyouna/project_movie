@@ -43,14 +43,16 @@
 		<section id="articleContentArea">
 			${notice.notice_content}
 		</section>
-		<input type="button" value="목록" id="listButton" style="float: right;" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
 		<hr>
+		<div style="text-align: right;" >
+		<input type="button" value="목록" id="listButton" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
+		</div>
 <!-- 		다음글이 없을 경우 if문 사용해서 해당 글이 존재하지 x 라고 표시 -->
-		<table border="1">
+		<table id="buttonTable">
 			<tr>
 				<td>
 					<input type="button" value="△이전글" id="tableButton" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
-					<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다")</c:if>>
+					<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
 				</td>
 <!-- 				이전글 제목 가져오기 -->
 				<td>${param.notice_code-1}</td>
@@ -58,7 +60,7 @@
 			<tr>
 				<td>
 					<input type="button" value="▽다음글" id="tableButton" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
-					>
+					<c:if test="${param.inquiry_code-1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
 				</td>
 				<td><a href="onclick=location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'">${notice.notice_subject}</a></td>
 			</tr>

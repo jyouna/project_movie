@@ -28,7 +28,7 @@ public class CustomerServiceController {
 		int listLimit = 5; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
 		int listCount = service.getNoticeListCount();
-		int pageListLimit = 5;
+		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
 		if (maxPage == 0) {
 			maxPage = 1;

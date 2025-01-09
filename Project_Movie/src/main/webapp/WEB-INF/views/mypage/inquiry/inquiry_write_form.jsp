@@ -14,14 +14,14 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/inquery/inquery_write_form.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_write_form.css" />
 	</head>
 	<body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
 		<div id="title">
 			<h1>게시판 글 등록</h1>
 		</div>
-	<article id="writeForm">
+		<article id="writeForm">
 			<form action="BoardWrite" name="writeForm" method="post">
 				<table>
 					<tr>

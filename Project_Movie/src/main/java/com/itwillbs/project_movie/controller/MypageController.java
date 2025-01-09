@@ -1,10 +1,22 @@
 package com.itwillbs.project_movie.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.itwillbs.project_movie.service.MypageService;
+import com.itwillbs.project_movie.vo.InquiryVO;
+import com.itwillbs.project_movie.vo.PageInfo;
 
 @Controller
 public class MypageController {
+	@Autowired
+	private MypageService service;
 	//1.결제내역 - 예매 내역
 	@GetMapping("ReservationDetail")
 	public String reservationDetail() {
@@ -57,20 +69,50 @@ public class MypageController {
 	public String mypointReward() {
 		return "mypage/mypoint/mypoint_reward";
 	}
-	// 1:1문의 - 글 보기
-	@GetMapping("InqueryPost")
-	public String inqueryPost() {
-		return "mypage/inquery/inquery_post";
-	}
 	//1:1 문의 - 글 목록
-	@GetMapping("InqueryList")
-	public String inqueryList() {
-		return "mypage/inquery/inquery_list";
+	@GetMapping("InquiryList")
+	public String inquiryList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		int listCount = service.getInquiryListCount();
+		int listLimit = 10;
+		int startRow = (pageNum - 1) * listLimit; 
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
+		if (maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
+		int endPage = startPage + pageListLimit -1;
+		if (endPage > maxPage) {
+			endPage = maxPage; 
+		}
+		
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
+			model.addAttribute("targetURL", "InquiryList?pageNum=1");
+			return "result/fail";
+		}
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		model.addAttribute("pageInfo", pageInfo);
+		
+		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit);
+		model.addAttribute("inquiryList", inquiryList);
+		return "mypage/inquiry/inquiry_list";
+	}
+	// 1:1문의 - 글 보기
+	@GetMapping("InquiryPost")
+	public String inquiryPost(Model model, int inquiry_code, InquiryVO inquiry) {
+		inquiry = service.getInquiry(inquiry_code);
+		if(inquiry == null) {
+			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
+			return "result/fail";
+		}
+		model.addAttribute("inquiry", inquiry);
+		return "mypage/inquiry/inquiry_post";
 	}
 	//1:1문의 - 글 작성 폼
-	@GetMapping("InqueryWriteForm")
-	public String inqueryWriteForm() {
-		return "mypage/inquery/inquery_write_form";
+	@GetMapping("InquiryWrite")
+	public String inquiryWrite() {
+		return "mypage/inquiry/inquiryWrite";
 	}
 	//top에 있는 마이페이지 연결
 	@GetMapping("MypageMain")

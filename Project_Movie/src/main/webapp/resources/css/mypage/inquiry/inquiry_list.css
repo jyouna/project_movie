@@ -9,41 +9,115 @@ body {
 .box {
 	width: 1400px;
 	height: 500px;
-	}
-/* Search bar styling */
-.search-bar {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+}
+전체 섹션 스타일
+.dateSearch_sec {
     margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+제목 스타일
+.dateSearch_sec .haze {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* 검색 리스트 */
+.search_list {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* 기간 선택 제목 */
+.search_list .tit {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+.select_btn   {
+padding-top: 12px; 
+}
+/* 버튼 스타일 */
+.select_btn ul {
+    display: flex;
     gap: 10px;
 }
 
-.search-bar select,
-.search-bar input,
-.search-bar button {
-    padding: 7px 7px 7px 7px;
+.select_btn ul li {
+    list-style: none;
+}
+
+.select_btn ul li button {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
     font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.search-bar button {
-width: 80px;
-    height: 32px;
-    line-height: 32px;
-    border: none;
+
+.select_btn ul li.on button {
+    background-color: #000;
     color: #fff;
-    background: #394b61;
+    border: 1px solid #000;
+}
+
+.select_btn ul li button:hover {
+    background-color: #f0f0f0;
 }
 
 
-.search-bar button:hover {
-    background-color: #555;
-    text-align: center;
+	
+.inp_datepicker input.text {
+   padding: 10px;
+   font-size: 14px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   background-color: #fff;
+   width: 150px;
 }
 
+	
+.hyphen {
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+}
+/* 조회 버튼 */
+.btn_wrap {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 15px;
+}
+
+.btn_wrap .btn_search {
+   padding: 8px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn_wrap .btn_search:hover {
+    background-color: #444;
+}
+/* 안내 텍스트 */
+.bul_list {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 0 !important;
+}
 /* Article styling */
 article {
     background-color: #fff;
@@ -100,7 +174,7 @@ article {
     width: 40px;        /* 너비 */
     height: 40px;       /* 높이 */
     line-height: 40px;  /* 세로 중앙 정렬을 위해 텍스트의 높이를 맞춤 */
-    border: none;
+    border: 1px;
     color: #000000;
     background: #aeaeae;
     text-align: center; /* 가로 중앙 정렬 */
