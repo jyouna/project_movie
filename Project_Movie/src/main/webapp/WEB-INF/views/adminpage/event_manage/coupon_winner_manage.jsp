@@ -26,6 +26,7 @@
 	<h3>이벤트 당첨자 목록</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
+		<h4>쿠폰 당첨자</h4>
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<select>
@@ -37,38 +38,40 @@
 		</div>	
 	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
-		<table id="mainTable">
-			<tr align="center" id="tr01">
-				<th width="50">이벤트번호</th>
-				<th width="150">이벤트제목</th>
-				<th width="150">시작일자</th>
-				<th width="150">종료일자</th>
-				<th width="150">당첨자</th>
-				<th width="150">쿠폰종류</th>
-				<th width="150">쿠폰상세</th>
+		<table id="mainTable" class="mainTable">
+			<tr align="center" id="tr01" class="tr01">
+				<th width="50">코드</th>
+				<th width="250">이벤트제목</th>
+				<th width="150">당첨일시</th>
+				<th width="100">시작일자</th>
+				<th width="100">종료일자</th>
+				<th width="100">당첨자</th>
+				<th width="100">쿠폰종류</th>
+				<th width="100">쿠폰상세</th>
 			</tr>
 			<c:choose>
-				<c:when test="${empty event_winner}">
+				<c:when test="${empty coupon_winner}">
 					<tr>
-						<th colspan="7">"작성된 게시글이 없습니다."</th>
+						<th colspan="8">"작성된 게시글이 없습니다."</th>
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="winner" items="${event_winner}" varStatus="status">
+					<c:forEach var="coupon" items="${coupon_winner}" varStatus="status">
 						<tr>
-							<td>${winner.event_code}</td>	
-							<td>${winner.event_subject}</td>	
-							<td>${winner.event_start_date}</td>	
-							<td>${winner.event_end_date}</td>	
-							<td>${winner.winner_id}</td>	
+							<td>${coupon.event_code}</td>	
+							<td>${coupon.event_subject}</td>	
+							<td><fmt:formatDate value="${coupon.prize_datetime}" pattern="yyyy-MM-dd hh:mm"/> </td>	
+							<td>${coupon.event_start_date}</td>	
+							<td>${coupon.event_end_date}</td>	
+							<td>${coupon.winner_id}</td>	
 							<c:choose>
-								<c:when test="${winner.coupon_type eq false}">
+								<c:when test="${coupon.coupon_type eq false}">
 									<td>금액할인</td>
-									<td>${winner.discount_amount}원</td>
+									<td>${coupon.discount_amount}원</td>
 								</c:when>
 								<c:otherwise>
 									<td>할인율</td>
-									<td>${winner.discount_rate}%</td>
+									<td>${coupon.discount_rate}%</td>
 								</c:otherwise>
 							</c:choose>
 						</tr>	
@@ -79,6 +82,5 @@
 	</div>
 	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-	
 </body>
 </html>

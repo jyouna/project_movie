@@ -22,4 +22,6 @@ public class EventWinnerVO {
 	private Boolean coupon_type; // 0 금액할인 1 할인율
 	private int discount_amount = 0;
 	private int discount_rate = 0;
+	private Timestamp prize_datetime;
+	private int point_amount = 0;
 }

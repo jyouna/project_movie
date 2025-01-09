@@ -129,7 +129,7 @@ $(function(){
 				eventEndList.push($(this).val());	
 			});
 			if(confirm("포인트를 지급하시겠습니까?")) {
-				location.href="GiveCoupon?member_id=" + eventStartList.join(",") +"&event_code=" + event_code;
+				location.href="GivePoint?member_id=" + eventEndList.join(",") +"&event_code=" + event_code;
 			}
 		} else {
 			alert("대상자를 선택하세요");
@@ -182,7 +182,7 @@ $(function(){
 	        $("#discount_rate").attr("hidden", true);
 	    }
 	});
-	
+
 	// 쿠폰 지급 폼 취소
 	$("#cancel").on("click", function(){
 		if(confirm("이전 페이지로 돌아가시겠습니까?")) {

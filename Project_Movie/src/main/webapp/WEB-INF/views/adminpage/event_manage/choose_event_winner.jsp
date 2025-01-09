@@ -46,7 +46,7 @@
 		<table id="mainTable">
 			<tr align="center" id="tr01">
 				<th width="50"><input type="checkbox" id="selectAll"></th>
-				<th width="50">이벤트코드</th>
+				<th width="50">코드</th>
 				<th width="100">대상자</th>
 				<th width="150">이벤트제목</th>
 				<th width="100">시작일자</th>

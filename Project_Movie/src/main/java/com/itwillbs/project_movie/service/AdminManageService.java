@@ -12,7 +12,9 @@ import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
 import com.itwillbs.project_movie.vo.EventWinnerVO;
 import com.itwillbs.project_movie.vo.GetGiveCouponInfoVO;
+import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
+import com.itwillbs.project_movie.vo.PointVO;
 
 @Service
 public class AdminManageService {
@@ -110,10 +112,10 @@ public class AdminManageService {
 		String coupon_type = vo.getCoupon_type();
 		int discount_amount = Integer.parseInt(vo.getDiscount_amount());
 		int discount_rate = Integer.parseInt(vo.getDiscount_rate());
+		int event_code = vo.getEvent_code();
 		List<String> id = vo.getMember_id();
-		
 		int insertCount = 0;
-
+		
 		for(String member_id : id) {
 			CouponVO coupon = new CouponVO();
 			if(coupon_type.equals("금액할인")) {
@@ -121,7 +123,6 @@ public class AdminManageService {
 			} else if(coupon_type.equals("할인율")){
 				coupon.setCoupon_type(true);
 			} 
-			
 			coupon.setCoupon_status(false);
 			coupon.setDiscount_amount(discount_amount);
 			coupon.setDiscount_rate(discount_rate);
@@ -130,16 +131,23 @@ public class AdminManageService {
 			coupon.setEvent_code(vo.getEvent_code());
 			
 			insertCount = manageMapper.insertCoupon(coupon);
-			
-			if(insertCount > 0) {
-				System.out.println("쿠폰 등록 성공" + insertCount);
 			}
-		}
+			if(insertCount > 0) {
+				manageMapper.updateEventWinnerSetStatus(event_code); 
+				// 당첨 완료 시 해당 이벤트 당첨 상태 true
+			} else {
+				System.out.println("쿠폰등록 실패");
+			}
 	}
 
-	public List<EventWinnerVO> getEventWinnerList() {
+	public List<EventWinnerVO> getEventWinnerList() { // 쿠폰 당첨자 리스트 
 		// TODO Auto-generated method stub
 		return manageMapper.selectAllEventWinner();
+	}
+
+	public List<EventWinnerVO> getPointWinnerList() { // 포인트 당첨자 리스트
+		// TODO Auto-generated method stub
+		return manageMapper.getPointWinnerList();
 	}
 
 	public EventBoardVO checkEventStatus(int event_code) {
@@ -147,4 +155,38 @@ public class AdminManageService {
 		return manageMapper.checkEventStatus(event_code);
 	}
 
+	public void GivePointToWinner(List<String> member_id, int event_code, int point_amount) {
+		// TODO Auto-generated method stub
+		// 1. 회원에게 포인트 + 시키고
+		// 2. 포인트 테이블에 정보 저장
+		// 3. 이벤트 당첨자 추첨 상태 true
+		
+		for(String id : member_id) {
+			manageMapper.insertPointInfo(id, event_code, point_amount); // 포인트 변동 정보 저장
+			manageMapper.creditPoint(id, point_amount); // 회원에게 포인트 + 시킴
+		}
+		
+		manageMapper.updateEventWinnerSetStatus(event_code); // 당첨 완료 시 해당 이벤트 추첨 상태 true
+
+	}
+
+	public List<PointVO> getPointRecord() {
+		// TODO Auto-generated method stub
+		return manageMapper.getPointRecord();
+	}
+
+	public List<CouponVO> getCouponList() {
+		// TODO Auto-generated method stub
+		return manageMapper.getCouponList();
+	}
+
+	public List<Map<String, String>> getCouponInfo() {
+		// TODO Auto-generated method stub
+		return manageMapper.getCouponInfo();
+	}
+
+	public List<MemberAllInfoVO> getMemberAllInfo() {
+		// TODO Auto-generated method stub
+		return manageMapper.getMemberAllInfo();
+	}
 }

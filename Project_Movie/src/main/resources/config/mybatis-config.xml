@@ -14,17 +14,21 @@
 	기본 문법 : <typeAlias type="실제 클래스타입(패키지명 포함)" alias="별칭" />
 	-->
 	<typeAliases>
-		<typeAlias type="com.itwillbs.project_movie.vo.AdminRegisVO" alias="adminmanage"/>
-		<typeAlias type="com.itwillbs.project_movie.vo.EventBoardVO" alias="eventboard"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.MovieVO" alias="movie"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.NoticeBoardVO" alias="notice_board"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.FaqBoardVO" alias="faq_board"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.MemberVO" alias="member"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.EmailAuthVO" alias="EmailAutH"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.SeatVO" alias="seat"/>
-		<typeAlias type="com.itwillbs.project_movie.vo.EventWinnerVO" alias="EventWinner"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.ScheduleVO" alias="schedule"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.AdminRegisVO" alias="adminmanage"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.EventBoardVO" alias="eventboard"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.EventWinnerVO" alias="EventWinner"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.PointVO" alias="point"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.CouponVO" alias="coupon"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.MemberAllInfoVO" alias="memberAllInfo"/>
 	</typeAliases>
+	
 </configuration>
 
 

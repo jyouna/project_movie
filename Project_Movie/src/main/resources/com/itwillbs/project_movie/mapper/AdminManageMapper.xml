@@ -117,6 +117,12 @@
 		WHERE event_code = #{event_code}
 	</update>
 	
+	<update id="updateEventWinnerSetStatus">
+		UPDATE event_board
+		SET set_winner_status = true
+		WHERE event_code = #{event_code}
+	</update>
+	
 	<select id="getEventBoardList" resultType="eventboard">
 		SELECT *
 		FROM event_board
@@ -160,6 +166,31 @@
 		)
 	</insert>
 	
+	<update id="creditPoint">
+		UPDATE member
+		SET point = point + #{point_amount}
+		WHERE member_id = #{id}
+	</update>
+	
+	<insert id="insertPointInfo">
+		<selectKey keyProperty="point_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(point_code), 0)
+			FROM point;
+		</selectKey>
+		
+		INSERT INTO point
+		VALUES (
+			#{point_code}+1,
+			#{point_amount},
+			DEFAULT,
+			#{event_code},
+			#{id},
+			DEFAULT,
+			now(),
+			DEFAULT
+		)
+	</insert>
+	
 	<select id="selectAllEventWinner" resultType="EventWinner">
 		SELECT 
 			c.event_code AS event_code, 
@@ -169,7 +200,8 @@
 			e.event_end_date AS event_end_date,
 			c.coupon_type AS coupon_type,
 			c.discount_amount AS discount_amount,
-			c.discount_rate AS discount_rate
+			c.discount_rate AS discount_rate,
+			c.regis_date AS prize_datetime
 		FROM 
 			event_board e 
 		JOIN 
@@ -177,5 +209,69 @@
 		ON 
 			e.event_code = c.event_code
 	</select>
-
+	
+	<select id="getPointWinnerList" resultType="EventWinner">
+		SELECT 
+			p.event_code AS event_code,
+		    p.point_holder AS winner_id,
+			e.event_subject AS event_subject, 
+			e.event_start_date AS event_start_date, 
+			e.event_end_date AS event_end_date,
+		    p.point_credited AS point_amount,
+		    p.regis_date AS prize_datetime
+		FROM 
+			event_board e 
+		JOIN 
+			point p
+		ON 
+			e.event_code = p.event_code
+	</select>
+	
+	<select id="getPointRecord" resultType="point">
+		SELECT *
+		FROM point
+	</select>
+	
+	<select id="getCouponList" resultType="coupon">
+		SELECT *
+		FROM coupon
+	</select>
+	
+	<select id="getCouponInfo" resultType="map">
+		SELECT c.member_id, count(*) AS coupon
+		FROM member m 
+		JOIN coupon c
+		ON m.member_id = c.member_id
+		GROUP BY c.member_id;
+	</select>
+	
+	<select id="getMemberAllInfo" resultType="memberAllInfo">
+		SELECT 
+			c.member_id AS member_id, 
+			count(*) AS coupon_num, 
+		    m.point AS remain_point,
+		    m.member_name AS member_name,
+		    m.member_passwd AS member_passwd,
+		    m.birth_date AS birth_date,
+		    m.email AS email,
+		    m.gender AS gender,
+		    m.genre AS gerne,
+			m.phone AS phone,
+		    m.text_receive AS text_receive,
+		    m.email_receive AS email_receive,
+		    m.info_open AS info_open,
+		    m.member_type AS member_type,
+		    m.email_auth_status AS email_auth_status,
+		    m.phone_auth_status AS phone_auth_status,
+		    m.member_status AS member_status
+		FROM 
+			member m 
+		JOIN 
+			coupon c
+		ON 
+			m.member_id = c.member_id
+		GROUP BY 
+			c.member_id;
+	</select>
+	
  </mapper>

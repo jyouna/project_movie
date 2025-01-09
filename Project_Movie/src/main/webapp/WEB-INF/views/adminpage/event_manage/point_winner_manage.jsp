@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>쿠폰 관리</title>
+	<title>이벤트 당첨자</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
@@ -23,11 +23,12 @@
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<h3>쿠폰 내역</h3>
+	<h3>이벤트 당첨자 목록</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
+		<h4>포인트 당첨자</h4>
 		</div>	
-		<div id="divTopRight">
+		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<select>
 				<option>제목+내용</option>
 				<option>제목</option>
@@ -39,75 +40,36 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="100">쿠폰번호</th>
-				<th width="200">쿠폰타입</th>
-				<th width="150">쿠폰상세</th>
-<!-- 				<th width="150">할인율</th> -->
-				<th width="200">등록일자</th>
-				<th width="200">만료일자</th>
-				<th width="200">쿠폰상태</th>
-				<th width="150">보유계정</th>
-				<th width="150">이벤트코드</th>
+				<th width="50">코드</th>
+				<th width="150">이벤트제목</th>
+				<th width="150">당첨일시</th>
+				<th width="150">시작일자</th>
+				<th width="150">종료일자</th>
+				<th width="150">당첨자</th>
+				<th width="150">포인트금액</th>
 			</tr>
 			<c:choose>
-				<c:when test="${empty couponVo}">
+				<c:when test="${empty point_winner}">
 					<tr>
-						<th colspan="9">"작성된 게시글이 없습니다."</th>
+						<th colspan="7">"작성된 게시글이 없습니다."</th>
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="coupon" items="${couponVo}" varStatus="status">
+					<c:forEach var="point" items="${point_winner}" varStatus="status">
 						<tr>
-							<td>${coupon.coupon_code}</td>	
-							<td>
-								<c:choose>
-									<c:when test="${coupon.coupon_type eq false}">
-										금액할인
-									</c:when>
-									<c:otherwise>
-										할인율
-									</c:otherwise>
-								</c:choose>
-							</td>	
-							<td>
-								<c:choose>
-									<c:when test="${coupon.discount_amount eq '0'}">
-										${coupon.discount_rate}% 할인권
-									</c:when>
-									<c:otherwise>
-										${coupon.discount_amount}원 할인권
-									</c:otherwise>
-								</c:choose>
-							</td>	
-<!-- 							<td> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${coupon.discount_rate eq '0'}"> --%>
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-										
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
-<!-- 							</td>	 -->
-							<td><fmt:formatDate value="${coupon.regis_date}" pattern="yyyy-MM-dd"/> </td>	
-							<td><fmt:formatDate value="${coupon.expired_date}" pattern="yyyy-MM-dd"/> </td>	
-							<td>
-								<c:choose>
-									<c:when test="${coupon.coupon_status eq false}">
-										미사용
-									</c:when>
-									<c:otherwise>
-										사용완료
-									</c:otherwise>
-								</c:choose>
-							</td>	
-							<td>${coupon.member_id}</td>	
-							<td>${coupon.event_code}</td>	
+							<td>${point.event_code}</td>	
+							<td>${point.event_subject}</td>	
+							<td><fmt:formatDate value="${point.prize_datetime}" pattern="yyyy-MM-dd hh:mm"/> </td>	
+							<td>${point.event_start_date}</td>	
+							<td>${point.event_end_date}</td>	
+							<td>${point.winner_id}</td>	
+							<td>${point.point_amount}원</td>
 						</tr>	
 					</c:forEach>
 				</c:otherwise>
-			</c:choose> 			
-			
+			</c:choose> 
 		</table>
+		<br>
 	</div>
 	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

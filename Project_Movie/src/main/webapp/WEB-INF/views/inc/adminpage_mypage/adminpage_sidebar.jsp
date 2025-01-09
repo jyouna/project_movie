@@ -133,14 +133,17 @@
 					        <a class="nav-link" href="EventBoardManage">
 					            이벤트관리
 					        </a>
-					        <a class="nav-link" href="EventWinnerManage">
-					            이벤트당첨자관리
+					        <a class="nav-link" href="CouponWinnerManage">
+					            이벤트쿠폰당첨자
+					        </a>
+					        <a class="nav-link" href="PointWinnerManage">
+					            이벤트포인트당첨자
 					        </a>
 					        <a class="nav-link" href="CouponBoardManage">
-					            쿠폰관리
+					            쿠폰내역
 					        </a>
 					        <a class="nav-link" href="PointBoardManage">
-					            포인트관리
+					            포인트내역
 					        </a>
 					    </nav>
 					</div>

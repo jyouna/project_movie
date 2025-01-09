@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>쿠폰 관리</title>
+	<title>포인트 관리</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
@@ -20,11 +22,9 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	<h3>포인트 관리</h3>
+	<h3>포인트 변동 내역</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" value="포인트발급" id="give_point">
-			<input type="button" value="포인트회수" id="getback_point">
 		</div>	
 		<div id="divTopRight">
 			<select>
@@ -38,25 +38,79 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="100">선택</th>
+				<th width="100">코드</th>
 				<th width="350">ID</th>
-				<th width="350">잔여포인트</th>
+				<th width="350">포인트적립</th>
+				<th width="350">포인트차감</th>
+				<th width="350">이벤트코드</th>
+				<th width="350">취소코드</th>
+				<th width="350">예매코드</th>
+				<th width="350">변동일시</th>
 			</tr>
-			<tr align="center" id="tr02">
-				<td><input type="checkbox"></td>
-				<td>hoon1</td>
-				<td>25632</td>
-			</tr>
+			<c:choose>
+				<c:when test="${empty pointVo}">
+					<tr>
+						<th colspan="7">"작성된 게시글이 없습니다."</th>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="point" items="${pointVo}" varStatus="status">
+						<tr>
+							<td>${point.point_code}</td>	
+							<td>${point.point_holder}</td>	
+							<td>
+								<c:choose>
+									<c:when test="${point.point_credited eq '0'}}">
+									</c:when>
+									<c:otherwise>
+										${point.point_credited}
+									</c:otherwise>
+								</c:choose>							
+							</td>	
+							<td>
+								<c:choose>
+									<c:when test="${point.point_debited eq '0'}">
+									</c:when>
+									<c:otherwise>
+										${point.point_debited}
+									</c:otherwise>
+								</c:choose>							
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${point.event_code eq '0'}">
+									</c:when>
+									<c:otherwise>
+										${point.event_code}
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${point.refund_code eq '0'}">
+									</c:when>
+									<c:otherwise>
+										${point.refund_code}
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td>
+								<c:choose>
+									<c:when test="${point.booking_code}">
+									</c:when>
+									<c:otherwise>
+										${point.booking_code}
+									</c:otherwise>
+								</c:choose>							
+							</td>	
+							<td><fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd hh:mm"/> </td>	
+						</tr>	
+					</c:forEach>
+				</c:otherwise>
+			</c:choose> 	
 		</table>
 	</div>
 	<br>
-	<div id="divBottom" class="view">
-		<a href="#">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
-	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 
 </body>

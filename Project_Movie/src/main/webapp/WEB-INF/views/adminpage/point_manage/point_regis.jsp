@@ -10,14 +10,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	
-	<title>쿠폰 지급</title>
-	
+	<title>포인트 지급</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
-
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -27,50 +24,25 @@
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 
-	<form action="GiveCoupon" method="post" id="giveCouponForm">
+	<form action="GivePoint" method="post" id="givePointForm">
 		<div id="tableDiv" class="view" style="overflow-x: auto;">
-		<h3>쿠폰 지급</h3>
-			<fieldset> <!--  할인쿠폰 / 금액쿠폰 선택 영역  -->
+		<h3>포인트 지급</h3>
+			<fieldset>
 				<table class="mainTable"> 
 					<tr class="tr01">
-						<th>만료일</th>
-						<th>쿠폰타입</th>
-						<th id="thForDiscount"></th>
+						<th>포인트 금액</th>
 					</tr>
 					<tr>
-						<td><input type="date" name="expired_date" required></td>
-						<td> <!--  할인율/금액할인 선택 -->
-							<select id="coupon_type" name="coupon_type" required>
-								<option>선택</option>
-								<option>금액할인</option>
-								<option>할인율</option>
-							</select>
-						</td>
-						<td> <!-- 할인율 혹은 할인금액 입력!! -->
-							<select id="discount_rate" name="discount_rate" class="discount_rate" hidden>
-								<option value="0" selected>선택</option>
-								<option>10</option>
-								<option>20</option>
-								<option>30</option>
-								<option>40</option>
-								<option>50</option>
-								<option>60</option>
-								<option>70</option>
-								<option>80</option>
-								<option>90</option>
-								<option>100</option>
-							</select>
-							<input type="text" maxlength="5" id="discount_amount" name="discount_amount" value="0" placeholder="금액 입력" class="discount_amount" hidden>
-						</td>
+						<td><input type="text" maxlength="5" name="point_amount" value="0" placeholder="금액 입력" ></td>
 					</tr>
 				</table>			
 			</fieldset>
 			<div id="couponSet">
-				<input type="button" value="지급하기" id="couponSubmit">
+				<input type="submit" value="지급하기">
 				<input type="button" value="돌아가기" id="cancel">
 			</div>
 			<br>
-			<h3>당첨자</h3>
+			<h3>포인트 지급 대상자</h3>
 			<fieldset> <!--  지급 대상자 출력 항목 -->
 				<table id="mainTable" class="mainTable">
 					<tr align="center" id="tr01" class="tr01">

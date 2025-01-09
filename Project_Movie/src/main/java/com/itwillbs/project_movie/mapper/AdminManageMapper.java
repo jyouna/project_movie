@@ -10,7 +10,9 @@ import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
 import com.itwillbs.project_movie.vo.EventWinnerVO;
+import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
+import com.itwillbs.project_movie.vo.PointVO;
 
 @Mapper
 public interface AdminManageMapper {
@@ -48,8 +50,25 @@ public interface AdminManageMapper {
 
 	int insertCoupon(CouponVO coupon);
 
-	List<EventWinnerVO> selectAllEventWinner();
+	List<EventWinnerVO> selectAllEventWinner(); // 쿠폰 당첨자 리스트
+	
+	List<EventWinnerVO> getPointWinnerList(); // 포인트 당첨자 리스트
 
 	EventBoardVO checkEventStatus(@Param("event_code") int event_code);
+
+	void creditPoint(@Param("id") String id, @Param("point_amount") int point_amount);
+
+	void insertPointInfo(@Param("id") String id, @Param("event_code") int event_code, @Param("point_amount") int point_amount);
+
+	List<PointVO> getPointRecord();
+
+	List<CouponVO> getCouponList();
+
+	List<Map<String, String>> getCouponInfo();
+
+	void updateEventWinnerSetStatus(@Param("event_code") int event_code);
+
+	List<MemberAllInfoVO> getMemberAllInfo();
+
 
 }
