@@ -166,7 +166,7 @@
 									<!-- 영화 제목과 이용가 표시 -->
 								    <div class="movie_container">
 								        <div class="mv_age">12</div>
-								        <div class="mv_title">해피엔드</div>
+								        <div class="mv_title">해피앤드</div>
 								    </div>
 								
 								    <!-- 시간/좌석 버튼들 -->

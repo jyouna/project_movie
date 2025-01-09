@@ -28,10 +28,11 @@ public class BookController {
 	@GetMapping("BookTickets")
 	public String bookTickets(Model model) {
 		
+		// 영화 목록 조회
 		List<MovieVO> movieList = service.getMovieList();
 		model.addAttribute("movieList", movieList);
 		
-		System.out.println("movieList : " + movieList);
+//		System.out.println("movieList : " + movieList);
 		
 		
 		return "book_tickets/book_tickets";
@@ -54,7 +55,10 @@ public class BookController {
 //			return "result/fail";
 //		}
 		
+		// 좌석 정보 조회
 		List<SeatVO> seatList = service.getSeat();
+		
+		
 		int rowCount = 0;
 		int colCount = 0;
 		
@@ -70,8 +74,6 @@ public class BookController {
 			}
 		}
 		
-		System.out.println(colCount);
-		System.out.println(rowCount);
 		model.addAttribute("seatList", seatList);
 		model.addAttribute("rowCount", rowCount);
 		model.addAttribute("colCount", colCount);
@@ -80,14 +82,6 @@ public class BookController {
 		return "book_tickets/book_seat";
 	}
 	
-	@PostMapping("BookSeat")
-	public String bookSeat(SeatVO seat, TicketVO ticket) {
-		
-		
-		
-		
-		return "redirect:/BookPay";
-	}
 	
 	
 

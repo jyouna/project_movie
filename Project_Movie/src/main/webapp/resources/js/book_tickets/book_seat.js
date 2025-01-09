@@ -64,6 +64,24 @@ $(function () {
 		}).get();
 		
 		console.log("선택된 좌석 : " + selectedSeats);
+		
+		let targetSeats = ["A8", "A9", "A10"];
+		
+		if(targetSeats.includes($(this).text())) {
+			
+			if($(this).hasClass("selected")) {
+			$(this).css({"background-color" : "#4374D9",
+						 "background" : "#4374D9",
+						 "color" : "#444"});
+			alert("해당 좌석은 휠체어석입니다.\n일반 고객은 다른 좌석을 선택해 주시기 바랍니다.")		
+			
+			} else {
+			$(this).css({"background-color" : "#6799FF",
+						 "background" : "#6799FF",
+						 "color" : "#444"});
+			}
+		
+		}
 
 		// -------------------------------------------------
 		// 관람객 타입별 인원수 합		
@@ -80,6 +98,10 @@ $(function () {
 			$(this).removeClass("selected");
 			alert("좌석이 선택이 완료되었습니다");
 		} 
+		
+		
+		
+		
 	});
 	
 	// 수정 필요
@@ -99,12 +121,17 @@ $(function () {
 		
 	});
 	
-	
-	
-	
-//	if($(".seat").text() == "A9", $(".seat").text() == "A9", $(".seat").text() == "A10")
-	
-	
+	// 장애인석 색상 변경
+	$(".seat").each(function() {
+		let targetSeats = ["A8", "A9", "A10"];
+		
+		if(targetSeats.includes($(this).text())) {
+			$(this).css({"background-color" : "#6799FF",
+						 "background" : "#6799FF",
+						 "color" : "#444"});
+		}
+	});
+			
 	
 	
 });
