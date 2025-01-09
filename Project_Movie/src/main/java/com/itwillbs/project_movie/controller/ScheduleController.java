@@ -37,23 +37,37 @@ public class ScheduleController {
 
 	// 스케줄상세페이지에서 스케줄등록 비즈니스 로직
 	@PostMapping("ScheduleRegistForm")
-	public String scheduleRegistForm(ScheduleVO scheduleVO, String select_date) {
+	public String scheduleRegistForm(ScheduleVO scheduleVO, String select_date, Model model) {
+		// 파라미터로 전달받은 스케줄 정보를 DB에 저장된 스케줄정보와 비교하여 같은관의 일정 겹침 여부 판단
+		List<ScheduleVO> dbScheduleList = scheduleService.getScheduleListOnSelectDay(select_date, scheduleVO.getTheater_code());
+		for(ScheduleVO dbschedule : dbScheduleList) {
+			System.out.println(dbschedule);
+		}
 
-		// 영화코드를 유니크하게 조합하기위해 schedule 컬럼의 리터럴 조합
-		// 날짜조합하기위해 "yyyy-MM-dd HH:mm"을 "yyyyMMddHHmm"으로 변환
-		DateTimeFormatter beforeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		LocalDateTime beforeStartTime = LocalDateTime.parse(scheduleVO.getStr_start_time(), beforeFormatter);
-		DateTimeFormatter afterFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
-		String afterStartTime = beforeStartTime.format(afterFormatter);
-
-		// 상영관코드, 영화코드, 상영시작날짜시간을 조합하여 스케줄 코드 생성 및 vo에 초기화
-		String makeSchedule_code = scheduleVO.getTheater_code() + scheduleVO.getMovie_code() + afterStartTime;
-		scheduleVO.setSchedule_code(makeSchedule_code);
-
-		int insertCount = scheduleService.registSchedule(scheduleVO);
-
-		return "redirect:/AdminMovieSetScheduleDetail?theater_code=" + scheduleVO.getTheater_code() + "&select_date="
-				+ select_date;
+//		// 영화코드를 유니크하게 조합하기위해 schedule 컬럼의 리터럴 조합
+//		// 날짜조합하기위해 "yyyy-MM-dd HH:mm"을 "yyyyMMddHHmm"으로 변환
+//		DateTimeFormatter beforeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//		LocalDateTime beforeStartTime = LocalDateTime.parse(scheduleVO.getStr_start_time(), beforeFormatter);
+//		DateTimeFormatter afterFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+//		String afterStartTime = beforeStartTime.format(afterFormatter);
+//
+//		// 상영관코드, 영화코드, 상영시작날짜시간을 조합하여 스케줄 코드 생성 및 vo에 초기화
+//		String makeSchedule_code = scheduleVO.getTheater_code() + scheduleVO.getMovie_code() + afterStartTime;
+//		scheduleVO.setSchedule_code(makeSchedule_code);
+//		
+//		int insertCount = scheduleService.registSchedule(scheduleVO);
+//		
+//		if(insertCount > 0) {
+//			return "redirect:/AdminMovieSetScheduleDetail?theater_code="+ scheduleVO.getTheater_code() 
+//				+ "&select_date=" + select_date;
+//		} else {
+//			model.addAttribute("msg", "스케줄 등록 실패!");
+//			return "result/process";
+//		}
+		
+		return "";
+		
+		
 	}
 
 }

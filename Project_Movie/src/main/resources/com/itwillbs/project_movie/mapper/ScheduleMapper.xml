@@ -3,9 +3,16 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itwillbs.project_movie.mapper.ScheduleMapper">
-
+	
 	<!-- schedule 테이블에 스케줄 insert -->
 	<insert id="insertSchedule">
+		<!-- 스케줄 테이블 insert 작업시 해당 관의 좌석수 입력을 위해 좌서수 select 선행 -->
+		<selectKey keyProperty="avail_seat" resultType="int" order="BEFORE">
+			SELECT COUNT(*)
+			FROM seat
+			WHERE theater_code = #{theater_code}
+		</selectKey>
+	
 		INSERT INTO schedule
 		VALUES (
 			#{schedule_code}
@@ -19,5 +26,19 @@
 			, #{showtime_type}
 		)
 	</insert>
+	
+	<select id="selectSchedule" resultType="schedule">
+		SELECT *
+		FROM schedule
+		<if test="howSearch != null and searchKeyword != null"> 
+				WHERE ${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
+		</if>
+		<if test="columnName != null and selectCondition != null">
+			WHERE ${colnumnName} = #{selectCondition}
+		</if>
+		<if test="columnName2 != null and selectCondition2 != null">
+			AND ${columnName2} = #{selectCondition2}
+		</if>
+	</select>
 	
 </mapper>
