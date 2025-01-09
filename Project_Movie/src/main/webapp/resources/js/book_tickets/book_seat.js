@@ -32,7 +32,6 @@ $(function () {
 		// 인원 변경 시 선택된 좌석 초기화 메서드
 		resetSeats();
 		
-		
 	});
 	
 	// - 버튼 클릭 시 인원수 감소
@@ -65,24 +64,12 @@ $(function () {
 		
 		console.log("선택된 좌석 : " + selectedSeats);
 		
-		let targetSeats = ["A8", "A9", "A10"];
 		
-		if(targetSeats.includes($(this).text())) {
-			
-			if($(this).hasClass("selected")) {
-			$(this).css({"background-color" : "#4374D9",
-						 "background" : "#4374D9",
-						 "color" : "#444"});
-			alert("해당 좌석은 휠체어석입니다.\n일반 고객은 다른 좌석을 선택해 주시기 바랍니다.")		
-			
-			} else {
-			$(this).css({"background-color" : "#6799FF",
-						 "background" : "#6799FF",
-						 "color" : "#444"});
-			}
-		
+		// 휠체어석 선택 시 알림창
+		if(($(this).text() == "A8" || $(this).text() == "A9") && $(this).hasClass("selected")) {
+			alert("해당 좌석은 휠체어석입니다.\n일반 고객은 다른 좌석을 선택해 주시기 바랍니다.");
 		}
-
+			
 		// -------------------------------------------------
 		// 관람객 타입별 인원수 합		
 		let totalCount = 0;
@@ -94,13 +81,11 @@ $(function () {
 		if(totalCount == 0) {
 			$(this).removeClass("selected");
 			alert("인원을 선택해주세요");
+			location.reload();
 		} else if(selectedSeats.length > totalCount) {
 			$(this).removeClass("selected");
 			alert("좌석이 선택이 완료되었습니다");
 		} 
-		
-		
-		
 		
 	});
 	
@@ -119,20 +104,7 @@ $(function () {
 		}
 		location.href = 'BookPay';
 		
-	});
-	
-	// 장애인석 색상 변경
-	$(".seat").each(function() {
-		let targetSeats = ["A8", "A9", "A10"];
-		
-		if(targetSeats.includes($(this).text())) {
-			$(this).css({"background-color" : "#6799FF",
-						 "background" : "#6799FF",
-						 "color" : "#444"});
-		}
-	});
-			
-	
+	});			
 	
 });
 

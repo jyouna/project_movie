@@ -376,8 +376,17 @@ form input[type="text"].count {
     background: #666; /* 슬라이더 색상 변화 */
 }
 
+button[name="wheelChairSeat"] {
+	background-color : #EDC6C6;
+ 	background : #EDC6C6;
+ 	color : #444;
+}
 
-
+button[name="wheelChairSeat"].selected {
+	background-color : #B79090;
+ 	background : #B79090;
+ 	color : #444;
+}
 
 
 

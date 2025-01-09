@@ -15,9 +15,9 @@ public class SeatVO {
 	);
 	 */
 	
-	private String seat_code;
-	private String seat_row;
-	private int seat_col;
-	private String seat_type;
-	private String theater_code;
+	private String seat_code;		// 좌석 코드
+	private String seat_row;		// 좌석 행 (A ~ G)
+	private int seat_col;			// 좌석 열 (1 ~ 10)
+	private String seat_type;		// 좌석 타입 (일반석, 장애인석)
+	private String theater_code;	// 상영관 코드 (T1, T2, T3)
 }

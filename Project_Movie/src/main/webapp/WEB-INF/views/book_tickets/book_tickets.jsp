@@ -162,240 +162,46 @@
 								<h4>시간</h4>
 							</div>
 							<div class="movie_schedule_info">
-								<section class="sec01">
-									<!-- 영화 제목과 이용가 표시 -->
-								    <div class="movie_container">
-								        <div class="mv_age">12</div>
-								        <div class="mv_title">해피앤드</div>
-								    </div>
-								
-								    <!-- 시간/좌석 버튼들 -->
-								    <div class="time_seat_container">
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">10:30</span>
-								        	<span class="details">
-									        	<span class="seat">78/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">13:45</span>
-								        	<span class="details">
-									        	<span class="seat">63/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								    </div>
-								</section>
-								<section class="sec01">
-									<!-- 영화 제목과 이용가 표시 -->
-								    <div class="movie_container">
-								        <div class="mv_age">12</div>
-								        <div class="mv_title">해피엔드</div>
-								    </div>
-								
-								    <!-- 시간/좌석 버튼들 -->
-								    <div class="time_seat_container">
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								    </div>
-								</section>
-								<section class="sec01">
-									<!-- 영화 제목과 이용가 표시 -->
-								    <div class="movie_container">
-								        <div class="mv_age">12</div>
-								        <div class="mv_title">해피엔드</div>
-								    </div>
-								
-								    <!-- 시간/좌석 버튼들 -->
-								    <div class="time_seat_container">
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">10:30</span>
-								        	<span class="details">
-									        	<span class="seat">78/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">13:45</span>
-								        	<span class="details">
-									        	<span class="seat">63/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								    </div>
-								</section>
-								<section class="sec01">
-									<!-- 영화 제목과 이용가 표시 -->
-								    <div class="movie_container">
-								        <div class="mv_age">12</div>
-								        <div class="mv_title">해피엔드</div>
-								    </div>
-								
-								    <!-- 시간/좌석 버튼들 -->
-								    <div class="time_seat_container">
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">10:30</span>
-								        	<span class="details">
-									        	<span class="seat">78/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">13:45</span>
-								        	<span class="details">
-									        	<span class="seat">63/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								    </div>
-								</section>
-								<section class="sec01">
-									<!-- 영화 제목과 이용가 표시 -->
-								    <div class="movie_container">
-								        <div class="mv_age">12</div>
-								        <div class="mv_title">해피엔드</div>
-								    </div>
-								
-								    <!-- 시간/좌석 버튼들 -->
-								    <div class="time_seat_container">
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">10:30</span>
-								        	<span class="details">
-									        	<span class="seat">78/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								    </div>
-								</section>
-								<section class="sec01">
-									<!-- 영화 제목과 이용가 표시 -->
-								    <div class="movie_container">
-								        <div class="mv_age">12</div>
-								        <div class="mv_title">해피엔드</div>
-								    </div>
-								
-								    <!-- 시간/좌석 버튼들 -->
-								    <div class="time_seat_container">
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">10:30</span>
-								        	<span class="details">
-									        	<span class="seat">78/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">13:45</span>
-								        	<span class="details">
-									        	<span class="seat">63/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								        <a class="time_seat_btn">
-								        	<span class="mv_time">17:10</span>
-								        	<span class="details">
-									        	<span class="seat">80/80</span>
-									        	<span class="hall">1관</span>
-								        	</span>
-								        </a>
-								    </div>
-								</section>
+<%-- 								<c:forEach var="i" begin="1" end="10"> --%>
+								<c:forEach var="movie" items="${movieList}">
+									<section class="sec01">
+										<!-- 영화 제목과 이용가 표시 -->
+									    <div class="movie_container">
+									        <div class="mv_age">
+										        <c:choose>
+													<c:when test="${movie.age_limit eq '12세이상관람가'}">
+														<img src="${pageContext.request.contextPath}/resources/images/mv_age(12).png">
+													</c:when>
+													<c:when test="${movie.age_limit eq '15세이상관람가'}">
+														<img src="${pageContext.request.contextPath}/resources/images/mv_age(15).png">
+													</c:when>
+													<c:when test="${movie.age_limit eq '청소년관람불가'}">
+														<img src="${pageContext.request.contextPath}/resources/images/mv_age(19).png">
+													</c:when>
+													<c:otherwise>
+														<img src="${pageContext.request.contextPath}/resources/images/mv_age(all).png">
+													</c:otherwise>
+												</c:choose>
+											</div>
+									        <div class="mv_title">${movie.movie_name}</div>
+									    </div>
+									
+									    <!-- 시간/좌석 버튼들 -->
+									    <div class="time_seat_container">
+										    <c:forEach var="sch" items="${schWithMovie}">
+										    	<c:if test="${movie.movie_name eq sch.movie_name}">
+											        <a class="time_seat_btn">
+											        	<span class="mv_time">${sch.start_time}</span>
+											        	<span class="details">
+												        	<span class="seat">78/80</span>
+												        	<span class="hall">1관</span>
+											        	</span>
+											        </a>
+										    	</c:if>
+										    </c:forEach>
+									    </div>
+									</section>
+								</c:forEach>
 							</div>
 						</div>
 					</div>

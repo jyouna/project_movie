@@ -52,10 +52,11 @@
 				            <c:forEach var="j" begin="0" end="${rowCount-1}">
 					            <div class="seat_row">
 					            	<c:forEach var="i" begin="0" end="${colCount-1}">
-						                <button type="button" class="seat" name="seatName">${seatList[i + j*10].seat_code}</button>
+						                <button type="button" class="seat" <c:if test="${(i eq 7 and j eq 0) or (i eq 8 and j eq 0)}">name="wheelChairSeat"</c:if>>${seatList[i + j*10].seat_code}</button>
 					            	</c:forEach>
 					            </div>
 				            </c:forEach>
+				            
 			        </div>
 					
 					<span class="space_line"></span>

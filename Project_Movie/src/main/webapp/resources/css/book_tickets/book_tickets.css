@@ -294,6 +294,10 @@ a .mv_title {
     font-family: Arial, sans-serif;
 }
 
+.sec01:last-child {
+    margin-bottom: 30px;
+}
+
 .movie_container {
     display: flex;
     align-items: center;

@@ -7,7 +7,29 @@
 	<select id="selectMovieList" resultType="movie">
 		SELECT age_limit, movie_name
 		FROM movie
+		WHERE movie_status = #{movie_status}
 	</select>
+	
+	<select id="selectScheduleJoinMovie">
+		SELECT m.age_limit, m.movie_name, s.start_time, s.end_time, s.theater_code
+		FROM schedule s JOIN movie m
+		ON s.movie_code = m.movie_code;
+	</select>
+	
+	
+	
+	<resultMap type="map" id="schWithMovie">
+		<result property="age_limit" column="age_limit" />
+		<result property="movie_name" column="movie_name" />
+	</resultMap>
+	
+	<select id="selectSchWithMovie" resultMap="schWithMovie">
+		SELECT *
+		FROM schedule s 
+		JOIN movie m
+		ON s.movie_code = m.movie_code
+	</select>
+	
 	
 	<select id="selectSeat" resultType="seat">
 		SELECT SUBSTR(seat_code, 4) AS seat_code
