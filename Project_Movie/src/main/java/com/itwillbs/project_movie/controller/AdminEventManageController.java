@@ -32,6 +32,7 @@ public class AdminEventManageController {
 	
 	@GetMapping("EventBoardManage") // 이벤트 게시판 관리 + 리스트 출력
 	public String eventBoardManagement(EventBoardVO eventVo, Model model, HttpSession session) {
+		// 로그인 유무 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
 			model.addAttribute("targetURL", "AdminLogin");
@@ -45,9 +46,11 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
+		// 이벤트 게시판 전체 목록조회 후 뷰페이지로 전달
 		List<EventBoardVO> eventList = new ArrayList<EventBoardVO>();
 		eventList = adminService.eventBoardList();
 		model.addAttribute("eventVo", eventList);
+		
 		return "adminpage/event_manage/event_board_manage";
 	}
 	
@@ -60,9 +63,7 @@ public class AdminEventManageController {
 	public String eventBoardRegistration(EventBoardVO eventVo, HttpSession session) {
 		/* 1. 시작일 > 등록일(now())
 		 * 2. 종료일 > 시작일
-		 * 
 		 * 날짜 선택 시 위 두가지 반드시 적용되어야 함
-		 * 
 		 */
 		String admin_sId = (String) session.getAttribute("admin_sId");
 //		String sId = "admin";

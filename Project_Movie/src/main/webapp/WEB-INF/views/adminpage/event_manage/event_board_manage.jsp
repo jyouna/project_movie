@@ -80,7 +80,7 @@
 							<td>${eventBoard.event_writer}</td>	
 							<td>
 								<c:if test="${eventBoard.event_status == 0}">
-										미진행
+										대기
 								</c:if>
 								<c:if test="${eventBoard.event_status == 1}">
 										진행중
@@ -94,7 +94,7 @@
 									완료
 								</c:if>
 								<c:if test="${eventBoard.set_winner_status == false}">
-									미진행
+									대기
 								</c:if>
 							</td>
 						</tr>	

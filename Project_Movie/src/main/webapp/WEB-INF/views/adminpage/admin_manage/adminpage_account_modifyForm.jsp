@@ -15,7 +15,6 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />	
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <style type="text/css">
 
@@ -113,49 +112,6 @@ input[type="checkbox"] {
 	</form>
 	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-	
-	<script type="text/javascript">
-		$(function(){
-			let check_name = false;
-			let check_passwd = false;
-			
-			$("#passwd").on("blur", function(){
-				let regexPasswd = /^[a-z0-9]{8,10}$/;
-				let passwds = $("#passwd").val();
-				
-				if(regexPasswd.exec(passwds)) {
-					check_passwd = true;
-					$("#checkPasswdResult").text("비밀번호 양식 일치").css("color", "blue");
-				} else {
-					check_passwd = false;
-					$("#checkPasswdResult").text("비밀번호 양식 불일치").css("color", "red");
-				}
-			});
-			
-			$("#name").on("blur", function(){
-				let name = $("#name").val();
-				let regexName = /^관리자\d{1,3}$/;
-				
-				if(regexName.exec(name)) {
-					check_name = true;
-					$("#checkNameResult").text("사용 가능").css("color", "blue");
-				} else {
-					check_name = false;
-					$("#checkNameResult").text("사용 불가능").css("color", "red");
-				}
-			});
-			
-			$("#accountModifyForm").on("submit", function(event){
-				event.preventDefault();
-				
-				 if (check_name && check_passwd) {
-				        this.submit();
-			    } else {
-			        // 조건이 충족되지 않으면 경고창 표시
-			        alert("제출된 양식을 다시 확인하세요.");
-			    }
-			});
-		});
-	</script>
+
 </body>
 </html>

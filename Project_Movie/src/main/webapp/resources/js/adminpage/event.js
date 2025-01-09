@@ -1,4 +1,7 @@
 $(function(){
+	$("input[type='checkbox']").prop("checked", false); 
+	// 전체 선택 후 history.back()을 해도 기존에 선택했던 체크박스 모두 초기화 됨
+	
 	$("#give_point").on("click", function(){
 		location.href="PointBoardRegis";
 	});	
@@ -20,21 +23,11 @@ $(function(){
 	});
 	
 	$("#selectAll").on("click", function(){
-	    let checkboxes = $(".eventSetCheckbox");
-	    let isChecked = $(this).data("checked") || false; // 현재 체크 상태 (기본값은 false)
-	    
-	    // 체크 상태를 반전
-	    checkboxes.prop("checked", !isChecked);
-
-	    // 체크 박스 
+	    let checkboxes = $(".eventSetCheckbox"); // 클래스 선택자
+	    let isChecked = $(this).data("checked") || false; // 현재 체크 상태값 저장. 없는 경우 false 값으로 설정
+		console.log("체크 속성값 : " + isChecked);
 	    $(this).data("checked", !isChecked);
-
-	    // 버튼 텍스트 변경
-	    if (!isChecked) {
-	        $(this).val("전체해제");
-	    } else {
-	        $(this).val("전체선택");
-	    }
+	    checkboxes.prop("checked", !isChecked);
 	});
 	
 	$("#board_modify").on("click", function(){

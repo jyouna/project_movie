@@ -45,7 +45,7 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="50"><input type="checkbox" id="selectAll"></th>
+				<th width="50"><input type="checkbox" class="eventSetCheckbox" id="selectAll"></th>
 				<th width="50">코드</th>
 				<th width="100">대상자</th>
 				<th width="150">이벤트제목</th>
