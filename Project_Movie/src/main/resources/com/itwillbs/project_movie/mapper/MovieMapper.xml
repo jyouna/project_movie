@@ -63,7 +63,7 @@
 		FROM movie
 		<choose>
 			<when test="howSearch != null and searchKeyword != null"> 
-				WHERE ${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
+				WHERE ${howSearch} LIKE '%${searchKeyword}%' 
 			</when>
 			<when test="columnName != null and selectCondition != null">
 				WHERE ${columnName} = #{selectCondition}

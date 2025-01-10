@@ -106,12 +106,10 @@ $(function() {
 			let runningTime = $("input[name=running_time]").val();
 			let startDateTime = scheduleDate + " " + $(this).val();
 			
-			// 선택한시간에 러닝타임을 더해 상영종료 시간 계산 후 스케줄 입력 폼요소에 입력
 			$("input[name='str_start_time']").val(startDateTime);
 			
 			//String 타입을 날짜시간 계산을위해 Date 타입으로 변환
 			let startDateTime2 = new Date(startDateTime);
-			
 			// 시작 시간을 기준으로 영화타입 "조조", "일반", "심야" 판별 후 폼요소에 입력
 			// 아래에 상영시간을 더하는 코드보다 위에 위치 해야 시작시간을 가지고 판별 가능
 			let showtimeType = "";
@@ -142,6 +140,27 @@ $(function() {
 			endTime = formatEndDateTime.split(" ")[1];
 			$("input[name='e_time']").val(endTime);
 			
+			$.ajax({
+				type : "GET",
+				url : "GetScheduleInfo",
+				data : {
+					select_date : scheduleDate,
+					theater_code : selectTheater
+				},
+				dataType : "json"
+			}).done(function(dbScheduleList) {
+				for(let index = 0; index < dbScheduleList.length; index++) {
+					// DB의 스케줄과 시간 
+					let start = new Date(startDateTime).getTime();
+					let end = new Date(formatNextScheduleTime).getTime();
+					console.log("입력시작시간 : " + start + " : 데이터타입 : " + typeof(start));
+					console.log("입력끝시간 : " + end + " : 데이터타입 : " + typeof(end));
+					console.log("스케줄" + index + "의 시작시간 : " + dbScheduleList[index].start_time);
+					console.log("스케줄" + index + "의 끝시간 : " + dbScheduleList[index].end_time);
+				}
+			}).fail(function() {
+				
+			});
 		}
 	});
 	
@@ -169,6 +188,11 @@ $(function() {
 			isBetween = true;
 		} 
 		return isBetween;
+	}
+	
+	// 날짜 시간 비교 메서드
+	function isAvailRegist(start, end, dbstart, dbend) {
+		
 	}
 }); // document ready 끝
 	
