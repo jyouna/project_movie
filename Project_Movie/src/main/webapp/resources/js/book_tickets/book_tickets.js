@@ -3,10 +3,13 @@ $(function() {
 		type : "GET",
 		url : "BookTickets",
 		data : {
-			movie_status : "상영예정작"
+			
 		}
 	}).done(function(data) {
 		console.log(data);
+		$(".mv_list_container").html(
+			
+		);
 	}).fail(function() {
 		
 	});

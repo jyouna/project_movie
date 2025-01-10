@@ -1,8 +1,6 @@
 package com.itwillbs.project_movie.controller;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.vo.MovieVO;
-import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 
 @Controller
@@ -30,16 +25,12 @@ public class BookController {
 	}
 	
 	@GetMapping("BookTickets")
-	public String bookTickets(Model model) {
+	public String bookTickets(Model model, String start_time) {
 		
 		// 영화 목록 조회
 		List<MovieVO> movieList = service.getMovieList();
 		model.addAttribute("movieList", movieList);
 //		System.out.println("movieList : " + movieList);
-		
-		List<ScheduleVO> schedule = service.getSchedule();
-		model.addAttribute("schedule", schedule);
-//		System.out.println("schedule : " + schedule);
 		
 		
 		// 스케줄에 등록된 영화 정보 가져오는 List
@@ -50,14 +41,19 @@ public class BookController {
 		// 상영 시작시간 형식 변환
 		for(Map<String, Object> map : schWithMovie) {
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
 
-			String start_time = formatter.format(map.get("start_time"));
-			String end_time = formatter.format(map.get("end_time"));
+			String start_time1 = timeFormatter.format(map.get("start_time"));
+			String end_time = timeFormatter.format(map.get("end_time"));
 			
-			map.put("start_time", start_time);
+			map.put("start_time", start_time1);
 			map.put("end_time", end_time);
+			
 		}
+		
+		
+		
+
 		
 		return "book_tickets/book_tickets";
 	}
@@ -102,6 +98,11 @@ public class BookController {
 		model.addAttribute("rowCount", rowCount);
 		model.addAttribute("colCount", colCount);
 		System.out.println(seatList);
+		
+		
+		
+		
+		
 		
 		return "book_tickets/book_seat";
 	}

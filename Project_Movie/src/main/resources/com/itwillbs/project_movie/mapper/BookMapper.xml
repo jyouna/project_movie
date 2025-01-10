@@ -5,30 +5,24 @@
 <mapper namespace="com.itwillbs.project_movie.mapper.BookMapper">
 	
 	<select id="selectMovieList" resultType="movie">
-		SELECT age_limit, movie_name
+		SELECT *
 		FROM movie
-		WHERE movie_status = #{movie_status}
-	</select>
-	
-	<select id="selectScheduleJoinMovie">
-		SELECT m.age_limit, m.movie_name, s.start_time, s.end_time, s.theater_code
-		FROM schedule s JOIN movie m
-		ON s.movie_code = m.movie_code;
+		WHERE movie_status = '상영예정작'
 	</select>
 	
 	
-	
-	<resultMap type="map" id="schWithMovie">
-		<result property="age_limit" column="age_limit" />
-		<result property="movie_name" column="movie_name" />
-	</resultMap>
-	
-	<select id="selectSchWithMovie" resultMap="schWithMovie">
+	<select id="selectSchWithMovie" resultType="map">
 		SELECT *
 		FROM schedule s 
 		JOIN movie m
 		ON s.movie_code = m.movie_code
+<!-- 		WHERE SUBSTR(start_time, 1, 10) = #{start_time} -->
 	</select>
+	
+	
+	
+	
+	
 	
 	
 	<select id="selectSeat" resultType="seat">
@@ -37,5 +31,21 @@
 		WHERE theater_code = 'T1'
 		ORDER BY seat_row ASC, seat_col ASC;
 	</select>
+	
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

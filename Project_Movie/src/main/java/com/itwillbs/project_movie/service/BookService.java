@@ -15,19 +15,19 @@ import com.itwillbs.project_movie.vo.SeatVO;
 public class BookService {
 	@Autowired private BookMapper mapper;
 
+	// 영화/시간 선택 페이지
 	public List<MovieVO> getMovieList() {
 		return mapper.selectMovieList();
-	}
-
-	public List<SeatVO> getSeat() {
-		return mapper.selectSeat();
-	}
-
-	public List<ScheduleVO> getSchedule() {
-		return mapper.selectScheduleJoinMovie();
 	}
 
 	public List<Map<String, Object>> getSchWithMovie() {
 		return mapper.selectSchWithMovie();
 	}
+
+
+	// 좌석 선택 페이지
+	public List<SeatVO> getSeat() {
+		return mapper.selectSeat();
+	}
+
 }

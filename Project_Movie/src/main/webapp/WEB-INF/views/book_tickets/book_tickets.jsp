@@ -193,8 +193,8 @@
 											        <a class="time_seat_btn">
 											        	<span class="mv_time">${sch.start_time}</span>
 											        	<span class="details">
-												        	<span class="seat">78/80</span>
-												        	<span class="hall">1관</span>
+												        	<span class="seat">78/${sch.avail_seat}</span>
+												        	<span class="hall">${sch.theater_code eq 'T1' ? '1관' : (sch.theater_code eq 'T2' ? '2관' : '3관')}</span>
 											        	</span>
 											        </a>
 										    	</c:if>

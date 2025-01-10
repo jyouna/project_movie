@@ -14,10 +14,9 @@ public interface BookMapper {
 
 	List<MovieVO> selectMovieList();
 
+	List<Map<String, Object>> selectSchWithMovie();
+
 	List<SeatVO> selectSeat();
 
-	List<ScheduleVO> selectScheduleJoinMovie();
-
-	List<Map<String, Object>> selectSchWithMovie();
 
 }
