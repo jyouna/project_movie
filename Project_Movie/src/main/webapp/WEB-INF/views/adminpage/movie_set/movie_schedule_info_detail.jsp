@@ -85,6 +85,9 @@
 				    	<option value="0">예매불가</option>
 				    	<option value="1">예매가능</option>
 				    </select>
+				    <br>
+				    <span id="isRegistPossible">
+				    </span>
 				    <div class="form_btnGroup">
 				    	<input type="submit" value="등록">
 				    	<input type="reset" value="초기화">

@@ -18,7 +18,7 @@ $(function() {
 	// 영화선택 설렉트박스에 리스트 추가
 	$.ajax({
 		type : "GET",
-		url : "AdminMovieSetSearchBox", // 기존 컨트롤러 매핑메서드 재사용
+		url : "AdminMovieSetSearch",
 		data : {
 			columnName : "movie_status",
 			in1 : "상영예정작",
@@ -149,14 +149,32 @@ $(function() {
 				},
 				dataType : "json"
 			}).done(function(dbScheduleList) {
-				for(let index = 0; index < dbScheduleList.length; index++) {
-					// DB의 스케줄과 시간 
+				for(let dbSchedule of dbScheduleList) {
+					// 등록할 스케줄의 시작, 끝(상영후 다음스케줄 가능)시간, 스케줄 시작과 끝의 중간시간
 					let start = new Date(startDateTime).getTime();
 					let end = new Date(formatNextScheduleTime).getTime();
-					console.log("입력시작시간 : " + start + " : 데이터타입 : " + typeof(start));
-					console.log("입력끝시간 : " + end + " : 데이터타입 : " + typeof(end));
-					console.log("스케줄" + index + "의 시작시간 : " + dbScheduleList[index].start_time);
-					console.log("스케줄" + index + "의 끝시간 : " + dbScheduleList[index].end_time);
+					let average = (start + end) / 2;
+					// DB의 스케줄의 시작, 끝(상영후 다음스케줄 가능)시간,
+					let dbStart = dbSchedule.start_time;
+					let dbEnd = dbSchedule.next_schedule;
+					
+					// 새로등록할 스케줄의 1)시작시간이 DB스케줄의 시작 끝 시간 사이에 없고,
+					// 2)끝시간이 DB스케줄의 시작 끝 시간 사이에 없으면 겹치지않음
+					// 단, 이때 DB스케줄의 시작시간보다 새로등록할 스케줄의 시작시간이 조금 빠르고
+					// 러닝타임이 DB스케줄의 러닝타임보다 월등히 길때 새로등록할 스케줄의 끝시간이 DB스케줄의
+					// 끝시간을 넘어가서 위에 조건에 충족하지만 스케줄이 겹치게됨
+					// 따라서 위에 조건에 더해서 새로등록할 스케줄의 3)중간시간도 DB스케줄의 시간안에 포함되지 않는지도 판별해야됨
+					
+					if(	!(start > dbStart && start < dbEnd) // 1)
+						&& !(end > dbStart && end < dbEnd) // 2)
+						&& !(average > dbStart && average < dbEnd) ) // 3)
+						{
+						$("#isRegistPossible").text("등록가능합니다.")
+						$("#isRegistPossible").css("color", "#ADD826")
+					} else {
+						$("#isRegistPossible").html("- 등록불가 -<br>이미 등록된 스케줄과 겹칩니다.<br> 시간을 확인해주세요");
+						$("#isRegistPossible").css("color", "#FF86C1")
+					}
 				}
 			}).fail(function() {
 				

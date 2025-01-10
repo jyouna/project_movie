@@ -103,3 +103,7 @@ h2 {
 .form_btnGroup input {
 	width: 80px;
 }
+
+#isRegistPossible {
+	text-align: center;
+}

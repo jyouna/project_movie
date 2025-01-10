@@ -201,7 +201,7 @@ $(function() {
 				return actorResult;
 			});
 			
-			// API에서 개봉일이 String 으로 넘어와서 Date 타입 형식으로 변환
+			// API에서 개봉일이 yyyyHHmm 형식으로 넘어와서 Date 타입 형식으로 변환
 			let dateStr = movieInfo.openDt;
 			let year = dateStr.substring(0, 4);
 			let month = dateStr.substring(4, 6);
@@ -283,70 +283,6 @@ $(function() {
 			alert("영화상세정보를 가져오지 못했습니다");
 		});
 		
-	});
-	
-	// ajax를 통해 검색어 검색으로 영화목록 요청
-	$("#search02 input[type=button]").click(function() {
-		// 검색어가 ""일경우 모든 영화출력됨으로 ""일경우 검색어 입력 경고창 출력
-		if($("#search02>input[type=text]").val() == "") {
-			alert("검색어를 입력해주세요");
-		} else {
-			$.ajax({
-				type : "GET",
-				url : "AdminMovieSetSearchBox",
-				data : {
-					howSearch : $(".search_box").val(),
-					searchKeyword: $("#search02>input[type=text]").val()
-				},
-				dataType : "json"
-			}).done(function(MovieList) {
-				
-				$("#sec02 > div").hide();
-				
-				$("#sec02>table").html(
-					"<tr>"
-						+ "<th><b><input type='radio'name='select_movie' disabled></b></th>"
-						+ "<th>영화코드</th>"
-						+ "<th>영화제목</th>"
-						+ "<th>장르</th>"
-						+ "<th>관람등급</th>"
-						+ "<th>영화상태</th>"
-						+ "<th>등록일자</th>"
-						+ "<th>등록계정</th>"
-					+ "</tr>"
-				);
-				
-				// 조회 내역이 0이면 조회 조건 표시
-				if(MovieList[0] == null) {
-						$("#sec02>table").append(
-								"<tr>"
-									+ "<th  colspan='8'>검색 결과가 없습니다. 검색어를 확인해주세요<br>"
-									+ "(영화상태 - 대기, 투표영화, 상영예정작, 현재상영작, 과거상영작<br>"
-									+ "영화장르 - 코미디, 드라마, 액션, SF, 범죄,  스릴러, 공포, 판타지<br>"
-									+ "애니메이션, 어드벤처, 미스터리... )"
-									+ "</th>"
-								+ "</tr>"
-						);	
-				} else {
-					for(let movie of MovieList) {
-						$("#sec02>table").append(
-								"<tr>"
-									+ "<td><input type='radio'name='select_movie'></td>"
-									+ "<td>" + movie.movie_code + "</td>"
-									+ "<td>" + movie.movie_name + "</td>"
-									+ "<td>" + movie.movie_genre + "</td>"
-									+ "<td>" + movie.age_limit + "</td>"
-									+ "<td>" + movie.movie_status + "</td>"
-									+ "<td>" + movie.str_regist_date +"</td>"
-									+ "<td>" + movie.regist_admin_id  +"</td>"
-								+ "</tr>"
-						);	
-					}
-				}
-			}).fail(function() {
-				alert("검색에 실패하셨습니다")
-			});
-		}
 	});
 	
 	// 선택된 행의 영화코드, 영화명, 영화상태 저장을 위한 변수(페이지로드시 마다 초기화)
@@ -505,12 +441,6 @@ $(function() {
 	$("#director_name").keypress(function(event){
 		if(event.which == 13) { 
 		 	$("#request_movie_info_btn").click(); 
-		}
-	});
-	
-	$("#search02 input[type='text']").keypress(function(event){
-		if(event.which == 13) { 
-		 	$("#search02 input[type='button']").click(); 
 		}
 	});
 	

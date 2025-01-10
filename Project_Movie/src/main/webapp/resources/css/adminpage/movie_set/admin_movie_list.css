@@ -13,17 +13,21 @@
 	padding-bottom: 25px;
 }
 
-#sec01 div {
-    margin-bottom: 10px;
-}
-
-
 #search01 {
     float: left;
 }
 
 #search02 {
     float: right;
+}
+
+#search02 form {
+	margin-bottom: 5px;
+}
+
+#search02 input[type="submit"] {
+	margin-right: 0px;
+    height: 40px;
 }
 
 #sec01 input[type="button"] {
@@ -92,7 +96,7 @@ table th[colspan] {
 #sec02 {
 	z-index: -1;
 	width: 100%;
-	height: 410px;
+	height: 425px;
 	overflow-y: auto;
 }
 
@@ -292,4 +296,16 @@ form {
 
 tr {
 	cursor: pointer;
+}
+
+.page_btn_group a {
+	color : gray;
+	text-decoration: none;
+}
+
+.page_btn_group input[type="button"] {
+	border-radius: 5px;
+	border: 1px solid;
+	width: 30px;
+	height: 30px;
 }

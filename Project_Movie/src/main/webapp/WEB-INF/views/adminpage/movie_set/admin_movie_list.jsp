@@ -27,31 +27,47 @@
 				<input type="button" value="전체 영화 조회" onclick="location.href='AdminMovieSetList'">
 			</div>
 			<div id="search02">
-				<select class="search_box">
-					<option selected="selected" value="movie_name">영화제목</option>
-					<option value="movie_genre">장르</option>
-					<option value="movie_status">영화상태</option>
-				</select>
-				<input type="text" placeholder="검색어를 입력하세요">
-				<input type="button" value="검색">
+				<form action="AdminMovieSetList">
+					<select class="search_box" name="howSearch">
+						<option value="movie_name" <c:if test ="${param.howSearch eq 'movie_name'}">selected</c:if>>영화제목</option>
+						<option value="movie_genre" <c:if test ="${param.howSearch eq 'movie_genre'}">selected</c:if>>장르</option>
+						<option value="movie_status" <c:if test ="${param.howSearch eq 'movie_status'}">selected</c:if>>영화상태</option>
+					</select>
+					<c:choose>
+						<c:when test="${not empty param.searchKeyword}">
+							<input type="text" name="searchKeyword" value="${param.searchKeyword}"required>
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요" required>
+						</c:otherwise>
+					</c:choose>
+					<input type="submit" value="검색">
+				</form>
 			</div>
 		</div>
 		
 		<div id="sec02">
 			<table>
 				<tr>
-					<th><input type="radio" name="movie_radio" disabled></th>
-	                <th>영화코드</th>
-	                <th>영화제목</th>
-	                <th>장르</th>
-	                <th>관람등급</th>
-	                <th>영화상태</th>
-	                <th>등록일자</th>
-	                <th>등록계정</th>
+					<th style="width:30px"><input type="radio" name="movie_radio" disabled></th>
+	                <th style="width:80px">영화코드</th>
+	                <th style="width:242px">영화제목</th>
+	                <th style="width:231px">장르</th>
+	                <th style="width:130px">관람등급</th>
+	                <th style="width:98px">영화상태</th>
+	                <th style="width:100px">등록일자</th>
+	                <th style="width:78px";>등록계정</th>
 				</tr>
 				<c:choose>
 					<c:when test="${empty movieList}">
-						<tr><td colspan="8">게시물이 존재하지 않습니다</td><tr>
+						<tr>
+							<td colspan="8">
+								검색 결과가 없습니다. 검색어를 확인해주세요<br>
+								(영화상태 - 대기, 투표영화, 상영예정작, 현재상영작, 과거상영작<br>
+								영화장르 - 코미디, 드라마, 액션, SF, 범죄,  스릴러, 공포, 판타지<br>
+								애니메이션, 어드벤처, 미스터리... )
+							</td>
+						<tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="movie" items="${movieList}">
@@ -70,21 +86,25 @@
 				</c:choose>
 			</table>
 	       	<div class="page_btn_group">
-	            <input type="button" value="<" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>
-	            	onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum - 1}'">
-	            <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
-	            	<c:choose>
-	            		<c:when test="${pageInfo.pageNum eq i}">
-	            			<b>${i}</b>
-	            		</c:when>
-	            		<c:otherwise>
-	            			<a href="AdminMovieSetList?pageNum=${i}">${i}</a>
-	            		</c:otherwise>
-	            	</c:choose>
-	            </c:forEach>
-	            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
-	            onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum + 1}'">
-	            
+				<c:if test="${not empty param.searchKeyword}">
+					<c:set var="searchParam" value="&howSearch=${param.howSearch}&searchKeyword=${param.searchKeyword}"/>			
+				</c:if>
+				<c:if test="${pageInfo.maxPage != 0}">
+		            <input type="button" value="<" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>
+		            	onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum - 1}${searchParam}'">
+		            <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+		            	<c:choose>
+		            		<c:when test="${pageInfo.pageNum eq i}">
+		            			<b>${i}</b>
+		            		</c:when>
+		            		<c:otherwise>
+		            			<a href="AdminMovieSetList?pageNum=${i}${searchParam}">${i}</a>
+		            		</c:otherwise>
+		            	</c:choose>
+		            </c:forEach>
+		            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
+		            onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum + 1}${searchParam}'">
+				</c:if>
 	        </div>
 		</div>
 		<div id="sec03">

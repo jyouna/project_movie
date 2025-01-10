@@ -62,13 +62,14 @@ public class MovieController {
 		return "movie_info/movie_info_detail";
 	}
 	
-	//관리자페이지 영화관리 영화목록 페이지 맵핑, 영화리스트 출력
+	//관리자페이지 영화관리 영화목록 페이지 맵핑, 영화리스트 출력, 검색한 영화 리스트 출력
 	@GetMapping("AdminMovieSetList")
-	public String adminMovieSetList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String adminMovieSetList(@RequestParam(defaultValue = "1") int pageNum, Model model,
+			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
-		int listLimit = 9; // 한 페이지 당 표시할 게시물 수
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
-		int listCount = movieService.getMovieListCount(); //총 영화 목록수 조회
+		int listCount = movieService.getMovieListCount(howSearch, searchKeyword); //총 영화 목록수 조회
 		int pageListLimit = 5; // 한페이지당 페이지번호 수
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
@@ -78,6 +79,7 @@ public class MovieController {
 			endPage = maxPage;
 		}
 		
+		// url 파라미터 조작 방지
 		if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
 			model.addAttribute("targetURL", "AdminMovieSetList?pageNum=1");
@@ -87,16 +89,17 @@ public class MovieController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit);
+		// 조건에맞는 영화 리스트 조회
+		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit, howSearch, searchKeyword);
 		model.addAttribute("movieList", movieList);
 		return "adminpage/movie_set/admin_movie_list";
 	}
 	
-	// 관리자 영화목록에서 검색어 검색으로 리스트 출력
+	// 관리자 영화관리에서 조건별 영화 검색
 	// ajax 요청을 통해 json 형식으로 리턴
 	@ResponseBody
-	@GetMapping("AdminMovieSetSearchBox")
-	public List<MovieVO> adminMovieSetSearchBox(@RequestParam Map<String, String> map) {
+	@GetMapping("AdminMovieSetSearch")
+	public List<MovieVO> adminMovieSetSearch(@RequestParam Map<String, String> map) {
 		List<MovieVO> SearchMovieList =  movieService.searchMovie(map);
 		
 		// db의 timestamp타입 데이터를 String타입으로 변환 후 응답
@@ -106,6 +109,7 @@ public class MovieController {
 		}
 		return SearchMovieList;
 	}
+
 	
 	// 관리자 영화목록에서 영화등록 로직
 	@PostMapping("AdminMovieInfoRegist")

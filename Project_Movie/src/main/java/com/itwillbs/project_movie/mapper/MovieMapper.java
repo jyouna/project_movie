@@ -18,10 +18,11 @@ public interface MovieMapper {
 	MovieVO SelectMovieByCode(String movie_code);
 	
 	// 총 영화목록 수 조회 메서드
-	int selectMovieListCount();
+	int selectMovieListCount(@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
 	
 	// 영화목록 조회
-	List<MovieVO> selectMovieList(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	List<MovieVO> selectMovieList(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
 	
 	// 조건에 따른 영화목록 조회 메서드
 	List<MovieVO> selectMovieListCheck(Map<String, String> map);

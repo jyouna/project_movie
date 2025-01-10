@@ -27,13 +27,13 @@ public class MovieService {
 	}
 	
 	// 페이징 처리를 위한 영화 목록 수 조회
-	public int getMovieListCount() {
-		return movieMapper.selectMovieListCount();
+	public int getMovieListCount(String howSearch, String searchKeyword) {
+		return movieMapper.selectMovieListCount(howSearch, searchKeyword);
 	}
 	
 	// 페이징 후 페이지에 필요한 만큼의 영화목록 조회
-	public List<MovieVO> getMovieList(int startRow, int listLimit) {
-		return movieMapper.selectMovieList(startRow, listLimit);
+	public List<MovieVO> getMovieList(int startRow, int listLimit, String howSearch, String searchKeyword) {
+		return movieMapper.selectMovieList(startRow, listLimit, howSearch, searchKeyword);
 	}
 	
 	// 검색조건(컬럼명), 검색어를 파라미터로 전달 후 해당 영화리스트 조회
