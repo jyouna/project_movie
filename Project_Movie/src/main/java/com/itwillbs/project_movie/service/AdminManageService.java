@@ -25,11 +25,6 @@ public class AdminManageService {
 		return manageMapper.insertAccount(adminVo);
 	}
 
-	public List<AdminRegisVO> queryAdminList(int startRow, int listLimit) {
-		// TODO Auto-generated method stub
-		return manageMapper.selectAdminList(startRow, listLimit);
-	}
-
 	public int deleteAdminAccount(String id) {
 		// TODO Auto-generated method stub
 		return manageMapper.deleteAdminAccount(id);
@@ -43,7 +38,7 @@ public class AdminManageService {
 	public List<EventBoardVO> eventBoardList() {
 		return manageMapper.selectEventBoardList();
 	}
-
+	
 	public void setEventStart(int[] event_codes) {
 		for(int event_code : event_codes) {
 			manageMapper.updateEventStatusStart(event_code);
@@ -189,4 +184,51 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getMemberAllInfo();
 	}
+
+	public int getBoardListForPaging(String boardName) {
+		
+		System.out.println("서비스까지 호출됨!!");
+		int listCount = 0;
+		/* boardName의 값에 따라 조회하는 테이블을 다르게 한다.
+		// 관리자 목록  -> adminList
+		// 회원목록 	 -> memberList
+		// 이벤트목록 	 -> eventBoardList
+		// 이벤트당첨자 -> eventWinnerList
+		// 쿠폰당첨자	 -> couponWinnerList
+		// 쿠폰내역	 -> couponList
+		// 포인트당첨자 -> pointWinnerList
+		// 포인트내역   -> pointList
+		*/
+
+		switch (boardName) {
+		case "adminList" :
+			listCount = manageMapper.getAdminListCount(); break;
+		case "meberList" : 
+			listCount = manageMapper.getMemberListCount(); break;
+//		case "eventBoardList" : 
+//			return manageMapper.getMemberListCount(); break;
+//		case "eventWinnerList" : 
+//			return manageMapper.getMemberListCount(); break;
+//		case "couponWinnerList" : 
+//			return manageMapper.getMemberListCount(); break;
+//		case "couponList" : 
+//			return manageMapper.getMemberListCount(); break;
+//		case "pointWinnerList" : 
+//			return manageMapper.getMemberListCount(); break;
+//		case "pointList" : 
+//			return manageMapper.getMemberListCount(); break;
+		}
+		return listCount;
+	}
+
+	public List<AdminRegisVO> queryAdminList(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return manageMapper.selectAdminPagingListPaging(startRow, listLimit);
+	}
+
+	public List<MemberVO> queryMemberList(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return manageMapper.selectMemberListPaging(startRow, listLimit);
+	}
+
 }

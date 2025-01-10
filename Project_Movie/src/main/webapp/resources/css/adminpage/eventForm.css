@@ -1,0 +1,73 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;}
+
+form > h1 {
+	text-align: center;}
+
+table {
+	table-layout: fixed;
+    border-collapse: collapse;}
+th {
+	width: 7em;}
+
+td { 
+    padding-left: 2em;
+ 	margin: 0; /* 마진 제거 */ 
+    box-sizing: border-box; /* 테두리와 패딩 포함하여 크기 계산 */ 
+    vertical-align: middle; /* 수직 정렬 */ }
+
+tr {
+	border: 1px solid #eee;
+	height: 4em;}
+	
+tr:hover {
+	background-color: #eee} 
+
+input[type="text"] {
+	width: 100%;
+	width: 100%;
+	height: 70px;
+	padding: 8px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 15px;
+	box-sizing: border-box;}
+
+.checkDate {
+	appearance: none; /* 기본 브라우저 스타일 제거 */
+	padding: 10px;
+	font-size: 16px;
+	width: 35%;
+ 	height: 70px;
+ 	border: 1px solid #ddd;
+ 	border-radius: 15px;
+	box-sizing: border-box;}
+
+input[type="file"] {
+	height: 100%;
+	font-size: 16px;
+ 	padding: 10px;}
+	
+.bottom {
+	padding: 15px;
+	margin: 5px;
+	width: 100px;
+	border-radius: 20px;
+	border: 3px;
+	font-size: 1.1em;
+	font-weight: bold;}
+
+textarea {
+	padding: 0px;
+	margin: 0px;
+ 	border: 1px solid #ddd;
+	border-radius: 15px;
+	box-sizing: border-box;}
+	
+	
+	
+	
+	
+	

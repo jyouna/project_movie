@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
+import com.itwillbs.project_movie.handler.PagingHandler;
 import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.CouponVO;
@@ -30,6 +33,9 @@ import com.itwillbs.project_movie.vo.PointVO;
 public class AdminManageController {
 	@Autowired
 	private AdminManageService adminService;
+	
+	@Autowired
+	private PagingHandler pagingHandler;
 	
 	@GetMapping("AdminLogin") // 관리자 계정 로그인 폼 이동
 	// 세션 admin_sId가 있을 시 바로 접속, 그렇지 않을 경우 관리자 로그인 페이지 이동
@@ -68,7 +74,8 @@ public class AdminManageController {
 	}
 	
 	@GetMapping("AdminAccountManage") // 관리자 계정관리 페이지 이동
-	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
+	public String adminAccountManagement(@RequestParam(defaultValue = "1") int pageNum, 
+			Model model, HttpSession session) {
 		
 		// 관리자 로그인 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
@@ -83,33 +90,13 @@ public class AdminManageController {
 			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
+//		
+		Map<String, Object> pagingMap = pagingHandler.pagingProcess(pageNum, "adminList");
+		PageInfo pageInfo = (PageInfo)pagingMap.get("pageInfo");
+		List<AdminRegisVO> voList = (List<AdminRegisVO>)pagingMap.get("voList");
 		
-		int listLimit = 2;
-		int startRow = (pageNum - 1) * listLimit;
-		int listCount = adminService.getBoardListCount();
-		int pageListLimit = 3;
-		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);
-		
-		if(maxPage == 0) {
-			maxPage = 1;
-		}
-		
-		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
-		int endPage = startPage + pageListLimit - 1;
-		if(endPage > maxPage) {
-			endPage = maxPage;
-		}
-		
-		if(pageNum < 1 || pageNum > maxPage) {
-			return "";
-		}
-		
-		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
-		System.out.println("페이지 정보 : " + pageInfo);
-		List<AdminRegisVO> voList = new ArrayList<AdminRegisVO>();
-		voList = adminService.queryAdminList(startRow, listLimit);
-		model.addAttribute("voList", voList);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("voList", voList);
 		
 		return "adminpage/admin_manage/adminpage_account_manage";
 	}	
@@ -176,7 +163,7 @@ public class AdminManageController {
 	}
 	
 	@GetMapping("MemberList") // 회원 리스트 조회
-	public String memberList(HttpSession session, Model model) {
+	public String memberList(@RequestParam(defaultValue = "1") int pageNum, HttpSession session, Model model) {
 		// 관리자 로그인 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -191,13 +178,14 @@ public class AdminManageController {
 			return "result/process";
 		}
 		
-		List<MemberAllInfoVO> memberAllInfo = adminService.getMemberAllInfo(); // 회원리스트 조회
+		Map<String, Object> pagingMap = pagingHandler.pagingProcess(pageNum, "memberList");
+		PageInfo pageInfo = (PageInfo)pagingMap.get("pageInfo");
+		List<MemberAllInfoVO> voList = (List<MemberAllInfoVO>)pagingMap.get("voList");
 		
-		for(MemberAllInfoVO m : memberAllInfo) {
-			System.out.println("allinfo 정보 : " + m);
-		}
-		
-		model.addAttribute("memberAllInfo", memberAllInfo);
+		System.out.println("뷰 페이지 전달 전 voList 값 : " + voList);
+
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("voList", voList);
 		
 		return "adminpage/member_manage/member_list";
 	}

@@ -19,8 +19,6 @@ public interface AdminManageMapper {
 
 	int insertAccount(AdminRegisVO adminVo);
 
-	List<AdminRegisVO> selectAdminList(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
-
 	int deleteAdminAccount(@Param("id") String id);
 
 //	void insertEventBoard(@Param("noticeVo") NoticeBoardVO noticeVo);
@@ -69,6 +67,13 @@ public interface AdminManageMapper {
 	void updateEventWinnerSetStatus(@Param("event_code") int event_code);
 
 	List<MemberAllInfoVO> getMemberAllInfo();
+
+	List<AdminRegisVO> selectAdminPagingListPaging(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	List<MemberVO> selectMemberListPaging(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
+
+	int getAdminListCount();
+
+	int getMemberListCount();
 
 
 }

@@ -28,13 +28,42 @@
 	    )
 	</insert>
 	
-	<select id="selectAdminList" resultType="adminmanage">
+	<select id="selectAdminPagingListPaging" resultType="adminmanage">
 		SELECT *
 		FROM admin
 		ORDER BY start_date
 		LIMIT
 			#{startRow},
 			#{listLimit}
+	</select>
+	
+		<select id="selectMemberListPaging" resultType="memberAllInfo">
+		SELECT  -- 회원테이블 구성 시 가입일, 탈퇴일 혹은 고유 인덱스 컬럼이 필요하다는 것을 고려하지 못하여 중복되지 않는 값으로 정렬이 불가
+			c.member_id AS member_id, 
+			count(*) AS coupon_num, 
+		    m.point AS remain_point,
+		    m.member_name AS member_name,
+		    m.member_passwd AS member_passwd,
+		    m.birth_date AS birth_date,
+		    m.email AS email,
+		    m.gender AS gender,
+		    m.genre AS gerne,
+			m.phone AS phone,
+		    m.text_receive AS text_receive,
+		    m.email_receive AS email_receive,
+		    m.info_open AS info_open,
+		    m.member_type AS member_type,
+		    m.email_auth_status AS email_auth_status,
+		    m.phone_auth_status AS phone_auth_status,
+		    m.member_status AS member_status
+		FROM 
+			member m 
+		JOIN 
+			coupon c
+		ON 
+			m.member_id = c.member_id                  
+		GROUP BY 
+			c.member_id;
 	</select>
 	
 	<select id="checkAdminId" resultType="String">
@@ -244,34 +273,15 @@
 		ON m.member_id = c.member_id
 		GROUP BY c.member_id;
 	</select>
+		
+	<select id="getAdminListCount" resultType="int">
+		SELECT count(*)
+		FROM admin
+	</select>
 	
-	<select id="getMemberAllInfo" resultType="memberAllInfo">
-		SELECT 
-			c.member_id AS member_id, 
-			count(*) AS coupon_num, 
-		    m.point AS remain_point,
-		    m.member_name AS member_name,
-		    m.member_passwd AS member_passwd,
-		    m.birth_date AS birth_date,
-		    m.email AS email,
-		    m.gender AS gender,
-		    m.genre AS gerne,
-			m.phone AS phone,
-		    m.text_receive AS text_receive,
-		    m.email_receive AS email_receive,
-		    m.info_open AS info_open,
-		    m.member_type AS member_type,
-		    m.email_auth_status AS email_auth_status,
-		    m.phone_auth_status AS phone_auth_status,
-		    m.member_status AS member_status
-		FROM 
-			member m 
-		JOIN 
-			coupon c
-		ON 
-			m.member_id = c.member_id
-		GROUP BY 
-			c.member_id;
+	<select id="getMemberListCount" resultType="int">
+		SELECT count(*)
+		FROM member
 	</select>
 	
  </mapper>

@@ -23,9 +23,6 @@
 input[type="checkbox"] {
     transform: scale(1.5); /* 1.5배 확대 */
     margin: 5px;}
-   
-/* #tableDiv { */
-/* 	border: 1px solid red !important;} */
 </style>
 
 </head>
@@ -104,9 +101,8 @@ input[type="checkbox"] {
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-		<input type="button" value="다음" 
-			onclick="location.href='AdminAccountManage?pageNum=${pageInfo.pageNum + 1}'" 
-			<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+		<input type="button" value="다음" onclick="location.href='AdminAccountManage?pageNum=${pageInfo.pageNum + 1}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>
 	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
