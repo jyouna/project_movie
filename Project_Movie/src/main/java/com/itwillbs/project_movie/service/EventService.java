@@ -12,13 +12,13 @@ import com.itwillbs.project_movie.vo.EventBoardVO;
 public class EventService {
 @Autowired
 private EventMapper mapper;
-	public int getEventListCount() {
+	public int getEventListCount(String searchType, String searchKeyword) {
 		// TODO Auto-generated method stub
-		return mapper.selectEventListCount();
+		return mapper.selectEventListCount(searchType,searchKeyword);
 	}
-	public List<EventBoardVO> getEventList(int startRow, int listLimit) {
+	public List<EventBoardVO> getEventList(int startRow, int listLimit, String searchType, String searchKeyword) {
 		// TODO Auto-generated method stub
-		return mapper.selectEventList(startRow,listLimit);
+		return mapper.selectEventList(startRow,listLimit,searchType,searchKeyword);
 	}
 	public EventBoardVO getEvent(int event_code, boolean isIncreaseReadcount) {
 		EventBoardVO event = mapper.selectEvent(event_code);

@@ -114,6 +114,13 @@ public class MypageController {
 	public String inquiryWrite() {
 		return "mypage/inquiry/inquiryWrite";
 	}
+	//1:1문의 - 글 수정 폼
+	@GetMapping("InquiryModify")
+	public String inquiryModify() {
+		return "mypage/inquiry/inquiryModify";
+	}
+	
+	
 	//top에 있는 마이페이지 연결
 	@GetMapping("MypageMain")
 	public String MypageMain() {

@@ -6,6 +6,10 @@ body {
     margin: 0;
     padding: 0;
 }
+.box {
+	width: 1400px;
+	height: 800px;
+}
 /* 이벤트 - 글  */
 #articleForm {
     background-color: #fff;

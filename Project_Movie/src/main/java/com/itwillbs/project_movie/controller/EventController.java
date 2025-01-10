@@ -19,10 +19,12 @@ public class EventController {
 	private EventService service;
 	// 이벤트 - 글 목록
 	@GetMapping("EventList")
-	public String eventList(@RequestParam(defaultValue="1") int pageNum, Model model) {
+	public String eventList(@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue ="") String searchKeyword,
+			@RequestParam(defaultValue="1") int pageNum, Model model) {
 		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
-		int listCount = service.getEventListCount();
+		int listCount = service.getEventListCount(searchType, searchKeyword);
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 :0);
 		if(maxPage == 0) {
@@ -45,7 +47,7 @@ public class EventController {
 		
 		PageInfo pageinfo = new PageInfo (listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageinfo);
-		List<EventBoardVO> eventList = service.getEventList(startRow, listLimit);
+		List<EventBoardVO> eventList = service.getEventList(startRow, listLimit, searchType, searchKeyword );
 		model.addAttribute("eventList", eventList);
 		return "event/event_list";
 	}

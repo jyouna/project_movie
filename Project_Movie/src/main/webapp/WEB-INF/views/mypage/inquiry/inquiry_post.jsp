@@ -27,14 +27,11 @@
 					<tr>
 						<th width="100">제목</th>
 						<td colspan="3">${inquiry.inquiry_subject}</td>
-					</tr>
-					<tr>
-						<td colspan="2" ></td>
 						<th width="120">등록일</th>
 						<td width="180">
 							<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/>
 						</td>
-					</tr>	
+					</tr>
 				</table>
 		</section>
 		<section id="articleContentArea">
@@ -45,10 +42,10 @@
 		<input type="button" value="목록" id="listButton" onclick="location.href='InquiryList?pageNum=${param.pageNum}'">
 		</div>
 		<section id="commandCell">
-				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }">
-					<input type="button" value="수정" >
+<%-- 				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }"> --%>
+					<input type="button" value="수정" id="modify">
 					<input type="button" value="삭제" onclick="confirmDelete()">
-				</c:if>
+<%-- 				</c:if> --%>
 		</section>
 		
 		<table>
@@ -65,6 +62,19 @@
 				<td></td>
 			</tr>
 		</table>
+		<script type="text/javascript">
+			$(function () {
+				$("#modify").on("click", function () {
+					window.open(
+							'InquiryModify',
+							'1:1문의 수정창',
+							'width=400, height=700, scrollbars=no, resizeable=no');
+				});
+			});
+		
+		
+		
+		</script>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

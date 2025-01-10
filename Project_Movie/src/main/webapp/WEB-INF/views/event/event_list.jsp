@@ -21,12 +21,15 @@
 			<h1>전체 이벤트</h1>
 		</div>
 	    <div class="search-bar">
-	      <select>
-	        <option>제목</option>
-	        <option>내용</option>
-	      </select>
-	      <input type="text" placeholder="검색어를 입력하세요.">
-  		  <input type="button" value="검색" id="searchButton">
+	    	<form action="EventList" method="get">
+		      <select name="searchType">
+<!-- 		      	검색했을때 searchType을 설정하고 그대로 놔두고싶을때 selected 해놓기 -->
+		        <option value="subject">제목</option>
+		        <option value="content">내용</option>
+		      </select>
+		      <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+	  		  <input type="submit" value="검색">
+  			</form>
 	    </div>
 		<div id="listForm">
 			<table id="eventForm" border="1">

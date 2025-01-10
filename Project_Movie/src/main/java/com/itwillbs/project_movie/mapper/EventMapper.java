@@ -8,9 +8,9 @@ import com.itwillbs.project_movie.vo.EventBoardVO;
 
 public interface EventMapper {
 
-	int selectEventListCount();
+	int selectEventListCount(@Param("searchType") String searchType,@Param("searchKeyword") String searchKeyword);
 
-	List<EventBoardVO> selectEventList(@Param("startRow") int startRow,@Param("listLimit") int listLimit);
+	List<EventBoardVO> selectEventList(@Param("startRow") int startRow,@Param("listLimit") int listLimit, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 
 	EventBoardVO selectEvent(int event_code);
 

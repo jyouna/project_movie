@@ -38,10 +38,10 @@
 		<section id="listForm">
 			<table id="inquiryForm" border="1">
 				<tr id="tr_top" align="center">
-					<td width="35px">번호</td>
+					<td width="25px">번호</td>
 					<td width="45px">상태</td>
-					<td width="200px" >제목</td>
-					<td width="100px">등록일</td>
+					<td width="300px">제목</td>
+					<td width="80px">등록일</td>
 				</tr>
 					
 				<c:choose>
@@ -52,7 +52,15 @@
 						<c:forEach var="inquiry" items="${inquiryList}" varStatus="status">
 							<tr>
 								<td class="inquiry_code">${inquiry.inquiry_code}</td>
-								<td>${inquiry.response_status}</td>
+								<td>
+									<c:if test="${inquiry.response_status eq 0}">
+										답변 전
+									</c:if>
+									<c:if test="${inquiry.response_status eq 1}">
+										답변 완료
+									</c:if>
+									
+								</td>
 								<td class="inquiry_subject">${inquiry.inquiry_subject}</td>
 								<td>
 									<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yy-MM-dd"/>
