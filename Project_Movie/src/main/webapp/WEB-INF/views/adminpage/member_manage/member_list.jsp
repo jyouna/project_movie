@@ -31,7 +31,20 @@ th, td {
 		<div id="divTopLeft">
 			<input type="button" value="전체조회" id="listSearch">
 			<input type="button" value="ID 조회" id="idSearch">
-		</div>		
+		</div>
+		<div id="divTopRight"> <!--  우측 상단 검색란 -->
+			<form action="MemberList" method="get">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">	
+				<select name="searchKeyword">
+					<option value="searchId">ID</option>
+					<option value="searchEmail">이메일</option>
+					<option value="searchPhone">연락처</option>
+				</select>
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent">
+				<input type="submit" value="검색" id="searchBtn">
+<%-- 				<input type="hidden" value="${param.pageNum}" name="pageNum"> --%>
+			</form>	
+		</div>	
 	</div>
 	<div id="tableDiv">
 		<table id="mainTable" border="1">

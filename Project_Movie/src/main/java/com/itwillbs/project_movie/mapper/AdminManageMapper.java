@@ -21,7 +21,6 @@ public interface AdminManageMapper {
 
 	int deleteAdminAccount(@Param("id") String id);
 
-//	void insertEventBoard(@Param("noticeVo") NoticeBoardVO noticeVo);
 	void insertEventBoard(EventBoardVO eventVo);
 
 	List<EventBoardVO> selectEventBoardList();
@@ -48,19 +47,34 @@ public interface AdminManageMapper {
 
 	int insertCoupon(CouponVO coupon);
 
-	List<EventWinnerVO> selectAllEventWinner(); // 쿠폰 당첨자 리스트
+	List<EventWinnerVO> selectAllEventWinner(@Param("startRow") int startRow, 
+											@Param("listLimit") int listLimit, 
+											@Param("searchKeyword") String searchKeyword, 
+											@Param("searchContent") String searchContent); // 쿠폰 당첨자 리스트
 	
-	List<EventWinnerVO> getPointWinnerList(); // 포인트 당첨자 리스트
+	List<EventWinnerVO> getPointWinnerList(@Param("startRow") int startRow, 
+										   @Param("listLimit") int listLimit, 
+										   @Param("searchKeyword") String searchKeyword, 
+										   @Param("searchContent") String searchContent); // 포인트 당첨자 리스트
 
 	EventBoardVO checkEventStatus(@Param("event_code") int event_code);
 
-	void creditPoint(@Param("id") String id, @Param("point_amount") int point_amount);
+	void creditPoint(@Param("id") String id, 
+					 @Param("point_amount") int point_amount);
 
-	void insertPointInfo(@Param("id") String id, @Param("event_code") int event_code, @Param("point_amount") int point_amount);
+	void insertPointInfo(@Param("id") String id, 
+			 			 @Param("event_code") int event_code, 
+			 			 @Param("point_amount") int point_amount);
 
-	List<PointVO> getPointRecord();
+	List<PointVO> getPointRecord(@Param("startRow") int startRow, 
+								@Param("listLimit") int listLimit, 
+								@Param("searchKeyword") String searchKeyword, 
+								@Param("searchContent") String searchContent);
 
-	List<CouponVO> getCouponList();
+	List<CouponVO> getCouponList(@Param("startRow") int startRow, 
+								@Param("listLimit") int listLimit, 
+								@Param("searchKeyword") String searchKeyword, 
+								@Param("searchContent") String searchContent);
 
 	List<Map<String, String>> getCouponInfo();
 
@@ -68,12 +82,43 @@ public interface AdminManageMapper {
 
 	List<MemberAllInfoVO> getMemberAllInfo();
 
-	List<AdminRegisVO> selectAdminPagingListPaging(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
-	List<MemberVO> selectMemberListPaging(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
-
+	List<AdminRegisVO> selectAdminPagingListPaging(@Param("startRow") int startRow, 
+												   @Param("listLimit") int listLimit);
+	
+	List<MemberAllInfoVO> selectMemberListPaging(@Param("startRow") int startRow, 
+												 @Param("listLimit") int listLimit, 
+												 @Param("searchKeyword") String searchKeyword, 
+												 @Param("searchContent") String searchContent);
+	
 	int getAdminListCount();
+	
+	int getMemberListCount(@Param("searchKeyword") String searchKeyword, 
+						   @Param("searchContent") String searchContent);
+	
+	int getEventBoardListCount(@Param("searchKeyword") String searchKeyword, 
+							   @Param("searchContent") String searchContent);
+	
+	int getCouponWinnerListCount(@Param("searchKeyword") String searchKeyword, 
+								 @Param("searchContent") String searchContent);
 
-	int getMemberListCount();
+	int getPointWinnerListCount(@Param("searchKeyword") String searchKeyword, 
+								@Param("searchContent") String searchContent);
+
+	int getCouponListCount(@Param("searchKeyword") String searchKeyword, 
+							@Param("searchContent") String searchContent);
+
+	int getPointListCount(@Param("searchKeyword") String searchKeyword, 
+						@Param("searchContent") String searchContent);
+
+	List<MemberVO> searchMemberList(@Param("searchKeyword") String searchKeyword, 
+									@Param("searchContent") String searchContent);
+
+	List<EventBoardVO> selectEventBoardList(@Param("startRow") int startRow, 
+											@Param("listLimit") int listLimit, 
+											@Param("searchKeyword") String searchKeyword, 
+											@Param("searchContent") String searchContent);
+
+
 
 
 }

@@ -27,7 +27,10 @@ import com.itwillbs.project_movie.vo.GetGiveCouponInfoVO;
 import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.PageInfo;
+import com.itwillbs.project_movie.vo.PageInfo2;
 import com.itwillbs.project_movie.vo.PointVO;
+
+import lombok.Builder.Default;
 
 @Controller
 public class AdminManageController {
@@ -41,7 +44,7 @@ public class AdminManageController {
 	// 세션 admin_sId가 있을 시 바로 접속, 그렇지 않을 경우 관리자 로그인 페이지 이동
 	public String adminLogigForm(HttpSession session) {
 		System.out.println("관리자 로그인 세션 : " + session.getAttribute("admin_sId"));  
-		
+		 
 		if(session.getAttribute("admin_sId") == null) {
 			return "adminpage/admin_manage/adminpage_login_form";
 		} else {
@@ -90,10 +93,14 @@ public class AdminManageController {
 			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
-//		
-		Map<String, Object> pagingMap = pagingHandler.pagingProcess(pageNum, "adminList");
-		PageInfo pageInfo = (PageInfo)pagingMap.get("pageInfo");
-		List<AdminRegisVO> voList = (List<AdminRegisVO>)pagingMap.get("voList");
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "adminList");		
+		
+		List<AdminRegisVO> voList = adminService.queryAdminList(pageInfo.getStartRow(), pageInfo.getListLimit());
+		
+//		Map<String, Object> pagingMap = pagingHandler.pagingProcess(pageNum, "adminList");
+//		PageInfo pageInfo = (PageInfo)pagingMap.get("pageInfo");
+//		List<AdminRegisVO> voList = (List<AdminRegisVO>)pagingMap.get("voList");
 		
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("voList", voList);
@@ -124,7 +131,6 @@ public class AdminManageController {
 	
 	@GetMapping("DeleteAdminAccount") // 관리자 계정 삭제
 	public String adminAccountDelete(@RequestParam("admin_id") String[] admin_id, Model model) {
-//		System.out.println("화면에서 받아온 값 : " + admin_id);
 		int  deleteCount = 0;
 		
 		for (String id : admin_id) {
@@ -163,7 +169,11 @@ public class AdminManageController {
 	}
 	
 	@GetMapping("MemberList") // 회원 리스트 조회
-	public String memberList(@RequestParam(defaultValue = "1") int pageNum, HttpSession session, Model model) {
+	public String memberList(@RequestParam(defaultValue = "1") int pageNum, 
+			HttpSession session, Model model, 
+			@RequestParam(defaultValue = "") String searchKeyword, 
+			@RequestParam(defaultValue = "") String searchContent) {
+		
 		// 관리자 로그인 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -177,18 +187,28 @@ public class AdminManageController {
 			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
-		
-		Map<String, Object> pagingMap = pagingHandler.pagingProcess(pageNum, "memberList");
-		PageInfo pageInfo = (PageInfo)pagingMap.get("pageInfo");
-		List<MemberAllInfoVO> voList = (List<MemberAllInfoVO>)pagingMap.get("voList");
-		
-		System.out.println("뷰 페이지 전달 전 voList 값 : " + voList);
 
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "memberList", searchKeyword, searchContent);
+		List<MemberAllInfoVO> voList = adminService.queryMemberList(pageInfo.getStartRow(), pageInfo.getPageListLimit(), 
+																	searchKeyword, searchContent);
+		
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("voList", voList);
 		
 		return "adminpage/member_manage/member_list";
 	}
+
+	
+	
+//	@GetMapping("searchMemberList")
+//	public String searchMemberList(@RequestParam(defaultValue = "1") Model model, String searchKeyword, String searchContent) {
+//		List<MemberVO> voList = adminService.searchedMemberList(searchKeyword, searchContent);
+//		
+//		
+//		
+//		return "adminpage/member_manage/member_list";
+//	}
+	
 //	
 //	@GetMapping("StaticsVisitors") // 방문자 통계
 //	public String staticsVisitors(HttpSession session, Model model) {

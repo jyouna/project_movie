@@ -68,7 +68,10 @@
 	</div>
 <script type="text/javascript">
 $(function(){
-	let today = new Date().toISOString().split('T')[0];
+	let time = new Date()
+	time.setHours(time.getHours() + 9); // UTC+9 적용
+	let today = time.toISOString().split('T')[0];
+	
 	$("#event_start_date").attr("min", today);
 	$("#event_end_date").attr("min", today);
 	

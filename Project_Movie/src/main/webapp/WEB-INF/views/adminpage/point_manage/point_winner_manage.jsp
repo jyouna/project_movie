@@ -29,41 +29,42 @@
 		<h4>포인트 당첨자</h4>
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
-			<select>
-				<option>제목+내용</option>
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text" placeholder="검색어를입력하세요"> <input type="button" value="검색" id="searchBtn">
+			<form action="PointWinnerManage" method="get">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">
+				<select name="searchKeyword">
+					<option value="winnerId" <c:if test="${param.searchKeyword eq 'winnerId'}">selected</c:if>>아이디</option>
+					<option value="eventSubject" <c:if test="${param.searchKeyword eq 'eventSubject'}">selected</c:if>>이벤트</option>
+				</select>
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
+				<input type="submit" value="검색">
+			</form>
 		</div>	
 	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="50">코드</th>
-				<th width="150">이벤트제목</th>
-				<th width="150">당첨일시</th>
-				<th width="150">시작일자</th>
-				<th width="150">종료일자</th>
+<!-- 				<th width="50">코드</th> -->
 				<th width="150">당첨자</th>
 				<th width="150">포인트금액</th>
+				<th width="150">이벤트</th>
+				<th width="150">진행기간</th>
+				<th width="150">당첨일시</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty point_winner}">
 					<tr>
-						<th colspan="7">"작성된 게시글이 없습니다."</th>
+						<th colspan="5">"작성된 게시글이 없습니다."</th>
 					</tr>
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="point" items="${point_winner}" varStatus="status">
 						<tr>
-							<td>${point.event_code}</td>	
-							<td>${point.event_subject}</td>	
-							<td><fmt:formatDate value="${point.prize_datetime}" pattern="yyyy-MM-dd hh:mm"/> </td>	
-							<td>${point.event_start_date}</td>	
-							<td>${point.event_end_date}</td>	
+<%-- 							<td>${point.event_code}</td>	 --%>
 							<td>${point.winner_id}</td>	
 							<td>${point.point_amount}원</td>
+							<td>${point.event_subject}</td>	
+							<td>${point.event_start_date} ~ ${point.event_end_date}</td>	
+							<td><fmt:formatDate value="${point.prize_datetime}" pattern="yyyy-MM-dd hh:mm"/> </td>	
 						</tr>	
 					</c:forEach>
 				</c:otherwise>
@@ -71,7 +72,28 @@
 		</table>
 		<br>
 	</div>
-	<br>
+	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
+	<div id="divBottom" class="view">
+<%-- 이전 페이지 이동 --%>	
+		<input type="button" value="이전" 
+			onclick="location.href='PointWinnerManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
+		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+			<c:choose>
+				<c:when test="${i eq pagInfo.pageNum}">
+<%-- 현재 페이지 표시 --%>	
+					<strong>${i}</strong>
+				</c:when>
+<%-- 페이지 번호 클릭하여 이동 --%>	
+				<c:otherwise>
+					<a href="PointWinnerManage?pageNum=${i}${searchRecord}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+<%-- 다음 페이지 이동 --%>	
+		<input type="button" value="다음" onclick="location.href='PointWinnerManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+	</div>	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

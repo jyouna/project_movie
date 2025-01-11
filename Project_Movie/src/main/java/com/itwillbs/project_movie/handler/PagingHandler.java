@@ -1,24 +1,13 @@
 package com.itwillbs.project_movie.handler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import com.itwillbs.project_movie.service.AdminManageService;
-import com.itwillbs.project_movie.vo.AdminRegisVO;
-import com.itwillbs.project_movie.vo.CouponVO;
-import com.itwillbs.project_movie.vo.EventBoardVO;
-import com.itwillbs.project_movie.vo.EventWinnerVO;
-import com.itwillbs.project_movie.vo.MemberVO;
-import com.itwillbs.project_movie.vo.PageInfo;
-import com.itwillbs.project_movie.vo.PointVO;
+import com.itwillbs.project_movie.vo.PageInfo2;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
  /*
   *  페이징 처리를 대신하여 전달하는 핸들러!!
@@ -39,20 +28,59 @@ import com.itwillbs.project_movie.vo.PointVO;
   */
 
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class PagingHandler {	
 	
 	@Autowired
 	AdminManageService adminService;
 	
-	public Map<String, Object> pagingProcess(int pageNum, String boardName) {
-		
+	public PageInfo2 pagingProcess(int pageNum, String boardName, String searchKeyword, String searchContent) {
+		System.out.println("일반 페이징 서비스 호출");
 		System.out.println("페이징 핸들러 호출");
 		System.out.println("전달 받은 페이지 번호 : " + pageNum);
 		System.out.println("전달 받은 호출코드 : " + boardName);
 		
-		Map<String, Object> pageMap = new HashMap<String, Object>(); // 리턴할 리스트 객체 2개를 저장할 변수
-		List<?> voList = new ArrayList<>(); // 게시물 목록을 저장할 List객체
+//		Map<String, Object> pageMap = new HashMap<String, Object>(); // 리턴할 리스트 객체 2개를 저장할 변수
+//		List<?> voList = new ArrayList<>(); // 게시물 목록을 저장할 List객체
 		
+		int listLimit = 10;
+		int startRow = (pageNum - 1) * listLimit;
+		int listCount = adminService.getBoardListForPaging(boardName, searchKeyword, searchContent); // 서비스에서 boardName값 판별하여 다르게 작동!
+		System.out.println("리스트 카운트 : " + listCount);
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);	
+		System.out.println("MaxPage 값 1번 : " + maxPage);
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		System.out.println("pageNum 1번 : " + pageNum);
+		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		System.out.println("pageNum 2번 : " + pageNum);
+		}
+		
+		// 2번 페이지로 와서 검색하는 경우 maxPage보다 pageNum이 큰 경우가 발생하게 되므로 1페이지로 변경시킴.
+		if(pageNum > maxPage) {
+			pageNum = 1;
+		}
+		if(pageNum < 1 || pageNum > maxPage) {
+			System.out.println("pageNum 3번" + pageNum);
+			System.out.println("MaxPage 값 2번 : " + maxPage);
+			return null;
+		}	
+		
+		PageInfo2 pageInfo = new PageInfo2(listCount, pageListLimit, maxPage, startPage, endPage, pageNum, listLimit, startRow);
+		
+		return pageInfo;
+	}
+
+	// 검색기능 없는 게시판을 위한 오버로딩!!
+	public PageInfo2 pagingProcess(int pageNum, String boardName) {
+		System.out.println("오버로딩 페이징 서비스 호출");
 		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListForPaging(boardName); // 서비스에서 boardName값 판별하여 다르게 작동!
@@ -62,35 +90,26 @@ public class PagingHandler {
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit - 1;
+		
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}
+		
+		// 2번 페이지로 와서 검색하는 경우 maxPage보다 pageNum이 큰 경우가 발생하게 되므로 1페이지로 변경시킴.
+		if(pageNum > maxPage) {
+			pageNum = 1;
+		}
+		
 		if(pageNum < 1 || pageNum > maxPage) {
 			return null;
 		}	
 		
-		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
-		// 페이징 정보 저장
+		PageInfo2 pageInfo = new PageInfo2(listCount, pageListLimit, maxPage, startPage, endPage, pageNum, listLimit, startRow);
 		
-		// 화면에 전달할 VO LIST 객체 생성.
-		// startRow을 PageInfo 객체에 저장하면 단순해진다. 
-		switch(boardName) {
-			case "adminList" : voList = adminService.queryAdminList(startRow, listLimit); break;
-			case "memberList" : voList = adminService.queryMemberList(startRow, listLimit); break;
-//			case "eventBoardList" : voList = adminService.queryEventBoardList(startRow, listLimit); break;
-//			case "eventWinnerList" : voList = adminService.queryEventWinnerList(startRow, listLimit); break;
-//			case "couponWinnerList" : voList = adminService.queryEventWinnerList(startRow, listLimit); break; 
-//			case "couponList" : voList = adminService.queryCouponList(startRow, listLimit); break;
-//			case "pointWinnerList" : voList = adminService.queryPointWinnerList(startRow, listLimit); break;
-//			case "pointList" : voList = adminService.queryPointList(startRow, listLimit); break;
-		}
-		
-		pageMap.put("voList", voList); //
-		pageMap.put("pageInfo", pageInfo);
-
-		return pageMap;
+		return pageInfo;
 	}
 
 }

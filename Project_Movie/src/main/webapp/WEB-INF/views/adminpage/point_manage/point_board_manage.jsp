@@ -26,13 +26,16 @@
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
 		</div>	
-		<div id="divTopRight">
-			<select>
-				<option>제목+내용</option>
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text" placeholder="검색어를입력하세요"> <input type="button" value="검색" id="searchBtn">
+		<div id="divTopRight"> <!--  우측 상단 검색란 -->
+			<form action="PointBoardManage" method="get">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">
+				<select name="searchKeyword">
+					<option value="pointHolder" <c:if test="${param.searchKeyword eq 'pointHolder'}">selected</c:if>>아이디</option>
+					<option value="eventCode" <c:if test="${param.searchKeyword eq 'eventCode'}">selected</c:if>>이벤트번호</option>
+				</select>
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
+				<input type="submit" value="검색">
+			</form>
 		</div>	
 	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
@@ -110,7 +113,28 @@
 			</c:choose> 	
 		</table>
 	</div>
-	<br>
+	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
+	<div id="divBottom" class="view">
+<%-- 이전 페이지 이동	 --%>
+		<input type="button" value="이전" 
+			onclick="location.href='PointBoardManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
+		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+			<c:choose>
+				<c:when test="${i eq pagInfo.pageNum}">
+<%-- 현재 페이지 표시	 --%>
+					<strong>${i}</strong>
+				</c:when>
+<%-- 페이지 번호 클릭하여 이동	 --%>
+				<c:otherwise>
+					<a href="PointBoardManage?pageNum=${i}${searchRecord}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+<%-- 다음 페이지 이동	 --%>
+		<input type="button" value="다음" onclick="location.href='PointBoardManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+	</div>	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 
 </body>

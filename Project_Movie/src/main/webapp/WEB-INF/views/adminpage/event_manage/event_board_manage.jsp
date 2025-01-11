@@ -13,7 +13,6 @@
 	<title>이벤트 관리</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_manage.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
@@ -26,37 +25,80 @@
 	<h3>이벤트 관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-<!-- 			<input type="button" value="전체선택" id="selectAll"> -->
 			<input type="button" value="등록하기" id="board_regis">
-<!-- 			<input type="button" value="수정하기" id="board_modify"> -->
-<!-- 			<input type="button" value="삭제하기" id="delete"> -->
 			<input type="button" id="eventStart" value="이벤트 시작">
 			<input type="button" id="eventEnd" value="이벤트 종료">
 			<input type="button" id="chooseEventWinner" value="이벤트 당첨자 추첨">
 		</div>	
-		<div id="divTopRight"> <!--  우측 상단 검색란 -->
-			<select>
-				<option>제목+내용</option>
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text" placeholder="검색어를입력하세요"> <input type="button" value="검색" id="searchBtn">
+		<div id="divTopRight">
+			<form action="EventBoardManage" method="get">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">
+				<select name="searchKeyword">
+					<option value="eventSubject" <c:if test="${param.searchKeyword eq 'eventSubject'}">selected</c:if>>제목</option>
+					<option value="eventContent" <c:if test="${param.searchKeyword eq 'eventContent'}">selected</c:if>>내용</option>
+					<option value="eventWriter" <c:if test="${param.searchKeyword eq 'eventWriter'}">selected</c:if>>작성자</option>
+				</select>
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent"
+					<c:if test="${!param.searchContent}">value = ${param.searchContent}</c:if>>
+				<input type="submit" value="검색">
+			</form>
 		</div>	
+		
 	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-<!-- 				<th width="50"><input type="checkbox" id="selectAll"></th> -->
-				<th width="50">선택</th>
-<!-- 				<th width="70">번호</th> -->
-				<th width="50">번호</th>
-				<th width="350">제목</th>
-				<th width="150">등록일자</th>
-				<th width="150">시작일자</th>
-				<th width="150">종료일자</th>
-				<th width="150">등록계정</th>
-				<th width="150">진행상태</th>
-				<th width="150">당첨상태</th>
+				<th width="100">
+					<select class="selectNoOption">
+						<option>선택</option>
+					</select>
+				</th>
+				<th width="100">
+					<select class="selectNoOption">
+						<option>번호</option>
+					</select>
+				</th>
+				<th width="350">
+					<select class="selectNoOption">
+						<option>제목</option>
+					</select>
+				</th>
+				<th width="150">
+					<select class="selectNoOption">
+						<option>등록일자</option>
+					</select>
+				</th>
+				<th width="150">
+					<select class="selectNoOption">
+						<option>시작일자</option>
+					</select>
+				</th>
+				<th width="150">
+					<select class="selectNoOption">
+						<option>종료일자</option>
+					</select>
+				</th>
+				<th width="150">
+					<select class="selectNoOption">
+						<option>작성자</option>
+					</select>
+				</th>
+				<th width="150">
+					<select class="selectOption" id="eventStatus"> 
+					<%-- AJAX로 구현 --%>
+						<option selected>진행상태</option>
+						<option>대기</option>
+						<option>진행중</option>
+						<option>종료</option>
+					</select>
+				</th>
+				<th width="150">
+					<select class="selectOption" id="eventSetWinnerStatus">
+						<option selected>당첨진행</option>
+						<option>대기</option>
+						<option>완료</option>
+					</select>
+				</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty eventVo}">
@@ -104,14 +146,39 @@
 		</table>
 	</div>
 	<br>
+	
+	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 	<div id="divBottom" class="view">
-		<a href="#">1</a>
-		<a href="#">2</a>
-		<a href="#">3</a>
-		<a href="#">4</a>
-		<a href="#">5</a>
+<%-- 이전 페이지 이동 --%>
+		<input type="button" value="이전" 
+			onclick="location.href='EventBoardManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
+		<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
+		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+<%-- 화면에 1 2 3 4 5 등 페이지 표시 --%>
+			<c:choose>
+				<c:when test="${i eq pagInfo.pageNum}">
+					<strong>${i}</strong>
+				</c:when>
+<%-- 1 ~ 5 중 이동할 페이지 --%>
+				<c:otherwise>
+					<a href="EventBoardManage?pageNum=${i}${searchRecord}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+<%-- 다음 페이지 이동 --%>
+		<input type="button" value="다음" onclick="location.href='EventBoardManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>
+	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
+	<script type="text/javascript">
+	$(function(){
+		$("#eventStatus").on("change", function(){
+
+			window.open("${pageContext.request.contextPath}/resources/img/adminManage/test.png", "구현 필요", "800, 800");
+		});
+	})
+	</script>
 </body>
 </html>

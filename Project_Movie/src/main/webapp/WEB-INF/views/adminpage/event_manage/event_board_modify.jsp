@@ -71,30 +71,6 @@
 			</table>
 		</form>
 	</div>
-
-
-
-
-<!-- 	<div id="LayoutDiv1"> -->
-<!-- 		<form action="updateEventBoard" method="post"> -->
-<!-- 			<h3>이벤트 게시글 수정</h3> -->
-<!-- 			<div> -->
-<%-- 				제목 <input type="text" value="${eventVo.event_subject}" name="event_subject"><br> --%>
-<%-- 				등록일 <input type="datetime-local" name="event_file3" value="${eventVo.regis_date}" id="regis_date" readonly><br> --%>
-<%-- 				시작일 <input type="date" value="${eventVo.event_start_date}" name="event_start_date" id="event_start_date" ><br> --%>
-<%-- 				종료일 <input type="date" value="${eventVo.event_end_date}" name="event_end_date" id="event_end_date"><br> --%>
-<%-- 				<textarea rows="10" cols="100" name="event_content">"${eventVo.event_content}"</textarea> --%>
-<%-- 				<input type="file" name="event_file1" value="${eventVo.event_file1}"><br> --%>
-<%-- 				<input type="file" name="event_file2" value="${eventVo.event_file2}"><br> --%>
-<%-- 				<input type="file" name="event_file3" value="${eventVo.event_file3}"> --%>
-<!-- 			</div> -->
-<!-- 			<div id="divBottom"> -->
-<!-- 				<input type="submit" value="수정" class="bottom"> -->
-<!-- 				<input type="reset" value="초기화" class="bottom"> -->
-<!-- 				<input type="button" value="취소" class="bottom" onclick="history.back()"> -->
-<!-- 			</div> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
 	<script type="text/javascript">
 	$(function(){
 		let regisDate = $("#regis_date").val().split("T")[0];

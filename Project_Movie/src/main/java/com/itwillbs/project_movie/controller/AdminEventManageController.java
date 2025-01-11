@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
+import com.itwillbs.project_movie.handler.PagingHandler;
 import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.CouponVO;
@@ -23,6 +24,7 @@ import com.itwillbs.project_movie.vo.EventWinnerVO;
 import com.itwillbs.project_movie.vo.GetGiveCouponInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.PageInfo;
+import com.itwillbs.project_movie.vo.PageInfo2;
 import com.itwillbs.project_movie.vo.PointVO;
 
 @Controller
@@ -30,8 +32,13 @@ public class AdminEventManageController {
 	@Autowired
 	private AdminManageService adminService;
 	
+	@Autowired
+	private PagingHandler pagingHandler;
+		
 	@GetMapping("EventBoardManage") // 이벤트 게시판 관리 + 리스트 출력
-	public String eventBoardManagement(EventBoardVO eventVo, Model model, HttpSession session) {
+	public String eventBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+										@RequestParam(defaultValue = "") String searchKeyword,
+										@RequestParam(defaultValue = "") String searchContent) {
 		// 로그인 유무 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -46,10 +53,10 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
-		// 이벤트 게시판 전체 목록조회 후 뷰페이지로 전달
-		List<EventBoardVO> eventList = new ArrayList<EventBoardVO>();
-		eventList = adminService.eventBoardList();
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventBoardList", searchKeyword, searchContent);
+		List<EventBoardVO> eventList = adminService.eventBoardList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		model.addAttribute("eventVo", eventList);
+		model.addAttribute("pageInfo", pageInfo);
 		
 		return "adminpage/event_manage/event_board_manage";
 	}
@@ -61,10 +68,6 @@ public class AdminEventManageController {
 	
 	@GetMapping("EventBoardRegisSubmit") // 이벤트 게시글 등록폼 제출
 	public String eventBoardRegistration(EventBoardVO eventVo, HttpSession session) {
-		/* 1. 시작일 > 등록일(now())
-		 * 2. 종료일 > 시작일
-		 * 날짜 선택 시 위 두가지 반드시 적용되어야 함
-		 */
 		String admin_sId = (String) session.getAttribute("admin_sId");
 //		String sId = "admin";
 		eventVo.setEvent_writer(admin_sId);
@@ -79,7 +82,6 @@ public class AdminEventManageController {
 		for(int code : event_codes) {
 			System.out.println("시작할 이벤트 코드 : " + code);
 		}
-		
 		adminService.setEventStart(event_codes);
 		
 		return "redirect:/EventBoardManage";
@@ -105,6 +107,7 @@ public class AdminEventManageController {
 	
 	@PostMapping("updateEventBoard") // 이벤트 게시글 수정폼 제출
 	public String eventBoardModify(EventBoardVO eventVo) {
+		
 		return "";
 	}
 	
@@ -156,9 +159,7 @@ public class AdminEventManageController {
 	public String chooseEventWinner(int event_code, Model model) {
 		System.out.println("이벤트 당첨 컨트롤러 이동");
 		EventBoardVO eventVo = adminService.selectWinner(event_code);
-//		System.out.println("이벤트Vo : " + eventVo);
 		List<MemberVO> memberVo = adminService.getMemberList();
-//		System.out.println("멤버Vo : " + memberVo);
 
 		model.addAttribute("eventVo", eventVo);
 		model.addAttribute("memberVo", memberVo);
@@ -185,9 +186,6 @@ public class AdminEventManageController {
 	
 	@GetMapping("GivePoint") // 이벤트 당첨자 선택 후 포인트 지급 화면 이동
 	public String givePoint(@RequestParam("member_id") List<String> member_id, int event_code, Model model) {
-//		for(String id : member_id) {
-//			System.out.println("쿠폰 증정 대상자 : " + id);
-//		}
 		model.addAttribute("member_id", member_id);
 		model.addAttribute("event_code", event_code);
 		
@@ -199,15 +197,15 @@ public class AdminEventManageController {
 		System.out.println("지급 대상자 : " + member_id);
 		System.out.println("이벤트 코드 : " + event_code);
 		System.out.println("지급할 포인트 : " + point_amount);
-		
-		// point 테이블 이용하여 구현하기.
 		adminService.GivePointToWinner(member_id, event_code, point_amount);
 		
 		return "redirect:/PointWinnerManage";
 	}
 	
 	@GetMapping("CouponWinnerManage") // 이벤트 당첨자 표시 페이지
-	public String couponWinnerPage(HttpSession session, Model model) {
+	public String couponWinnerPage(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+									@RequestParam(defaultValue = "") String searchKeyword,
+									@RequestParam(defaultValue = "") String searchContent) {
 		// 로그인 유무 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -222,16 +220,18 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
-		List<EventWinnerVO> coupon_winner = adminService.getEventWinnerList();
-		System.out.println("쿠폰 당첨자 내역 : " + coupon_winner);
-
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "couponWinnerList", searchKeyword, searchContent);
+		List<EventWinnerVO> coupon_winner = adminService.getEventWinnerList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		model.addAttribute("coupon_winner", coupon_winner);
+		model.addAttribute("pageInfo", pageInfo);
 		
-		return "adminpage/event_manage/coupon_winner_manage";
+		return "adminpage/coupon_manage/coupon_winner_manage";
 	}
 
 	@GetMapping("PointWinnerManage") // 이벤트 당첨자 표시 페이지
-	public String pointWinnerPage(HttpSession session, Model model) {
+	public String pointWinnerPage(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+									@RequestParam(defaultValue = "") String searchKeyword,
+									@RequestParam(defaultValue = "") String searchContent) {
 		// 로그인 유무 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -246,16 +246,21 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
-		List<EventWinnerVO> point_winner = adminService.getPointWinnerList();
-		System.out.println("포인트 당첨자 내역 : " + point_winner);
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointWinnerList", searchKeyword, searchContent);
+		List<EventWinnerVO> point_winner = adminService.getPointWinnerList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		
 		model.addAttribute("point_winner", point_winner);
+		model.addAttribute("pageInfo", pageInfo);
 		
-		return "adminpage/event_manage/point_winner_manage";
+		return "adminpage/point_manage/point_winner_manage";
 	}
 	
 	@GetMapping("CouponBoardManage") // 쿠폰 관리 페이지
-	public String couponBoardManagement(HttpSession session, Model model) {
+	public String couponBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+										@RequestParam(defaultValue = "") String searchKeyword,
+										@RequestParam(defaultValue = "") String searchContent) {
+		System.out.println("컨트롤러 pageNum : " + pageNum);
+		
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
 			model.addAttribute("targetURL", "AdminLogin");
@@ -269,14 +274,19 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
-		List<CouponVO> couponVo = adminService.getCouponList();
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "couponList", searchKeyword, searchContent);
+		System.out.println("pageInfo 값 : " + pageInfo);
+		List<CouponVO> couponVo = adminService.getCouponList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		model.addAttribute("couponVo", couponVo);
+		model.addAttribute("pageInfo", pageInfo);
 		
 		return "adminpage/coupon_manage/coupon_board_manage";
 	}
 	
 	@GetMapping("PointBoardManage") // 포인트 관리 페이지
-	public String pointBoardManagement(HttpSession session, Model model) {
+	public String pointBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+										@RequestParam(defaultValue = "") String searchKeyword,
+										@RequestParam(defaultValue = "") String searchContent) {
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
 			model.addAttribute("targetURL", "AdminLogin");
@@ -290,9 +300,12 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
-		List<PointVO> pointVo = adminService.getPointRecord();
-		System.out.println("포인트 내역 : " + pointVo);
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointList", searchKeyword, searchContent);
+		
+		List<PointVO> pointVo = adminService.getPointRecord(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+		
 		model.addAttribute("pointVo", pointVo);
+		model.addAttribute("pageInfo", pageInfo);
 		
 		return "adminpage/point_manage/point_board_manage";
 	}

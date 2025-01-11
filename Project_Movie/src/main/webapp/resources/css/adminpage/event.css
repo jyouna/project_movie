@@ -35,11 +35,17 @@ h3 {
 #tr01 {
 	background-color: lightskyblue !important;
 	text-align: center;
+    padding: 0 !important; 
+    vertical-align: middle !important; 
+    height: 50px !important; 
 }
 
 .tr01 {
 	background-color: lightskyblue !important;
-	text-align: center;
+    text-align: center !important; 
+    padding: 0 !important; 
+    vertical-align: middle !important; 
+    height: 100px !important; 
 }
 
 #mainTable tr {
@@ -98,7 +104,7 @@ tr:hover {
     background-color: #f9f9f9 !important;
 }
 
-input[type="button"] {
+input[type="button"], input[type="submit"] {
 	padding:5px;
 	border-radius: 20px;
 	border: 3px;
@@ -115,4 +121,29 @@ a {
 #couponSet {
 	text-align: center;
 	margin: 1em;
+}
+
+.selectOption {
+	font: inherit;
+	padding: 0;
+	width: 100%; 
+	height: 100%; 
+	box-sizing: border-box; 
+	background-color: lightskyblue;
+	border: none;
+	text-align: center;
+    vertical-align: middle;
+}
+
+.selectNoOption {
+	font: inherit;
+	padding: 0;
+	width: 100%; 
+	height: 100%; 
+	box-sizing: border-box; 
+	background-color: lightskyblue;
+	border: none;
+	text-align: center;
+    vertical-align: middle;
+    pointer-events: none;
 }

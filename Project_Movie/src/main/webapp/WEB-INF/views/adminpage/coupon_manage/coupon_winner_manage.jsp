@@ -29,25 +29,26 @@
 		<h4>쿠폰 당첨자</h4>
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
-			<select>
-				<option>제목+내용</option>
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text" placeholder="검색어를입력하세요"> <input type="button" value="검색" id="searchBtn">
+			<form action="CouponWinnerManage" method="get">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">
+				<select name="searchKeyword">
+					<option value="winnerId" <c:if test="${param.searchKeyword eq 'winnerId'}">selected</c:if>>아이디</option>
+					<option value="eventSubject" <c:if test="${param.searchKeyword eq 'eventSubject'}">selected</c:if>>이벤트</option>
+				</select>
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
+				<input type="submit" value="검색">
+			</form>
 		</div>	
 	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable" class="mainTable">
 			<tr align="center" id="tr01" class="tr01">
-				<th width="50">코드</th>
-				<th width="250">이벤트제목</th>
-				<th width="150">당첨일시</th>
-				<th width="100">시작일자</th>
-				<th width="100">종료일자</th>
 				<th width="100">당첨자</th>
-				<th width="100">쿠폰종류</th>
-				<th width="100">쿠폰상세</th>
+				<th width="100">쿠폰</th>
+<!-- 				<th width="50">코드</th> -->
+				<th width="250">이벤트</th>
+				<th width="200">진행기간</th>
+				<th width="150">당첨일시</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty coupon_winner}">
@@ -58,28 +59,49 @@
 				<c:otherwise>
 					<c:forEach var="coupon" items="${coupon_winner}" varStatus="status">
 						<tr>
-							<td>${coupon.event_code}</td>	
-							<td>${coupon.event_subject}</td>	
-							<td><fmt:formatDate value="${coupon.prize_datetime}" pattern="yyyy-MM-dd hh:mm"/> </td>	
-							<td>${coupon.event_start_date}</td>	
-							<td>${coupon.event_end_date}</td>	
 							<td>${coupon.winner_id}</td>	
 							<c:choose>
 								<c:when test="${coupon.coupon_type eq false}">
-									<td>금액할인</td>
-									<td>${coupon.discount_amount}원</td>
+									<td>${coupon.discount_amount}원 할인</td>
 								</c:when>
 								<c:otherwise>
-									<td>할인율</td>
-									<td>${coupon.discount_rate}%</td>
+									<td>${coupon.discount_rate}% 할인</td>
 								</c:otherwise>
 							</c:choose>
+<%-- 							<td>${coupon.event_code}</td>	 --%>
+							<td>${coupon.event_subject}</td>	
+							<td>${coupon.event_start_date} ~ ${coupon.event_end_date}</td>	
+							<td><fmt:formatDate value="${coupon.prize_datetime}" pattern="yyyy-MM-dd hh:mm"/> </td>	
 						</tr>	
 					</c:forEach>
 				</c:otherwise>
 			</c:choose> 
 		</table>
 	</div>
+	<br>
+	<br>
+	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
+	<div id="divBottom" class="view">
+<%-- 이전 페이지 이동 --%>	
+		<input type="button" value="이전" 
+			onclick="location.href='CouponWinnerManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
+		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+			<c:choose>
+				<c:when test="${i eq pagInfo.pageNum}">
+<%-- 현재 페이지 표시 --%>	
+					<strong>${i}</strong>
+				</c:when>
+<%-- 페이지 번호 클릭하여 이동 --%>	
+				<c:otherwise>
+					<a href="CouponWinnerManage?pageNum=${i}${searchRecord}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+<%-- 다음 페이지 이동 --%>	
+		<input type="button" value="다음" onclick="location.href='CouponWinnerManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+	</div>	
 	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

@@ -37,8 +37,8 @@
 			#{listLimit}
 	</select>
 	
-		<select id="selectMemberListPaging" resultType="memberAllInfo">
-		SELECT  -- 회원테이블 구성 시 가입일, 탈퇴일 혹은 고유 인덱스 컬럼이 필요하다는 것을 고려하지 못하여 중복되지 않는 값으로 정렬이 불가
+	<select id="selectMemberListPaging" resultType="memberAllInfo">
+		SELECT  							-- 회원테이블 구성 시 가입일, 탈퇴일 혹은 고유 인덱스 컬럼이 필요하다는 것을 고려하지 못하여 중복되지 않는 값으로 정렬이 불가
 			c.member_id AS member_id, 
 			count(*) AS coupon_num, 
 		    m.point AS remain_point,
@@ -61,9 +61,23 @@
 		JOIN 
 			coupon c
 		ON 
-			m.member_id = c.member_id                  
+			m.member_id = c.member_id  
+		<if test="!searchContent.equals('')">
+			WHERE
+			<choose>
+				<when test="searchKeyword.equals('searchId')">
+					m.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchEmail')">
+					m.email LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchPhone')">
+					m.phone LIKE '%${searchContent}%'
+				</when>
+			</choose>	                
+		</if>
 		GROUP BY 
-			c.member_id;
+			c.member_id		
 	</select>
 	
 	<select id="checkAdminId" resultType="String">
@@ -128,14 +142,33 @@
 	</insert>
 	
 	<select id="selectEventBoardList" resultType="eventboard">
-		select *
-		from event_board
-		order by event_code desc
+		SELECT *
+		FROM event_board
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('eventSubject')">
+					event_subject LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventContent')">
+					event_content LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventWriter')">
+					event_writer LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY event_code desc
+		LIMIT
+			#{startRow},
+			#{listLimit}		
 	</select>
 	
 	<update id="updateEventStatusStart">
 		UPDATE event_board
-		SET event_status = 1
+		SET 
+			event_status = 1,
+			event_start_date = now()
 		WHERE event_code = #{event_code}
 	</update>
 	
@@ -237,6 +270,22 @@
 			coupon c
 		ON 
 			e.event_code = c.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					c.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY 
+			event_code desc
+		LIMIT
+			#{startRow},
+			#{listLimit}				
 	</select>
 	
 	<select id="getPointWinnerList" resultType="EventWinner">
@@ -254,24 +303,30 @@
 			point p
 		ON 
 			e.event_code = p.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					p.point_holder LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY 
+			event_code desc
+		LIMIT
+			#{startRow},
+			#{listLimit}
 	</select>
-	
-	<select id="getPointRecord" resultType="point">
-		SELECT *
-		FROM point
-	</select>
-	
-	<select id="getCouponList" resultType="coupon">
-		SELECT *
-		FROM coupon
-	</select>
-	
+
 	<select id="getCouponInfo" resultType="map">
 		SELECT c.member_id, count(*) AS coupon
 		FROM member m 
 		JOIN coupon c
 		ON m.member_id = c.member_id
-		GROUP BY c.member_id;
+		GROUP BY c.member_id
 	</select>
 		
 	<select id="getAdminListCount" resultType="int">
@@ -280,8 +335,164 @@
 	</select>
 	
 	<select id="getMemberListCount" resultType="int">
-		SELECT count(*)
-		FROM member
+		SELECT  		
+			COUNT(*)
+		FROM 
+			member m 
+		JOIN 
+			coupon c
+		ON 
+			m.member_id = c.member_id  
+		<if test="!searchContent.equals('')">
+			WHERE
+			<choose>
+				<when test="searchKeyword.equals('searchId')">
+					m.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchEmail')">
+					m.email LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchPhone')">
+					m.phone LIKE '%${searchContent}%'
+				</when>
+			</choose>	                
+		</if>
+		GROUP BY 
+			c.member_id	
 	</select>
 	
+	<select id="getEventBoardListCount" resultType="int">
+		SELECT count(*)
+		FROM event_board
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('eventSubject')">
+					event_subject LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventContent')">
+					event_content LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventWriter')">
+					event_writer LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+	</select>
+	
+	<select id="getCouponWinnerListCount" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			event_board e 
+		JOIN 
+			coupon c
+		ON 
+			e.event_code = c.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					c.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>		
+	</select>
+	
+	<select id="getPointWinnerListCount" resultType="int">
+		SELECT 
+			COUNT(p.point_holder)
+		FROM 
+			event_board e 
+		JOIN 
+			point p
+		ON 
+			e.event_code = p.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					p.point_holder LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>		
+	</select>
+	
+	<select id="getCouponListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM coupon
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('couponHolder')">
+					member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('couponStatus')">
+					coupon_status LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+	</select>
+	
+	<select id="getCouponList" resultType="coupon">
+		SELECT *
+		FROM coupon
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('couponHolder')">
+					member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('couponStatus')">
+					coupon_status LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY coupon_code		
+		LIMIT
+			#{startRow},
+			#{listLimit}		
+	</select>
+	
+	<select id="getPointListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM point
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('pointHolder')">
+					point_holder LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventCode')">
+					event_code LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+	</select>
+	
+	<select id="getPointRecord" resultType="point">
+		SELECT *
+		FROM point
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('pointHolder')">
+					point_holder LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventCode')">
+					event_code LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY event_code		
+		LIMIT
+			#{startRow},
+			#{listLimit}					
+	</select>
  </mapper>

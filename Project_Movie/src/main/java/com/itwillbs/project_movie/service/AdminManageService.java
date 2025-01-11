@@ -135,16 +135,6 @@ public class AdminManageService {
 			}
 	}
 
-	public List<EventWinnerVO> getEventWinnerList() { // 쿠폰 당첨자 리스트 
-		// TODO Auto-generated method stub
-		return manageMapper.selectAllEventWinner();
-	}
-
-	public List<EventWinnerVO> getPointWinnerList() { // 포인트 당첨자 리스트
-		// TODO Auto-generated method stub
-		return manageMapper.getPointWinnerList();
-	}
-
 	public EventBoardVO checkEventStatus(int event_code) {
 		// TODO Auto-generated method stub
 		return manageMapper.checkEventStatus(event_code);
@@ -165,16 +155,6 @@ public class AdminManageService {
 
 	}
 
-	public List<PointVO> getPointRecord() {
-		// TODO Auto-generated method stub
-		return manageMapper.getPointRecord();
-	}
-
-	public List<CouponVO> getCouponList() {
-		// TODO Auto-generated method stub
-		return manageMapper.getCouponList();
-	}
-
 	public List<Map<String, String>> getCouponInfo() {
 		// TODO Auto-generated method stub
 		return manageMapper.getCouponInfo();
@@ -185,7 +165,7 @@ public class AdminManageService {
 		return manageMapper.getMemberAllInfo();
 	}
 
-	public int getBoardListForPaging(String boardName) {
+	public int getBoardListForPaging(String boardName, String searchKeyword, String searchContent) {
 		
 		System.out.println("서비스까지 호출됨!!");
 		int listCount = 0;
@@ -199,36 +179,81 @@ public class AdminManageService {
 		// 포인트당첨자 -> pointWinnerList
 		// 포인트내역   -> pointList
 		*/
+		
 
+		switch (boardName) {
+		case "meberList" : 
+			listCount = manageMapper.getMemberListCount(searchKeyword, searchContent); break;
+		case "eventBoardList" : 
+			listCount = manageMapper.getEventBoardListCount(searchKeyword, searchContent); break;
+		case "couponWinnerList" : 
+			listCount = manageMapper.getCouponWinnerListCount(searchKeyword, searchContent); break;
+		case "pointWinnerList" : 
+			listCount = manageMapper.getPointWinnerListCount(searchKeyword, searchContent); break;
+		case "couponList" : 
+			listCount = manageMapper.getCouponListCount(searchKeyword, searchContent); break;
+		case "pointList" : 
+			listCount = manageMapper.getPointListCount(searchKeyword, searchContent); break;
+		}
+		
+
+		
+		return listCount;
+	}
+	
+	// 검색기능 없는 게시판용 오버로딩
+	public int getBoardListForPaging(String boardName) {
+		
+		System.out.println("서비스까지 호출됨!!");
+		int listCount = 0;
+		
 		switch (boardName) {
 		case "adminList" :
 			listCount = manageMapper.getAdminListCount(); break;
-		case "meberList" : 
-			listCount = manageMapper.getMemberListCount(); break;
-//		case "eventBoardList" : 
-//			return manageMapper.getMemberListCount(); break;
-//		case "eventWinnerList" : 
-//			return manageMapper.getMemberListCount(); break;
-//		case "couponWinnerList" : 
-//			return manageMapper.getMemberListCount(); break;
-//		case "couponList" : 
-//			return manageMapper.getMemberListCount(); break;
-//		case "pointWinnerList" : 
-//			return manageMapper.getMemberListCount(); break;
-//		case "pointList" : 
-//			return manageMapper.getMemberListCount(); break;
 		}
 		return listCount;
 	}
 
+	// 관리자 계정 리스트 조회
 	public List<AdminRegisVO> queryAdminList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
 		return manageMapper.selectAdminPagingListPaging(startRow, listLimit);
 	}
 
-	public List<MemberVO> queryMemberList(int startRow, int listLimit) {
+	// 회원 리스트 조회
+	public List<MemberAllInfoVO> queryMemberList(int startRow, int listLimit, String searchKeyword, String searchContent) {
 		// TODO Auto-generated method stub
-		return manageMapper.selectMemberListPaging(startRow, listLimit);
+		return manageMapper.selectMemberListPaging(startRow, listLimit, searchKeyword, searchContent);
 	}
 
+	// 이벤트 게시판 리스트 조회
+	public List<EventBoardVO> eventBoardList(int startRow, int listLimit, String searchKeyword, String searchContent) {
+		// TODO Auto-generated method stub
+		return manageMapper.selectEventBoardList(startRow, listLimit, searchKeyword, searchContent);
+	}
+	
+	// 쿠폰 당첨자 리스트 조회
+	public List<EventWinnerVO> getEventWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) { // 쿠폰 당첨자 리스트 
+		// TODO Auto-generated method stub
+		return manageMapper.selectAllEventWinner(startRow, listLimit, searchKeyword, searchContent);
+	}
+
+	// 포인트 당첨자 리스트 조회
+	public List<EventWinnerVO> getPointWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) { // 포인트 당첨자 리스트
+		// TODO Auto-generated method stub
+		return manageMapper.getPointWinnerList(startRow, listLimit, searchKeyword, searchContent);
+	}
+	
+	// 쿠폰 테이블 조회
+	public List<CouponVO> getCouponList(int startRow, int listLimit, String searchKeyword, String searchContent) {
+		// TODO Auto-generated method stub
+		return manageMapper.getCouponList(startRow, listLimit, searchKeyword, searchContent);
+	}
+	
+	// 포인트 테이블 조회
+	public List<PointVO> getPointRecord(int startRow, int listLimit, String searchKeyword, String searchContent) {
+		// TODO Auto-generated method stub
+		return manageMapper.getPointRecord(startRow, listLimit, searchKeyword, searchContent);
+	}
+	
 }

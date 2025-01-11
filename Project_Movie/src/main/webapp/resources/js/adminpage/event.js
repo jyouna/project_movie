@@ -102,7 +102,9 @@ $(function(){
 		if(eventSetCheckbox.length > 0) {
 			let eventStartList = [];
 			eventSetCheckbox.each(function (){
-				eventStartList.push($(this).val());	
+				if($(this).val() != "on") {
+					eventStartList.push($(this).val());
+				}	
 			});
 			if(confirm("쿠폰을 지급하시겠습니까?")) {
 				location.href="GiveCoupon?member_id=" + eventStartList.join(",") + "&event_code=" + event_code;
@@ -119,7 +121,9 @@ $(function(){
 		if(eventSetCheckbox.length > 0) { // jquery 객체배열 형태에 저장된 값이 1개 이상일 경우 해당 값을 eventEndList라는 배열에 차례로 저장한다.
 			let eventEndList = [];
 			eventSetCheckbox.each(function (){
-				eventEndList.push($(this).val());	
+				if($(this).val() != "on") {
+					eventEndList.push($(this).val());
+				}
 			});
 			if(confirm("포인트를 지급하시겠습니까?")) {
 				location.href="GivePoint?member_id=" + eventEndList.join(",") +"&event_code=" + event_code;
@@ -136,7 +140,8 @@ $(function(){
 		
 		if(!eventCode) {
 			alert("대상자를 선택하세요");
-		}
+			return;
+		} 
 		
 		if(confirm("선택한 대상자들에게 쿠폰을 발급하시겠습니까?")) {
 			$.ajax({

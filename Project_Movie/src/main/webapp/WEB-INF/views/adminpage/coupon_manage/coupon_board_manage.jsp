@@ -27,13 +27,16 @@
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
 		</div>	
-		<div id="divTopRight">
-			<select>
-				<option>제목+내용</option>
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text" placeholder="검색어를입력하세요"> <input type="button" value="검색" id="searchBtn">
+		<div id="divTopRight"> <!--  우측 상단 검색란 -->
+			<form action="CouponBoardManage" method="get">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">
+				<select name="searchKeyword" id="selectKeyword">
+					<option value="couponHolder" <c:if test="${param.searchKeyword eq 'couponHolder'}">selected</c:if>>아이디</option>
+					<option value="couponStatus" <c:if test="${param.searchKeyword eq 'couponStatus'}">selected</c:if>>쿠폰상태</option>
+				</select>
+				<input type="text" placeholder="아이디를입력하세요" name="searchContent" value="${param.searchContent}" id="writeContent"> 
+				<input type="submit" value="검색">
+			</form>
 		</div>	
 	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
@@ -79,15 +82,6 @@
 									</c:otherwise>
 								</c:choose>
 							</td>	
-<!-- 							<td> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${coupon.discount_rate eq '0'}"> --%>
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-										
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
-<!-- 							</td>	 -->
 							<td><fmt:formatDate value="${coupon.regis_date}" pattern="yyyy-MM-dd"/> </td>	
 							<td><fmt:formatDate value="${coupon.expired_date}" pattern="yyyy-MM-dd"/> </td>	
 							<td>
@@ -106,10 +100,44 @@
 					</c:forEach>
 				</c:otherwise>
 			</c:choose> 			
-			
 		</table>
 	</div>
-	<br>
+	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
+	<div id="divBottom" class="view">
+<%-- 이전 페이지 이동	 --%>
+		<input type="button" value="이전" 
+			onclick="location.href='CouponBoardManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
+		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+			<c:choose>
+				<c:when test="${i eq pagInfo.pageNum}">
+<%-- 현재 페이지 표시	 --%>
+					<strong>${i}</strong>
+				</c:when>
+<%-- 페이지 번호 클릭하여 이동	 --%>
+				<c:otherwise>
+					<a href="CouponBoardManage?pageNum=${i}${searchRecord}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+<%-- 다음 페이지 이동	 --%>
+		<input type="button" value="다음" onclick="location.href='CouponBoardManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+	</div>	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
+
+<script type="text/javascript">
+$(function(){
+	$("#selectKeyword").on("change", function(){
+		let check = $("#selectKeyword").val();
+		
+		if(check === 'couponStatus'){
+			$("#writeContent").attr("placeholder", "0 미사용 / 1 사용");
+		} else {
+			$("#writeContent").attr("placeholder", "아이디를입력하세요");
+		}
+	})
+})
+</script>
 </body>
 </html>

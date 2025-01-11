@@ -38,7 +38,7 @@
 						<th id="thForDiscount"></th>
 					</tr>
 					<tr>
-						<td><input type="date" name="expired_date" required></td>
+						<td><input type="date" name="expired_date" required id="expired_date"></td>
 						<td> <!--  할인율/금액할인 선택 -->
 							<select id="coupon_type" name="coupon_type" required>
 								<option>선택</option>
@@ -112,6 +112,15 @@
 	</form>
 	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
+<script type="text/javascript">
+$(function(){
+	let time = new Date()
+	time.setHours(time.getHours() + 9); // UTC+9 적용
+	let today = time.toISOString().split('T')[0];
 
+	console.log(today);
+	$("#expired_date").attr("min", today);
+})
+</script>
 </body>
 </html>
