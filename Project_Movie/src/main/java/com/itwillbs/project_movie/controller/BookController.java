@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.vo.MovieVO;
@@ -24,42 +28,41 @@ public class BookController {
 		return "book_tickets/movie_schedule_info";
 	}
 	
+	// 예매하기 페이지 매핑
 	@GetMapping("BookTickets")
-	public String bookTickets(Model model, String start_time) {
+	public String bookTickets(Model model) {
 		
-		// 영화 목록 조회
+		// 상영중인 영화 목록 조회
 		List<MovieVO> movieList = service.getMovieList();
 		model.addAttribute("movieList", movieList);
-//		System.out.println("movieList : " + movieList);
-		
+
+		return "book_tickets/book_tickets";
+	}
+	
+	@ResponseBody
+	@PostMapping("BookTickets")
+	public List<Map<String, Object>> bookTicketsList(Model model, @RequestParam String start_time) {
 		
 		// 스케줄에 등록된 영화 정보 가져오는 List
-		List<Map<String, Object>> schWithMovie = service.getSchWithMovie();
+		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(start_time);
 		model.addAttribute("schWithMovie", schWithMovie);
-		System.out.println("schWithMovie : " + schWithMovie);
+//		System.out.println("schWithMovie : " + schWithMovie);
 		
 		// 상영 시작시간 형식 변환
 		for(Map<String, Object> map : schWithMovie) {
 			
 			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
-
+			
 			String start_time1 = timeFormatter.format(map.get("start_time"));
 			String end_time = timeFormatter.format(map.get("end_time"));
 			
 			map.put("start_time", start_time1);
 			map.put("end_time", end_time);
-			
 		}
+	
 		
-		
-		
-
-		
-		return "book_tickets/book_tickets";
+		return schWithMovie;
 	}
-	
-	
-	
 	
 	
 	@GetMapping("BookSeat")

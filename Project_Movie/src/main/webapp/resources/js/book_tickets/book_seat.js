@@ -9,12 +9,13 @@ $(function () {
 	
 	// + 버튼 클릭 시 인원수 증가
 	$(".plus_btn").on("click", function() {
+		
 		// 관람객 타입별 인원수 합
 		let totalCount = 0;
 		$(".count").each(function () {
 			totalCount += parseInt($(this).val());
 		});
-
+		
 		// 8명 이상 선택 불가
 		if(totalCount >= 8) {
 			alert("인원수는 최대 8명까지 가능합니다");

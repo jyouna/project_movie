@@ -132,10 +132,11 @@
 		</div>
 		
 		<script>
-			 $(".modal_close").click(function() {
+			$(".modal_close").click(function() {
 				$(".modal").css("display", "none");
 				$(".modal_content").css("display", "none");
 			});
+			let contextPath = "${pageContext.request.contextPath}";
 		</script>
 	</article>
 

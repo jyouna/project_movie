@@ -7,7 +7,8 @@
 	<select id="selectMovieList" resultType="movie">
 		SELECT *
 		FROM movie
-		WHERE movie_status = '상영예정작'
+		WHERE movie_status = '현재상영작'
+		ORDER BY movie_type
 	</select>
 	
 	
@@ -16,9 +17,12 @@
 		FROM schedule s 
 		JOIN movie m
 		ON s.movie_code = m.movie_code
-<!-- 		WHERE SUBSTR(start_time, 1, 10) = #{start_time} -->
+		WHERE DATE_FORMAT(start_time, '%Y년 %m월 %d') = #{start_time} 
+<!-- 		<if test="movie_name != null and movie_name != ''"> -->
+<!-- 		AND s.movie_name = #{movie_name} -->
+<!-- 		</if> -->
+		ORDER BY start_time
 	</select>
-	
 	
 	
 	

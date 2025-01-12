@@ -20,8 +20,8 @@ public class BookService {
 		return mapper.selectMovieList();
 	}
 
-	public List<Map<String, Object>> getSchWithMovie() {
-		return mapper.selectSchWithMovie();
+	public List<Map<String, Object>> getSchWithMovie(String start_time) {
+		return mapper.selectSchWithMovie(start_time);
 	}
 
 

@@ -31,9 +31,6 @@
 
 	<article class="box post">
 		<h2>예매하기</h2>
-	
-	
-	
 		<!-- 	모달창 -->
 		<div class="modal">
 			<div class="modal_content">
@@ -50,8 +47,7 @@
 			<!-- 		셀렉트박스 -->
 						<div class="mv_sel">
 							<select>
-								<option selected>예매율순</option>
-								<option>별점순</option>
+								<option selected>별점순</option>
 								<option>가나다순</option>
 							</select>
 						</div>
@@ -124,9 +120,9 @@
 			
 			                    // 날짜 항목 출력
 			                    // 현재 날짜 셀렉트X
-	 		                    // out.println("<div class='date_item' data-date='" + yearMonth + " " + date + "'>");
+	 		                    out.println("<div class='date_item' data-date='" + yearMonth + " " + date + "'>");
 			                    // 현재 날짜 셀렉트O
-			                    out.println("<div class='date_item " + selectedClass + "' data-date='" + yearMonth + " " + date + "'>");
+// 			                    out.println("<div class='date_item " + selectedClass + "' data-date='" + yearMonth + " " + date + "'>");
 			                    out.println("  <a href='#'>");
 			                    out.println("    <span>" + day + "</span>");
 			                    out.println("    <strong>" + date + "</strong>");
@@ -137,6 +133,7 @@
 			                    calendar.add(Calendar.DATE, 1);
 		                	}
 		           		%>
+		           		
 							<!-- 날짜 리스트 렌더링 -->
 				            <c:set var="lastYearMonth" value="" />
 				            <c:forEach var="date" items="${dateList}">
@@ -161,10 +158,11 @@
 							<div class="header_time">
 								<h4>시간</h4>
 							</div>
+							
 							<div class="movie_schedule_info">
-<%-- 								<c:forEach var="i" begin="1" end="10"> --%>
+								<h4>날짜를 선택해주세요</h4>
 								<c:forEach var="movie" items="${movieList}">
-									<section class="sec01">
+									<section class="sec01" id="${movie.movie_name}">
 										<!-- 영화 제목과 이용가 표시 -->
 									    <div class="movie_container">
 									        <div class="mv_age">
@@ -187,71 +185,14 @@
 									    </div>
 									
 									    <!-- 시간/좌석 버튼들 -->
-									    <div class="time_seat_container">
-										    <c:forEach var="sch" items="${schWithMovie}">
-										    	<c:if test="${movie.movie_name eq sch.movie_name}">
-											        <a class="time_seat_btn">
-											        	<span class="mv_time">${sch.start_time}</span>
-											        	<span class="details">
-												        	<span class="seat">78/${sch.avail_seat}</span>
-												        	<span class="hall">${sch.theater_code eq 'T1' ? '1관' : (sch.theater_code eq 'T2' ? '2관' : '3관')}</span>
-											        	</span>
-											        </a>
-										    	</c:if>
-										    </c:forEach>
+									    <div class="time_seat_container" id="${movie.movie_code}">
+									    	<!-- ajax로 버튼 추가 -->
 									    </div>
 									</section>
 								</c:forEach>
 							</div>
 						</div>
 					</div>
-
-				<span class="space_line"></span>
-				
-				<div class="mv_info_container">
-					<div class="top_info">
-						<div class="book_info">예매정보</div>
-						<div class="pay_info">결제</div>	
-					</div>
-					<div class="tnb">
-						<div class="bottom_btn">
-							<button class="back_btn" onclick="history.back()">이전</button>
-						</div>
-						<div class="poster">
-							<div class="mv_poster">영화포스터</div>
-							<div class="mv_title">해피엔드</div>
-						</div>
-						<!-- 영화관 정보 섹션 -->
-						<div class="mv_info">
-					        <div class="row">
-					            <div class="header">일시</div>
-					            <div class="data">2024.12.30(월) 23:00</div>
-					        </div>
-					        <div class="row">
-					            <div class="header">상영관</div>
-					            <div class="data">1관</div>
-					        </div>
-					        <div class="row">
-					            <div class="header">인원</div>
-					            <div class="data">일반 1명, 청소년 1명</div>
-					        </div>
-							 <div class="row">
-					            <div class="header">좌석</div>
-					            <div class="data">D5, D6, D7</div>
-					        </div>
-						</div>
-						
-						<!-- 결제 정보 섹션 -->
-					   	<div class="ticket_info">
-						</div>
-					
-						<div class="bottom_btn">
-							<button class="pay_btn" onclick="location.href='BookSeat'">좌석선택</button>
-						</div>
-					</div>
-				</div>
-					
-				
 			</div>
 		</div>
 	
@@ -267,16 +208,6 @@
 	            
 	        });
 	        
-	        // 영화 목록 클릭 시 선택 효과
-	        $(document).ready(function () {
-	            $(".mv_list").on("click", function () {
-	                // 다른 항목의 선택 상태 초기화
-	                $(".mv_list").removeClass("selected");
-	                // 클릭된 항목에 selected 클래스 추가
-	                $(this).addClass("selected");
-	            });
-	        });
-	        
 	        // 예매하기 버튼 클릭 시 모달창 생성 
 			$("[href='BookTickets']").click(function(e) {
 				e.preventDefault();
@@ -289,6 +220,8 @@
 				$(".modal").css("display", "none");
 				$(".modal_content").css("display", "none");
 			});
+	        
+	        let contextPath = "${pageContext.request.contextPath}";
 	        
 		</script>
 	</article>
