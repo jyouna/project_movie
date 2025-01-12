@@ -28,83 +28,13 @@
 				</div>
 				<div id="select_search">
 					<select>
-						<option>추천순</option>
+						<option>제목순</option>
+						<option>별점순</option>
+						<option>예매율순</option>
 					</select>
 				</div>
 			</div>
-			<div id="season_movie_list">
-				<div>
-					<h2>Season Movie</h2>
-				</div>
-				<div>
-					<c:forEach var="i" begin="1" end="3">
-						<div class="movie">
-							<label>바람</label><br>
-							<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-							<input type="button" value="예매하기">
-							<div class="movie_info">
-					            <ul>
-			            			<li>영화 제목: 모아나 2</li>
-						            <li>감독: 데이빗 테드 주니어</li>
-						            <li>출연: 아웃이 크래랙존, 드웨인 존슨</li>
-						            <li>등급: 전체 관람가</li>
-						            <li>장르: 애니메이션</li>
-						            <li>개봉일: 2024.1.27</li>
-						            <li> 러닝 타임: 100분</li>
-						            <li>발권: 10,000원</li>
-					            </ul>
-					        </div>
-						</div>
-					</c:forEach>
-				</div>
-			</div>
-			<div id="movie_list">
-				<div>
-					<c:forEach var="i" begin="1" end="3">
-						<div class="movie">
-							<label>범죄와의전쟁</label><br>
-							<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster2.jpg"></a><br>
-							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-							<input type="button" value="예매하기">
-							<div class="movie_info">
-					            <ul>
-			            			<li>영화 제목: 모아나 2</li>
-						            <li>감독: 데이빗 테드 주니어</li>
-						            <li>출연: 아웃이 크래랙존, 드웨인 존슨</li>
-						            <li>등급: 전체 관람가</li>
-						            <li>장르: 애니메이션</li>
-						            <li>개봉일: 2024.1.27</li>
-						            <li> 러닝 타임: 100분</li>
-						            <li>발권: 10,000원</li>
-					            </ul>
-					        </div>
-						</div>
-					</c:forEach>
-				</div>
-				<div>
-					<c:forEach var="i" begin="1" end="3">
-						<div class="movie">
-							<label>신세계</label><br>
-							<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster3.webp"></a><br>
-							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-							<input type="button" value="예매하기">
-							<div class="movie_info">
-					            <ul>
-			            			<li>영화 제목: 모아나 2</li>
-						            <li>감독: 데이빗 테드 주니어</li>
-						            <li>출연: 아웃이 크래랙존, 드웨인 존슨</li>
-						            <li>등급: 전체 관람가</li>
-						            <li>장르: 애니메이션</li>
-						            <li>개봉일: 2024.1.27</li>
-						            <li> 러닝 타임: 100분</li>
-						            <li>발권: 10,000원</li>
-					            </ul>
-					        </div>
-						</div>
-					</c:forEach>
-				</div>
-			</div>
+			<jsp:include page="/WEB-INF/views/inc/page/movie_info/currently_upcoming_movieList.jsp"></jsp:include>
 		</div>
 	</article>
 

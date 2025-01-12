@@ -1,16 +1,9 @@
 package com.itwillbs.project_movie.controller;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.PageInfo;
-import com.itwillbs.project_movie.vo.ScheduleVO;
 
 @Controller
 public class MovieController {
@@ -34,20 +26,43 @@ public class MovieController {
 	
 	// 영화안내 시즌무비 페이지 맵핑
 	@GetMapping("SeasonMovieInfo")
-	public String seasonMovieInfo() {
+	public String seasonMovieInfo(Model model) {
+		// 시즌 현재상영작 리스트 조회
+		List<MovieVO> movieList = movieService.getSeasonCurrentlyMovieList();
+		model.addAttribute("movieList", movieList);
 		return "movie_info/season_movie_info";
 	}
 	
 	// 영화안내 현재상영작 페이지 맵핑
 	@GetMapping("CurrentlyMovieInfo")
-	public String currentlyMovieInfo() {
+	public String currentlyMovieInfo(Model model) {
+		// 현재상영작 리스트 조회
+		List<MovieVO> currentlyMovieList = movieService.getCurrentlyMovieList();
+		int seasonMovieCount = movieService.getCountSeasonCurrentlyMovie();
+		int generalMovieCount = movieService.getCountGeneralCurrentlyMovie();
+		
+		model.addAttribute("movieList", currentlyMovieList);
+		model.addAttribute("seasonMovieCount", seasonMovieCount);
+		model.addAttribute("generalMovieCount", generalMovieCount);
 		return "movie_info/currently_movie_info";
 	}
 	
 	// 영화안내 상영예정작 페이지 맵핑
 	@GetMapping("UpcomingMovieInfo")
-	public String upcomingMovieInfo() {
-		return "movie_info/upcoming_movie_info2";
+	public String upcomingMovieInfo(Model model) {
+		// 전체 상영 예정작 수
+		int upcomingTotalMovieCount = movieService.getCountTotalUpcomingMovie();
+		// 일반 상영예정작 수
+		int generalMovieCount = movieService.getCountGeneralUpcomingMovie();
+		// 시즌 상영예정작 수
+		int seasonMovieCount = movieService.getCountSeasonUpcomingMovie();
+		// 상영예정작 리스트 조회
+		List<MovieVO> upcomingMovieList = movieService.getUpcomingMovieList();
+		model.addAttribute("movieList", upcomingMovieList);
+		model.addAttribute("seasonMovieCount", seasonMovieCount);
+		model.addAttribute("generalMovieCount", generalMovieCount);
+		model.addAttribute("totalCount", upcomingTotalMovieCount);
+		return "movie_info/upcoming_movie_info";
 	}
 	
 	// 영화안내 지난상영작 페이지 맵핑
@@ -58,7 +73,10 @@ public class MovieController {
 	
 	// 영화상세안내 페이지 맵핑
 	@GetMapping("MovieInfoDetail")
-	public String movieInfoDetail() {
+	public String movieInfoDetail(Model model, String movie_code) {
+		// 영화코드로 영화정보 조회
+		MovieVO movie = movieService.searchMovieInfo(movie_code);
+		model.addAttribute("movie", movie);
 		return "movie_info/movie_info_detail";
 	}
 	
@@ -67,31 +85,15 @@ public class MovieController {
 	public String adminMovieSetList(@RequestParam(defaultValue = "1") int pageNum, Model model,
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
-		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
-		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
-		int listCount = movieService.getMovieListCount(howSearch, searchKeyword); //총 영화 목록수 조회
-		int pageListLimit = 5; // 한페이지당 페이지번호 수
-		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
-		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
-		int endPage = startPage + pageListLimit - 1; // 각 페이지의 마지막 페이지번호
+		// 지난상영작 리스트 페이징처리와 구분하기위한 변수선언
+		String howSearch2 = "";
+		String searchKeyword2 = "";
 		
-		if(endPage > maxPage) {
-			endPage = maxPage;
-		}
-		
-		// url 파라미터 조작 방지
-		if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
-			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
-			model.addAttribute("targetURL", "AdminMovieSetList?pageNum=1");
+		//페이징 처리 메서드
+		if(!pagingMethod(model, pageNum, 9, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
 			return "result/process";
 		}
 		
-		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
-		model.addAttribute("pageInfo", pageInfo);
-		
-		// 조건에맞는 영화 리스트 조회
-		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit, howSearch, searchKeyword);
-		model.addAttribute("movieList", movieList);
 		return "adminpage/movie_set/admin_movie_list";
 	}
 	
@@ -122,6 +124,10 @@ public class MovieController {
 		MovieVO dbMovieVO = movieService.searchMovieInfo(movieVO.getMovie_code());
 		if(dbMovieVO == null) {
 			int resultCount = 0;
+			
+			// 트레일러주소 포맷
+			String trailer_url = movieVO.getMovie_trailer().replace("watch?v=", "embed/");
+			movieVO.setMovie_trailer(trailer_url);
 			
 			try {
 				resultCount = movieService.registMovie(movieVO);
@@ -155,13 +161,13 @@ public class MovieController {
 		
 		// 상영예정작은 9개이상 등록 불가(시즌 별 상영작 9개 제한)
 		// 등록가능 여부 판별을 위해 상영예정작 수 조회
-		int UpcomingTotalMovieCount = movieService.getCountTotalUpcomingMovie();
+		int upcomingTotalMovieCount = movieService.getCountTotalUpcomingMovie();
 		
-		if(UpcomingTotalMovieCount >= 9) {
+		if(upcomingTotalMovieCount >= 9) {
 			sendMsgMap.put("msg", "더이상 상영예정작을 등록할 수 없습니다(현재 상영예정작 : 9개)");
 			return sendMsgMap;
 		} else {
-			// 일반영화인지 시즌영화인지 비교후 상영예정작 등록 간으여부 판별(일반-6, 시즌-3)
+			// 일반영화인지 시즌영화인지 비교후 상영예정작 등록 가능여부 판별(일반-6, 시즌-3)
 			if(map.get("movie_type").equals("일반")) {
 				int generalUpcomingMovieCount = movieService.getCountGeneralUpcomingMovie();
 				if(generalUpcomingMovieCount >=6) {
@@ -213,6 +219,7 @@ public class MovieController {
 		}
 	}
 	
+	
 	// 관리자 영화관리에서 영화삭제
 	@ResponseBody
 	@PostMapping("DeleteMovieFromDB")
@@ -245,7 +252,11 @@ public class MovieController {
 	@GetMapping("AdminMovieSetUpcoming")
 	public String adminMovieSetUpcoming(Model model) {
 		List<MovieVO> upcomingMovieList = movieService.getUpcomingMovieList();
+		int seasonMovieCount = movieService.getCountSeasonUpcomingMovie();
+		int generalMovieCount = movieService.getCountGeneralUpcomingMovie();
 		model.addAttribute("movieList", upcomingMovieList);
+		model.addAttribute("seasonMovieCount", seasonMovieCount);
+		model.addAttribute("generalMovieCount", generalMovieCount);
 		return "adminpage/movie_set/upcoming_movie_set";
 	}
 	
@@ -265,16 +276,106 @@ public class MovieController {
 		}
 	}
 	
+	// 관리자 영화관리에서 영화상태 현재상영작으로 변경
+	// 업데이트 후 alert창에 표시할 문구 리턴
+	@ResponseBody
+	@PostMapping("UpdateMovieStatusToCurrently")
+	public Map<String, String> updateMovieStatusToCurrently(@RequestParam Map<String, String> map) {
+		// 결과 전달을 위한 객체
+		Map<String, String> sendMsgMap = new HashMap<String, String>();
+		
+		// 현재상영작은 9개이상 등록불가
+		// 등록가능 여부 판별을 위해 현재상영작 수 조회
+		int pickMovieCount = movieService.getCountCurrentlyMovie();
+		if(pickMovieCount >= 9) {
+			sendMsgMap.put("msg", "더이상 현재상영작 등록할 수 없습니다(현재상영작 : 9개)");
+			return sendMsgMap;
+		} else {
+			int updateResult = movieService.setMovieStatus(map);
+			// 업데이트 결과 판별 후 메세지 전달
+			if(updateResult>0) {
+				sendMsgMap.put("msg", "현재상영작 등록완료");
+			} else {
+				sendMsgMap.put("msg", "현재상영작 등록실패");
+			}
+			return sendMsgMap;
+		}
+	}
+	
+	// 관리자 영화관리에서 영화상태 지난상영작으로 변경
+	// 업데이트 후 alert창에 표시할 문구 리턴
+	@ResponseBody
+	@PostMapping("UpdateMovieStatusToPast")
+	public Map<String, String> updateMovieStatusToPast(@RequestParam Map<String, String> map) {
+		// 결과 전달을 위한 객체
+		Map<String, String> sendMsgMap = new HashMap<String, String>();
+		int updateResult = movieService.setMovieStatus(map);
+		
+		// 업데이트 결과 판별 후 메세지 전달
+		if(updateResult>0) {
+			sendMsgMap.put("msg", "지난상영작 등록완료");
+		} else {
+			sendMsgMap.put("msg", "지난상영작 등록실패");
+		}
+		return sendMsgMap;
+	}
+	
 	//관리자페이지 영화관리 현재상영작 페이지 맵핑
 	@GetMapping("AdminMovieSetCurrently")
-	public String aminMovieSetCurrently() {
+	public String aminMovieSetCurrently(Model model) {
+		List<MovieVO> currentlyMovieList = movieService.getCurrentlyMovieList();
+		int seasonMovieCount = movieService.getCountSeasonCurrentlyMovie();
+		int generalMovieCount = movieService.getCountGeneralCurrentlyMovie();
+		model.addAttribute("movieList", currentlyMovieList);
+		model.addAttribute("seasonMovieCount", seasonMovieCount);
+		model.addAttribute("generalMovieCount", generalMovieCount);
 		return "adminpage/movie_set/currently_movie_set";
 	}
 	
 	//관리자페이지 영화관리 지난상영작 페이지 맵핑
 	@GetMapping("AdminMovieSetPast")
-	public String AdminMovieSetPast() {
+	public String AdminMovieSetPast(@RequestParam(defaultValue = "1") int pageNum, Model model,
+			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
+		
+		// 기본 영화 리스트 페이징처리와 구분을 위한 변수선언
+		String howSearch2 = "movie_status";
+		String searchKeyword2 = "지난상영작";
+		
+		// 페이징처리 메서드 
+		if(!pagingMethod(model, pageNum, 9, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+			return "result/process";
+		}
+		
 		return "adminpage/movie_set/past_movie_set";
+	}
+	
+	private Boolean pagingMethod(Model model, int pageNum, int listLimit, String howSearch, String searchKeyword,
+			String howSearch2, String searchKeyword2) {
+		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
+		int listCount = movieService.getMovieListCount(howSearch, searchKeyword, howSearch2, searchKeyword2); //총영화 목록(검색 영화 목록)수 조회
+		int pageListLimit = 5; // 한페이지당 페이지번호 수
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
+		int endPage = startPage + pageListLimit - 1; // 각 페이지의 마지막 페이지번호
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		// url 파라미터 조작 방지
+		if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
+			model.addAttribute("targetURL", "AdminMovieSetList?pageNum=1");
+			return false;
+		}
+		
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		// 조건에맞는 영화 리스트 조회
+		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+		model.addAttribute("movieList", movieList);
+		return true;
 	}
 	
 }

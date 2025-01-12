@@ -31,6 +31,15 @@ public class ScheduleService {
 		conditionMap.put("selectCondition2", theater_code);
 		return scheduleMapper.selectSchedule(conditionMap);
 	}
+	
+	// 상영예정작 영화를 현재상영작으로 등록시 해당영화의 스케줄 등록여부조회
+	// select문의 where절 조건 전달
+	public List<ScheduleVO> getScheduleRegisted(String movie_code) {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("columnName", "movie_code");
+		conditionMap.put("selectCondition", movie_code);
+		return scheduleMapper.selectSchedule(conditionMap);
+	}
 
 
 }

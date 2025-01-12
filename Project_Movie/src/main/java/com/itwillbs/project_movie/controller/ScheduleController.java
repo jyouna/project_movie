@@ -75,4 +75,18 @@ public class ScheduleController {
 		}
 		return scheduleList;
 	}
+	
+	// 상영예정작 페이지에서 현재상영작으로 등록하기 위해 등록 스케줄 존재여부 판별
+	@ResponseBody
+	@GetMapping("IsExistSchedule") 
+	public Boolean isExistSchedule(String movie_code) {
+		Boolean isExit = false;
+		
+		// 해당영화의 스케줄 조회, 조회결과 존재할경우 true 리턴;
+		List<ScheduleVO> ScheduleList = scheduleService.getScheduleRegisted(movie_code);
+		if(ScheduleList.size() != 0) {
+			isExit = true;
+		}
+		return isExit;
+	}
 }

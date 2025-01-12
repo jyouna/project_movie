@@ -20,12 +20,10 @@
 	margin-bottom: 5px;
 }
 
-
-
 #select_search select{
 	display: inline-block;
 	text-align: center;
-	padding: 0 20px;
+	width: 150px;
 }
 
 #season_movie_list {
@@ -52,6 +50,7 @@
 
 .movie img {
 	width: 300px;
+	height: 450px;
 }
 
 .movie input[type=button] {
@@ -75,16 +74,26 @@
     top: 45px;
     left: 15px;
     width: 90%;
-    height: 79%;
+    height: 82%;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     box-sizing: border-box;
     text-align: left;
-    padding: 40px 20px;
+    padding: 20px 20px;
+    font-size: 17px;
+}
+
+.movie {
+	margin-bottom: 15px;
 }
 
 .movie:hover .movie_info {
     display: block;
+}
+
+.movie label {
+	font-size: 20px;
+	font-weight: bold;
 }
 
 

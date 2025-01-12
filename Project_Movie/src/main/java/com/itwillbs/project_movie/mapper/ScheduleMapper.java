@@ -13,7 +13,7 @@ public interface ScheduleMapper {
 	// schedule 테이블에 스케줄 insert
 	int insertSchedule(ScheduleVO scheduleVO);
 	
-	// WHERE절 컬럼명에 따라 영화조회 가능한 메서드
+	// WHERE절 컬럼명에 따라 스케줄조회 가능한 메서드
 	List<ScheduleVO> selectSchedule(Map<String, String> conditionMap);
-
+	
 }

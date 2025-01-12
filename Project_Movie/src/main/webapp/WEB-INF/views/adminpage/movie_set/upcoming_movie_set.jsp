@@ -12,10 +12,10 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/adminpage/movie_set/upcoming_movie_set.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/movie_set/upcoming_currently_movie_set.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_set/upcoming_movie_set.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_set/upcoming_currently_movie_set.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -24,9 +24,9 @@
 		<div id="body_top">
 			<div id="title">상영예정작 관리</div>
 			<div id="btnGroup01">
-				<input type="button" id="set_date_btn" value="상영기간설정">
+				<input type="button" id="set_date_btn" value="상영기간설정/변경">
 				<input type="button" id="to_schedule_regist" value="상영스케줄설정">
-				<input type="button" value="현재상영작으로등록">
+				<input type="button" id="to_currently_movie" value="현재상영작으로등록">
 				<input type="button" id="remove_from_upcoming_btn" value="상영예정작에서 삭제">
 			</div>
 			<div id="btnGroup02">
@@ -37,63 +37,78 @@
 			<div id="season_movie_list">
 				<table>
 					<tr>
-						<th><input type="radio" disabled="disabled"></th>
-						<th>영화코드</th>
-						<th>영화제목</th>
-						<th>상영예정기간</th>
-						<th>상영시간</th>
-						<th>관람연령</th>
-						<th>영화분류</th>
+						<th style="width:30px"><input type="radio" disabled="disabled"></th>
+						<th style="width:80px">영화코드</th>
+						<th style="width:250px">영화제목</th>
+						<th style="width:242px">상영예정기간</th>
+						<th style="width:100px">상영시간</th>
+						<th style="width:180px">관람연령</th>
+						<th style="width:80px">영화분류</th>
 					</tr>
-					<c:forEach var="i" begin="0" end="2">
-						<tr>
-							<th><input type="radio" name="movie_radio"></th>
-							<td>${movieList[i].movie_code}</td>
-							<td>${movieList[i].movie_name}</td>
-							<c:choose>
-								<c:when test="${empty movieList[i].start_screening_date or empty movieList[i].end_screening_date}">
-									<td>상영예정기간을 입력해주세요.</td>
-								</c:when>
-								<c:otherwise>
-									<td>${movieList[i].start_screening_date} ~ ${movieList[i].end_screening_date}</td>
-								</c:otherwise>
-							</c:choose>
-							<td>${movieList[i].running_time}</td>
-							<td>${movieList[i].age_limit}</td>
-							<td>${movieList[i].movie_type}</td>
-						<tr>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${seasonMovieCount != 0}">
+							<c:forEach var="i" begin="0" end="${seasonMovieCount - 1}">
+								<tr>
+									<th><input type="radio" name="movie_radio"></th>
+									<td>${movieList[i].movie_code}</td>
+									<td>${movieList[i].movie_name}</td>
+									<c:choose>
+										<c:when test="${empty movieList[i].start_screening_date or empty movieList[i].end_screening_date}">
+											<td>상영예정기간을 입력해주세요.</td>
+										</c:when>
+										<c:otherwise>
+											<td>${movieList[i].start_screening_date} ~ ${movieList[i].end_screening_date}</td>
+										</c:otherwise>
+									</c:choose>
+									<td>${movieList[i].running_time}</td>
+									<td>${movieList[i].age_limit}</td>
+									<td>${movieList[i].movie_type}</td>
+								<tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr><th colspan="7">시즌 상영예정작이 존재하지 않습니다</th></tr>
+						</c:otherwise>
+					</c:choose>
 				</table>
 			</div>
 			<div id="movie_list">
 				<table>
 					<tr>
-						<th><input type="radio" disabled="disabled"></th>
-						<th>영화코드</th>
-						<th>영화제목</th>
-						<th>상영예정기간</th>
-						<th>상영시간</th>
-						<th>관람연령</th>
-						<th>영화분류</th>
+						<th style="width:30px"><input type="radio" disabled="disabled"></th>
+						<th style="width:80px">영화코드</th>
+						<th style="width:250px">영화제목</th>
+						<th style="width:242px">상영예정기간</th>
+						<th style="width:100px">상영시간</th>
+						<th style="width:180px">관람연령</th>
+						<th style="width:80px">영화분류</th>
 					</tr>
-					<c:forEach var="i" begin="3" end="8">
-						<tr>
-							<th><input type="radio" name="movie_radio"></th>
-							<td>${movieList[i].movie_code}</td>
-							<td>${movieList[i].movie_name}</td>
-							<c:choose>
-								<c:when test="${empty movieList[i].start_screening_date or empty movieList[i].end_screening_date}">
-									<td></td>
-								</c:when>
-								<c:otherwise>
-									<td>${movieList[i].start_screening_date} ~ ${movieList[i].end_screening_date}</td>
-								</c:otherwise>
-							</c:choose>
-							<td>${movieList[i].running_time}</td>
-							<td>${movieList[i].age_limit}</td>
-							<td>${movieList[i].movie_type}</td>
-						<tr>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${generalMovieCount != 0}">
+							<c:forEach var="i" begin="${seasonMovieCount}" end="${seasonMovieCount + generalMovieCount - 1}">
+								<tr>
+									<th><input type="radio" name="movie_radio"></th>
+									<td>${movieList[i].movie_code}</td>
+									<td>${movieList[i].movie_name}</td>
+									<c:choose>
+										<c:when test="${(empty movieList[i].start_screening_date or empty movieList[i].end_screening_date)
+											and not empty movieList[i]}">
+											<td>상영예정기간을 입력해주세요.</td>
+										</c:when>
+										<c:otherwise>
+											<td>${movieList[i].start_screening_date} ~ ${movieList[i].end_screening_date}</td>
+										</c:otherwise> 
+									</c:choose>
+									<td>${movieList[i].running_time}</td>
+									<td>${movieList[i].age_limit}</td>
+									<td>${movieList[i].movie_type}</td>
+								<tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr><th colspan="7">일반 상영예정작이 존재하지 않습니다</th></tr>
+						</c:otherwise>
+					</c:choose>
 				</table>
 			</div>
 		</div>
@@ -111,42 +126,9 @@
 			    </div>
 			</div>
 		</div>
-		<div id="movie_info_modal" class="modal">
-			<div class="modal_content2">
-			    <h2>영화 정보</h2>
-			    <hr>
-		        <label>영화코드</label><input type="text" name="movie_code" readonly><br>
-		        <label>영화명</label><input type="text" name="movie_name" readonly><br>
-		        <label>장르</label><input type="text" name="movie_genre" readonly><br>
-		        <label>감독</label><input type="text" name="movie_director" readonly><br>
-		        <label>출연</label><input type="text" name="movie_actor" readonly><br>
-		        <label>개봉일</label><input type="date" name="release_date" readonly><br>
-		        <label>러닝타임</label><input type="text" name="running_time" readonly><br>
-		        <label>관람연령</label><input type="text" name="age_limit" readonly><br>
-		        <label>별점</label><input type="text" name="movie_rating" readonly><br>
-		       	<label>줄거리</label><br>
-		        <textarea cols="40" rows="5" name="movie_synopsis"></textarea><br>
-		        <label class="url_label">이미지1</label><input type="text" class="url" name="movie_img1" readonly>
-		        <label class="url_label">이미지2</label><input type="text" class="url" name="movie_img2" readonly><br>
-		        <label class="url_label">이미지3</label><input type="text" class="url" name="movie_img3" readonly>
-		        <label class="url_label">이미지4</label><input type="text" class="url" name="movie_img4" readonly><br>
-		        <label class="url_label">이미지5</label><input type="text" class="url" name="movie_img5" readonly>
-		        <label class="url_label">예고편</label><input type="text" class="url" name="movie_trailer" readonly><br>
-		        <label>영화상태</label>
-		        <select name="movie_status">
-		            <option value="대기" disabled>대기</option>
-		            <option value="투표영화" disabled>투표영화</option>
-		            <option value="상영예정작">상영예정작</option>
-		            <option value="현재상영작" disabled>현재상영작</option>
-		            <option value="과거상영작" disabled>과거상영작</option>
-		        </select><br>
-		        <div class="btnGroup">
-		        	<button type="button" class="close_modal">닫기</button>
-		        </div>
-			</div>
-		</div>
 	</section>
 	
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/movie_set/movie_info_modal.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

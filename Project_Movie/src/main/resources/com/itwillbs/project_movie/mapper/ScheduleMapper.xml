@@ -34,11 +34,12 @@
 				WHERE ${howSearch} LIKE CONCAT('%', #{searchKeyword}, '%') 
 		</if>
 		<if test="columnName != null and selectCondition != null">
-			WHERE ${colnumnName} = #{selectCondition}
+			WHERE ${columnName} = #{selectCondition}
 		</if>
 		<if test="columnName2 != null and selectCondition2 != null">
 			AND ${columnName2} = #{selectCondition2}
 		</if>
 	</select>
+	
 	
 </mapper>

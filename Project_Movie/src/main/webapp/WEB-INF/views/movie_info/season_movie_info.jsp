@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <!--
 	Escape Velocity by HTML5 UP
@@ -26,15 +27,11 @@
 		    </div>
 		
 		    <div class="movie_poster">
-		        <div class="poster" id="poster1" onclick="location.href=''">
-		            <img src="${pageContext.request.contextPath}/resources/images/poster6.png">
-		        </div>
-		        <div class="poster" id="poster2" onclick="location.href=''">
-		            <img src="${pageContext.request.contextPath}/resources/images/poster4.png">
-		        </div>
-		        <div class="poster" id="poster3" onclick="location.href=''">
-		            <img src="${pageContext.request.contextPath}/resources/images/poster5.png">
-		        </div>
+		    	<c:forEach var="movie" items="${movieList}" varStatus="status">
+			        <div class="poster" id="poster${status.count}" onclick="location.href='MovieInfoDetail?movie_code=${movie.movie_code}'">
+			            <img src="${movie.movie_img1}">
+			        </div>
+		    	</c:forEach>
 		    </div>
 		
 		    <div id="season_info">

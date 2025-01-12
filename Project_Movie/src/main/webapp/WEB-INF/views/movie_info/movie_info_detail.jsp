@@ -14,6 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/movie_info/movie_info_detail.css" />
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -23,53 +24,45 @@
 	<article class="box post">
 		<div id="movie_info_detail">
 			<div id="page_top">
-				현재상영작
+				${movie.movie_status}
 			</div>
 			<div>
 				<div id="movie_poster">
-					<img src="${pageContext.request.contextPath}/resources/images/poster1.webp"><br>
+					<img src="${movie.movie_img1}"><br>
 					<input type="button" value="예매하기">
 				</div>
 				<div id="movie_info">
-					<b>영화제목</b>
+					<b>${movie.movie_name}</b>
 					<p id="p01">
-						★★★★★ <br>
-						2024/12/31 | 120분 | 전체관람가
+						★(${movie.movie_rating}) <br>
+						${movie.release_date} | ${movie.running_time} | ${movie.age_limit}
 					</p>
 					<p id="p02">
-					    감독 : xxx<br>
-						출연 : 아놀드 슈왈츠 제네거, 로버트 다우니 주니어, 박정현<br>
-						장르 : 액션
+					    감독 : ${movie.movie_director}<br>
+						출연 : ${movie.movie_actor}<br>
+						장르 : ${movie.movie_genre}
 					</p>
 					줄거리
 					<div id="movie_summary">
-						붉게 물든 노을 바라보며 슬픈 그대 얼굴 생각이나 고개 숙이네 눈물 흘러 아무 말 할 수가 없지만 난 너를
-						사랑하네 (후우우) 이 세상은 너뿐이야 소리쳐 부르지만 저 대답 없는 노을만 붉게 타는데 그 세월 속에 잊어야 할
-						기억들이 다시 생각나면 눈 감아요 소리 없이 그 이름 불러요 아름다웠던 그대 모습 다시 볼 수 없는 것 알아요 후회
-						없어 저 타는 노을 붉은 노을처럼 난 너를 사랑하네 (후우우) 이 세상은 너뿐이야 소리쳐 부르지만 저 대답 없는 노을만
-						붉게 타는데 어데로 갔을까? 사랑하던 슬픈 그대 얼굴 보고 싶어 깊은 사랑 후회 없어 저 타는 붉은 노을처럼 난 너를
-						사랑하네 (후우우) 이 세상은 너뿐이야 소리쳐 부르지만 저 대답 없는 노을만 붉게 타는데 그 세월 속에 잊어야 할
-						기억들이 다시 생각나면 눈 감아요 소리 없이 그 이름 불러요 아름다웠던 그대 모습 다시 볼 수 없는 것 알아요 후회
-						없어 저 타는 노을 붉은 노을처럼 난 너를 사랑하네 (후우우) 이 세상은 너 뿐이야 소리쳐 부르지만 저 대답 없는
-						노을만 붉게 타는데 난 너를 사랑하네 (후우우) 이 세상은 너뿐이야 소리쳐 부르지만 저 대답 없는 노을만 붉게 타는데
+						${movie.movie_synopsis}
 					</div>
 				</div>
 			</div>
 			<div id="movie_trailer">
 				메인예고편
 				<div>
-					예고편
+					<iframe id="video" width="850" height="500" src="${movie.movie_trailer}"></iframe>
 				</div>
 			</div>
 			<div id="movie_stillcut">
-				스틸컷
+				Still Cut
 				<div>
-					<img src="${pageContext.request.contextPath}/resources/images/poster1.webp">
+					<img src="${movie.movie_img1}">
 					<div class="stillcut">
-						<img src="${pageContext.request.contextPath}/resources/images/stillcut1.jpg">
-						<img src="${pageContext.request.contextPath}/resources/images/stillcut2.jpg"><br>
-						<img src="${pageContext.request.contextPath}/resources/images/stillcut3.jpg">
-						<img src="${pageContext.request.contextPath}/resources/images/stillcut4.jpg">
+						<img src="${movie.movie_img2}">
+						<img src="${movie.movie_img3}"><br>
+						<img src="${movie.movie_img4}">
+						<img src="${movie.movie_img5}">
 					</div>
 				</div>
 			</div>

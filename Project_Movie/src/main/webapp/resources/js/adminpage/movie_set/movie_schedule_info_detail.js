@@ -21,17 +21,24 @@ $(function() {
 		url : "AdminMovieSetSearch",
 		data : {
 			columnName : "movie_status",
-			in1 : "상영예정작",
-			in2 : "현재상영작",
+			in1 : "현재상영작",
+			in2 : "상영예정작",
 			olderColumn : "movie_status",
-			howOlder : "ASC",
+			howOlder : "DESC",
 			olderColumn2 : "movie_type",
 			howOlder2 : "ASC",
 		}
 	}).done(function(movieList) {
+		// 현재상영작 스케줄 등록 폼의 영화선택 설렉트박스에 추가
+		for(let index = 0; index <= 8; index++) {
+			$("optgroup[label='현재상영작']").append(
+				"<option value='" + movieList[index].movie_code + "'>" + movieList[index].movie_name + "</option>"
+			);
+		}
+		
 		// 상영예정작의 영화상영기간 미설정 여부 판단, 영화상영기간 설정이 완료된 후에 상영스케줄 설정 가능
 		// 아래에 selectbox 핸들러에 change이벤트시 경고창 및 영화상영기간 설정창으로 이동 작업예정
-		for(let index = 0; index <= 8; index++) {
+		for(let index = 9; index <= movieList.length; index++) {
 			if(movieList[index].start_screening_date == null || movieList[index].end_screening_date == null) {
 				$("optgroup[label='상영예정작']").append(
 					"<option value='noPeriod'>" + movieList[index].movie_name + "</option>"
@@ -43,12 +50,6 @@ $(function() {
 			}
 		}
 		
-		// 현재상영작 스케줄 등록 폼의 영화선택 설렉트박스에 추가
-		for(let index = 9; index < movieList.length; index++) {
-			$("optgroup[label='현재상영작']").append(
-				"<option value='" + movieList[index].movie_code + "'>" + movieList[index].movie_name + "</option>"
-			);
-		}
 	});
 	
 	// 스케줄 등록 모달 오픈
@@ -106,6 +107,8 @@ $(function() {
 			let runningTime = $("input[name=running_time]").val();
 			let startDateTime = scheduleDate + " " + $(this).val();
 			
+			$(this).val()
+			
 			$("input[name='str_start_time']").val(startDateTime);
 			
 			//String 타입을 날짜시간 계산을위해 Date 타입으로 변환
@@ -149,6 +152,9 @@ $(function() {
 				},
 				dataType : "json"
 			}).done(function(dbScheduleList) {
+				// 중복판별을 위한 변수
+				let isDuplication = false;
+				
 				for(let dbSchedule of dbScheduleList) {
 					// 등록할 스케줄의 시작, 끝(상영후 다음스케줄 가능)시간, 스케줄 시작과 끝의 중간시간
 					let start = new Date(startDateTime).getTime();
@@ -164,20 +170,29 @@ $(function() {
 					// 러닝타임이 DB스케줄의 러닝타임보다 월등히 길때 새로등록할 스케줄의 끝시간이 DB스케줄의
 					// 끝시간을 넘어가서 위에 조건에 충족하지만 스케줄이 겹치게됨
 					// 따라서 위에 조건에 더해서 새로등록할 스케줄의 3)중간시간도 DB스케줄의 시간안에 포함되지 않는지도 판별해야됨
+					// 위의 조건을 DB스케줄 각각 1), 2), 3) 다 비교하여 그중 하나라도 만족하지 않으면 스케줄 등록불가
 					
-					if(	!(start > dbStart && start < dbEnd) // 1)
-						&& !(end > dbStart && end < dbEnd) // 2)
-						&& !(average > dbStart && average < dbEnd) ) // 3)
-						{
-						$("#isRegistPossible").text("등록가능합니다.")
-						$("#isRegistPossible").css("color", "#ADD826")
-					} else {
-						$("#isRegistPossible").html("- 등록불가 -<br>이미 등록된 스케줄과 겹칩니다.<br> 시간을 확인해주세요");
-						$("#isRegistPossible").css("color", "#FF86C1")
-					}
+					// 등록시작,등록끝,등록중간 시간이 하나라도 db스케줄의 시작과 끝의 사이에 있으면 
+					// 중복, 등록불가
+					if(	(start >= dbStart && start <= dbEnd) // 1)
+						|| (end >= dbStart && end <= dbEnd) // 2)
+						|| (average >= dbStart && average <= dbEnd) ) {  // 3)
+						isDuplication = true;
+						break;
+					} 
+				}
+				
+				if(!isDuplication) {
+					$("#isRegistPossible").text("등록가능합니다.")
+					$("#isRegistPossible").css("color", "#ADD826")
+					$(".form_btnGroup input[type=submit]").prop("disabled", false);
+				} else {
+					$("#isRegistPossible").html("- 등록불가 -<br>이미 등록된 스케줄과 겹칩니다.<br> 시간을 확인해주세요");
+					$("#isRegistPossible").css("color", "#FF86C1")
+					$(".form_btnGroup input[type=submit]").prop("disabled", true);
 				}
 			}).fail(function() {
-				
+				alert("스케줄 등록에 실패했습니다.")
 			});
 		}
 	});
@@ -208,9 +223,5 @@ $(function() {
 		return isBetween;
 	}
 	
-	// 날짜 시간 비교 메서드
-	function isAvailRegist(start, end, dbstart, dbend) {
-		
-	}
 }); // document ready 끝
 	

@@ -113,13 +113,15 @@ $(function() {
 			
 			for(let movie of result.movieListResult.movieList) {
 				movie.repGenreNm ? movie.repGenreNm : "";
-				// 성인물 제외 하기 위한 코드
 				let isPassedMovie = true
-			    let checkList = ["성인물", "멜로", "에로", "다큐멘터리", "기타"];
-
-				for(let checkKeyword of checkList) {
-					if(movie.repGenreNm.includes(checkKeyword) || movie.repGenreNm == "") {
-						isPassedMovie = false;
+				
+				// 개봉일로 조회하면 성인물이너무 많이나와서 제외 하기 위한 코드
+			    let checkList = ["성인물", "에로", "멜로", "다큐멘터리", "기타"];
+				if(ajaxData.openStartDt != null) {
+					for(let checkKeyword of checkList) {
+						if(movie.repGenreNm.includes(checkKeyword) || movie.repGenreNm == "") {
+							isPassedMovie = false;
+						}
 					}
 				}
 				
@@ -229,9 +231,9 @@ $(function() {
 				let movieInfo2 = data.results[0];
 				$("input[name='movie_rating']").val(Math.round(movieInfo2.vote_average * 10) / 10);
 				$("textarea[name='movie_synopsis']").val(movieInfo2.overview);
-				$("input[name='movie_img1']").val("https://image.tmdb.org/t/p/w500/" + movieInfo2.poster_path);
-				
+				$("input[name='movie_img1']").val("https://image.tmdb.org/t/p/w500" + movieInfo2.poster_path);
 				// 영화이미지 url 조회 입력
+				console.log(movieInfo2.id);
 				$.ajax({
 					type : "GET",
 					url : "http://api.themoviedb.org/3/movie/" + movieInfo2.id + "/images",
@@ -241,13 +243,8 @@ $(function() {
 					dataType : "json"
 				}).done(function(data) {
 					let movieStillCutArr = data.backdrops;
-					let stillCutCount = 0;
-					for(let movieStillCut of movieStillCutArr) {
-						$("input[name='movie_img" + (stillCutCount + 2) + "']").val("https://image.tmdb.org/t/p/w500/" + movieStillCut.file_path);
-						stillCutCount++;
-						if(stillCutCount == 4) {
-							break;
-						}
+					for(let i = 5; i < 9; i++) {
+						$("input[name='movie_img" + (i - 3) + "']").val("https://image.tmdb.org/t/p/w500" + movieStillCutArr[i].file_path);
 					}
 				}).fail(function() {
 					alert("영화상세정보를 가져오지 못했습니다");
@@ -344,7 +341,6 @@ $(function() {
 					data : {
 						movie_code : selectMovieCode,
 						movie_status : "투표영화",
-						column_name : "movie_status"
 					},
 				}).done(function(result) {
 					alert(result.msg);

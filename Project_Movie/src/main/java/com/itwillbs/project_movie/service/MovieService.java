@@ -27,13 +27,13 @@ public class MovieService {
 	}
 	
 	// 페이징 처리를 위한 영화 목록 수 조회
-	public int getMovieListCount(String howSearch, String searchKeyword) {
-		return movieMapper.selectMovieListCount(howSearch, searchKeyword);
+	public int getMovieListCount(String howSearch, String searchKeyword, String howSearch2, String searchKeyword2) {
+		return movieMapper.selectMovieListCount(howSearch, searchKeyword, howSearch2, searchKeyword2);
 	}
 	
 	// 페이징 후 페이지에 필요한 만큼의 영화목록 조회
-	public List<MovieVO> getMovieList(int startRow, int listLimit, String howSearch, String searchKeyword) {
-		return movieMapper.selectMovieList(startRow, listLimit, howSearch, searchKeyword);
+	public List<MovieVO> getMovieList(int startRow, int listLimit, String howSearch, String searchKeyword, String howSearch2, String searchKeyword2) {
+		return movieMapper.selectMovieList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
 	}
 	
 	// 검색조건(컬럼명), 검색어를 파라미터로 전달 후 해당 영화리스트 조회
@@ -59,6 +59,8 @@ public class MovieService {
 		Map<String, String> conditionMap = new HashMap<String, String>();
 		conditionMap.put("columnName", "movie_type");
 		conditionMap.put("selectCondition", "일반");
+		conditionMap.put("columnName2", "movie_status");
+		conditionMap.put("selectCondition2", "상영예정작");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
 	
@@ -67,6 +69,8 @@ public class MovieService {
 		Map<String, String> conditionMap = new HashMap<String, String>();
 		conditionMap.put("columnName", "movie_type");
 		conditionMap.put("selectCondition", "시즌");
+		conditionMap.put("columnName2", "movie_status");
+		conditionMap.put("selectCondition2", "상영예정작");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
 	
@@ -75,6 +79,14 @@ public class MovieService {
 		Map<String, String> conditionMap = new HashMap<String, String>();
 		conditionMap.put("columnName", "movie_status");
 		conditionMap.put("selectCondition", "투표영화");
+		return movieMapper.selectMovieCount(conditionMap);
+	}
+	
+	// 현재 상영작 수 조회 
+	public int getCountCurrentlyMovie() {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("columnName", "movie_status");
+		conditionMap.put("selectCondition", "현재상영작");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
 	
@@ -98,7 +110,45 @@ public class MovieService {
 		return movieMapper.updateScreeningPeriod(movieVO);
 	}
 	
-
+	// 현재상영작 리스트 조회
+	public List<MovieVO> getCurrentlyMovieList() {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("columnName", "movie_status");
+		conditionMap.put("selectCondition", "현재상영작");
+		conditionMap.put("olderColumn", "movie_type");
+		conditionMap.put("howOlder", "ASC");
+		return movieMapper.selectMovieListCheck(conditionMap);
+	}
 	
+	// 시즌 현재상영작 리스트 조회
+	public List<MovieVO> getSeasonCurrentlyMovieList() {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("columnName", "movie_status");
+		conditionMap.put("selectCondition", "현재상영작");
+		conditionMap.put("columnName2", "movie_type");
+		conditionMap.put("selectCondition2", "시즌");
+		return movieMapper.selectMovieListCheck(conditionMap);
+	}
+	
+	// 일반 현재상영작 수 조회
+	public int getCountGeneralCurrentlyMovie() {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("columnName", "movie_type");
+		conditionMap.put("selectCondition", "일반");
+		conditionMap.put("columnName2", "movie_status");
+		conditionMap.put("selectCondition2", "현재상영작");
+		return movieMapper.selectMovieCount(conditionMap);
+	}
+	
+	// 시즌 현재상영작 수 조회
+	public int getCountSeasonCurrentlyMovie() {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("columnName", "movie_type");
+		conditionMap.put("selectCondition", "시즌");
+		conditionMap.put("columnName2", "movie_status");
+		conditionMap.put("selectCondition2", "현재상영작");
+		return movieMapper.selectMovieCount(conditionMap);
+	}
+
 	
 }
