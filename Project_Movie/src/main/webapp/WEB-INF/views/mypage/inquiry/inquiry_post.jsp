@@ -44,7 +44,7 @@
 		<section id="commandCell">
 <%-- 				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }"> --%>
 					<input type="button" value="수정" id="modify">
-					<input type="button" value="삭제" onclick="confirmDelete()">
+					<input type="button" value="삭제" id="delete">
 <%-- 				</c:if> --%>
 		</section>
 		
@@ -63,14 +63,22 @@
 			</tr>
 		</table>
 		<script type="text/javascript">
-			$(function () {
-				$("#modify").on("click", function () {
-					window.open(
-							'InquiryModify',
-							'1:1문의 수정창',
-							'width=400, height=700, scrollbars=no, resizeable=no');
-				});
+		$(function () {
+			$("#inquiryModify").on("click", function() {
+				window.open(    
+					'inquiryModify',
+					'문의 내역 수정',
+					'width=400, height=700, scrollbars=no, resizable=no');
 			});
+			
+			$("#delete").on("click", function() {
+				confirm("정말 삭제하시겠습니까?"){
+					alert("삭제되었습니다.");
+				}
+			});
+			
+			
+		});//function
 		
 		
 		

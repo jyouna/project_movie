@@ -25,15 +25,18 @@
 		<div id="title">
 			<h1>내가 본 영화</h1>
 		</div>
-			<div id="selectBox"> 
-				<select>
-					<option>2024</option>
-					<option>2023</option>
-					<option>2022</option>
-					<option>2021</option>
-					<option>2020</option>
-				</select>
-				<input type="button" value="조회" id="inquire">
+			* 영화 조회는 최근 5년 내역만 조회가 가능합니다
+			<div id="selectBox">
+				<form action="watchedMovie" method="get">
+					<select name="searchYear">
+						<option>2025</option>
+						<option>2024</option>
+						<option>2023</option>
+						<option>2022</option>
+						<option>2021</option>
+					</select>
+				</form>
+				<input type="submit" value="조회">
 			</div>
 	<!-- 			순서 체크하고 리뷰등록 누를경우 작성팝업 생성 -->
 			<div style="text-align: right;">
@@ -42,29 +45,32 @@
 	      <section id="listForm">
 	         <table>
 	            <tr id="tr_top">
-<!-- 	            순서는 체크박스 -->
-	               <td>순서</td>
+	               <td><input type="radio" disabled="disabled"></td>
 	               <td>영화명</td>
 	               <td>관람일시</td>
 	               <td>관람인원</td>
-	               <td>관람좌석</td>
-	               <td>상영관</td>
+	               <td>리뷰 등록</td>
 	            </tr>
-	               
+	           
 	            <c:choose>
-	               <c:when test="${empty boardList}"> 
-	                  <tr><td colspan="6">게시물이 존재하지 않습니다</td></tr>
+	               <c:when test="${empty watchedMovie}"> 
+	                  <tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
 	               </c:when>
 	               <c:otherwise>
-	                  <c:forEach var="board" items="${boardList}" varStatus="status">
+	                  <c:forEach var="watchedMovie" items="${watchedMovie}" varStatus="status">
 	                     <tr>
-	                        <td class="board_num">${board.board_num}</td>
-	                        <td class="board_subject">${board.board_subject}</td>
-	                        <td>${board.board_name}</td>
+	                      	<td><input type="radio"></td>
+	                        <td>${watchedMovie.w_moviename}</td>
 	                        <td>
-	                           <fmt:formatDate value="${board.board_date}" pattern="yy-MM-dd - yy-MM-dd"/>
+	                        	<fmt:formatDate value="${watchedMovie.w_date}" pattern="yyyy-MM-dd"/>
+                        	</td>
+	                        <td>${watchedMovie.w_people}</td>
+	                        <td>
+	                        	<c:choose>
+	                        		<c:when test="${watchedMovie.w_review == 0}">리뷰등록전</c:when>
+	                        		<c:when test="${watchedMovie.w_review == 1}">리뷰등록완료</c:when>
+	                        	</c:choose>
 	                        </td>
-	                        <td>${board.board_readcount}</td>
 	                     </tr>
 	                  </c:forEach>
 	               </c:otherwise>               
@@ -73,7 +79,7 @@
 	      </section>
 	            <section id="pageList">
 	         <input type="button" value="&lt" 
-	            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum - 1}'" 
+	            onclick="location.href='WatchedMovie?pageNum=${pageInfo.pageNum - 1}'" 
 	             <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 	         
 	         <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -83,22 +89,19 @@
 	               
 	               </c:when>
 	               <c:otherwise>
-	                  <a href="BoardList?pageNum=${i}">${i}</a>
+	                  <a href="WatchedMovie?pageNum=${i}">${i}</a>
 	               </c:otherwise>
 	            </c:choose>
 	         </c:forEach>
 	         
 	         
 	         <input type="button" value="&gt" 
-	            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum + 1}'" 
+	            onclick="location.href='WatchedMovie?pageNum=${pageInfo.pageNum + 1}'" 
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>
 	<script type="text/javascript">
 		$(function () {
-			$("#inquire").on("click", function() {
-				confirm("조회 버튼 누르셨습니다.")
-			});
 			
 			$("#reviewRegister").on("click", function() {
 				window.open(

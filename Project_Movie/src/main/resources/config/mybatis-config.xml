@@ -28,6 +28,9 @@
 		<typeAlias type="com.itwillbs.project_movie.vo.CouponVO" alias="coupon"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.MemberAllInfoVO" alias="memberAllInfo"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.InquiryVO" alias="inquiry"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.ReservationDetailVO" alias="reservationDetail"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.ReservationCancelVO" alias="reservationCancel"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.WatchedMovieVO" alias="watchedMovie"/>
 	</typeAliases>
 	
 </configuration>

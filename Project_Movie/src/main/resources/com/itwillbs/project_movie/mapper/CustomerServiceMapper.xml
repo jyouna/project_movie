@@ -7,10 +7,32 @@
  	<select id="selectNoticeListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM notice_board
+ 			<if test="!searchKeyword.equals('')">
+ 				WHERE 
+ 				<choose>
+ 					<when test="searchType.equals('subject')">
+ 						notice_subject LIKE CONCAT('%','{#searchKeyword}','%')
+ 					</when>
+ 					<when test="searchType.equals('content')">
+ 						notice_content LIKE CONCAT('%','{#searchKeyword}','%')
+ 					</when>
+ 				</choose>
+ 			</if>
  	</select>
  	<select id="selectNoticeList" resultType="notice_board">
  		SELECT *
  		FROM notice_board
+ 		<if test="!searchKeyword.equals('')">
+ 				WHERE 
+ 				<choose>
+ 					<when test="searchType.equals('subject')">
+ 						notice_subject LIKE CONCAT('%','{#searchKeyword}','%')
+ 					</when>
+ 					<when test="searchType.equals('content')">
+ 						notice_content LIKE CONCAT('%','{#searchKeyword}','%')
+ 					</when>
+ 				</choose>
+ 			</if>
 		LIMIT 
 			#{startRow}
 			, #{listLimit}

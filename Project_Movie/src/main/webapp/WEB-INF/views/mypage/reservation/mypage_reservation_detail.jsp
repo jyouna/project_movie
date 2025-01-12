@@ -31,31 +31,36 @@
       <section id="listForm">
          <table>
             <tr id="tr_top">
-	           	<td width="8%">순서</td>
-				<td width="15%">예매번호</td>
+	           	<td width="5%"><input type="radio" name="reservationRadio" disabled="disabled"></td>
+	           	<td width="7%">순서</td>
+				<td width="12%">예매번호</td>
 				<td width="20%">영화명</td>
 				<td width="11%">관람인원</td>
 				<td width="11%">관람좌석</td>
-				<td width="10%">상영관</td>
+				<td width="9%">상영관</td>
 				<td width="15%">예매일</td>
 				<td width="10%">금액</td>
 
             </tr>
                
             <c:choose>
-               <c:when test="${empty boardList}"> 
-                  <tr><td colspan="8">게시물이 존재하지 않습니다</td></tr>
+               <c:when test="${empty reservationDetail}"> 
+                  <tr><td colspan="9">게시물이 존재하지 않습니다</td></tr>
                </c:when>
                <c:otherwise>
-                  <c:forEach var="board" items="${boardList}" varStatus="status">
+                  <c:forEach var="reservationDetail" items="${reservationDetail}" varStatus="status">
                      <tr>
-                        <td class="board_num">${board.board_num}</td>
-                        <td class="board_subject">${board.board_subject}</td>
-                        <td>${board.board_name}</td>
+                    	<td><input type="radio" name="reservationRadio"></td>
+                        <td>${reservationDetail.r_code}</td>
+                        <td>${reservationDetail.r_num}</td>
+                        <td>${reservationDetail.r_moviename}</td>
+                        <td>${reservationDetail.r_people}</td>
+                        <td>${reservationDetail.r_seat}</td>
+                        <td>${reservationDetail.r_theater}</td>
                         <td>
-                           <fmt:formatDate value="${board.board_date}" pattern="yy-MM-dd - yy-MM-dd"/>
+                           <fmt:formatDate value="${reservationDetail.r_date}" pattern="yy-MM-dd"/>
                         </td>
-                        <td>${board.board_readcount}</td>
+                        <td>${reservationDetail.r_price}</td>
                      </tr>
                   </c:forEach>
                </c:otherwise>               
@@ -70,9 +75,9 @@
       <input type="button" value="예매취소" id="cancel">
 <!-- 확인 시 예매가 취소되었습니다. -->
 	</div>
-            <section id="pageList">
+         <section id="pageList">
          <input type="button" value="&lt" 
-            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum - 1}'" 
+            onclick="location.href='ReservationDetail?pageNum=${pageInfo.pageNum - 1}'" 
              <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
          
          <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -82,30 +87,22 @@
                
                </c:when>
                <c:otherwise>
-                  <a href="BoardList?pageNum=${i}">${i}</a>
+                  <a href="ReservationDetail?pageNum=${i}">${i}</a>
                </c:otherwise>
             </c:choose>
          </c:forEach>
          
          
          <input type="button" value="&gt" 
-            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum + 1}'" 
+            onclick="location.href='ReservationDetail?pageNum=${pageInfo.pageNum + 1}'" 
              <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
       </section>
 	</article>
 	<script type="text/javascript">
 		$(function () {
-			$("#detail").on("click", function() {
-				window.open(    
-					'detail',
-					'예매내역 상세 정보',
-					'width=400, height=700, scrollbars=no, resizeable=no');
-			});
-			
-			$("#cancel").on("click", function() {
-				confirm("예매 취소하시겠습니까?")
-			});
-			
+			$("#detail").click(function (){
+				if()
+			})
 			
 		});
 		

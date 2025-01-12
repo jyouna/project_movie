@@ -11,9 +11,9 @@ import com.itwillbs.project_movie.vo.NoticeBoardVO;
 @Mapper
 public interface CustomerServiceMapper {
 	// 공지사항 게시물 수 조회
-	int selectNoticeListCount();
+	int selectNoticeListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	// 공지사항 목록 조회
-	List<NoticeBoardVO> selectNoticeList(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	List<NoticeBoardVO> selectNoticeList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	// 공지사항 상세정보 조회
 	NoticeBoardVO selectNotice(int notice_code);
 	// 공지사항 조회수 증가

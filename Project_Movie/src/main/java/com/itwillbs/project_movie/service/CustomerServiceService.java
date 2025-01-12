@@ -15,14 +15,16 @@ public class CustomerServiceService {
 	@Autowired
 	private CustomerServiceMapper mapper;
 	// 공지사항 목록 조회
-	public int getNoticeListCount() {
+	public int getNoticeListCount(String searchType, String searchKeyword) {
 		// TODO Auto-generated method stub
-		return mapper.selectNoticeListCount();
+		System.out.println( "servicegetcount " + searchKeyword);
+		return mapper.selectNoticeListCount(searchType,searchKeyword);
 	}
 	// 공지사항 
-	public List<NoticeBoardVO> getNoticeList(int startRow, int listLimit) {
+	public List<NoticeBoardVO> getNoticeList(int startRow, int listLimit, String searchType, String searchKeyword) {
 		// TODO Auto-generated method stub
-		return mapper.selectNoticeList(startRow, listLimit);
+		System.out.println( "servicegetlist " + searchKeyword);
+		return mapper.selectNoticeList(startRow, listLimit, searchType,searchKeyword);
 	}
 	// 공지사항 글 조회 및 조회수 
 	public NoticeBoardVO getNotice(int notice_code, boolean isIncreaseReadcount) {

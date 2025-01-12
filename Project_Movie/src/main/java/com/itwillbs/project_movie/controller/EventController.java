@@ -35,10 +35,6 @@ public class EventController {
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}
-		System.out.println("listLimit = " + listLimit);
-		System.out.println("startRow = " + startRow);
-		System.out.println("pageListLimit = " + pageListLimit);
-		System.out.println("maxPage = " + maxPage);
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "EventList?pagenum=1");
@@ -47,7 +43,7 @@ public class EventController {
 		
 		PageInfo pageinfo = new PageInfo (listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageinfo);
-		List<EventBoardVO> eventList = service.getEventList(startRow, listLimit, searchType, searchKeyword );
+		List<EventBoardVO> eventList = service.getEventList(startRow, listLimit, searchType, searchKeyword);
 		model.addAttribute("eventList", eventList);
 		return "event/event_list";
 	}

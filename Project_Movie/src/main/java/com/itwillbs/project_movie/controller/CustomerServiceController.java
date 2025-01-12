@@ -24,10 +24,13 @@ public class CustomerServiceController {
 	private CustomerServiceService service;
 	// 공지사항 - 글 목록
 	@GetMapping("NoticeList")
-	public String noticeList(Model model, @RequestParam(defaultValue = "1") int pageNum ) {
+	public String noticeList(Model model, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue="") String searchType, 
+			@RequestParam(defaultValue="") String searchKeyword) {
+		System.out.println( "controller " + searchKeyword);
 		int listLimit = 5; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
-		int listCount = service.getNoticeListCount();
+		int listCount = service.getNoticeListCount(searchType,searchKeyword);
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
 		if (maxPage == 0) {
@@ -48,7 +51,7 @@ public class CustomerServiceController {
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
-		List<NoticeBoardVO> noticeList = service.getNoticeList(startRow, listLimit);
+		List<NoticeBoardVO> noticeList = service.getNoticeList(startRow, listLimit, searchType, searchKeyword);
 		model.addAttribute("noticeList", noticeList);
 		return "customer_service/notice_list";
 	}
@@ -71,7 +74,7 @@ public class CustomerServiceController {
 	public String faqList(Model model, @RequestParam(defaultValue = "1") int pageNum ) {
 		int listLimit = 5; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
-		int listCount = service.getNoticeListCount();
+		int listCount = service.getFaqListCount();
 		int pageListLimit = 5;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0); // 최대 페이지
 		if (maxPage == 0) {

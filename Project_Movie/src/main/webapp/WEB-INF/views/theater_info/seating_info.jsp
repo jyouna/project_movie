@@ -22,6 +22,7 @@
 		<div class="content">
     		<h1 style="font-size: 1.5em;">좌석배치도</h1>
     		<hr>
+    		<h6 style="font-weight: normal;">※ 1-3관 좌석배치도 동일</h6>
     	<div class="seat-layout">
 				<img
 					src="${pageContext.request.contextPath}/resources/images/seat.png"

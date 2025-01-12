@@ -25,13 +25,18 @@
 		<div id="title">
 			<h1>공지사항</h1>
 		</div>
-		<div id="search-bar" style="text-align: right;">
-			<select id="search_box">
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text" placeholder="검색어를 입력하세요.">
-			<input type="button" value="검색">
+		<div id="search-bar" style="text-align:	right;">
+<!-- 		여기서 선택하고 검색한 값을 넘겨줘야하니까 form 태그로 감싸고 action = NoticeList , 전달방식 - get -->
+			<form action="NoticeList" method="get">
+				<select id="searchType">
+	<!-- 			옵션에 각각 값을 넣어준다 -->
+					<option value="subject">제목</option>
+					<option value="content">내용</option>
+				</select>
+	<!-- 			검색어에는 name값을 searchKeyword로 준다 -->
+				<input type="text" name ="searchKeyword" placeholder="검색어를 입력하세요.">
+				<input type="submit" value="검색">
+			</form>
 		</div>
 		<section id="listForm">
 			<table>

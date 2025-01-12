@@ -2,16 +2,22 @@ package com.itwillbs.project_movie.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.project_movie.service.MypageService;
 import com.itwillbs.project_movie.vo.InquiryVO;
 import com.itwillbs.project_movie.vo.PageInfo;
+import com.itwillbs.project_movie.vo.ReservationCancelVO;
+import com.itwillbs.project_movie.vo.ReservationDetailVO;
+import com.itwillbs.project_movie.vo.WatchedMovieVO;
 
 @Controller
 public class MypageController {
@@ -19,7 +25,32 @@ public class MypageController {
 	private MypageService service;
 	//1.결제내역 - 예매 내역
 	@GetMapping("ReservationDetail")
-	public String reservationDetail() {
+	public String reservationDetail(@RequestParam (defaultValue="1") int pageNum, Model model) {
+		int listCount = service.getReservationDetailCount();
+		int listLimit = 10; 
+		int startRow = (pageNum - 1) * listLimit; 
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
+		if (maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
+		int endPage = startPage + pageListLimit -1;
+		if (endPage > maxPage) {
+			endPage = maxPage; 
+		}
+		
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
+			model.addAttribute("targetURL", "ReservationDetail?pageNum=1");
+			return "result/fail";
+		}
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		model.addAttribute("pageInfo", pageInfo);
+		
+		List<ReservationDetailVO> reservationDetail = service.getReservationDetail(startRow, listLimit);
+		model.addAttribute("reservationDetail", reservationDetail);
+		
 		return "mypage/reservation/mypage_reservation_detail";
 	}
 	//1-1 상세정보 버튼 클릭시 창 띄우기
@@ -27,14 +58,61 @@ public class MypageController {
 	public String detail() {
 		return "mypage/reservation/detail";
 	}
-	//2.결제내역 - 예매 취소내역 
+	//2. 결제내역 - 예매 취소내역 
 	@GetMapping("ReservationCancel")
-	public String reservationCancel() {
+	public String reservationCancel(@RequestParam (defaultValue="1") int pageNum, Model model) {
+		int listCount = service.getReservationCancelCount();
+		int listLimit = 5;
+		int startRow = (pageNum - 1) * listLimit;
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1: 0);
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
+		int endPage = startPage + pageListLimit -1;
+		if (endPage > maxPage) {
+			endPage = maxPage; 
+		}
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
+			model.addAttribute("targetURL", "ReservationCancel?pageNum=1");
+			return "result/fail";
+		}
+		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		model.addAttribute("pageInfo", pageinfo);
+		
+		List<ReservationCancelVO> reservationCancel = service.getReservationCancel(startRow, listLimit);
+		model.addAttribute("reservationCancel", reservationCancel);
 		return "mypage/reservation/mypage_reservation_cancel";
 	}
 	//3. 무비로그 - 내가 본 영화
 	@GetMapping("WatchedMovie")
-	public String watchedMovie() {
+	public String watchedMovie(@RequestParam(defaultValue="1") int pageNum, Model model) {
+		int listCount = service.getWatchedMovieCount();
+		int listLimit = 5;
+		int startRow = (pageNum - 1) * listLimit;
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1: 0);
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
+		int endPage = startPage + pageListLimit -1;
+		if (endPage > maxPage) {
+			endPage = maxPage; 
+		}
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
+			model.addAttribute("targetURL", "WatchedMovie?pageNum=1");
+			return "result/fail";
+		}
+		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		model.addAttribute("pageInfo", pageinfo);
+		
+		List<WatchedMovieVO> watchedMovie = service.getWatchedMovie(startRow, listLimit);
+		model.addAttribute("watchedMovie", watchedMovie);
+		
 		return "mypage/movie_log/mypage_watched_movie";
 	}
 	//3-1. 리뷰 등록창 

@@ -25,54 +25,61 @@
       <section id="listForm">
          <table>
             <tr id="tr_top">
-               <td>영화명</td>
-               <td>관람일시</td>
-               <td>관람인원</td>
-               <td>취소일</td>
-               <td>결제취소 금액</td>
+               <td width="33%">영화명</td>
+               <td width="15%">관람일시</td>
+               <td width="10%">관람인원</td>
+               <td width="12%">취소승인상태</td>
+               <td width="15%"> 취소승인일</td>
+               <td width="15%">환불금액</td>
             </tr>
                
             <c:choose>
-               <c:when test="${empty boardList}"> 
-                  <tr><td colspan="8">게시물이 존재하지 않습니다</td></tr>
+               <c:when test="${empty reservationCancel}"> 
+                  <tr><td colspan="6">게시물이 존재하지 않습니다</td></tr>
                </c:when>
                <c:otherwise>
-                  <c:forEach var="board" items="${boardList}" varStatus="status">
+                  <c:forEach var="reservationCancel" items="${reservationCancel}" varStatus="status">
                      <tr>
-                        <td class="board_num">${board.board_num}</td>
-                        <td class="board_subject">${board.board_subject}</td>
-                        <td>${board.board_name}</td>
+                        <td>${reservationCancel.r_moviename}</td>
+                        <td>${reservationCancel.r_date}</td>
+                        <td>${reservationCancel.r_people}</td>
                         <td>
-                           <fmt:formatDate value="${board.board_date}" pattern="yy-MM-dd - yy-MM-dd"/>
+	                   		<c:choose>
+						      	<c:when test="${reservationCancel.r_cancelstatus == 0}">승인전</c:when>
+						      	<c:when test="${reservationCancel.r_cancelstatus == 1}">취소 완료</c:when>
+						    </c:choose>
                         </td>
-                        <td>${board.board_readcount}</td>
+                        <td>
+                           <fmt:formatDate value="${reservationCancel.r_canceldate}" pattern="yy-MM-dd"/>
+                        </td>
+                        <td>${reservationCancel.r_cancelprice}</td>
                      </tr>
                   </c:forEach>
                </c:otherwise>               
             </c:choose>
          </table>
       </section>
+
 <!--       오른쪽 정렬 -->
-            <section id="pageList">
+         <section id="pageList">
          <input type="button" value="&lt" 
-            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum - 1}'" 
+            onclick="location.href='ReservationCancel?pageNum=${pageInfo.pageNum - 1}'" 
              <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
          
          <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
             <c:choose>
                <c:when test="${i eq pageInfo.pageNum }">
                   <strong>${i}</strong>
-               
                </c:when>
                <c:otherwise>
-                  <a href="BoardList?pageNum=${i}">${i}</a>
+                  <a href="ReservationCancel?pageNum=${i}">${i}</a>
                </c:otherwise>
             </c:choose>
          </c:forEach>
          
          
          <input type="button" value="&gt" 
-            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum + 1}'" 
+            onclick="location.href='ReservationCancel?pageNum=${pageInfo.pageNum + 1}'" 
              <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
       </section>
 	</article>
