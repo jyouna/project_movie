@@ -10,6 +10,7 @@ import com.itwillbs.project_movie.mapper.BookMapper;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
+import com.itwillbs.project_movie.vo.TicketVO;
 
 @Service
 public class BookService {
@@ -20,14 +21,26 @@ public class BookService {
 		return mapper.selectMovieList();
 	}
 
-	public List<Map<String, Object>> getSchWithMovie(String start_time) {
-		return mapper.selectSchWithMovie(start_time);
+	public List<Map<String, Object>> getSchWithMovie(Map<String, String> conditionMap) {
+		return mapper.selectSchWithMovie(conditionMap);
 	}
 
 
 	// 좌석 선택 페이지
 	public List<SeatVO> getSeat() {
 		return mapper.selectSeat();
+	}
+
+	public Map<String, String> getSelectedMovie(String movie_code) {
+		return mapper.getSelectMovie(movie_code);
+	}
+
+	public List<TicketVO> getTicketType() {
+		return mapper.selectTicketType();
+	}
+
+	public List<MovieVO> getMovieListCheck(Map<String, String> conditionMap) {
+		return mapper.selectMovieListCheck(conditionMap);
 	}
 
 }

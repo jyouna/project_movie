@@ -52,14 +52,14 @@ $(function () {
 	});
 	
 	
-	
+	let selectedSeats = "";
 	// 좌석 선택 & 선택된 좌석 값 가져오기
 	$(".seat").on("click", function() {
 		// 현재 클릭된 요소만 가리킴
 		$(this).toggleClass("selected");
 		
 		// 선택된 좌석 값 가져오기
-		let selectedSeats = $(".seat.selected").map(function() {
+		selectedSeats = $(".seat.selected").map(function() {
 			return $(this).text();
 		}).get();
 		
@@ -99,13 +99,63 @@ $(function () {
 			totalCount += parseInt($(this).val());
 		});
 		
-		if(totalCount === 0) {
-			alert("좌석을 선택해주세요");
+		console.log(selectedSeats.length);
+		
+		if(totalCount == 0) {
+			alert("인원을 선택해주세요");
+			return false;
+		} else if(selectedSeats.length != totalCount) {
+			alert("좌석을 모두 선택해주세요");
 			return false;
 		}
+		
 		location.href = 'BookPay';
 		
-	});			
+	});		
+	
+	function seats() {
+		$.ajax({
+			type : "POST",
+			url : "BookSeat",
+			data : {
+				ticket_type : ticket_type,
+				ticket_amount : ticket_amount
+			}
+		}).done(function(data) {
+			let ticketType = "";
+			for(let ticket of data) {
+				if(ticket.ticket_type == 0) {
+					ticketType = "성인";
+				} else if(ticket.ticket_type == 1) {
+					ticketType = "청소년";
+				} else {
+					ticketType = "경로/우대";
+				}
+				
+				$(".ticket_info").append(`
+				<div class="header">${ticketType}</div>
+	            <div class="data">
+	            	<span class="price">${ticket.ticket_amount}</span>
+	            	<span class="exe"> 원 X</span>
+	            	<span class="qty"> 2</span>
+	            </div>
+			`);
+			}
+			
+			
+		}).fail(function(){
+			
+		});
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+		
 	
 });
 

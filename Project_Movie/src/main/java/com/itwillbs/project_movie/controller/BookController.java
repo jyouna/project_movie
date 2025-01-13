@@ -1,7 +1,10 @@
 package com.itwillbs.project_movie.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.SeatVO;
+import com.itwillbs.project_movie.vo.TicketVO;
 
 @Controller
 public class BookController {
@@ -41,10 +45,9 @@ public class BookController {
 	
 	@ResponseBody
 	@PostMapping("BookTickets")
-	public List<Map<String, Object>> bookTicketsList(Model model, @RequestParam String start_time) {
-		
+	public List<Map<String, Object>> bookTicketsList(Model model,@RequestParam Map<String, String> conditionMap) {
 		// 스케줄에 등록된 영화 정보 가져오는 List
-		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(start_time);
+		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(conditionMap);
 		model.addAttribute("schWithMovie", schWithMovie);
 //		System.out.println("schWithMovie : " + schWithMovie);
 		
@@ -53,10 +56,10 @@ public class BookController {
 			
 			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
 			
-			String start_time1 = timeFormatter.format(map.get("start_time"));
+			String start_time = timeFormatter.format(map.get("start_time"));
 			String end_time = timeFormatter.format(map.get("end_time"));
 			
-			map.put("start_time", start_time1);
+			map.put("start_time", start_time);
 			map.put("end_time", end_time);
 		}
 	
@@ -64,9 +67,16 @@ public class BookController {
 		return schWithMovie;
 	}
 	
+	@ResponseBody
+	@GetMapping("GetMovieListOnScheduleTable")
+	public List<MovieVO> getMovieListOnScheduleTable(@RequestParam Map<String, String> conditionMap) {
+		List<MovieVO> movieList = service.getMovieListCheck(conditionMap);
+		return movieList;
+	}
+	
 	
 	@GetMapping("BookSeat")
-	public String bookSeatPage(HttpSession session, Model model) {
+	public String bookSeatPage(HttpSession session, Model model, TicketVO ticket) {
 
 		// 로그인 후 좌석 선택 가능
 		// 미로그인 시 로그인 폼으로 이동
@@ -103,14 +113,27 @@ public class BookController {
 		System.out.println(seatList);
 		
 		
+		List<TicketVO> ticketType = service.getTicketType();
+		model.addAttribute("ticketType", ticketType);
 		
+		System.out.println(ticketType);
 		
 		
 		
 		return "book_tickets/book_seat";
 	}
 	
-	
+	@ResponseBody
+	@PostMapping("BookSeat")
+	public String bookSeat(Model model, TicketVO ticket) {
+		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+//		String showDate = formatter.format();
+
+		
+		
+		return "";
+	}
 	
 
 	@GetMapping("BookPay")

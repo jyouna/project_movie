@@ -295,7 +295,7 @@ a .mv_title {
 }
 
 .sec01 {
-    display: flex;
+	display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 20px;

@@ -13,6 +13,6 @@ public class TicketVO {
 	 */
 	
 	private int ticket_code;
-	private int ticket_type;
-	private int ticket_amount;
+	private int ticket_type; // 티켓분류(0 : 성인, 1 : 청소년, 2 : 경로/우대)
+	private int ticket_amount; // 티켓 금액
 }

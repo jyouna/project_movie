@@ -163,7 +163,6 @@
 								<h4>날짜를 선택해주세요</h4>
 								<c:forEach var="movie" items="${movieList}">
 									<section class="sec01" id="${movie.movie_name}">
-										<!-- 영화 제목과 이용가 표시 -->
 									    <div class="movie_container">
 									        <div class="mv_age">
 										        <c:choose>
@@ -184,9 +183,7 @@
 									        <div class="mv_title">${movie.movie_name}</div>
 									    </div>
 									
-									    <!-- 시간/좌석 버튼들 -->
 									    <div class="time_seat_container" id="${movie.movie_code}">
-									    	<!-- ajax로 버튼 추가 -->
 									    </div>
 									</section>
 								</c:forEach>

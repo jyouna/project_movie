@@ -9,16 +9,23 @@ import org.apache.ibatis.annotations.Param;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
+import com.itwillbs.project_movie.vo.TicketVO;
 
 @Mapper
 public interface BookMapper {
 
 	List<MovieVO> selectMovieList();
 
-	List<Map<String, Object>> selectSchWithMovie(
-			@Param("start_time") String start_time);
+	List<Map<String, Object>> selectSchWithMovie(Map<String, String> conditionMap);
 
 	List<SeatVO> selectSeat();
+
+	Map<String, String> getSelectMovie(String movie_code);
+
+	List<TicketVO> selectTicketType();
+
+	List<MovieVO> selectMovieListCheck(Map<String, String> conditionMap);
+
 
 
 }

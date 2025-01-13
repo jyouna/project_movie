@@ -32,9 +32,19 @@
 				</div>
 				<form action="BookSeat" name="seatChoice" method="post">
 					<ul>
-						<c:forEach var="type" items="성인, 청소년, 노약자">
+						<c:forEach var="type" items="${ticketType}">
 							<li>
-								<strong>${type}</strong>
+								<c:choose>
+									<c:when test="${type.ticket_type eq 0}">
+										<strong>성인</strong>
+									</c:when>
+									<c:when test="${type.ticket_type eq 1}">
+										<strong>청소년</strong>
+									</c:when>
+									<c:otherwise>
+										<strong>경로/우대</strong>
+									</c:otherwise>
+								</c:choose>
 								<div class="ctrl_box">
 									<button type="button" class="minus_btn">-</button>
 									<input type="text" class="count" name="count" value="0" readonly>

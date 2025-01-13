@@ -18,16 +18,21 @@
 		JOIN movie m
 		ON s.movie_code = m.movie_code
 		WHERE DATE_FORMAT(start_time, '%Y년 %m월 %d') = #{start_time} 
-<!-- 		<if test="movie_name != null and movie_name != ''"> -->
-<!-- 		AND s.movie_name = #{movie_name} -->
-<!-- 		</if> -->
-		ORDER BY start_time
+		AND start_time > now()
+		<if test="movie_name != ''">
+			AND movie_name = #{movie_name}
+		</if>
+		ORDER BY movie_type, start_time
 	</select>
 	
-	
-	
-	
-	
+	<select id="selectMovieListCheck" resultType="movie">
+		SELECT *
+		FROM movie
+		WHERE ${columnName} = #{searchCondition}
+		<if test="searchCondition2 != null">
+			AND ${columnName2} = #{searchCondition2}
+		</if>
+	</select>
 	
 	<select id="selectSeat" resultType="seat">
 		SELECT SUBSTR(seat_code, 4) AS seat_code
@@ -36,7 +41,13 @@
 		ORDER BY seat_row ASC, seat_col ASC;
 	</select>
 	
-
+	<select id="selectTicketType" resultType="map">
+		SELECT *
+		FROM ticket
+<!-- 		WHERE ticket_type = #{ticket_type} -->
+	</select>
+	
+	
 </mapper>
 
 
