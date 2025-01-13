@@ -302,6 +302,10 @@ public class MovieController {
 		}
 	}
 	
+	// 관리자 영화관리에서 상영예정작을 다시 대기 영화로 벼녁ㅇ
+//	@GetMapping("RemoveFromUpcoming")
+//	public String removeFromUpcoming()
+	
 	// 관리자 영화관리에서 영화상태 지난상영작으로 변경
 	// 업데이트 후 alert창에 표시할 문구 리턴
 	@ResponseBody

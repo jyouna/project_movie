@@ -3,6 +3,7 @@ package com.itwillbs.project_movie.controller;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,28 @@ public class ScheduleController {
 	// 관리자페이지 영화관리 상영스케줄관리 페이지 맵핑
 	@GetMapping("AdminMovieSetSchedule")
 	public String adminMovieSetSchedule() {
+		
+//	    // 오늘 날짜로 설정
+//	    Calendar calendar = Calendar.getInstance();
+//	    
+//	    // 해당 달의 첫날 계산
+//	    calendar.set(Calendar.DAY_OF_MONTH, 1);
+//	    int firstDay = calendar.get(Calendar.DAY_OF_MONTH);
+//	    int firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+//	    
+//	    // 해당 달의 마지막 날 계산
+//	    int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+//	    calendar.set(Calendar.DAY_OF_MONTH, lastDay);
+//	    int lastDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+//	    
+//	    // 요일 배열 (1: 일요일, 2: 월요일, ... , 7: 토요일)
+//	    String[] days = {"", "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"};
+//	    
+//	    System.out.println("해당 달의 첫날: " + firstDay + "일 (" + days[firstDayOfWeek] + ")");
+//	    System.out.println("해당 달의 마지막 날: " + lastDay + "일 (" + days[lastDayOfWeek] + ")");
+
+		
+		
 		return "adminpage/movie_set/movie_schedule_info";
 	}
 

@@ -216,6 +216,22 @@ $(function() {
 		}
 	});
 	
+	// 상영예정작에서 삭제 버튼 클릭시 영화상태를 상영예정작에서 대기로 변경
+	$("#remove_from_upcoming_btn").click(function() {
+		// 테이블 선택여부 판별 메서드 호출
+		if(!isClicked()) {
+			return;
+		}
+		
+		// 시즌영화는 투표를 통해 선정한 영화이기 때문에 삭제 불가
+		if(movie_type == '시즌') {
+			alert("시즌 영화는 투표로 선정된 영화이기 때문에 삭제 불가합니다");
+			return;
+		}
+		
+//		location.href
+	})
+	
 	// 테이블 선택여부 판별 메서드
 	function isClicked() {
 		if(movie_code == "") {
