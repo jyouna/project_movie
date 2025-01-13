@@ -74,6 +74,7 @@
 											</c:choose>
 										</span>
 										<span class="mv_title">${movie.movie_name}</span>
+										<input type="text" value="${movie.movie_code}" hidden>
 									</a>
 								</div>
 							</c:forEach>

@@ -6,8 +6,6 @@ $(function() {
 	$(".movie_schedule_info h4").css("display", "flex");
 	$(".movie_schedule_info :not(h4)").css("display", "none");
 	
-	
-	
 	let isDateSelected = false;
 	
 	$(".mv_list").click(function() {
@@ -17,15 +15,14 @@ $(function() {
 			return;
 		}
 		
+		// 영화선택시 해당영화코드 변수에 초기화
 		$(".mv_list").removeClass("selected");
 		$(this).addClass("selected");
+		selectedMovie = $(this).find("input[type='text']").val();
 		
-		selectedMovie = $(this).text().trim();
-	    console.log("선택된 영화 : " + selectedMovie);
-		
+	    console.log("선택된 영화코드 : " + selectedMovie);
+		// 스케줄 조회 메서드 호출
 		loadSchedule(selectedDate, selectedMovie);
-
-
 	});
 	
 	
@@ -33,34 +30,28 @@ $(function() {
 	$(".date_item").click(function() {
 		$(".sec01").css("display", "flex");
 		isDateSelected = true;
-		
-		// 다시 상영시간 보이게 처리	
-		$(".movie_schedule_info :not(h4)").css("display", "flex");
-		$(".movie_schedule_info h4").css("display", "none");
-		
-	
 		selectedDate = $(this).data("date");
 	    console.log("선택된 날짜 : " + selectedDate);
 		
+		// 스케줄 조회 메서드
 		loadSchedule(selectedDate, "");
-		
 	});
 	
 	
-	
-	function loadSchedule(start_time, movie_name) {
+	// 예매 날짜 영화 선택시 스케줄 표시 메서드
+	function loadSchedule(selectedDate, selectedMovie) {
+		
+		// 날짜 및 영화 선택시 조건에 해당하는 영화만 연령등급 영화명 표시
 		$.ajax({
 			type : "GET",
-			url : "GetMovieListOnScheduleTable",
+			url : "A",
 			data : {
-				columnName : "movie_status",
-				searchCondition : "현재상영작",
-				columnName2 : "movie_name",
-				searchCondition2 : movie_name
-				
-			},
-			dateType : "JSON"
+				start_time : selectedDate,
+				movie_code : selectedMovie
+			}
 		}).done(function(movieList) {
+			$(".movie_schedule_info").empty();
+			
 			for(let movie of movieList) {
 				let ageLimit = movie.age_limit;
 				let img = "";
@@ -88,18 +79,15 @@ $(function() {
 				`);
 			}
 			
-			// 해당 조건에 해당하는 스케줄 조회
+			// 날짜 및 영화 선택시 조건에 해당하는 스케줄 해당영화 섹션에 표시
 			$.ajax({
-				type : "POST",
-				url : "BookTickets",
+				type : "GET",
+				url : "B",
 				data : {
-				 	movie_name : movie_name,
-					start_time : start_time
-					
-				},
-				dateType : "JSON"
+					start_time : selectedDate,
+					movie_code : selectedMovie
+				}
 			}).done(function(scheduleList) {
-				$(".time_seat_container").empty();
 				for(let schedule of scheduleList) {
 					let hallName = schedule.theater_code;
 					if(hallName == "T1") {
@@ -114,7 +102,7 @@ $(function() {
 					$("#" + schedule.movie_code).append(`
 					    <a class="time_seat_btn">
 					        <input type="hidden" value="${schedule.movie_code}">
-					        <span class="mv_time">${schedule.start_time}</span>
+					        <span class="mv_time">${schedule.str_start_time}</span>
 					        <span class="details">
 					            <span class="seat">70/${schedule.avail_seat}</span>
 					            <span class="hall">${hallName}</span>
@@ -122,19 +110,13 @@ $(function() {
 					    </a>
 					`);
 				}
-				
-				
-				
-				
 			}).fail(function() {
-				$(".movie_schedule_info").html(
-            		"<h3>페이지를 로드할 수 없습니다. 관리자에게 문의 바랍니다.</h3>"
-        		);
+					alert("스케줄 조회 실패하였습니다.")
 			});
-			
-			
+		}).fail(function() {
+			alert("영화정보 조회 실패했습니다.")
 		});
-	}	
+	}
 	
 	
 	
@@ -146,10 +128,6 @@ $(function() {
 //					location.href = "BookSeat?schCode=" + schCode;
 //				}
 //			});
-	
-	
-	
-	
 	
 
 });
