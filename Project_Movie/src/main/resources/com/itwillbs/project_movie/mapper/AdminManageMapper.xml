@@ -38,7 +38,7 @@
 	</select>
 	
 	<select id="selectMemberListPaging" resultType="memberAllInfo">
-		SELECT  							-- 회원테이블 구성 시 가입일, 탈퇴일 혹은 고유 인덱스 컬럼이 필요하다는 것을 고려하지 못하여 중복되지 않는 값으로 정렬이 불가
+		SELECT  		
 			c.member_id AS member_id, 
 			count(*) AS coupon_num, 
 		    m.point AS remain_point,
@@ -55,7 +55,8 @@
 		    m.member_type AS member_type,
 		    m.email_auth_status AS email_auth_status,
 		    m.phone_auth_status AS phone_auth_status,
-		    m.member_status AS member_status
+		    m.member_status AS member_status,
+		    m.regis_date AS regis_date
 		FROM 
 			member m 
 		JOIN 
@@ -77,7 +78,12 @@
 			</choose>	                
 		</if>
 		GROUP BY 
-			c.member_id		
+			c.member_id
+		ORDER BY 
+			m.regis_date
+		LIMIT
+			#{startRow},
+			#{listLimit}				
 	</select>
 	
 	<select id="checkAdminId" resultType="String">
@@ -335,14 +341,8 @@
 	</select>
 	
 	<select id="getMemberListCount" resultType="int">
-		SELECT  		
-			COUNT(*)
-		FROM 
-			member m 
-		JOIN 
-			coupon c
-		ON 
-			m.member_id = c.member_id  
+		SELECT COUNT(*)
+		FROM member m 
 		<if test="!searchContent.equals('')">
 			WHERE
 			<choose>
@@ -357,8 +357,6 @@
 				</when>
 			</choose>	                
 		</if>
-		GROUP BY 
-			c.member_id	
 	</select>
 	
 	<select id="getEventBoardListCount" resultType="int">
@@ -494,5 +492,16 @@
 		LIMIT
 			#{startRow},
 			#{listLimit}					
+	</select>
+	
+	<select id="getMonthlyTotalNewMember" resultType="int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE 
+			regis_date 
+		BETWEEN
+			CONCAT(#{year}, '-', #{month}, '-01')
+		AND
+			LAST_DAY(CONCAT(#{year}, '-', #{month}, '-01'))
 	</select>
  </mapper>

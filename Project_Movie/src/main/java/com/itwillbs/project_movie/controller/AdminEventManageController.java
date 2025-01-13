@@ -107,7 +107,6 @@ public class AdminEventManageController {
 	
 	@PostMapping("updateEventBoard") // 이벤트 게시글 수정폼 제출
 	public String eventBoardModify(EventBoardVO eventVo) {
-		
 		return "";
 	}
 	
@@ -157,6 +156,7 @@ public class AdminEventManageController {
 	
 	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 폼 이동
 	public String chooseEventWinner(int event_code, Model model) {
+	
 		System.out.println("이벤트 당첨 컨트롤러 이동");
 		EventBoardVO eventVo = adminService.selectWinner(event_code);
 		List<MemberVO> memberVo = adminService.getMemberList();
@@ -300,10 +300,9 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
+		
 		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointList", searchKeyword, searchContent);
-		
 		List<PointVO> pointVo = adminService.getPointRecord(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
-		
 		model.addAttribute("pointVo", pointVo);
 		model.addAttribute("pageInfo", pageInfo);
 		

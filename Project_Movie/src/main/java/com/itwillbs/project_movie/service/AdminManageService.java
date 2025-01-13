@@ -1,5 +1,6 @@
 package com.itwillbs.project_movie.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -179,10 +180,8 @@ public class AdminManageService {
 		// 포인트당첨자 -> pointWinnerList
 		// 포인트내역   -> pointList
 		*/
-		
-
 		switch (boardName) {
-		case "meberList" : 
+		case "memberList" : 
 			listCount = manageMapper.getMemberListCount(searchKeyword, searchContent); break;
 		case "eventBoardList" : 
 			listCount = manageMapper.getEventBoardListCount(searchKeyword, searchContent); break;
@@ -195,9 +194,6 @@ public class AdminManageService {
 		case "pointList" : 
 			listCount = manageMapper.getPointListCount(searchKeyword, searchContent); break;
 		}
-		
-
-		
 		return listCount;
 	}
 	
@@ -255,5 +251,29 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getPointRecord(startRow, listLimit, searchKeyword, searchContent);
 	}
-	
+
+	public int monthlyTotalNewMemberStatics(int year, int month) {
+		// TODO Auto-generated method stub
+		return manageMapper.getMonthlyTotalNewMember(year, month);
+	}
+
+	public Map<String, Object> getMonthlyNewMember(int year) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String[] arr = {"", "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"};
+		
+		for(int i = 1; i <= 12; i++) {
+			int monthlyCount = manageMapper.getMonthlyTotalNewMember(year, i);
+			map.put(arr[i], monthlyCount);
+			System.out.println(arr[i] + " 가입자 : " + monthlyCount);
+//			System.out.println("월별 통계 : " + map);
+		}
+		
+		System.out.println("map에 저장된 값 : " + map);
+		
+		return map;
+	}
+
+
 }

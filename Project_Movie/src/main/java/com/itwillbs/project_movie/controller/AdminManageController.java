@@ -1,10 +1,13 @@
 package com.itwillbs.project_movie.controller;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.reflection.SystemMetaObject;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
 import com.itwillbs.project_movie.handler.PagingHandler;
 import com.itwillbs.project_movie.service.AdminManageService;
+import com.itwillbs.project_movie.service.MemberService;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
@@ -39,6 +43,9 @@ public class AdminManageController {
 	
 	@Autowired
 	private PagingHandler pagingHandler;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping("AdminLogin") // 관리자 계정 로그인 폼 이동
 	// 세션 admin_sId가 있을 시 바로 접속, 그렇지 않을 경우 관리자 로그인 페이지 이동
@@ -189,100 +196,37 @@ public class AdminManageController {
 		}
 
 		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "memberList", searchKeyword, searchContent);
-		List<MemberAllInfoVO> voList = adminService.queryMemberList(pageInfo.getStartRow(), pageInfo.getPageListLimit(), 
-																	searchKeyword, searchContent);
-		
+		List<MemberAllInfoVO> voList = adminService.queryMemberList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("voList", voList);
 		
 		return "adminpage/member_manage/member_list";
 	}
-
 	
 	
-//	@GetMapping("searchMemberList")
-//	public String searchMemberList(@RequestParam(defaultValue = "1") Model model, String searchKeyword, String searchContent) {
-//		List<MemberVO> voList = adminService.searchedMemberList(searchKeyword, searchContent);
-//		
-//		
-//		
-//		return "adminpage/member_manage/member_list";
-//	}
+	// 회원계정 메크로 생성기
+	@GetMapping("makeNewmember")
+	public String makeNewmember() {
+		String email = "acvbqd@naver.com";
+		String id = "testId";
+		Random r = new Random();
+		for(int i = 2105; i < 2222; i++) {
+			Date date = Date.valueOf("2024-09-01");
+			MemberVO vo = new MemberVO();
+			vo.setMember_id(id + i + r.nextInt(50000));
+			vo.setMember_passwd("12345678");
+			vo.setMember_name("네이버");
+			vo.setBirth_date(date);
+			vo.setEmail(email + i + r.nextInt(50000));
+			vo.setPhone("123-1123-1234");
+			vo.setGender('M');
+			vo.setGenre("액션");
+			vo.setInfo_open(false);
+			memberService.registMember(vo);
+		}
+		
+		return "redirect:/MemberList";
+	}
 	
-//	
-//	@GetMapping("StaticsVisitors") // 방문자 통계
-//	public String staticsVisitors(HttpSession session, Model model) {
-//		// 관리자 로그인 판별
-//		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
-//			model.addAttribute("msg", "로그인 후 이용가능");
-//			model.addAttribute("targetURL", "AdminLogin");
-//			return "result/process";
-//		}
-//		
-//		// 관리자 메뉴 접근권한 판별
-//		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
-//			model.addAttribute("msg", "접근 권한이 없습니다.");
-//			model.addAttribute("targetURL", "AdminpageMain");
-//			return "result/process";
-//		}
-//		
-//		return "adminpage/statics_manage/statics_visitors";
-//	}
-//
-//	@GetMapping("StaticsSales") // 매출 통계 
-//	public String staticsSales(HttpSession session, Model model) {
-//		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
-//			model.addAttribute("msg", "로그인 후 이용가능");
-//			model.addAttribute("targetURL", "AdminLogin");
-//			return "result/process";
-//		}
-//		
-//		// 관리자 메뉴 접근권한 판별
-//		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
-//			model.addAttribute("msg", "접근 권한이 없습니다.");
-//			model.addAttribute("targetURL", "AdminpageMain");
-//			return "result/process";
-//		}
-//		return "adminpage/statics_manage/statics_sales";
-//	}
-//	
-//	@GetMapping("StaticsVoteResult") // 투표 결과(통계)
-//	public String staticsVoteResult(HttpSession session, Model model) {
-//		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
-//			model.addAttribute("msg", "로그인 후 이용가능");
-//			model.addAttribute("targetURL", "AdminLogin");
-//			return "result/process";
-//		}
-//		
-//		// 관리자 메뉴 접근권한 판별
-//		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
-//			model.addAttribute("msg", "접근 권한이 없습니다.");
-//			model.addAttribute("targetURL", "AdminpageMain");
-//			return "result/process";
-//		}
-//		return "\"adminpage/statics_manage/statics_voteResult";
-//	}
-//	
-//	@GetMapping("StaticsNewMember") // 신규 가입자 통계
-//	public String staticsNewMembers(HttpSession session, Model model) {
-//		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
-//			model.addAttribute("msg", "로그인 후 이용가능");
-//			model.addAttribute("targetURL", "AdminLogin");
-//			return "result/process";
-//		}
-//		
-//		// 관리자 메뉴 접근권한 판별
-//		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
-//			model.addAttribute("msg", "접근 권한이 없습니다.");
-//			model.addAttribute("targetURL", "AdminpageMain");
-//			return "result/process";
-//		}
-//		return "adminpage/statics_manage/statics_newMember";
-//	}
-//	
-//	@GetMapping("SpecificPeriodSearch") // 상세 기간 조회 버튼
-//	public String specificPeriodSearch() {
-//		return "adminpage/specific_period_search";
-//	}
 }
 

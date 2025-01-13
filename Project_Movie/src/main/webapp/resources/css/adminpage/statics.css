@@ -2,11 +2,10 @@
 
 h3 {
 	padding: 10px;
-	background-color: lightgrey;
-}
+	background-color: lightgrey;}
 
 #tableDiv {
-	border: 1px solid red;
+/* 	border: 1px solid red; */
 	width: 800px;
 	margin: 20px;
 }
@@ -17,28 +16,36 @@ h3 {
 	height: 20px;
 	width: 800px;
 	text-align: center;
-	padding: 10px;
-}
+	padding: 10px;}
+
+#chartArea {
+	width: 1000px;
+	height: 600px;}
 
 #mainTable th, #mainTable td {
 	width: 50%;
 	border: 1px solid black; /* 각 셀에 경계선 추가 */
-	padding: 8px; /* 셀 내부 여백 */
-}
+	padding: 8px; /* 셀 내부 여백 */}
 
 #showStatics {
 	margin: 20px;
-	border: 1px solid red;
+/* 	border: 1px solid red; */
 	width: 800px;
-	height: 400px;
-}
+	height: 400px;}
 
 input {
-	margin-bottom: 5px;
-}
+	margin-bottom: 5px;}
 
 input[type="button"] {
 	border-radius: 5px;
 	border: 1px;
-	padding: 0.3em;
-}
+	padding: 0.3em;}
+
+#tableDiv {
+	display: inline-block;}
+
+#year {
+	display : inline-block;}	
+	
+#month {
+	display: none;}

@@ -49,6 +49,7 @@ th, td {
 	<div id="tableDiv">
 		<table id="mainTable" border="1">
 			<tr align="center" id="tr01">
+				<th>가입일</th>
 				<th>아이디</th>
 				<th>이름</th>
 				<th>생년월일</th>
@@ -75,12 +76,11 @@ th, td {
 			<c:otherwise>
 				<c:forEach var="member" items="${voList}" varStatus="status">
 					<tr>
+						<td><fmt:formatDate value="${member.regis_date}" pattern="yyyy-MM-dd"/></td>
 						<td>${member.member_id}</td>
 <%-- 						<th>${member.member_passwd}</th> --%>
 						<td>${member.member_name}</td>
-						<td>
-							<fmt:formatDate value="${member.birth_date}" pattern="yyMMdd"/>
-						</td>
+						<td><fmt:formatDate value="${member.birth_date}" pattern="yyMMdd"/></td>
 						<td>${member.email}</td>
 						<td>${member.phone}</td>
 						<td>

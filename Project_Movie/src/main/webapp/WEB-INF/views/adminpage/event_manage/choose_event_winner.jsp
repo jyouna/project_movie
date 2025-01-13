@@ -83,6 +83,5 @@
 		<input type="button" value="돌아가기" onclick="history.back()">
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-
 </body>
 </html>

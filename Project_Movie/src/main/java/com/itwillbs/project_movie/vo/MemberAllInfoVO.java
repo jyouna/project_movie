@@ -31,4 +31,5 @@ public class MemberAllInfoVO {
 	private int remain_point;			// 잔여 포인트
 	private int coupon_num; 			// 보유 쿠폰 개수
 	private int member_status;         // 회원 상태 (1: 정상, 2: 휴면, 3: 탈퇴)
+	private Timestamp regis_date;         	// 회원가입일자
 }

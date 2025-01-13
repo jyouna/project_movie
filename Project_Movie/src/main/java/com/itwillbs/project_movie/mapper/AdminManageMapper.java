@@ -118,7 +118,9 @@ public interface AdminManageMapper {
 											@Param("searchKeyword") String searchKeyword, 
 											@Param("searchContent") String searchContent);
 
+	int getMonthlyTotalNewMember(@Param("year")int year,
+								@Param("month")int month);
 
-
+//	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 
 }

@@ -1,6 +1,8 @@
 package com.itwillbs.project_movie.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+
 import lombok.Data;
 //민기
 
@@ -51,11 +53,10 @@ public class MemberVO {
 	private boolean email_auth_status; // 이메일 인증 상태 (0: 미인증, 1: 인증)
 	private int member_status;         // 회원 상태 (1: 정상, 2: 휴면, 3: 탈퇴)
 
-	
-	
 	private int point;                 // 포인트
 	private int member_type;           // 회원 유형 (일반, 관리자 등 구분)
 	private boolean phone_auth_status; // 전화번호 인증 상태 (0: 미인증, 1: 인증)
+	private Timestamp regis_date;	   // 가입일
 }
 
 

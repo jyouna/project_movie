@@ -5,8 +5,6 @@
 <mapper namespace="com.itwillbs.project_movie.mapper.MemberMapper">
 <!-- 민기 -->
 	<!-- 회원 가입 - INSERT -->
-
-	
 	
 	<insert id="insertMember">
 	INSERT INTO member (
@@ -15,7 +13,7 @@
 	    email, phone, gender, genre,
 		text_receive, email_receive, info_open, 
 		point,member_type, email_auth_status, 
-		phone_auth_status, member_status
+		phone_auth_status, member_status, regis_date
 		
 	) VALUES (
 		#{member_id}, #{member_passwd},
@@ -23,7 +21,7 @@
 	    #{email}, #{phone},
 	    #{gender}, #{genre},
 	    #{text_receive}, #{email_receive}, #{info_open},
-		0,1,0,1,1
+		0,1,0,1,1, now()
 	)
 	</insert>
 	

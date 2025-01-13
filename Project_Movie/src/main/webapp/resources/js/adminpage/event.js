@@ -194,4 +194,16 @@ $(function(){
 			$("#giveCouponForm").submit();
 		}	
 	});
+	
+//	$("#eventStatus").on("chagne", function(){
+//		let status = $("#eventStatus").val();
+//		$.ajax({
+//			url : "getListbyStatus",
+//			type : "get",
+//			data : {status : status},
+//			success : function(){
+//				
+//			}
+//		});
+//	});
 });

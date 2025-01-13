@@ -48,16 +48,18 @@ public class PagingHandler {
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListForPaging(boardName, searchKeyword, searchContent); // 서비스에서 boardName값 판별하여 다르게 작동!
 		System.out.println("리스트 카운트 : " + listCount);
+
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);	
 		System.out.println("MaxPage 값 1번 : " + maxPage);
+
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
 		System.out.println("pageNum 1번 : " + pageNum);
 		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
-		int endPage = startPage + pageListLimit - 1;
-		
+		int endPage = startPage + pageListLimit - 1;	
+
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		System.out.println("pageNum 2번 : " + pageNum);
@@ -67,6 +69,7 @@ public class PagingHandler {
 		if(pageNum > maxPage) {
 			pageNum = 1;
 		}
+
 		if(pageNum < 1 || pageNum > maxPage) {
 			System.out.println("pageNum 3번" + pageNum);
 			System.out.println("MaxPage 값 2번 : " + maxPage);
@@ -90,25 +93,19 @@ public class PagingHandler {
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
-		
 		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit - 1;
-		
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}
-		
 		// 2번 페이지로 와서 검색하는 경우 maxPage보다 pageNum이 큰 경우가 발생하게 되므로 1페이지로 변경시킴.
 		if(pageNum > maxPage) {
 			pageNum = 1;
 		}
-		
 		if(pageNum < 1 || pageNum > maxPage) {
 			return null;
 		}	
-		
 		PageInfo2 pageInfo = new PageInfo2(listCount, pageListLimit, maxPage, startPage, endPage, pageNum, listLimit, startRow);
-		
 		return pageInfo;
 	}
 
