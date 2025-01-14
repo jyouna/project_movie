@@ -53,7 +53,7 @@ $(function() {
 	});
 	
 	// 스케줄 등록 모달 오픈
-	$("#regist_schedule_btn").click(function() {
+	$("#registScheduleBtn").click(function() {
 		$("#schedule_regist_modal").css("display", "block");
 	});
 	

@@ -29,76 +29,92 @@
 					<option value="T2" <c:if test="${theater_code eq 'T2'}">selected</c:if>>2관</option>
 					<option value="T3" <c:if test="${theater_code eq 'T3'}">selected</c:if>>3관</option>
 				</select>
-				<br>
 				<input type="date" class="changeScheduleTable" value="${select_date}">
-				<input type="button" id="regist_schedule_btn" value="스케줄등록">
-				<input type="button" value="스케줄변경">
+				<input type="button" id="registScheduleBtn" value="스케줄등록">
 				<input type="button" value="스케줄삭제">
 			</div>
 			<div id="btnGroup02">
-				<input type="button" value="영화정보">
+				<input type="button" value="예매 활성화">
+				<input type="button" value="예매 비활성화">
 			</div>
 		</div>
 		<div id="body_main">
-		</div>
-		<div id="schedule_regist_modal" class="modal">
-			<div class="modal_content">
-				<form action="ScheduleRegistForm" method="Post">
-					<h2>스케줄 등록</h2>
-					<hr>
-					   <label>영화선택</label>
-					<select name="selected_movie">
-						<option value="" selected="selected">선택</option>
-						<optgroup label="상영예정작"></optgroup>
-						<optgroup label="현재상영작"></optgroup>
-					</select>
-					<br>
-				    <label>영화코드</label>
-				    <input type="text" name="movie_code" readonly="readonly"><br>
-				    <label>영화명</label>
-				    <input type="text" name="movie_name" readonly="readonly"><br>
-				    <label>러닝타임</label>
-				    <input type="text" name="running_time" readonly="readonly"><br>
-				    <label>상영관</label>
-				    <select disabled="disabled">
-						<option value="T1" <c:if test="${theater_code eq 'T1'}">selected</c:if>>1관</option>
-						<option value="T2" <c:if test="${theater_code eq 'T2'}">selected</c:if>>2관</option>
-						<option value="T3" <c:if test="${theater_code eq 'T3'}">selected</c:if>>3관</option>
-					</select>
-					<input type="hidden" name="theater_code" required>	
-				    <br>
-				    <label>상영날짜</label>
-				    <input type="date" name="select_date" value="${select_date}" required readonly><br>
-				    <label>상영시작시간</label>
-				    <input type="time" name="s_time" min="09:00" max="22:30" required><br>
-				    <input type="hidden" name="str_start_time">
-				    <label>상영종료시간</label>
-				    <input type="time" name="e_time" readonly="readonly"><br>
-				    <input type="hidden" name="str_end_time">
-				    <label>청소 및 준비(분)</label>
-				    <input type="number" value="30" readonly="readonly"><br>
-				    <label>상영시간대</label>
-				    <input type="text" name="showtime_type" readonly><br>
-				    <label>예매가능여부</label>
-				    <input type="hidden" name="str_next_schedule">
-				    <select name="booking_avail">
-				    	<option value="0">예매불가</option>
-				    	<option value="1">예매가능</option>
-				    </select>
-				    <br>
-				    <span id="isRegistPossible">
-				    </span>
-				    <div class="form_btnGroup">
-				    	<input type="submit" value="등록">
-				    	<input type="reset" value="초기화">
-				    	<input type="button" class="close_modal" value="닫기">
-				    </div>
-				    <div>
-				    </div>
-				</form>
+			<div class="scheduleInfoBoardList">
+				<div class="scheduleInfoBoard">
+					<div class="scheduleCheck"><input type="checkbox" name="schedule_code"></div>
+	<%-- 				value="${schedule.schedule_code}" --%>
+					<div class="boardContent">
+						예매현황 - 예매전 예매중 예매불가<br>
+						스케줄코드 상영관 좌석현황<br>
+						영화제목 러닝타임<br>
+						시작시간 끝시간 <br>
+					</div>
+				</div>
+				<div class="creaningTime">
+					청소 및 다음 상영 준비시간(30분)
+				</div>	
 			</div>
 		</div>
 	</section>
+	
+<!-- 	스케줄 등록 모달 -->
+	<div id="schedule_regist_modal" class="modal">
+		<div class="modal_content">
+			<form action="ScheduleRegistForm" method="Post">
+				<h2>스케줄 등록</h2>
+				<hr>
+				   <label>영화선택</label>
+				<select name="selected_movie">
+					<option value="" selected="selected">선택</option>
+					<optgroup label="상영예정작"></optgroup>
+					<optgroup label="현재상영작"></optgroup>
+				</select>
+				<br>
+			    <label>영화코드</label>
+			    <input type="text" name="movie_code" readonly="readonly"><br>
+			    <label>영화명</label>
+			    <input type="text" name="movie_name" readonly="readonly"><br>
+			    <label>러닝타임</label>
+			    <input type="text" name="running_time" readonly="readonly"><br>
+			    <label>상영관</label>
+			    <select disabled="disabled">
+					<option value="T1" <c:if test="${theater_code eq 'T1'}">selected</c:if>>1관</option>
+					<option value="T2" <c:if test="${theater_code eq 'T2'}">selected</c:if>>2관</option>
+					<option value="T3" <c:if test="${theater_code eq 'T3'}">selected</c:if>>3관</option>
+				</select>
+				<input type="hidden" name="theater_code" required>	
+			    <br>
+			    <label>상영날짜</label>
+			    <input type="date" name="select_date" value="${select_date}" required readonly><br>
+			    <label>상영시작시간</label>
+			    <input type="time" name="s_time" min="09:00" max="22:30" required><br>
+			    <input type="hidden" name="str_start_time">
+			    <label>상영종료시간</label>
+			    <input type="time" name="e_time" readonly="readonly"><br>
+			    <input type="hidden" name="str_end_time">
+			    <label>청소 및 준비(분)</label>
+			    <input type="number" value="30" readonly="readonly"><br>
+			    <label>상영시간대</label>
+			    <input type="text" name="showtime_type" readonly><br>
+			    <label>예매가능여부</label>
+			    <input type="hidden" name="str_next_schedule">
+			    <select name="booking_avail">
+			    	<option value="0">예매불가</option>
+			    	<option value="1">예매가능</option>
+			    </select>
+			    <br>
+			    <span id="isRegistPossible">
+			    </span>
+			    <div class="form_btnGroup">
+			    	<input type="submit" value="등록">
+			    	<input type="reset" value="초기화">
+			    	<input type="button" class="close_modal" value="닫기">
+			    </div>
+			    <div>
+			    </div>
+			</form>
+		</div>
+	</div>
 	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

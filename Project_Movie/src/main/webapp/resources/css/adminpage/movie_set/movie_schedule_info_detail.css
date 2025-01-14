@@ -16,11 +16,14 @@ section {
 }	
 
 #btnGroup01 {
+	width: 50%;
 	float:left;
 }
 
 #btnGroup02 {
+	width: 50%;
 	float: right;
+	text-align: right;
 }
 
 #btnGroup01>select {
@@ -28,6 +31,7 @@ section {
     width: 80px;
     height: 35px;
 }
+
 #btnGroup01 input,
 #btnGroup02 input {
 	padding: 10px 15px;
@@ -41,6 +45,12 @@ section {
 #btnGroup01 input:hover,
 #btnGroup02 input:hover {
 	background-color: #e2e2e2;
+}
+
+#btnGroup01 select {
+	height: 42px;
+	border-radius: 5px;
+	text-align: center;
 }
 
 table {
@@ -110,4 +120,55 @@ h2 {
 	display: inline-block;
 	width: 100%;
 	text-align: center;
+}
+
+#body_top {
+	height: 125px;
+}
+
+.scheduleInfoBoardList {
+	border: 1px solid red;
+	padding: 20px;
+	border: 15px solid lightgray;
+	width: 100%;
+	height: 450px;
+	overflow-y: auto;
+	border-radius: 20px;
+}
+
+.scheduleInfoBoard {
+	margin-bottom: 7px;
+}
+
+.scheduleCheck {
+	width: 70px;
+	display: inline-block;
+	height: 150px;
+	vertical-align: top;
+	text-align: center;
+	background-color: lightgray;
+}
+
+.scheduleCheck>input[type="checkbox"] {
+	width: 30px;
+	height: 30px;
+	margin-top: 60px;
+}
+
+.boardContent {
+	width: 90%;
+	display: inline-block;
+	height: 150px;
+	vertical-align: top;
+	font-size: 20px;
+	background-color: lightgray;
+	padding: 10px;
+}
+
+.creaningTime {
+	text-align: center;
+	width: 98%;
+	border: 1px solid blue;
+	margin-bottom: 7px;
+	background-color: #A9A9A9;
 }
