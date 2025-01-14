@@ -86,7 +86,7 @@
 						        </div>
 						        <div class="row">
 						            <div class="header">인원</div>
-						            <div class="data">일반 1명, 청소년 1명</div>
+						            <div class="data"></div>
 						        </div>
 								 <div class="row">
 						            <div class="header">좌석</div>
@@ -96,38 +96,6 @@
 							
 							<!-- 결제 정보 섹션 -->
 						   	<div class="ticket_info">
-<%-- 						   		<c:forEach var="ticket" items="${ticketType}" varStatus="status"> --%>
-<!-- 							        <div class="row"> -->
-<!-- 							            <div class="header"> -->
-<%-- 							            	<c:choose> --%>
-<%-- 												<c:when test="${ticket.ticket_code eq 0}"> --%>
-<!-- 													<strong>성인</strong> -->
-<%-- 												</c:when> --%>
-<%-- 												<c:when test="${ticket.ticket_code eq 1}"> --%>
-<!-- 													<strong>청소년</strong> -->
-<%-- 												</c:when> --%>
-<%-- 												<c:otherwise> --%>
-<!-- 													<strong>경로/우대</strong> -->
-<%-- 												</c:otherwise> --%>
-<%-- 											</c:choose> --%>
-<!-- 							            </div> -->
-<!-- 							            <div class="data"> -->
-<%-- 							            	<span class="price">${ticket.ticket_amount}</span> --%>
-<!-- 							            	<span class="exe"> 원 X</span> -->
-<!-- 							            	<span class="qty"></span> -->
-<!-- 							            </div> -->
-<!-- 							        </div> -->
-<%-- 						   		</c:forEach> --%>
-<!-- 								<div class = "row"> -->
-<!-- 									<b>성인</b> 10000원 X 5 -->
-<!-- 								</div> -->
-<!-- 						        <div class="row"> -->
-<!-- 						            <div class="header">총금액</div> -->
-<!-- 						            <div class="data"> -->
-<!-- 						            	<span class="price"></span> -->
-<!-- 						                <span class="won"> 0 원</span> -->
-<!-- 						            </div> -->
-<!-- 						        </div> -->
 							</div>
 						
 							<div class="bottom_btn">

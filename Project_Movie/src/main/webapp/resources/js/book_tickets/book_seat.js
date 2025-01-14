@@ -35,7 +35,7 @@ $(function () {
 		
 		// 인원 변경 시 선택된 좌석 초기화 메서드
 		resetSeats();
-		seats();
+		ticketCount();
 		
 
 		
@@ -55,8 +55,7 @@ $(function () {
 
 		// 인원 변경 시 선택된 좌석 초기화 메서드
 		resetSeats();
-		
-		seats();
+		ticketCount();
 	});
 	
 	
@@ -68,7 +67,6 @@ $(function () {
 		// 관람객 타입별 인원수 합		
 		$(".count").each(function() {
 			totalCount += parseInt($(this).val());
-			console.log(totalCount);
 		});
 		
 		// 인원수 만큼 좌석 선택 가능
@@ -85,17 +83,23 @@ $(function () {
 			
 		} else if(selectedSeats.length == totalCount) {
 			$(this).removeClass("selected");
-			alert("좌석이 선택이 완료되었습니다");
+			alert("좌석 선택이 완료되었습니다");
+
+			// 선택된 좌석 값 가져오기
+			selectedSeats = $(".seat.selected").map(function() {
+				return $(this).text() + " ";
+			}).get();
 		}
+		console.log("선택된 좌석 : " + selectedSeats);
 		
 		// 휠체어석 선택 시 알림창
 		if(($(this).text() == "A8" || $(this).text() == "A9") && $(this).hasClass("selected")) {
 			alert("해당 좌석은 휠체어석입니다.\n일반 고객은 다른 좌석을 선택해 주시기 바랍니다.");
 		}
+
 			
 		$(".mv_info .data").eq(3).empty();
 		$(".mv_info .data").eq(3).append(selectedSeats);
-		
 	});
 	
 	
@@ -122,24 +126,8 @@ $(function () {
 		
 	});		
 	
-	let ticket_type = "";
-	$("ul li strong").each(function() {
-		ticket_type = $(this).text();
-			if(ticket_type == '성인') {
-				ticket_type = 0;
-			} else if(ticket_type == '청소년') {
-				ticket_type = 1;
-			} else if(ticket_type == '경로/우대'){
-				ticket_type = 2;
-			}
-			
-//		console.log("관객 : " + ticket_type);
-	});
-	
-	
-	
-	
-	function seats() {
+	// 관객 타입 별 가격과 인원 수에 따른 총금액
+	function ticketCount() {
 		
 		let adultCount = parseInt($(".count").eq(0).val());
 		let youthCount = parseInt($(".count").eq(1).val());
@@ -150,73 +138,84 @@ $(function () {
 		let seniorAmount = 5000;
 		
 		let totalAmount = adultCount * adultAmount + youthCount * youthAmount + seniorCount * seniorAmount;
-		console.log(totalAmount);
+//		console.log(totalAmount);
 		
 		$(".ticket_info").empty();
+		$(".mv_info .row .data").eq(2).empty();
+		
+		// 일반 티켓 가격과 수량
 		if(adultCount != 0) {
-//				<div class="header">
-//					<strong>일반</strong>
-//	            </div>
-//	            <div class="data">
-//	            	<span class="price">${ticket.ticket_amount}</span>
-//	            	<span class="exe"> 원 X</span>
-//	            	<span class="qty"></span>
-//	            </div>
-			$(".ticket_info").prepend(`
-			
-			
+			$(".ticket_info").append(`
 				<div class = "row">
-					<strong>성인</strong> ` + adultAmount + ` 원 X `+ adultCount +`
-				</div> 
+					<div class="header">
+						<strong>일반</strong>
+		            </div>
+		            <div class="data">
+		            	<span class="price">` + adultAmount + `</span>
+		            	<span class="exe"> 원 X</span>
+		            	<span class="qty">` + adultCount + `</span>
+		            </div>
+	            </div>
 			`)
+			
+			$(".mv_info .row .data").eq(2).append(`
+				일반 ` + adultCount + `명
+			`);
 		}
+		// 청소년 티켓 가격과 수량
 		if(youthCount != 0) {
-			$(".ticket_info").prepend(`
+			$(".ticket_info").append(`
 				<div class = "row">
-					<strong>청소년</strong> ` + youthAmount + ` 원 X `+ youthCount +`
-				</div> 
+					<div class="header">
+						<strong>청소년</strong>
+		            </div>
+		            <div class="data">
+		            	<span class="price">` + youthAmount + `</span>
+		            	<span class="exe"> 원 X</span>
+		            	<span class="qty">` + youthCount + `</span>
+		            </div>
+	            </div>
 			`)
+			
+			$(".mv_info .row .data").eq(2).append(`
+				청소년 ` + youthCount + `명
+			`);
 		}
+		// 경로/우대 티켓 가격과 수량
 		if(seniorCount != 0) {
-			$(".ticket_info").prepend(`
+			$(".ticket_info").append(`
 				<div class = "row">
-					<strong>경로/우대</strong> ` + seniorAmount + ` 원 X `+ seniorCount +`
-				</div> 
+					<div class="header">
+						<strong>경로/우대</strong>
+		            </div>
+		            <div class="data">
+		            	<span class="price">` + seniorAmount + `</span>
+		            	<span class="exe"> 원 X</span>
+		            	<span class="qty">` + seniorCount + `</span>
+		            </div>
+	            </div>
 			`)
+			
+			$(".mv_info .row .data").eq(2).append(`
+				경로/우대 ` + seniorCount + `명
+			`);
 		}
+		
+		// 총금액
 		$(".ticket_info").append(`
 	        <div class="row">
 	            <div class="header">총금액</div>
 	            <div class="data">
 	            	<span class="price"></span>
-	                <span class="won">`+  totalAmount + `원</span>
+	                <span class="won">`+  totalAmount + ` 원</span>
 	            </div>
 	        </div>
 		`);
 		
+		
+		
+		
 	}
-	
-//			$(".ticket_info").empty();
-//			
-//			let ticketType = "";
-//			for(let ticket of data) {
-//				if(ticket.ticket_type == 0) {
-//					ticketType = "성인";
-//				} else if(ticket.ticket_type == 1) {
-//					ticketType = "청소년";
-//				} else {
-//					ticketType = "경로/우대";
-//				}
-//				
-//				$(".ticket_info").append(`
-//				<div class="header">${ticketType}</div>
-//	            <div class="data">
-//	            	<span class="price">${ticket.ticket_amount}</span>
-//	            	<span class="exe"> 원 X</span>
-//	            	<span class="qty"> 2</span>
-//	            </div>
-//			`);
-	
 	
 	
 	

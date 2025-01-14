@@ -227,7 +227,7 @@ form input[type="text"].count {
 	display: flex; /* 버튼을 포함한 컨테이너를 가로로 정렬 */
     justify-content: space-between; /* 버튼 내부 텍스트 중앙 정렬 */
     align-items: center; /* 가로 중앙 정렬 */
-    width: 100px; /* 버튼 컨테이너의 고정 너비 */
+/*     width: 100px; 버튼 컨테이너의 고정 너비 */
     flex-shrink: 0; /* 크기 줄어들지 않도록 설정 */
 /*     margin: 0 20px; */
 }
@@ -267,14 +267,16 @@ form input[type="text"].count {
 }
 
 .tnb {
-		flex: 1;
+	flex: 1;
     display: flex; /* 가로 방향 정렬 */
     flex-wrap: nowrap; /* 줄바꿈 방지 */
-    justify-content: center; /* 내부 섹션 간의 간격 */
+    justify-content: space-between; /* 내부 섹션 간의 간격 */
     align-items: flex-start; /* 섹션을 위쪽 기준으로 정렬 */
     padding: 0 15px 10px 15px;
     border-radius: 5px;
     font-family: Arial, sans-serif;
+    
+    width: 100%;
 }
 
 .poster {
@@ -300,25 +302,39 @@ form input[type="text"].count {
 	color: #666666;
 }
 
+.tnb .mv_info, .tnb .ticket_info {
+    flex: 2; /* 결제 정보와 영화 정보를 동일한 크기로 설정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 세로로 위쪽부터 배치 */
+    align-items: flex-start;
+    min-height: 150px; /* 정보 섹션의 최소 높이 */
+    box-sizing: border-box;
+}
+
+.tnb .mv_info {
+    text-align: left;
+}
+
+.tnb .ticket_info {
+    text-align: left; /* 텍스트를 왼쪽 정렬 */
+}
+
 .tnb .mv_info .row .header, .tnb .ticket_info .row .header {
 	float: left;
-	margin-right: 10px; 
 	padding: 0;
-	min-width: 65px;
 	font-weight: bold;
 	font-size: 14px;
 	color: #666666;
 }
 
-.tnb .ticket_info .row strong {
-	float: left;
-	margin-right: 10px; 
-	padding: 0;
+.tnb .mv_info .row .header {
+	min-width: 50px;
+}
+
+.tnb .ticket_info .row .header {
+	margin-right: 5px; 
 	min-width: 65px;
-	font-weight: bold;
-	font-size: 14px;
-	color: #666666;
-	
 }
 
 .tnb .mv_info .row .data, .tnb .ticket_info .row .data {
