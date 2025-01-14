@@ -37,18 +37,18 @@ private EventMapper mapper;
 		return mapper.selectEventWinnerCount(searchType, searchKeyword);
 	}
 	//이벤트 당첨자 게시글 리스트
-	public List<EventWinnerBoardVO> getEventWinnerList(int startRow, int listLimit, String searchType, String searchKeyword) {
-		// TODO Auto-generated method stub
-		return mapper.selectEventWinnerList(startRow,listLimit, searchType, searchKeyword);
-	}
-	//당첨자 게시글 조회수 증가
-	public EventWinnerBoardVO getEventWinner(int winner_code, boolean isIncreaseReadcount) {
-		EventWinnerBoardVO eventWinner = mapper.selectEventWinner(winner_code);
-		if(eventWinner != null && isIncreaseReadcount) {
-			mapper.updateEventWinnerReadCount(eventWinner);
-		}
-		return eventWinner;
-	}
+//	public List<EventWinnerBoardVO> getEventWinnerList(int startRow, int listLimit, String searchType, String searchKeyword) {
+//		// TODO Auto-generated method stub
+//		return mapper.selectEventWinnerList(startRow,listLimit, searchType, searchKeyword);
+//	}
+//	//당첨자 게시글 조회수 증가
+//	public EventWinnerBoardVO getEventWinner(int winner_code, boolean isIncreaseReadcount) {
+//		EventWinnerBoardVO eventWinner = mapper.selectEventWinner(winner_code);
+//		if(eventWinner != null && isIncreaseReadcount) {
+//			mapper.updateEventWinnerReadCount(eventWinner);
+//		}
+//		return eventWinner;
+//	}
 
 
 }

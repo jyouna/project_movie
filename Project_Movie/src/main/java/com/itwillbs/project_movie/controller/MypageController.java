@@ -132,13 +132,13 @@ public class MypageController {
 		return "mypage/movie_log/mypage_watched_movie";
 	}
 	//3-1. 리뷰 등록창 
-	@ResponseBody
-	@PostMapping("reviewRegister")
-	public String reviewRegister(String r_code) {
-		WatchedMovieVO watchedMovie = service.searchWatchedmovieReview(r_code);
-		watchedMovie.setR_dateToString(watchedMovie.getR_date().toString().replace(".0", ""));
-		return watchedMovie;
-	}
+//	@ResponseBody
+//	@PostMapping("reviewRegister")
+//	public String reviewRegister(String r_code) {
+//		WatchedMovieVO watchedMovie = service.searchWatchedmovieReview(r_code);
+//		watchedMovie.setR_dateToString(watchedMovie.getR_date().toString().replace(".0", ""));
+//		return watchedMovie;
+//	}
 	
 	//4. 무비로그 - 관람평 
 	@GetMapping("Review")
