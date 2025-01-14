@@ -23,8 +23,12 @@ public interface BookMapper {
 	Map<String, String> getSelectMovie(String movie_code);
 
 	List<TicketVO> selectTicketType();
+	
+	List<MovieVO> selectMovieList2(Map<String, String> conditionMap);
 
-	List<MovieVO> selectMovieListCheck(Map<String, String> conditionMap);
+	List<ScheduleVO> selectScheduleList(Map<String, String> conditionMap);
+
+
 
 
 

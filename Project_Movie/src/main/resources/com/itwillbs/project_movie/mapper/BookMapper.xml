@@ -24,14 +24,32 @@
 		</if>
 		ORDER BY movie_type, start_time
 	</select>
-	
-	<select id="selectMovieListCheck" resultType="movie">
+
+	<select id="selectMovieList2" resultType="movie">
 		SELECT *
 		FROM movie
-		WHERE ${columnName} = #{searchCondition}
-		<if test="searchCondition2 != null">
-			AND ${columnName2} = #{searchCondition2}
-		</if>
+		<choose>
+			<when test="movie_code.equals('')">
+				WHERE movie_code IN (SELECT movie_code
+									 FROM schedule
+									 WHERE DATE_FORMAT(start_time, '%Y년 %m월 %d') = #{start_time}
+									 AND start_time > NOW())
+									 GROUP BY movie_code
+			</when>
+			<otherwise>
+				WHERE movie_code = #{movie_code}
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectScheduleList" resultType="schedule">
+		SELECT *
+		FROM schedule
+		WHERE DATE_FORMAT(start_time, '%Y년 %m월 %d') = #{start_time}
+		AND start_time > now()
+		<if test="!movie_code.equals('')">
+			AND movie_code = #{movie_code}
+		</if> 
 	</select>
 	
 	<select id="selectSeat" resultType="seat">
@@ -47,6 +65,11 @@
 <!-- 		WHERE ticket_type = #{ticket_type} -->
 	</select>
 	
+	<select id="selectTicketTypeAmount" resultType="int">
+		SELECT *
+		FROM ticket
+		WHERE ticket_type = #{ticket_type}
+	</select>
 	
 </mapper>
 

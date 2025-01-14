@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
 
@@ -68,13 +69,28 @@ public class BookController {
 	}
 	
 	@ResponseBody
-	@GetMapping("GetMovieListOnScheduleTable")
-	public List<MovieVO> getMovieListOnScheduleTable(@RequestParam Map<String, String> conditionMap) {
-		List<MovieVO> movieList = service.getMovieListCheck(conditionMap);
+	@GetMapping("GetMovieListScheduleToBooking")
+	public List<MovieVO> getMovieListScheduleToBooking(@RequestParam Map<String, String> conditionMap) {
+		List<MovieVO> movieList = service.getMovieList(conditionMap);
 		return movieList;
 	}
 	
+	@ResponseBody
+	@GetMapping("GetScheduleListToBooking")
+	public List<ScheduleVO> getScheduleListToBooking(@RequestParam Map<String, String> conditionMap) {
+		List<ScheduleVO> scheduleList = service.getScheduleList(conditionMap);
+		
+		// 시작, 끝 시간 형식변환
+		for(ScheduleVO schedule: scheduleList) {
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+			schedule.setStr_start_time(timeFormatter.format(schedule.getStart_time()));
+			schedule.setStr_end_time(timeFormatter.format(schedule.getEnd_time()));
+		}
+		
+		return scheduleList;
+	}
 	
+	// ========================= 좌석페이지 컨트롤러 =========================
 	@GetMapping("BookSeat")
 	public String bookSeatPage(HttpSession session, Model model, TicketVO ticket) {
 
@@ -124,15 +140,10 @@ public class BookController {
 	}
 	
 	@ResponseBody
-	@PostMapping("BookSeat")
-	public String bookSeat(Model model, TicketVO ticket) {
-		
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm");
-//		String showDate = formatter.format();
-
-		
-		
-		return "";
+	@PostMapping("BookSeatPayInfo")
+	public List<TicketVO> bookSeatPayInfo() {
+		List<TicketVO> ticketList = service.getTicketType();
+		return ticketList;
 	}
 	
 

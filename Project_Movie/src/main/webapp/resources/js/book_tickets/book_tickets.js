@@ -3,9 +3,6 @@ $(function() {
 	let selectedMovie = "";
 	// 페이지 로드됐을 때 상영시간 안보이게 처리하고
 	// "날짜를 선택해주세요" 출력
-	$(".movie_schedule_info h4").css("display", "flex");
-	$(".movie_schedule_info :not(h4)").css("display", "none");
-	
 	let isDateSelected = false;
 	
 	$(".mv_list").click(function() {
@@ -44,7 +41,7 @@ $(function() {
 		// 날짜 및 영화 선택시 조건에 해당하는 영화만 연령등급 영화명 표시
 		$.ajax({
 			type : "GET",
-			url : "A",
+			url : "GetMovieListScheduleToBooking",
 			data : {
 				start_time : selectedDate,
 				movie_code : selectedMovie
@@ -78,41 +75,61 @@ $(function() {
 					</section>
 				`);
 			}
+				
 			
 			// 날짜 및 영화 선택시 조건에 해당하는 스케줄 해당영화 섹션에 표시
 			$.ajax({
 				type : "GET",
-				url : "B",
+				url : "GetScheduleListToBooking",
 				data : {
 					start_time : selectedDate,
 					movie_code : selectedMovie
 				}
 			}).done(function(scheduleList) {
-				for(let schedule of scheduleList) {
-					let hallName = schedule.theater_code;
-					if(hallName == "T1") {
-						hallName = "1관";
-					} else if(hallName == "T2") {
-						hallName = "2관";
-					} else {
-						hallName = "3관";
+				console.log(scheduleList.length);
+				if(scheduleList.length != 0) {
+					
+					for(let schedule of scheduleList) {
+						let hallName = schedule.theater_code;
+						if(hallName == "T1") {
+							hallName = "1관";
+						} else if(hallName == "T2") {
+							hallName = "2관";
+						} else {
+							hallName = "3관";
+						}
+						
+						// 시간 버튼 출력
+						$("#" + schedule.movie_code).append(`
+						    <a class="time_seat_btn">
+						        <input type="hidden" value="${schedule.movie_code}">
+						        <span class="mv_time">${schedule.str_start_time}</span>
+						        <span class="details">
+						            <span class="seat">70/${schedule.avail_seat}</span>
+						            <span class="hall">${hallName}</span>
+						        </span>
+						    </a>
+						`);
 					}
 					
-					// 시간 버튼 출력
-					$("#" + schedule.movie_code).append(`
-					    <a class="time_seat_btn">
-					        <input type="hidden" value="${schedule.movie_code}">
-					        <span class="mv_time">${schedule.str_start_time}</span>
-					        <span class="details">
-					            <span class="seat">70/${schedule.avail_seat}</span>
-					            <span class="hall">${hallName}</span>
-					        </span>
-					    </a>
+				} else if(true) {
+					$(".movie_schedule_info").empty();
+					$(".movie_schedule_info").append(`
+						해당 영화의 스케줄이 존재하지 않습니다
 					`);
 				}
+				$(".time_seat_btn").click(function() {
+					schCode = $(this).find("input[type='hidden']").val();
+					console.log(schCode);
+					
+					if(confirm("좌석을 선택하시겠습니까?")) {
+						location.href = "BookSeat?schCode=" + schCode;
+					}
+				});
 			}).fail(function() {
 					alert("스케줄 조회 실패하였습니다.")
 			});
+
 		}).fail(function() {
 			alert("영화정보 조회 실패했습니다.")
 		});
@@ -120,14 +137,6 @@ $(function() {
 	
 	
 	
-//			$(".time_seat_btn").click(function() {
-//				schCode = $(this).find("input[type='hidden']").val();
-//				console.log(schCode);
-//				
-//				if(confirm("좌석을 선택하시겠습니까?")) {
-//					location.href = "BookSeat?schCode=" + schCode;
-//				}
-//			});
 	
 
 });

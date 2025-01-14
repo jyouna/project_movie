@@ -34,17 +34,7 @@
 					<ul>
 						<c:forEach var="type" items="${ticketType}">
 							<li>
-								<c:choose>
-									<c:when test="${type.ticket_type eq 0}">
-										<strong>성인</strong>
-									</c:when>
-									<c:when test="${type.ticket_type eq 1}">
-										<strong>청소년</strong>
-									</c:when>
-									<c:otherwise>
-										<strong>경로/우대</strong>
-									</c:otherwise>
-								</c:choose>
+								<strong>${type.ticket_type}</strong>
 								<div class="ctrl_box">
 									<button type="button" class="minus_btn">-</button>
 									<input type="text" class="count" name="count" value="0" readonly>
@@ -100,35 +90,44 @@
 						        </div>
 								 <div class="row">
 						            <div class="header">좌석</div>
-						            <div class="data">D5, D6, D7</div>
+						            <div class="data"></div>
 						        </div>
 							</div>
 							
 							<!-- 결제 정보 섹션 -->
 						   	<div class="ticket_info">
-						        <div class="row">
-						            <div class="header">성인</div>
-						            <div class="data">
-						            	<span class="price">10000</span>
-						            	<span class="exe"> 원 X</span>
-						            	<span class="qty"> 2</span>
-						            </div>
-						        </div>
-						        <div class="row">
-						            <div class="header">청소년</div>
-						            <div class="data">
-						            	<span class="price">8000</span>
-						            	<span class="exe"> 원 X</span>
-						            	<span class="qty"> 1</span>
-					        		</div>
-						        </div>
-						        <div class="row">
-						            <div class="header">총금액</div>
-						            <div class="data">
-						            	<span class="price">28000</span>
-						                <span class="won"> 원</span>
-						            </div>
-						        </div>
+<%-- 						   		<c:forEach var="ticket" items="${ticketType}" varStatus="status"> --%>
+<!-- 							        <div class="row"> -->
+<!-- 							            <div class="header"> -->
+<%-- 							            	<c:choose> --%>
+<%-- 												<c:when test="${ticket.ticket_code eq 0}"> --%>
+<!-- 													<strong>성인</strong> -->
+<%-- 												</c:when> --%>
+<%-- 												<c:when test="${ticket.ticket_code eq 1}"> --%>
+<!-- 													<strong>청소년</strong> -->
+<%-- 												</c:when> --%>
+<%-- 												<c:otherwise> --%>
+<!-- 													<strong>경로/우대</strong> -->
+<%-- 												</c:otherwise> --%>
+<%-- 											</c:choose> --%>
+<!-- 							            </div> -->
+<!-- 							            <div class="data"> -->
+<%-- 							            	<span class="price">${ticket.ticket_amount}</span> --%>
+<!-- 							            	<span class="exe"> 원 X</span> -->
+<!-- 							            	<span class="qty"></span> -->
+<!-- 							            </div> -->
+<!-- 							        </div> -->
+<%-- 						   		</c:forEach> --%>
+<!-- 								<div class = "row"> -->
+<!-- 									<b>성인</b> 10000원 X 5 -->
+<!-- 								</div> -->
+<!-- 						        <div class="row"> -->
+<!-- 						            <div class="header">총금액</div> -->
+<!-- 						            <div class="data"> -->
+<!-- 						            	<span class="price"></span> -->
+<!-- 						                <span class="won"> 0 원</span> -->
+<!-- 						            </div> -->
+<!-- 						        </div> -->
 							</div>
 						
 							<div class="bottom_btn">
