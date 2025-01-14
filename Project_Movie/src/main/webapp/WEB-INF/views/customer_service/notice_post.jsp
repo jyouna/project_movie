@@ -25,17 +25,15 @@
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th width="120px">제목 </th>
+					<th width="110px">제목 </th>
 					<td>${notice.notice_subject}</td>
-				</tr>
-				<tr>
-					<th width="120px">등록일</th>
-					<td>
+					<th width="90px">등록일</th>
+					<td width="160px">
 						<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 				<tr>
-					<th width="120px">첨부파일</th>
+					<th width="110px">첨부파일</th>
 					<td colspan="3" id="notice_file"></td>
 				</tr>
 			</table>

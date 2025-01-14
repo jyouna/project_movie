@@ -7,9 +7,9 @@ body {
     padding: 0;
 }
 .box {
-	width: 1400px;
-	height: 800px;
-}
+	width: 1000px;
+	height: 600px;
+	}
 /* 이벤트 - 글  */
 #articleForm {
     background-color: #fff;

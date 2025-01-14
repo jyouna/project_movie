@@ -15,6 +15,11 @@
  			#{startRow}
  			,#{listLimit}
 	</select>
+	<select id="selectReservationInfo" resultType="reservationDetail">
+		SELECT *
+ 		FROM reservation_detail
+ 		WHERE r_code = #{r_code}
+	</select>
 	<select id="selectReservationCancelCount" resultType="int">
 		SELECT COUNT(*)
 		FROM reservation_cancel
@@ -40,11 +45,17 @@
 			#{startRow}
 			, #{listLimit}
 	</select>
+	<select id="selectWatchedmovieReview" resultType="watchedMovie">
+		SELECT *
+		FROM watched_movie
+		WHERE r_code = #{r_code}
+	</select>
 <!-- 1:1문의 글 전체 가져오기 -->
  	<select id="selectInquiryListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM Inquiry
 	</select>
+<!-- 	1:1문의 글 시작번호,끝번호 -->
  	<select id="selectInquiryList" resultType="inquiry">
  		SELECT *
  		FROM Inquiry
@@ -52,10 +63,38 @@
  			#{startRow}
  			,#{listLimit}
  	</select>
+<!-- 	1:1문의 글 선택 -->
  	<select id="selectInquiry" resultType="inquiry">
  		SELECT *
  		FROM Inquiry
  		WHERE inquiry_code = #{inquiry_code}
  	</select>
- 
+<!-- 	1:1문의 글 작성-->
+ 	<insert id="insertInquiry">
+ 		INSERT INTO Inquiry
+ 		VALUES(
+ 			#{inquiry_code} + 1
+ 			, #{inquiry_subject}
+ 			, #{inquiry_writer}
+ 			, #{inquiry_content}
+ 			, #{inquiry_response}
+ 			, #{response_status}
+ 			, NOW()
+ 			, #{inquiry_writer_ip}
+ 		)
+ 	</insert>
+<!--  	1:1문의 글 수정  -->
+ 	<update id="updateInquiry">
+ 		UPDATE Inquiry
+ 		SET inquiry_subject = #{inquiry_subject}
+ 		, inquiry_content = #{inquiry_content}
+		, inquiry_date = #{inquiry_date}
+		WHERE inquiry_code = #{inquiry_code}
+ 	</update>
+<!--  	1:1문의 글 삭제 -->
+	<delete id="deleteInquiry">
+		DELETE 
+		FROM Inquiry
+		WHERE inquiry_code = #{inquiry_code}
+	</delete>
  </mapper>

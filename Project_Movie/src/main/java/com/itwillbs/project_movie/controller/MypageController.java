@@ -1,6 +1,11 @@
 package com.itwillbs.project_movie.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.service.MypageService;
 import com.itwillbs.project_movie.vo.InquiryVO;
+import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 import com.itwillbs.project_movie.vo.ReservationCancelVO;
 import com.itwillbs.project_movie.vo.ReservationDetailVO;
@@ -23,6 +32,7 @@ import com.itwillbs.project_movie.vo.WatchedMovieVO;
 public class MypageController {
 	@Autowired
 	private MypageService service;
+	
 	//1.결제내역 - 예매 내역
 	@GetMapping("ReservationDetail")
 	public String reservationDetail(@RequestParam (defaultValue="1") int pageNum, Model model) {
@@ -53,11 +63,17 @@ public class MypageController {
 		
 		return "mypage/reservation/mypage_reservation_detail";
 	}
-	//1-1 상세정보 버튼 클릭시 창 띄우기
-	@GetMapping("detail")
-	public String detail() {
-		return "mypage/reservation/detail";
+	//1.1 결제내역 - 상세정보 창
+	@ResponseBody
+	@PostMapping("ReservationDetail")
+	public ReservationDetailVO reservationDetail2(String r_code) {
+		ReservationDetailVO reservationDetail = service.searchdetail(r_code);
+		reservationDetail.setR_dateToString(reservationDetail.getR_date().toString().replace(".0", ""));
+		System.out.println(reservationDetail.getR_dateToString());
+		return reservationDetail;
 	}
+	//1.2 결제내역 - 예매 취소 장
+	
 	//2. 결제내역 - 예매 취소내역 
 	@GetMapping("ReservationCancel")
 	public String reservationCancel(@RequestParam (defaultValue="1") int pageNum, Model model) {
@@ -116,9 +132,12 @@ public class MypageController {
 		return "mypage/movie_log/mypage_watched_movie";
 	}
 	//3-1. 리뷰 등록창 
-	@GetMapping("reviewRegister")
-	public String reviewRegister() {
-		return "mypage/movie_log/review_register";
+	@ResponseBody
+	@PostMapping("reviewRegister")
+	public String reviewRegister(String r_code) {
+		WatchedMovieVO watchedMovie = service.searchWatchedmovieReview(r_code);
+		watchedMovie.setR_dateToString(watchedMovie.getR_date().toString().replace(".0", ""));
+		return watchedMovie;
 	}
 	
 	//4. 무비로그 - 관람평 
@@ -189,13 +208,72 @@ public class MypageController {
 	}
 	//1:1문의 - 글 작성 폼
 	@GetMapping("InquiryWrite")
-	public String inquiryWrite() {
+	public String inquiryWrite(HttpSession session, Model model) {
+		String id = (String)session.getAttribute("sId");
+		System.out.println("sId 출력 = " + id);
+		if(id == null) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			return "result/fail";
+		}
 		return "mypage/inquiry/inquiryWrite";
+	}
+	
+	//1:1문의 - 글 작성 post폼 
+	@PostMapping("InquiryWrite")
+	public String inquiryWrite(InquiryVO inquiry, HttpServletRequest request, HttpSession session, Model model) {
+		//게시물 작성자의 ip 주소정보를 가져와 vo객체에 저장
+		inquiry.setInquiry_writer_ip(getClientIp(request));
+		int insertCount = service.registInquiry(inquiry);
+		return "mypage/inquiry/inquiryWrite";
+	}
+	//* 1:1문의 - 글 작성 post폼 유틸리티
+	private String getClientIp(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	//1:1문의 - 글 수정 폼
 	@GetMapping("InquiryModify")
-	public String inquiryModify() {
+	public String inquiryModify(HttpSession session ,Model model) {
+		//아이디 가져와서 로그인 여부 판별
+		//null이면 접근권한이 없습니다
+		String id = (String) session.getAttribute("sId");
+		if(id == null) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			return "result/fail";
+		}
+		// mypageservice에서 getInquiry메서드 재사용해서 게시물 1개 정보 조회
+		//조회결과가 없거나 관리자가 아니거나 작성자가 아닌경우 잘못된접근입니다. 후 fail 페이지로 리턴
+		//조회 결과 페이지 정보 저장
+//		InquiryVO inquiry = service.getInquiry(inquiry);
 		return "mypage/inquiry/inquiryModify";
+	}
+	@GetMapping("InquiryDelete")
+	public String inquiryDelete(HttpSession session ,Model model, int pageNum,
+			InquiryVO inquiry) {
+		//아이디 가져와서 로그인 여부 판별
+		//null이면 접근권한이 없습니다
+		String id = (String) session.getAttribute("sId");
+//		if(id == null) {
+//			model.addAttribute("msg", "접근 권한이 없습니다.");
+//			return "result/fail";
+//		}
+		//Inquiryvo에서 getInquiry() 호출해서 게시글 상세정보 조회 요청(파라미터 = vo에서 inquiry_code 가져오기)
+		//만약 조회 결과가 없거나 관리자 or 작성자가 아닌 경우 경고메시지 출력 후 fail로 리턴
+		// service에서 removeCount() 호출해서 int deleteCount로 리턴
+		// deleteCount가 양수면 InquriyList의pageNum으로 리다이렉트
+		//아니면 글 삭제 실패 띄운 뒤 fail 페이지 리턴 
+		InquiryVO dbinquiry = service.getInquiry(inquiry.getInquiry_code());
+		if(inquiry == null || !id.equals("admin") && !id.equals(dbinquiry.getInquiry_writer())) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			return "result/fail";
+		}
+		int deleteCount = service.removeInquiry(inquiry);
+		if(deleteCount > 0) {
+			return "redirect:/InquiryList?pageNum=" + pageNum;
+		}else {
+			model.addAttribute("msg", "글 삭제하는데 실패했습니다");
+			return "result/fail";
+		}
 	}
 	
 	

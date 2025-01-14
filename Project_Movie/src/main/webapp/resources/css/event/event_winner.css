@@ -7,39 +7,76 @@ body {
     padding: 0;
 }
 
-/* Search bar styling */
-.search-bar {
+form[name="searchForm"] {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 20px;
-    gap: 10px;
+    gap: 10px; /* 요소 간 간격 */
+    background-color: #f9f9f9; /* 폼 배경색 */
+    padding: 15px;
+    border-radius: 8px; /* 둥근 모서리 */
+    margin: 10px 0px 10px 378px;
+    width: 50%; /* 폼 전체 너비 */
+    max-width: 524px; /* 최대 너비 */
 }
 
-.search-bar select,
-.search-bar input,
-.search-bar button {
-    padding: 7px 7px 7px 7px;
-    font-size: 14px;
+/* 드롭다운 메뉴 */
+form[name="searchForm"] select {
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: center;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s ease;
+    width: auto;
 }
 
-.search-bar button {
-width: 80px;
-    height: 32px;
-    line-height: 32px;
+form[name="searchForm"] select:focus {
+    border-color: #007bff; 
+    outline: none;
+}
+
+/* 검색어 입력 필드 */
+form[name="searchForm"] input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+	width: 184px; 
+}
+
+form[name="searchForm"] input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    width: 70px;
+}
+
+/* 검색 버튼 */
+form[name="searchForm"] input[type="submit"] {
+    padding: 3px 16px;
     border: none;
+    border-radius: 5px;
+    background-color: #808080;
     color: #fff;
-    background: #394b61;
-}
-
-
-.search-bar button:hover {
-    background-color: #555;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 41px;
     text-align: center;
+    line-height: 41px;
 }
+
+form[name="searchForm"] input[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); 
+}
+
+form[name="searchForm"] input[type="submit"]:active {
+    background-color: #003f7f; 
+}
+
 
 /* Article styling */
 article {

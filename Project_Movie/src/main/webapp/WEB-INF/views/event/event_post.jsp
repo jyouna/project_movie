@@ -24,17 +24,15 @@
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th width="120px">제목</th>
-					<td colspan="3">${event.event_subject}</td>
-				</tr>
-				<tr>
-					<th width="120px">등록일</th>
-					<td>
+					<th width="90px">제목</th>
+					<td width="220px">${event.event_subject}</td>
+					<th width="90px">등록일</th>
+					<td width="160px">
 						<fmt:formatDate value="${event.event_start_date}" pattern="yyyy-MM-dd"/>
 					</td>
-				</tr>	
-				<tr>
-					<th width="120px">첨부파일</th>
+				</tr>
+					<tr>
+					<th width="90px">첨부파일</th>
 					<td colspan="3">${event.event_file1}</td>
 				</tr>
 			</table>

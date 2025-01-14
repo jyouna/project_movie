@@ -20,14 +20,13 @@
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/customer_service_sidebar.jsp"></jsp:include>
-	
 	<article>
 		<div id="title">
 			<h1>공지사항</h1>
 		</div>
 		<div id="search-bar" style="text-align:	right;">
 <!-- 		여기서 선택하고 검색한 값을 넘겨줘야하니까 form 태그로 감싸고 action = NoticeList , 전달방식 - get -->
-			<form action="NoticeList" method="get">
+			<form action="NoticeList" method="get" name="searchForm">
 				<select id="searchType">
 	<!-- 			옵션에 각각 값을 넣어준다 -->
 					<option value="subject">제목</option>

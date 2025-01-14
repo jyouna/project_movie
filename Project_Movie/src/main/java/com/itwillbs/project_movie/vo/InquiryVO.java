@@ -15,5 +15,5 @@ public class InquiryVO {
 	private Timestamp inquiry_date;
 	private String admin_id;
 	private Timestamp response_date;
-
+	private String inquiry_writer_ip;
 }

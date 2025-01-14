@@ -20,46 +20,43 @@
 	<div id="title">
 		<h1>당첨자 발표</h1>
 	</div>
-	    <div class="search-bar">
-	      <select>
-	        <option>제목</option>
-	        <option>내용</option>
+	    <div class="search-bar" style="text-align:	right;">
+	    <form action="EventWinnerBoard" method="get" name="searchForm">
+	      <select name="searchType">
+	        <option value="subject">제목</option>
+	        <option value="content">내용</option>
 	      </select>
-	      <input type="text">
-	      <input type="button" value="검색" id="searchButton">
+	      <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+	      <input type="submit" value="검색">
+		</form>
 	    </div>
 		<section id="listForm">
 			<table id="eventWinnerForm" border="1">
 				<tr id="tr_top" align="center">
-					<td width="100px">구분</td>
-					<td width="150px">제목</td>
+					<td width="35px">순서</td>
+					<td width="80px">구분</td>
+					<td width="170px">제목</td>
 					<td width="100px">당첨자 발표일</td>
-					<td width="45px">조회수</td>
+					<td width="35px">조회수</td>
 				</tr>
-				<tr>
-					<td>시사회 / 무대인사</td>
-					<td>소방관 시사회 당첨자 발표</td>
-					<td>2024.11.25</td>
-					<td>0</td>
-				</tr>	
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${empty winnerList}">  --%>
-<!-- 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr> -->
-<%-- 					</c:when> --%>
-<%-- 					<c:otherwise> --%>
-<%-- 						<c:forEach var="winner" items="${winnerList}" varStatus="status"> --%>
-<!-- 							<tr> -->
-<%-- 								<td class="winner_num">${winner.winner_num}</td> --%>
-<%-- 								<td class="winner_subject">${winner.winner_subject}</td> --%>
-<%-- 								<td>${winner.winner_name}</td> --%>
-<!-- 								<td> -->
-<%-- 									<fmt:formatDate value="${winner.winner_date}" pattern="yy-MM-dd"/> --%>
-<!-- 								</td> -->
-<%-- 								<td>${winner.winner_readcount}</td> --%>
-<!-- 							</tr> -->
-<%-- 						</c:forEach> --%>
-<%-- 					</c:otherwise>					 --%>
-<%-- 				</c:choose> --%>
+				<c:choose>
+					<c:when test="${empty eventWinnerBoardList}"> 
+						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="eventWinnerBoard" items="${eventWinnerBoardList}" varStatus="status">
+							<tr>
+								<td class="winner_code" id="winner_code">${eventWinnerBoard.winner_code}</td>
+								<td>${eventWinnerBoard.winner_division}</td>
+								<td class="winner_subject">${eventWinnerBoard.winner_subject}</td>
+								<td>
+									<fmt:formatDate value="${eventWinnerBoard.winner_announce_date}" pattern="yyyy-MM-dd"/>
+								</td>
+								<td>${eventWinnerBoard.winner_views}</td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>					
+				</c:choose>
 			</table>
 		</section>
 				<section id="pageList">
@@ -88,17 +85,11 @@
 	<script type="text/javascript">
 		$(function () {
 			$(".winner_subject").on("click", function(event) {
-				console.log(event.target);
-				let board_num = $(event.target).siblings(".winner_num").text();
-				console.log("siblings " + winner_num);
-				location.href = "WinnerDetail?board_num=" + Winner_num + "&pageNum=${pageInfo.pageNum}";
+				let board_num = $(event.target).siblings(".winner_code").text();
+				console.log("siblings " + winner_code);
+				location.href = "WinnerPost?winner_code=" + winner_code + "&pageNum=${pageInfo.pageNum}";
 			});
 
-			$("#searchButton").on("click", function () {
-				confirm("검색버튼 눌렸습니다.")
-			});
-		
-		});
 	</script>
 
 

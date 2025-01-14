@@ -20,8 +20,8 @@
 		<div id="title">
 			<h1>전체 이벤트</h1>
 		</div>
-	    <div class="search-bar">
-	    	<form action="EventList" method="get">
+	    <div class="search-bar" style="text-align: right;">
+	    	<form action="EventList" method="get" name="searchForm">
 		      <select name="searchType">
 <!-- 		      	검색했을때 searchType을 설정하고 그대로 놔두고싶을때 selected 해놓기 -->
 		        <option value="subject">제목</option>

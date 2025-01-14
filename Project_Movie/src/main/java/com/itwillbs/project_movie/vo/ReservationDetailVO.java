@@ -14,4 +14,5 @@ public class ReservationDetailVO {
 	private int r_price;
 	private Timestamp r_date;
 	
+	private String r_dateToString;
 }

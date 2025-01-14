@@ -25,17 +25,15 @@
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th>제목</th>
-					<td colspan="3">${faq.faq_subject}</td>
-				</tr>
-				<tr>
-					<th>등록일</th>
-					<td>
+					<th width="110px">제목</th>
+					<td width="220px">${faq.faq_subject}</td>
+					<th width="90px">등록일</th>
+					<td width="160px">
 						<fmt:formatDate value="${faq.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 				<tr>
-					<th>첨부파일</th>
+					<th width="110px">첨부파일</th>
 					<td colspan="3" id="faq_file1"></td>
 				</tr>
 			</table>
@@ -43,12 +41,18 @@
 		<section id="articleContentArea">
 			${faq.faq_content}
 		</section>
-		<section id="commandCell">
-			<%-- 목록 버튼 항상 표시 --%>
-			<input type="button" value="목록" onclick="location.href='FaqList?pageNum=${param.pageNum}'">
-			<input type="button" value="△이전글" onclick="location.href='FaqPost?faq_code=${param.faq_code-1}&pageNum=${param.pageNum}'">
-			<input type="button" value="▽다음글" onclick="location.href='FaqPost?faq_code=${param.faq_code+1}&pageNum=${param.pageNum}'">
-		</section>
+		<input type="button" value="목록" onclick="location.href='FaqList?pageNum=${param.pageNum}'">
+		<hr>
+		<table id="postList">
+			<tr>
+				<th><input type="button" value="△이전글" id="tableButton" onclick="location.href='EventPost?event_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"></th>
+				<th>이거는 이전 글 </th>
+			</tr>
+			<tr>
+				<th><input type="button" value="▽다음글" id="tableButton" onclick="location.href='EventPost?event_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"></th>
+				<th>여기는 다음글</th>
+			</tr>
+		</table>
 	</article>
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>

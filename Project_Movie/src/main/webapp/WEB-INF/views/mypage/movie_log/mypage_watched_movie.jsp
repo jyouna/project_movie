@@ -13,11 +13,12 @@
 	<title>마이페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/movie_log/mypage_watched_movie.css" rel="stylesheet"/>
 	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/movie_log/mypage_watched_movie.css" />
+	<script src="${pageContext.request.contextPath}/resources/is/mypage/watched_movie.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
@@ -35,8 +36,8 @@
 						<option>2022</option>
 						<option>2021</option>
 					</select>
+					<input type="submit" value="조회">
 				</form>
-				<input type="submit" value="조회">
 			</div>
 	<!-- 			순서 체크하고 리뷰등록 누를경우 작성팝업 생성 -->
 			<div style="text-align: right;">
@@ -45,7 +46,7 @@
 	      <section id="listForm">
 	         <table>
 	            <tr id="tr_top">
-	               <td><input type="radio" disabled="disabled"></td>
+	               <td><input type="radio" name ="watchedMovie" disabled="disabled"></td>
 	               <td>영화명</td>
 	               <td>관람일시</td>
 	               <td>관람인원</td>
@@ -93,26 +94,27 @@
 	               </c:otherwise>
 	            </c:choose>
 	         </c:forEach>
-	         
-	         
 	         <input type="button" value="&gt" 
 	            onclick="location.href='WatchedMovie?pageNum=${pageInfo.pageNum + 1}'" 
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>
-	<script type="text/javascript">
-		$(function () {
-			
-			$("#reviewRegister").on("click", function() {
-				window.open(
-					'reviewRegister',
-					'리뷰 등록 창',
-					'width=400, height=700, scrollbars=no, resizeable=no');
-			});
-			
-			
-		});
-	</script>
+		<div id="watched_movie_review_modal" class="modal">
+		<div class="watched_movie_review">
+		    <h2>리뷰 등록</h2>
+		    <hr>
+	        <label>영화명</label><input type="text" name="r_moviename" readonly><br>
+	        <label>관람일</label><input type="datetime-local" name="r_date" readonly><br>
+	        <label>추천</label><input type="radio" name="a"><br>
+	        <label>비추천</label><input type="radio" name="a"><br>
+	        <hr>
+	        <div class="btnGroup">
+	        	<button type="submit" class="submit_modal">등록</button>
+	        	<button type="button" class="cancel_modal">취소</button>
+	        </div>
+		</div>
+	</div>
+		
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

@@ -25,6 +25,10 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectReservationDetail(startRow, listLimit);
 	}
+	//예매내역 상세정보 창
+	public ReservationDetailVO searchdetail(String r_code) {
+		return mapper.selectReservationInfo(r_code);
+	}
 // 취소내역 글 전체 가져오기 
 	public int getReservationCancelCount() {
 		// TODO Auto-generated method stub
@@ -46,6 +50,11 @@ private MyPageMapper mapper;
 		return mapper.selectWatchedMovie(startRow, listLimit);
 	}
 	
+	//리뷰 등록창
+	public WatchedMovieVO searchWatchedmovieReview(String r_code) {
+		// TODO Auto-generated method stub
+		return mapper.selectWatchedmovieReview(r_code);
+	}
 	
 // 1:1문의 글 전체 가져오기
 	public int getInquiryListCount() {
@@ -61,6 +70,21 @@ private MyPageMapper mapper;
 	public InquiryVO getInquiry(int inquiry_code) {
 		InquiryVO inquiry = mapper.selectInquiry(inquiry_code);
 		return inquiry;
+	}
+	//1:1문의 글 작성 
+	public int registInquiry(InquiryVO inquiry) {
+		// TODO Auto-generated method stub
+		return mapper.insertInquiry(inquiry);
+	}
+	//1:1문의 글 수정
+	public InquiryVO getInquiry(InquiryVO inquiry) {
+		// TODO Auto-generated method stub
+		return mapper.updateInquiry(inquiry);
+	}
+	//1:1문의 글 삭제 
+	public int removeInquiry(InquiryVO inquiry) {
+		// TODO Auto-generated method stub
+		return mapper.deleteInquiry(inquiry);
 	}
 
 }

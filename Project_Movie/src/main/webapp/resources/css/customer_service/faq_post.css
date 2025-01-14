@@ -28,53 +28,83 @@ body {
 #basicInfoArea table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
 }
 
 #basicInfoArea th {
-    background-color: #666;
+    background-color: #858585;
     color: #fff;
-    text-align: left;
-    padding: 5px 3px 5px 3px;
+    text-align:inherit;
+    padding: 11px 12px 11px 13px;
     border: 1px solid #ccc;
 }
 
 #basicInfoArea td {
     background-color: #f9f9f9;
-    padding: 20px;
+    padding: 12px;
     border: 1px solid #ccc;
+    text-align: center;
 }
-#content{
-	padding: 20px;
-	font-size: 15px;
+/* #content{ */
+/* 	padding: 20px; */
+/* 	font-size: 15px; */
+/* } */
+
+#articleContentArea{
+	padding: 27px;
+}
+#listButton{
+	transition: all .25s ease-in-out !important;
+    display: inline-block !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.25em !important;
+    text-decoration: none !important;
+    border-radius: 0.35em !important;
+    background-color: #858585;
+    color: white;
+    border: 0 !important;
+    outline: 0 !important;
+    cursor: pointer !important;
+    padding: 0 1.25em 0 1.25em !important;
+    font-size: 0.9em !important;
+    min-width: 1em !important;
+    height: 4em !important;
+    line-height: 4em !important;
 }
 
-/* Command buttons styling */
-#commandCell {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin: 18px;
+#tableButton {
+    transition: all .25s ease-in-out !important;
+    display: inline-block !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.25em !important;
+    text-decoration: none !important;
+    border-radius: 0.35em !important;
+    border: 0 !important;
+    outline: 0 !important;
+    cursor: pointer !important;
+    padding: 0 1.25em 0 1.25em !important;
+    font-size: 0.9em !important;
+    min-width: 1em !important;
+    height: 4em !important;
+    line-height: 4em !important;
+    background-color: #858585;
+    color: white;
 }
 
-#commandCell input[type="button"] {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    color: #333;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
+
+hr{
+	border: 0;
+	border-top: solid 1px #ddd;
+	margin: 0em 0 2em 0;
+}
+#buttonTable{
+	    width: 100%;
+    border-collapse: collapse;
 }
 
-#commandCell input[type="button"]:hover {
-    background-color: #a5a5a5;
-}
-
-#commandCell input[type="button"][disabled] {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
 
 #postList {
     width: 100%;

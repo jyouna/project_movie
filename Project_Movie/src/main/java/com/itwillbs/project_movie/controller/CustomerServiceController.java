@@ -27,10 +27,9 @@ public class CustomerServiceController {
 	public String noticeList(Model model, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue="") String searchType, 
 			@RequestParam(defaultValue="") String searchKeyword) {
-		System.out.println( "controller " + searchKeyword);
+		int listCount = service.getNoticeListCount(searchType,searchKeyword);
 		int listLimit = 5; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
-		int listCount = service.getNoticeListCount(searchType,searchKeyword);
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
 		if (maxPage == 0) {

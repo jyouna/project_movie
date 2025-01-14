@@ -26,48 +26,25 @@
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th>제목</th>
-					<td colspan="3">${board.board_subject}</td>
-				</tr>
-				<tr>
-					<th>발표일</th>
+					<th width="90px">제목</th>
+					<td width="220px">${eventWinnerBoard.winner_subject}</td>
+					<th width="90px">발표일</th>
 					<td>
-						<fmt:formatDate value="${board.board_date}" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${eventWinnerBoard.winner_announce_date}" pattern="yyyy-MM-dd"/>
 					</td>
-				</tr>
-				<tr>
-					<th>첨부파일</th>
-					<td colspan="3" id="board_file"></td>
 				</tr>
 			</table>
 		</section>
 		<section id="articleContentArea">
-			${board.board_content}
+			${eventWinnerBoard.winner_content}
 		</section>
 		<section id="commandCell">
-			<c:if test="${sessionScope.sId eq board.board_name || sessionScope.sId eq 'admin' }">
-				<input type="button" value="수정" id="Modify" >
-				<input type="button" value="삭제" id="Delete">
-			</c:if>
 			<%-- 목록 버튼 항상 표시 --%>
-			<input type="button" value="목록" onclick="location.href='BoardList?pageNum=${param.pageNum}'">
-			<input type="button" value="△이전글" onclick="">
-			<input type="button" value="▽다음글" onclick="">
+			<input type="button" value="목록" onclick="location.href='EventWinnerList?pageNum=${param.pageNum}'">
+				<input type="button" value="△이전글" id="tableButton" onclick="location.href='EventWinnerPost?winner_code=${eventWinnerBoard.winner_code-1}&pageNum=${PageInfo.pageNum }'">
+				<input type="button" value="▽다음글" id="tableButton" onclick="location.href='EventWinnerPost?winner_code=${eventWinnerBoard.winner_code+1}&pageNum=${PageInfo.pageNum }'">
 		</section>
 	</article>
-	<script type="text/javascript">
-		$(function() {
-			$("#Modify").on("click", function () {
-				confirm("수정하시겠습니까?")
-			});
-			
-			$("#Delete").on("click", function () {
-				confirm("삭제하시겠습니까?")
-			});
-		});
-	
-	
-	</script>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>

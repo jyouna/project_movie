@@ -25,9 +25,6 @@
 	<div id="title">
 		<h1>쿠폰</h1>
 	</div>
-	<div style="text-align: right;">
-		<input type="button" value="쿠폰 등록하기" id="couponRegister">
-	</div>
 <!-- 		이용할 수 있는 쿠폰 > 0건  -->
 <!-- 할인쿠폰 등록 버튼 생성 -->
 <!-- 쿠폰 번호 입력 후 등록하기 버튼 클릭 -> 쿠폰 등록 -->
