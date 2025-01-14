@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.project_movie.service.EventService;
 import com.itwillbs.project_movie.vo.EventBoardVO;
-import com.itwillbs.project_movie.vo.EventWinnerBoardVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 
 @Controller

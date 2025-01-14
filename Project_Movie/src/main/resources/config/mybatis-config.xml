@@ -24,7 +24,6 @@
 		<typeAlias type="com.itwillbs.project_movie.vo.AdminRegisVO" alias="adminmanage"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.EventBoardVO" alias="eventboard"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.EventWinnerVO" alias="EventWinner"/>
-		<typeAlias type="com.itwillbs.project_movie.vo.EventWinnerBoardVO" alias="eventWinnerBoard"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.PointVO" alias="point"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.CouponVO" alias="coupon"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.MemberAllInfoVO" alias="memberAllInfo"/>

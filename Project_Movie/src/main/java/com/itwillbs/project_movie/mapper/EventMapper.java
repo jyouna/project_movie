@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.itwillbs.project_movie.vo.EventBoardVO;
-import com.itwillbs.project_movie.vo.EventWinnerBoardVO;
 
 public interface EventMapper {
 

@@ -77,41 +77,41 @@
 		</if>
 	</select>
 <!-- 	이벤트 당첨자 글 가져오기 -->
-	<select id="selectEventWinnerList" resultType="eventWinnerBoard">
-		SELECT *
-		FROM event_winner_board
-		ORDER BY winner_code
-		<if test="!searchType.equals('')">
-			WHERE
-			<choose>
-				<when test="searchType.equals('subject')">
-					winner_subject LIKE CONCAT ('%','{#searchKeyword}', '%')
-				</when>
-				<when test="searchType.equals('content')">
-					winner_content LIKE CONCAT ('%','{#searchKeyword}', '%')
-				</when>
-			</choose>
-		</if>
-		LIMIT 
-			#{startRow}
-			, #{listLimit}
+<!-- 	<select id="selectEventWinnerList" resultType="eventWinnerBoard"> -->
+<!-- 		SELECT * -->
+<!-- 		FROM event_winner_board -->
+<!-- 		ORDER BY winner_code -->
+<!-- 		<if test="!searchType.equals('')"> -->
+<!-- 			WHERE -->
+<!-- 			<choose> -->
+<!-- 				<when test="searchType.equals('subject')"> -->
+<!-- 					winner_subject LIKE CONCAT ('%','{#searchKeyword}', '%') -->
+<!-- 				</when> -->
+<!-- 				<when test="searchType.equals('content')"> -->
+<!-- 					winner_content LIKE CONCAT ('%','{#searchKeyword}', '%') -->
+<!-- 				</when> -->
+<!-- 			</choose> -->
+<!-- 		</if> -->
+<!-- 		LIMIT  -->
+<!-- 			#{startRow} -->
+<!-- 			, #{listLimit} -->
 			
-	</select>
+<!-- 	</select> -->
 <!--  이벤트 당첨자 게시물 눌렸을때 해당 게시글 뜨도록  -->
- 	<select id="selectEventWinner" resultType="eventWinnerBoard">
- 		SELECT *
- 		FROM event_winner_board
- 		WHERE winner_code = #{winner_code}
- 	</select>
-<!--  이벤트 당첨자 게시물 눌렸을때 조회수 증가  -->
- 	<update id="updateEventWinnerReadCount" >
- 		<selectKey keyProperty ="winner_views" resultType="int" order="AFTER">
- 			SELECT winner_views
- 			FROM event_winner_board
- 			WHERE winner_code = #{winner_code}
- 		</selectKey>
- 		UPDATE event_winner_board
- 		SET winner_views = winner_views +1
- 		WHERE winner_code = #{winner_code}
- 	</update>
+<!--  	<select id="selectEventWinner" resultType="eventWinnerBoard"> -->
+<!--  		SELECT * -->
+<!--  		FROM event_winner_board -->
+<!--  		WHERE winner_code = #{winner_code} -->
+<!--  	</select> -->
+<!--  이벤트 당첨자 게시물 눌렸을때 조회수 증가  --> 
+<!--  	<update id="updateEventWinnerReadCount" > -->
+<!--  		<selectKey keyProperty ="winner_views" resultType="int" order="AFTER"> -->
+<!--  			SELECT winner_views -->
+<!--  			FROM event_winner_board -->
+<!--  			WHERE winner_code = #{winner_code} -->
+<!--  		</selectKey> -->
+<!--  		UPDATE event_winner_board -->
+<!--  		SET winner_views = winner_views +1 -->
+<!--  		WHERE winner_code = #{winner_code} -->
+<!--  	</update> -->
  </mapper>

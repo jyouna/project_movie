@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.project_movie.mapper.EventMapper;
 import com.itwillbs.project_movie.vo.EventBoardVO;
-import com.itwillbs.project_movie.vo.EventWinnerBoardVO;
 
 @Service
 public class EventService {
