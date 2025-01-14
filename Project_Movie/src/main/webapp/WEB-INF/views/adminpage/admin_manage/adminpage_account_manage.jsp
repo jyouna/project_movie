@@ -58,7 +58,7 @@ input[type="checkbox"] {
 			</tr>
 			<c:choose>		
 				<c:when test="${empty voList}">
-					<tr>	
+					<tr>
 						<th colspan="15">등록된 계정이 없습니다.</th>
 					</tr>	
 				</c:when>	
@@ -69,9 +69,7 @@ input[type="checkbox"] {
 				            <td>${status.count}</td>
 				            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}">${vo.admin_id}</a></td>
 				            <td>${vo.admin_passwd}</td>
-				            <td>
-				            	<fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/>
-				            </td>
+				            <td><fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/></td>
 				            <td>${vo.user_status ? '사용중' : '비사용'}</td>
 				            <td>${vo.user_name}</td>
 				            <td>${vo.member_manage ? 'O' : 'X'}</td>
@@ -151,24 +149,17 @@ input[type="checkbox"] {
 		});
 		
 		$("#selectAll").on("click", function(){
-		    let checkboxes = $(".deleteCheck");
-		    let isChecked = $(this).data("checked") || false; // 현재 체크 상태 (기본값은 false)
-		    
-		    // 체크 상태를 반전
-		    checkboxes.prop("checked", !isChecked);
-
-		    // 체크 박스 
-		    $(this).data("checked", !isChecked);
-
-		    // 버튼 텍스트 변경
-		    if (!isChecked) {
-		        $(this).val("전체해제");
-		    } else {
-		        $(this).val("전체선택");
-		    }
+			
+			// 1. 현재페이지
+			
+			// 2. 다른페이지로 갔다 돌아왔을 때 
+			
+			
+		    let checkboxes = $(".deleteCheck");  // 체크박스 항목들을 다루기 위한 객체 생성
+		    let isChecked = $(this).data("checked") || false; // 전체선택 버튼의 현재 체크 상태값 저장. 없는 경우 false 값으로 설정.
+		    $(this).data("checked", !isChecked); // 체크가 안된 상태에서 클릭했으면 true로 변경
+		    checkboxes.prop("checked", !isChecked); // 체크가 안된 상태에서 클릭했으면 true로 변경
 		});
-		
-		
 	});
 	</script>
 </body>

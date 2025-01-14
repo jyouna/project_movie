@@ -23,7 +23,7 @@ $(function(){
 	});
 	
 	$("#selectAll").on("click", function(){
-	    let checkboxes = $(".eventSetCheckbox"); // 클래스 선택자
+	    let checkboxes = $(".eventSetCheckbox"); // 체크박스 전체 선택자
 	    let isChecked = $(this).data("checked") || false; // 현재 체크 상태값 저장. 없는 경우 false 값으로 설정
 		console.log("체크 속성값 : " + isChecked);
 	    $(this).data("checked", !isChecked);

@@ -23,3 +23,5 @@ public class EventBoardVO {
 	private Date event_end_date;
 	private Boolean set_winner_status = false;
 }
+
+

@@ -44,12 +44,12 @@ public class PagingHandler {
 //		Map<String, Object> pageMap = new HashMap<String, Object>(); // 리턴할 리스트 객체 2개를 저장할 변수
 //		List<?> voList = new ArrayList<>(); // 게시물 목록을 저장할 List객체
 		
-		int listLimit = 10;
+		int listLimit = 20;
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListForPaging(boardName, searchKeyword, searchContent); // 서비스에서 boardName값 판별하여 다르게 작동!
 		System.out.println("리스트 카운트 : " + listCount);
 
-		int pageListLimit = 3;
+		int pageListLimit = 10;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);	
 		System.out.println("MaxPage 값 1번 : " + maxPage);
 

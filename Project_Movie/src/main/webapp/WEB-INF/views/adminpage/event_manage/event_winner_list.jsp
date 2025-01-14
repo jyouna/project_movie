@@ -27,7 +27,7 @@
 	
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-		<h4>쿠폰 당첨자</h4>
+		<h4>이벤트 당첨자</h4>
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<form action="CouponWinnerManage" method="get">
@@ -46,7 +46,7 @@
 		<table id="mainTable" class="mainTable">
 			<tr align="center" id="tr01" class="tr01">
 				<th width="100">당첨자</th>
-				<th width="100">쿠폰</th>
+				<th width="100">경품</th>
 <!-- 				<th width="50">코드</th> -->
 				<th width="250">이벤트</th>
 				<th width="200">진행기간</th>
@@ -54,7 +54,7 @@
 			</tr>
 			<c:choose>
 				<c:when test="${empty coupon_winner}">
-					<tr><th colspan="5">"작성된 게시글이 없습니다."</th></tr>
+<!-- 					<tr><th colspan="5">"당첨자가 없습니다."</th></tr> -->
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="coupon" items="${coupon_winner}" varStatus="status">
@@ -76,6 +76,23 @@
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
+			<c:choose>
+				<c:when test="${empty point_winner}">
+<!-- 					<tr><th colspan="5">"포인트 당첨자가 없습니다"</th></tr> -->
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="point" items="${point_winner}" varStatus="status">
+						<tr>
+<%-- 							<td>${point.event_code}</td>	 --%>
+							<td>${point.winner_id}</td>	
+							<td>${point.point_amount}원</td>
+							<td>${point.event_subject}</td>	
+							<td>${point.event_start_date} ~ ${point.event_end_date}</td>	
+							<td><fmt:formatDate value="${point.prize_datetime}" pattern="yyyy-MM-dd hh:mm"/> </td>	
+						</tr>	
+					</c:forEach>
+				</c:otherwise>
+			</c:choose> 			
 		</table>
 	</div>
 	<br>
@@ -83,8 +100,11 @@
 	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 	<div id="divBottom" class="view">
 <%-- 이전 페이지 이동 --%>	
+		<input type="button" value="처음" 
+			onclick="location.href='EventWinnerList?pageNum=1${searchRecord}'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 		<input type="button" value="이전" 
-			onclick="location.href='CouponWinnerManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
+			onclick="location.href='EventWinnerList?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
 			<c:choose>
@@ -94,12 +114,14 @@
 				</c:when>
 <%-- 페이지 번호 클릭하여 이동 --%>	
 				<c:otherwise>
-					<a href="CouponWinnerManage?pageNum=${i}${searchRecord}">${i}</a>
+					<a href="EventWinnerList?pageNum=${i}${searchRecord}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
 <%-- 다음 페이지 이동 --%>	
-		<input type="button" value="다음" onclick="location.href='CouponWinnerManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
+		<input type="button" value="다음" onclick="location.href='EventWinnerList?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+		<input type="button" value="끝" onclick="location.href='EventWinnerList?pageNum=${pageInfo.maxPage}${searchRecord}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>	
 	<br>

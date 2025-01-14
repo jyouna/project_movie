@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +37,7 @@ public class AdminEventManageController {
 	@Autowired
 	private PagingHandler pagingHandler;
 		
-	@GetMapping("EventBoardManage") // 이벤트 게시판 관리 + 리스트 출력
+	@GetMapping("EventBoardManage") // 이벤트 게시판 관리 + 이벤트 목록 출력
 	public String eventBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 										@RequestParam(defaultValue = "") String searchKeyword,
 										@RequestParam(defaultValue = "") String searchContent) {
@@ -156,10 +158,28 @@ public class AdminEventManageController {
 	
 	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 폼 이동
 	public String chooseEventWinner(int event_code, Model model) {
-	
+		// 라디오 버튼으로 특정 이벤트 1건 선택하여 해당 이벤트 종료 및 당첨자 추첨 로직
+		
 		System.out.println("이벤트 당첨 컨트롤러 이동");
-		EventBoardVO eventVo = adminService.selectWinner(event_code);
-		List<MemberVO> memberVo = adminService.getMemberList();
+		EventBoardVO eventVo = adminService.selectWinner(event_code); // 라디오 버튼으로 선택한 이벤트 정보 
+		List<MemberVO> member = adminService.getMemberList(); // 전체 멤버 리스트
+		List<MemberVO> memberVo = new ArrayList<>(); // 전체 멤버 리스트 중 50개만 저장하기 위한 list 객체. 한번에 2000개 전달시 오류 발생
+		Random r = new Random(); 
+		
+		for(int i = 0; i < 50; i++) {
+			memberVo.add(member.get(r.nextInt(2000)+1)); // 1~2000 중 랜덤으로 50명 추첨
+		}
+		
+		System.out.println("리스트 객체에 저장된 값 개수 : " + memberVo.size());
+		
+		/*  
+		 * 	이벤트 내용
+		 *  
+		 *  1. 특정 월 예매자 중 선택 
+		 *  2. 투표 참여자 중 선택
+		 *  3. 
+		 *  
+		 */ 
 
 		model.addAttribute("eventVo", eventVo);
 		model.addAttribute("memberVo", memberVo);
@@ -249,11 +269,44 @@ public class AdminEventManageController {
 		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointWinnerList", searchKeyword, searchContent);
 		List<EventWinnerVO> point_winner = adminService.getPointWinnerList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		
+		
 		model.addAttribute("point_winner", point_winner);
 		model.addAttribute("pageInfo", pageInfo);
 		
 		return "adminpage/point_manage/point_winner_manage";
 	}
+
+//	// 이벤트 당첨자 표시 페이지
+//	@GetMapping("EventWinnerList") 
+//	public String eventWinnerList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+//			@RequestParam(defaultValue = "") String searchKeyword,
+//			@RequestParam(defaultValue = "") String searchContent) {
+//		// 로그인 유무 판별
+//		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+//			model.addAttribute("msg", "로그인 후 이용가능");
+//			model.addAttribute("targetURL", "AdminLogin");
+//			return "result/process";
+//		}
+//		
+//		// 관리자 메뉴 접근권한 판별
+//		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+//			model.addAttribute("msg", "접근 권한이 없습니다.");
+//			model.addAttribute("targetURL", "AdminpageMain");
+//			return "result/process";
+//		}
+//		
+//		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventWinnerList", searchKeyword, searchContent);
+//		List<EventWinnerVO> event_winner = new ArrayList<EventWinnerVO>();
+//		
+//		
+////		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointWinnerList", searchKeyword, searchContent);
+////		List<EventWinnerVO> point_winner = adminService.getPointWinnerList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+////		
+//		model.addAttribute("event_winner", event_winner);
+//		model.addAttribute("pageInfo", pageInfo);
+//		
+//		return "adminpage/point_manage/point_winner_manage";
+//	}
 	
 	@GetMapping("CouponBoardManage") // 쿠폰 관리 페이지
 	public String couponBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,

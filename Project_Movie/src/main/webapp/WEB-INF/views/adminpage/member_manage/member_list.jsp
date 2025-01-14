@@ -21,6 +21,9 @@
 <style type="text/css">
 th, td {
 	text-align: left !important;}
+	
+/* .tdForNumber { */
+/* 	text-align: right !important;}	 */
 </style>
 </head>
 <body>
@@ -140,10 +143,10 @@ th, td {
 								VIP
 							</c:if>
 						</td>
-						<td>
+						<td class="tdForNumber">
 							<fmt:formatNumber value="${member.remain_point}" type="number" />
 						</td>
-						<td>
+						<td class="tdForNumber">
 							<fmt:formatNumber value="${member.coupon_num}" type="number" />
 						</td>
 						<td>
@@ -163,7 +166,9 @@ th, td {
 			</c:choose>
 		</table>
 	</div>
+	<br>
 	<div id="divBottom" class="view">
+		<input type="button" value="처음으로" onclick="location.href='MemberList?pageNum=1'" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
 		<input type="button" value="이전" 
 			onclick="location.href='MemberList?pageNum=${pageInfo.pageNum - 1}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
@@ -179,7 +184,10 @@ th, td {
 		</c:forEach>
 		<input type="button" value="다음" onclick="location.href='MemberList?pageNum=${pageInfo.pageNum + 1}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
-	</div>	
+		<input type="button" value="마지막으로" onclick="location.href='MemberList?pageNum=${pageInfo.maxPage}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+	</div>
+	<hr>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
 	<script type="text/javascript">

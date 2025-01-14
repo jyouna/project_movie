@@ -193,6 +193,10 @@ public class AdminManageService {
 			listCount = manageMapper.getCouponListCount(searchKeyword, searchContent); break;
 		case "pointList" : 
 			listCount = manageMapper.getPointListCount(searchKeyword, searchContent); break;
+//		case "eventWinnerList" : 
+//			int count1 = manageMapper.getPointListCount(searchKeyword, searchContent);
+//			int count2 = manageMapper.getCouponListCount(searchKeyword, searchContent); 
+//			listCount = count1 + count2; break;
 		}
 		return listCount;
 	}
@@ -274,6 +278,4 @@ public class AdminManageService {
 		
 		return map;
 	}
-
-
 }

@@ -39,8 +39,8 @@
 	
 	<select id="selectMemberListPaging" resultType="memberAllInfo">
 		SELECT  		
-			c.member_id AS member_id, 
-			count(*) AS coupon_num, 
+			m.member_id AS member_id, 
+			count(c.member_id) AS coupon_num, 
 		    m.point AS remain_point,
 		    m.member_name AS member_name,
 		    m.member_passwd AS member_passwd,
@@ -59,7 +59,7 @@
 		    m.regis_date AS regis_date
 		FROM 
 			member m 
-		JOIN 
+		LEFT JOIN 
 			coupon c
 		ON 
 			m.member_id = c.member_id  
@@ -78,7 +78,7 @@
 			</choose>	                
 		</if>
 		GROUP BY 
-			c.member_id
+			m.member_id
 		ORDER BY 
 			m.regis_date
 		LIMIT

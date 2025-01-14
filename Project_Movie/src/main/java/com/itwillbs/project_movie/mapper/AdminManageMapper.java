@@ -121,6 +121,12 @@ public interface AdminManageMapper {
 	int getMonthlyTotalNewMember(@Param("year")int year,
 								@Param("month")int month);
 
+	Map<String, Object> getAllEventWinnerList(@Param("startRow") int startRow, 
+											@Param("listLimit") int listLimit, 
+											@Param("searchKeyword") String searchKeyword, 
+											@Param("searchContent") String searchContent);
+
+
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 
 }
