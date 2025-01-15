@@ -1,5 +1,6 @@
 package com.itwillbs.project_movie.mapper;
 
+import java.sql.Date;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -56,6 +57,10 @@ public interface MemberMapper {
 	// 이메일 인증 여부 확인을 위한 메서드 추가
 	int checkEmailAuthStatus(@Param("email") String email);
 	// ============================
+
+	String findIdMember(@Param("member_name") String member_name, 
+			@Param("birth_date") Date birth_date,
+			@Param("email") String email);
 	
 	
 	

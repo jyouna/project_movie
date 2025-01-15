@@ -25,6 +25,24 @@
 	)
 	</insert>
 	
+	
+	<!-- 	 아이디 찾기 판별 -->
+	<select id="findIdMember" resultType="string">
+	    SELECT member_id
+	    FROM member
+	    WHERE member_name = #{member_name}
+	      AND birth_date = CAST(#{birth_date} AS DATE)
+	      AND email = #{email}
+	</select>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<!-- 회원 로그인을 위한 아이디, 패스워드 판별 - SELECT -->
 	<select id="selectMemberIdForLogin" resultType="string">
@@ -158,6 +176,7 @@
 		WHERE email = #{email}
 	</select>
 	<!-- ============================= -->
+	
 	
 	
 	

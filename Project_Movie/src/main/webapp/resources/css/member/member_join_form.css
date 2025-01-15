@@ -35,8 +35,9 @@ button {
 /*    text-align: center;      텍스트 중앙 정렬 */
 /* } */
 
-
-
+element.style {
+    color: #000000;
+}
 /* ===== 컨테이너 설정 ===== */
 .container {
   max-width: 100%;
@@ -62,10 +63,17 @@ button {
 
 /* ===== 입력 필드 및 버튼 크기 조정 ===== */
 input, select, button {
-/*   padding: 8px; */
-  margin-right: 5px;
+
+  	font-family: Arial, sans-serif;
+    /* padding: 8px; */
+    margin-right: 5px;
+    font-size: 15px;
+    color: #000000;
+    font-style: normal;
 
 }
+
+	
 
 input#username,
 input#password,
@@ -85,11 +93,13 @@ input#username {
   
 }
 
-input#password,
-input#confirm-password {
-  width: 90%; 
+input#password {
+  width: 80%; 
   height: 30px;
-  
+}
+input#confirm-password{
+  width: 50%; 
+  height: 30px;
 }
 
 input#name {
@@ -100,7 +110,7 @@ input#name {
 
 input#email,
 input#phone{
-  width: 45%; 
+  width: 70%; 
   height: 30px;
   
 }
@@ -112,11 +122,36 @@ input#phone-code{
   
 }
 
-input#genre{
-   width:80%;
-   height: 30px;
+/* input#genre{ */
+/*    color: #000000; */
+/*    width:80%; */
+/*    height: 30px; */
+/*    size: 15px; */
+/*    padding: 0; padding 값을 0으로 설정 */
+   
+/* } */
+
+/* select#genre option:first-child { */
+/*     color: #000000; */
+/*     font-weight: bold; */
+/*     font-size: 15px; */
+/* } */
+
+select#genre {
+    font-family: Arial, sans-serif; /* 폰트를 명시적으로 지정 */
+    font-size: 15px; /* 글자 크기 */
+    color: #000; /* 기본 글씨 색 검정 */
+    background-color: #fff; /* 배경색 설정 */
+    padding: 5px; /* 내부 여백 */
+    border: 1px solid #ccc; /* 테두리 설정 */
+    border-radius: 4px; /* 모서리 둥글게 */
 }
 
+select#genre option {
+    font-family: Arial, sans-serif; /* 옵션 글자 폰트 */
+    font-size: 15px; /* 옵션 글자 크기 */
+    color: #000; /* 옵션 글자 색 */
+}
 input#captcha{
    width:40%;
    height: 15px;
@@ -258,3 +293,93 @@ input[type="checkbox"]:focus {
 .gender-options input[type="radio"] {
     margin-right: 5px;      /* 라디오 버튼과 텍스트 사이의 여백 */
 }
+
+
+/* 전화번호 인증 섹션 */
+.phone-verification {
+    display: flex; /* 요소들을 가로로 나열 */
+    align-items: center; /* 입력 필드와 버튼을 수직 중앙 정렬 */
+    gap: 10px; /* 입력 필드와 버튼 간격 */
+}
+
+#sendAuthCodeBtn {
+    height: 30px; /* 버튼 높이 조정 */
+}
+
+.auth-code-section {
+/*     margin-top: 5px; 전화번호 입력 필드 아래 여백  //2 */
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 20px; /* 인증코드 필드와 버튼 간격 */
+}
+
+#authCode {
+    width: 40%; 
+     height: 30px;
+}
+
+#verifyAuthCodeBtn {
+    height: 30px; /* 버튼 높이 */
+}
+
+/* ===== 전화번호 인증 섹션 ===== */
+/* 변경된 JSP에 따라 추가된 부분 */
+.phone-verification {
+    display: flex; /* 입력 필드와 버튼 가로 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 10px; /* 입력 필드와 버튼 간격 */
+}
+
+.auth-code-section {
+    margin-top: 2px; /* 전화번호 입력 필드 아래 여백 */
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 10px; /* 인증코드 필드와 버튼 간격 */
+}
+
+
+/* 모든 브라우저 호환성을 위한 placeholder 스타일 */
+input::placeholder, 
+textarea::placeholder {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #a9a9a9; /* 기본 placeholder 글씨 색 */
+  font-style: normal; /* 기울이지 않음 */
+}
+
+/* Webkit 기반 브라우저 (Chrome, Safari 등) */
+input::-webkit-input-placeholder, 
+textarea::-webkit-input-placeholder {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #a9a9a9;
+  font-style: normal;
+}
+
+/* Firefox */
+input::-moz-placeholder, 
+textarea::-moz-placeholder {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #a9a9a9;
+  font-style: normal;
+}
+
+/* Internet Explorer 10-11 */
+input:-ms-input-placeholder, 
+textarea:-ms-input-placeholder {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #a9a9a9;
+  font-style: normal;
+}
+
+/* Edge */
+input::-ms-input-placeholder, 
+textarea::-ms-input-placeholder {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #a9a9a9;
+  font-style: normal;
+}
+

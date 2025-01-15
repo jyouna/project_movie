@@ -1,17 +1,10 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
+    padding: 0px;
     box-sizing: border-box;
   }
   
-  .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+  
   
   h1 {
     text-align: center;
@@ -21,13 +14,13 @@ body {
   .tabs {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   
   .tabs button {
-    padding: 10px;
+    padding: 0px;
     width: 45%;
-    border: 1px solid #007BFF;
+    border: 0px solid #007BFF;
     background-color: rgb(147, 190, 247);
     cursor: pointer;
   }
@@ -54,7 +47,7 @@ body {
   }
   
   button {
-    padding: 10px;
+    padding: 0px;
     background-color: #007BFF;
     color: white;
     border: none;
@@ -63,5 +56,26 @@ body {
   
   button:hover {
     background-color: #0056b3;
+  }
+  
+  .gap {
+    display: flex; /* Flexbox 사용 */
+    gap:330px; /* 요소 간 가로 간격 설정 */
+}
+
+.sidebar1 {
+    padding: 0px;
+    margin-left: -80px; /* 왼쪽으로 10px 이동 */
+}
+
+.container1 {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    
   }
   

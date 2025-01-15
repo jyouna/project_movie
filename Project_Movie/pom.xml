@@ -168,6 +168,17 @@
 		    <version>1.5</version>
 		</dependency>
 		
+		 <!--	휴대전화번호 인증 api -장민기========================================== -->
+		<dependency>
+		    <groupId>net.nurigo</groupId>
+		    <artifactId>sdk</artifactId>
+		    <version>4.2.7</version>
+		</dependency>
+
+						
+		
+						
+		<!-- ============================================== -->
 		
 						
 		<!-- ============================================== -->

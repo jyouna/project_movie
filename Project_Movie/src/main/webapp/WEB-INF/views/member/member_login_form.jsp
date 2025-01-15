@@ -46,7 +46,7 @@
 			  <input type="checkbox" id="rememberId" name="rememberId"
 			  <c:if test="${not empty cookie.rememberId.value}">checked="checked"</c:if>>
 			  <label for="rememberId">아이디 저장</label>
-			  <a href="${pageContext.request.contextPath}/MemberFindForm" class="link">ID/PW찾기</a> |
+			  <a href="${pageContext.request.contextPath}/MemberFind" class="link">ID/PW찾기</a> |
 			  <a href="${pageContext.request.contextPath}/MemberAgree" class="link">회원가입</a>
 			</div>
 

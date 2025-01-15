@@ -2,28 +2,28 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <!--
-	Escape Velocity by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+   Escape Velocity by HTML5 UP
+   html5up.net | @ajlkn
+   Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
 <head>
-	<title>Insert title here</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
-<%-- 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_join_form.css" /> --%>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_join_form.css" />
+   <title>Insert title here</title>
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_join_form.css" /> --%>
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_join_form.css" />
 </head>
 <body class="left-sidebar is-preload">
 
-	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
-	
-	<jsp:include page="/WEB-INF/views/inc/page/member_sidebar.jsp"></jsp:include>
-	
-	<article class="box post">
-		 <div class="container">
-    <h1>회원가입 ☆☆☆☆☆☆☆☆☆☆☆☆☆ ID)admin PW)1111로 만들어놨습니다  -민기-</h1>
+   <jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
+   
+   <jsp:include page="/WEB-INF/views/inc/page/member_sidebar.jsp"></jsp:include>
+   
+   <article class="box post">
+       <div class="container">
+    <h1>회원가입 <휴대폰 인증 api 만들어놔서, 가능한 db로 가입요망> </h1>
     
     <hr class="section-line"> <!-- 실선 추가 -->
 
@@ -36,13 +36,13 @@
       <!-- 아이디 입력 -->
       <table class="form-table">
         <!-- 아이디 입력 -->
-		<tr>
-		  <th>아이디 *</th> <!-- 필수 입력 항목 -->
-		  <td>
-		    <input type="text" id="username" name="member_id" placeholder="영문자,숫자,_ 5자리이상" required>
-<!-- 		    <button type="button">확인</button> -->
-		  </td>
-		</tr>
+      <tr>
+        <th>아이디 *</th> <!-- 필수 입력 항목 -->
+        <td>
+          <input type="text" id="username" name="member_id" placeholder="영문자,숫자,_ 5자리이상" required>
+<!--           <button type="button">확인</button> -->
+        </td>
+      </tr>
         <tr>
           <th>비밀번호 *</th>
           <td><input type="password" id="password" name="member_passwd" placeholder="영문자,숫자,특수문자(!@#$%) 8글자이상" required></td>
@@ -74,38 +74,85 @@
         </tr>
         
               <!-- 전화번호 -->
+       <%--       
       <tr>
         <th>전화번호 *</th>
         <td>
-          <input type="text" id="phone" name="phone" placeholder="숫자 입력" required>
-<!--           <button type="button">발송</button> -->
-<!--           <input type="text" id="phone-code" name="phone-code" placeholder="인증번호 입력"> -->
-<!--           <button type="button">확인</button> -->
+  
+         
+         <div class="phone-verification">
+             <input type="text" id="phone" name="phone" 
+             placeholder="전화번호 입력 *주의* -없이 11자리">
+             <button id="sendAuthCodeBtn">전송</button>
+         </div>
+         
+             
+          <div class="auth-code-section">
+                 <input type="text" id="authCode"  name="authCode" 
+                 placeholder="인증코드 입력">
+                 <button id="verifyAuthCodeBtn">확인</button>
+         
+         </div>
+            --%>
+         <tr>
+           <th>전화번호 *</th>
+           <td>
+             <!-- 독립된 폼으로 분리 -->
+             <form id="authCodeForm" onsubmit="return false;">
+               <div class="phone-verification">
+                 <input type="text" id="phone" name="phone" placeholder="전화번호 입력 *주의* -없이 11자리" required>
+                 <button type="button" id="sendAuthCodeBtn">전송</button>
+               </div>
+               <div class="auth-code-section">
+                 <input type="text" id="authCode" name="authCode" placeholder="인증코드 입력" required>
+                 <button type="button" id="verifyAuthCodeBtn">확인</button>
+               </div>
+             </form>
+           </td>
+         </tr>
+                        
+            
+            
+            
+            
+        
         </td>
+        
+        
       </tr>
       
       <!-- 성별 -->
-	<tr>
-	  <th>성별</th>
-	  <td>
-	    <div class="gender-options">
-	      <label><input type="radio" id="gender-m" name="gender" value="M"> 남성</label>
-	      <label><input type="radio" id="gender-f" name="gender" value="F"> 여성</label>
-	      <label><input type="radio" id="gender-none" name="gender" value="N"> 선택안함</label>
-	   </div>
+   <tr>
+     <th>성별</th>
+     <td>
+       <div class="gender-options">
+         <label><input type="radio" id="gender-m" name="gender" value="M"> 남성</label>
+         <label><input type="radio" id="gender-f" name="gender" value="F"> 여성</label>
+         <label><input type="radio" id="gender-none" name="gender" value="N"> 선택안함</label>
+      </div>
     </td>
-	</tr>
+   </tr>
       </table>
       
       <!-- 관심장르 및 수신 여부 -->
       <table class="form-table">
         <!-- 관심장르 -->
-        <tr>
-          <th>관심장르</th>
-          <td>
-            <input type="text" id="genre" name="genre" placeholder="관심 장르 입력">
-          </td>
-        </tr>
+         <tr>
+           <th>관심장르</th>
+           <td>
+             <select id="genre" name="genre">
+               <option value="" disabled selected>장르를 클릭하여 선택해주세요 </option> <!-- 기본 안내 옵션 -->
+               <option value="드라마">드라마</option>
+               <option value="애니메이션">애니메이션</option>
+               <option value="액션">액션</option>
+               <option value="멜로/로맨스">멜로/로맨스</option>
+               <option value="코미디">코미디</option>
+               <option value="스릴">스릴</option>
+               <option value="다큐멘터리">다큐멘터리</option>
+               <option value="기타">기타</option>
+             </select>
+           </td>
+         </tr>
         
         <!-- 문자 수신 여부 -->
         <tr>
@@ -132,13 +179,13 @@
         </tr>
       
         <!-- 자동 등록 방지 -->
-	 <tr>
-	  <th>자동 등록 방지 *</th>
-	  <td>
-	    <img src="${pageContext.request.contextPath}/resources/images/captcha.png" alt="captcha">
-	    <input type="text" id="captcha" name="captcha" placeholder="입력" required>
-	  </td>
-	</tr>
+    <tr>
+     <th>자동 등록 방지 *</th>
+     <td>
+       <img src="${pageContext.request.contextPath}/resources/images/captcha.png" alt="captcha">
+       <input type="text" id="captcha" name="captcha" placeholder="입력" > 
+     </td>
+   </tr>
       </table>
 
       <!-- 제출 버튼 -->
@@ -147,18 +194,18 @@
 <!--         <button type="reset" class="cancel-btn">취소</button> -->
 <!--       </div> -->
       <div class="button-group">
-	    <button type="submit" class="btn submit-btn">* 회원가입 *</button>
-	    <button type="button" id="cancel-btn" class="btn cancel-btn">취소</button>
-	 </div>
+       <button type="submit" class="btn submit-btn">* 회원가입 *</button>
+       <button type="button" id="cancel-btn" class="btn cancel-btn">취소</button>
+    </div>
     </form>
   </div>
-	
-	
-<%-- 		<jsp:include page="/WEB-INF/views/member/member_join_form_test.jsp"></jsp:include> --%>
-	</article>
+   
+   
+<%--       <jsp:include page="/WEB-INF/views/member/member_join_form_test.jsp"></jsp:include> --%>
+   </article>
 
-	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	<script src="${pageContext.request.contextPath}/resources/js/member/member_join_form.js"></script>
+   <jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
+   <script src="${pageContext.request.contextPath}/resources/js/member/member_join_form.js"></script>
 </body>
 </html>
 
