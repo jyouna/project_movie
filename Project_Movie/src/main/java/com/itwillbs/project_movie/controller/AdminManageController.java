@@ -51,7 +51,7 @@ public class AdminManageController {
 	// 세션 admin_sId가 있을 시 바로 접속, 그렇지 않을 경우 관리자 로그인 페이지 이동
 	public String adminLogigForm(HttpSession session) {
 		System.out.println("관리자 로그인 세션 : " + session.getAttribute("admin_sId"));  
-		 
+
 		if(session.getAttribute("admin_sId") == null) {
 			return "adminpage/admin_manage/adminpage_login_form";
 		} else {

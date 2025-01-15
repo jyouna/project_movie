@@ -28,7 +28,6 @@ input[type="checkbox"] {
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	
 	<h3>관리자 계정관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">

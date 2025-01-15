@@ -16,13 +16,21 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/statics.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<style type="text/css">
+#headTitle {
+	background-color: lightblue;
+}
+#myChart {
+	width: 100%;
+	height: 100%;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<div id="tableDiv">
-		<h3>신규 가입자 통계</h3>
-			<input type="button" onclick="location.href='makeNewmember'" value="회원생성">
-	
+		<h2 id="headTitle">신규 가입자 통계</h2>
+<!-- 			<input type="button" onclick="location.href='makeNewmember'" value="회원생성"> -->
 			<input type="button" value="전체 기간" id="totalPeriodSearch">
 			기간설정 
 			<select id="year">
@@ -32,25 +40,6 @@
 				<option value="2022">2022</option>
 				<option value="2021">2021</option>
 				<option value="2020">2020</option>
-				<option value="2019">2019</option>
-				<option value="2018">2018</option>
-				<option value="2017">2017</option>
-				<option value="2016">2016</option>
-				<option value="2015">2015</option>
-				<option value="2014">2014</option>
-				<option value="2013">2013</option>
-				<option value="2012">2012</option>
-				<option value="2011">2011</option>
-				<option value="2010">2010</option>
-				<option value="2009">2009</option>
-				<option value="2008">2008</option>
-				<option value="2007">2007</option>
-				<option value="2006">2006</option>
-				<option value="2005">2005</option>
-				<option value="2004">2004</option>
-				<option value="2003">2003</option>
-				<option value="2002">2002</option>
-				<option value="2001">2001</option>
 			</select>
 			<select id="month">
 				<option value="">월</option>
@@ -70,9 +59,214 @@
 			</select>
 	</div>
 	<div id="chartArea">
-		<canvas id="myChart" width="1000" height="600"></canvas>
+		<canvas id="myChart"></canvas>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
+<script type="text/javascript">
+$(function(){
+	let myChart;
+	let date = new Date();
+	let year = date.getFullYear()-1;
+	let month = date.getMonth();
+	
+	$.ajax({
+		url: "GetYearTotalMemberJoinStaticsInfo",
+		type: "get",
+		data : {
+			year : year,
+		},
+		dataType: "json",
+		success: function(response){
+  			if(myChart){myChart.destroy();} // 차트가 존재하면 먼저 지우고 새 차트를 생성
+			const monthOrder = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+ 			const data = monthOrder.map(month => response[month] || 0); // 월 순서에 맞게 배열로 변환 (값이 없으면 0)
+			const ctx = document.getElementById('myChart').getContext('2d');
+			
+  				
+			myChart = new Chart(ctx, {
+				type: "bar",
+				data: {
+					labels : monthOrder, // 축
+					datasets: [{ // 각 축에 들어갈 값 설정
+						label: year + "년 가입자 수", // 값 이름
+						data: data, // 값
+						backgroundColor: 'rgba(255, 99, 132, 0.2)',
+						borderColor: 'rgba(54, 162, 235, 1)',
+						borderWidth: 2
+					}]
+				},
+				options: {
+					plugins: {
+						subtitle: { // 차트 제목
+							display: true,
+							text: '연간 가입자 통계' 
+						}
+					},
+					scales: {
+						x : {
+							ticks: {
+								color: 'rgba(75, 192, 192, 1)'
+							}
+						},
+						y: {
+							min : 0,
+							max : 600,
+							ticks: {
+								color: 'rgba(75, 192, 192, 1)',
+								stepSize: 50
+							}
+							
+						}
+					}
+				}
+			});
+		}
+	});
+	
+	
+	
+	
+	
+	$("#totalPeriodSearch").on("click",function(){
 
+	});
+
+	$("#monthlySearch").on("click",function(){
+
+	});
+	
+	$("#specificPeriodSearch").on("click",function(){
+
+	});
+	
+	$("#year").on("change", function(){
+		let year = $("#year").val();
+		
+		if(year === "연도") {
+			$("#month").css("display", "none");
+		} else {
+			$("#month").css("display", "inline-block");
+		}
+	})
+	
+	$("#month").on("change", function(){
+		let year = $("#year").val();
+		let month = $("#month").val();
+		let yearAndMonth = year + "년 " + month + "월";
+		
+		if(month !== "" && month !== "yearTotal") {
+			console.log("year : " + year);	
+			console.log("month : " + month);	
+			
+			$.ajax({
+				url: "GetMonthlyMemberJoinStaticsInfo",
+				type: "get",
+				data : {
+					year : year,
+					month : month
+				},
+				dataType: "json",
+				success: function(response){
+					if(myChart){myChart.destroy();}
+					const ctx = document.getElementById('myChart').getContext('2d');
+					myChart = new Chart(ctx, {
+						type: "bar",
+						data: {
+							labels : [yearAndMonth], // 축
+							datasets: [{ // 각 축에 들어갈 값 설정
+								label:  year + "년 가입자 수", // 값
+								backgroundColor: 'rgba(255, 99, 132, 0.2)',
+								borderColor: 'rgba(54, 162, 235, 1)',
+								borderWidth: 2
+							}]
+						},
+						options: {
+							plugins: {
+								subtitle: { // 차트 제목
+									display: true,
+									text: '연간 가입자 통계' 
+								}
+							},
+							scales: {
+								x : {
+									ticks: {
+										color: 'rgba(75, 192, 192, 1)'
+									}
+								},
+								y: {
+									min : 0,
+									max : 600,
+									ticks: {
+										color: 'rgba(75, 192, 192, 1)',
+										stepSize: 50
+									}
+									
+								}
+							}
+						}
+					});
+				}
+			})
+		} else if(month === "yearTotal") {
+			console.log("연간 통계 선택");
+			$.ajax({
+				url: "GetYearTotalMemberJoinStaticsInfo",
+				type: "get",
+				data : {
+					year : year,
+				},
+				dataType: "json",
+				success: function(response){
+					const monthOrder = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+    				const data = monthOrder.map(month => response[month] || 0); // 월 순서에 맞게 배열로 변환 (값이 없으면 0)
+					const ctx = document.getElementById('myChart').getContext('2d');
+					
+    				if(myChart){myChart.destroy();} // 차트가 존재하면 먼저 지우고 새 차트를 생성
+    				
+					myChart = new Chart(ctx, {
+						type: "bar",
+						data: {
+							labels : monthOrder, // 축
+							datasets: [{ // 각 축에 들어갈 값 설정
+								label:  year + "년 가입자 수" , // 값 이름
+								data: data, // 값
+								backgroundColor: 'rgba(255, 99, 132, 0.2)',
+								borderColor: 'rgba(54, 162, 235, 1)',
+								borderWidth: 2
+							}]
+						},
+						options: {
+							plugins: {
+								subtitle: { // 차트 제목
+									display: true,
+									text: '연간 가입자 통계' 
+								}
+							},
+							scales: {
+								x : {
+									ticks: {
+										color: 'rgba(75, 192, 192, 1)'
+									}
+								},
+								y: {
+									min : 0,
+									max : 600,
+									ticks: {
+										color: 'rgba(75, 192, 192, 1)',
+										stepSize: 50
+									}
+									
+								}
+							}
+						}
+					});
+				}
+			});
+			
+		}
+	});
+});
+
+</script>
 </body>
 </html>
