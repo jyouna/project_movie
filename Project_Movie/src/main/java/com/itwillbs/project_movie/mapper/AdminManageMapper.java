@@ -126,6 +126,14 @@ public interface AdminManageMapper {
 											@Param("searchKeyword") String searchKeyword, 
 											@Param("searchContent") String searchContent);
 
+	int modifyEventBoard(EventBoardVO eventVo);
+
+	int deleteEventBoard(@Param("event_code") int event_code);
+
+	int checkEventStatusForDelete(@Param("event_code") int event_code);
+
+	int getMemberCount();
+
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

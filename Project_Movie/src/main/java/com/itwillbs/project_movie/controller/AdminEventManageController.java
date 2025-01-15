@@ -108,8 +108,20 @@ public class AdminEventManageController {
 	}
 	
 	@PostMapping("updateEventBoard") // 이벤트 게시글 수정폼 제출
-	public String eventBoardModify(EventBoardVO eventVo) {
-		return "";
+	public String eventBoardModify(EventBoardVO eventVo, Model model) {
+		System.out.println("폼 파라미터 : " + eventVo);
+		
+		int updateCount = adminService.modifyEventBoard(eventVo);
+		
+		if(updateCount > 0) {
+			System.out.println("이벤트 게시글 수정 성공");
+			return "redirect:/EventBoardManage";
+		} else {
+			model.addAttribute("msg", "게시글 수정 실패");
+			model.addAttribute("targetURL", "EventBoardManage");
+			return "result/process";			
+		}
+		
 	}
 	
 	@PostMapping("checkEventStatus") // 이벤트 종료 여부 ajax 응답
@@ -360,6 +372,27 @@ public class AdminEventManageController {
 		model.addAttribute("pageInfo", pageInfo);
 		
 		return "adminpage/point_manage/point_board_manage";
+	}
+	
+	@GetMapping("DeleteEventBoard")
+	@ResponseBody
+	public Boolean deleteEventBoard(int event_code) {
+		System.out.println("컨트롤러 호출됨 : " + event_code);
+		
+		int deleteCount = adminService.deleteEvent(event_code);
+		
+		if(deleteCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@GetMapping("countMember")
+	@ResponseBody
+	public int count_member() {
+		int member = adminService.getMemberCount();
+		return member;
 	}
 
 }

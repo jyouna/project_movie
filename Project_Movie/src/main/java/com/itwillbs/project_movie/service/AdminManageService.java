@@ -278,4 +278,31 @@ public class AdminManageService {
 		
 		return map;
 	}
+
+	public int modifyEventBoard(EventBoardVO eventVo) {
+		// TODO Auto-generated method stub
+		return manageMapper.modifyEventBoard(eventVo);
+	}
+
+	public int deleteEvent(int event_code) {
+		// TODO Auto-generated method stub
+		// 이벤트 삭제 전 상태 값 검사. 
+		// 2의 경우 이미 종료된 이벤트이므로 삭제 불가.
+		int event_status = checkEventStatusForDelete(event_code);
+		
+		if(event_status != 2) {
+			return manageMapper.deleteEventBoard(event_code);
+		} else {
+			return 0;
+		}
+	}
+	// 이벤트 삭제 전 상태 값 반환
+	public int checkEventStatusForDelete(int event_code) {
+		return manageMapper.checkEventStatusForDelete(event_code);
+	}
+
+	public int getMemberCount() {
+		// TODO Auto-generated method stub
+		return manageMapper.getMemberCount();
+	}
 }

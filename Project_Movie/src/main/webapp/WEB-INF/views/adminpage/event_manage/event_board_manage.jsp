@@ -30,6 +30,7 @@
 				<input type="button" id="eventStart" value="이벤트 시작">
 				<input type="button" id="eventEnd" value="이벤트 종료">
 				<input type="button" id="chooseEventWinner" value="이벤트 당첨자 추첨">
+				<input type="button" id="deleteEvent" value="이벤트 삭제">
 			</div>	
 			
 			<div id="divTopRight">

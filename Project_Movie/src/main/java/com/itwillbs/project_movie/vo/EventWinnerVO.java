@@ -1,12 +1,10 @@
 package com.itwillbs.project_movie.vo;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.Data;
-
 
 // DB에는 없는 VO 객체
 // 이벤트 당첨자 목록 출력 시 event_board 테이블과 

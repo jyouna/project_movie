@@ -195,15 +195,29 @@ $(function(){
 		}	
 	});
 	
-//	$("#eventStatus").on("chagne", function(){
-//		let status = $("#eventStatus").val();
-//		$.ajax({
-//			url : "getListbyStatus",
-//			type : "get",
-//			data : {status : status},
-//			success : function(){
-//				
-//			}
-//		});
-//	});
+	$("#deleteEvent").on("click", function(){
+		let event_code = $(".eventSetRadio:checked").val();
+		console.log("ajax 이벤트 코드 : " + event_code);
+						
+		if(event_code == null) {
+			alert("삭제할 이벤트를 선택하세요.");
+		} else {	
+			if(confirm("해당 계정을 삭제하시겠습니까?")){
+				$.ajax({
+					url: "DeleteEventBoard",
+					type: "get",
+					data: {event_code : event_code},
+				}).done(function(response){
+					if(response){
+						alert("해당 게시글이 삭제되었습니다.")
+						location.replace("EventBoardManage");
+					} else {
+						alert("종료된 이벤트는 삭제 불가합니다.");
+					}
+				}).fail(function(response){
+				})	
+			}
+		}
+	});
+	
 });

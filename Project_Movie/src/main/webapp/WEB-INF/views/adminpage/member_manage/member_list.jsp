@@ -32,8 +32,9 @@ th, td {
 	<h3>회원 정보 조회</h3>
 	<div id="divTop">
 		<div id="divTopLeft">
-			<input type="button" value="전체조회" id="listSearch">
-			<input type="button" value="ID 조회" id="idSearch">
+<!-- 			<input type="button" value="전체조회" id="listSearch"> -->
+<!-- 			<input type="button" value="ID 조회" id="idSearch"> -->
+			<span id="member_count"></span>
 		</div>
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<form action="MemberList" method="get">
@@ -47,7 +48,7 @@ th, td {
 				<input type="submit" value="검색" id="searchBtn">
 <%-- 				<input type="hidden" value="${param.pageNum}" name="pageNum"> --%>
 			</form>	
-		</div>	
+		</div>
 	</div>
 	<div id="tableDiv">
 		<table id="mainTable" border="1">
@@ -87,78 +88,40 @@ th, td {
 						<td>${member.email}</td>
 						<td>${member.phone}</td>
 						<td>
-							<c:if test="${member.gender eq 'M'}">
-								남
-							</c:if>
-							<c:if test="${member.gender eq 'F'}">
-								여
-							</c:if>
+							<c:if test="${member.gender eq 'M'}">남</c:if>
+							<c:if test="${member.gender eq 'F'}">여</c:if>
 						</td>
 						<td>${member.gerne}</td>
 						<td>
-							<c:if test="${member.text_receive eq false}">
-								거부
-							</c:if>
-							<c:if test="${member.text_receive eq true}">
-								동의
-							</c:if>
+							<c:if test="${member.text_receive eq false}">거부</c:if>
+							<c:if test="${member.text_receive eq true}">동의</c:if>
 						</td>
 						<td>
-							<c:if test="${member.email_receive eq false}">
-								거부
-							</c:if>
-							<c:if test="${member.email_receive eq true}">
-								동의
-							</c:if>
+							<c:if test="${member.email_receive eq false}">거부</c:if>
+							<c:if test="${member.email_receive eq true}">동의</c:if>
 						</td>
 						<td>
-							<c:if test="${member.info_open eq false}">
-								거부
-							</c:if>						
-							<c:if test="${member.info_open eq true}">
-								동의
-							</c:if>						
+							<c:if test="${member.info_open eq false}">거부</c:if>						
+							<c:if test="${member.info_open eq true}">동의</c:if>						
 						</td>
 						<td>
-							<c:if test="${member.email_auth_status eq false}">
-								미완
-							</c:if>						
-							<c:if test="${member.email_auth_status eq true}">
-								완료
-							</c:if>						
+							<c:if test="${member.email_auth_status eq false}">미완</c:if>						
+							<c:if test="${member.email_auth_status eq true}">완료</c:if>						
 						</td>
 						<td>
-							<c:if test="${member.phone_auth_status eq false}">
-								미완
-							</c:if>						
-							<c:if test="${member.phone_auth_status eq true}">
-								완료
-							</c:if>						
+							<c:if test="${member.phone_auth_status eq false}">미완</c:if>						
+							<c:if test="${member.phone_auth_status eq true}">완료</c:if>						
 						</td>
 						<td>
-							<c:if test="${member.member_type eq '1'}">
-								일반
-							</c:if>
-							<c:if test="${member.member_type eq '2'}">
-								VIP
-							</c:if>
+							<c:if test="${member.member_type eq '1'}">일반</c:if>
+							<c:if test="${member.member_type eq '2'}">VIP</c:if>
 						</td>
-						<td class="tdForNumber">
-							<fmt:formatNumber value="${member.remain_point}" type="number" />
-						</td>
-						<td class="tdForNumber">
-							<fmt:formatNumber value="${member.coupon_num}" type="number" />
-						</td>
+						<td class="tdForNumber"><fmt:formatNumber value="${member.remain_point}" type="number" /></td>
+						<td class="tdForNumber"><fmt:formatNumber value="${member.coupon_num}" type="number" /></td>
 						<td>
-							<c:if test="${member.member_status eq '1'}">
-								정상
-							</c:if>						
-							<c:if test="${member.member_status eq '2'}">
-								정지
-							</c:if>						
-							<c:if test="${member.member_status eq '3'}">
-								탈퇴
-							</c:if>						
+							<c:if test="${member.member_status eq '1'}">정상</c:if>						
+							<c:if test="${member.member_status eq '2'}">정지</c:if>						
+							<c:if test="${member.member_status eq '3'}">탈퇴</c:if>						
 						</td>
 					</tr>
 				</c:forEach>
@@ -168,7 +131,7 @@ th, td {
 	</div>
 	<br>
 	<div id="divBottom" class="view">
-		<input type="button" value="처음으로" onclick="location.href='MemberList?pageNum=1'" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
+		<input type="button" value="처음" onclick="location.href='MemberList?pageNum=1'" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
 		<input type="button" value="이전" 
 			onclick="location.href='MemberList?pageNum=${pageInfo.pageNum - 1}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
@@ -184,7 +147,7 @@ th, td {
 		</c:forEach>
 		<input type="button" value="다음" onclick="location.href='MemberList?pageNum=${pageInfo.pageNum + 1}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
-		<input type="button" value="마지막으로" onclick="location.href='MemberList?pageNum=${pageInfo.maxPage}'"
+		<input type="button" value="마지막" onclick="location.href='MemberList?pageNum=${pageInfo.maxPage}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>
 	<hr>
@@ -192,6 +155,16 @@ th, td {
 	
 	<script type="text/javascript">
 	$(function(){
+		$.ajax({
+			url: "countMember",
+			type: "get"
+		}).done(function(response){
+			$("#member_count").text("회원 수 : " + response + "명").css("color", "red");				
+		}).fail(function(){
+			
+		})
+		
+		
 		$("#listSearch").on("click", function(){
 			alert("전체 목록을 출력했습니다.");
 		});

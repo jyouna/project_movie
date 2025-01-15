@@ -149,12 +149,8 @@ input[type="checkbox"] {
 		});
 		
 		$("#selectAll").on("click", function(){
-			
 			// 1. 현재페이지
-			
 			// 2. 다른페이지로 갔다 돌아왔을 때 
-			
-			
 		    let checkboxes = $(".deleteCheck");  // 체크박스 항목들을 다루기 위한 객체 생성
 		    let isChecked = $(this).data("checked") || false; // 전체선택 버튼의 현재 체크 상태값 저장. 없는 경우 false 값으로 설정.
 		    $(this).data("checked", !isChecked); // 체크가 안된 상태에서 클릭했으면 true로 변경

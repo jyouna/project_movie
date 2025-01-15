@@ -504,4 +504,38 @@
 		AND
 			LAST_DAY(CONCAT(#{year}, '-', #{month}, '-01'))
 	</select>
+	
+	<update id="modifyEventBoard">
+		UPDATE 
+			event_board
+		SET
+			event_subject = #{event_subject},
+			event_start_date = #{event_start_date},
+			event_end_date = #{event_end_date},
+			event_content = #{event_content},
+			event_file1 = #{event_file1},
+			event_file2 = #{event_file2},
+			event_file3 = #{event_file3}
+		WHERE 
+			event_code = #{event_code}
+	</update>
+	
+	<select id="checkEventStatusForDelete" resultType="int">
+		SELECT 
+			event_status
+		FROM
+			event_board
+		WHERE
+			event_code = #{event_code}
+	</select>
+	
+	<delete id="deleteEventBoard">
+		DELETE FROM event_board
+		WHERE event_code = #{event_code}
+	</delete>
+	
+	<select id="getMemberCount">
+		SELECT count(*)
+		FROM member
+	</select>
  </mapper>
