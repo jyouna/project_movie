@@ -41,5 +41,18 @@
 		</if>
 	</select>
 	
+	<select id="selectScheduleJoinMovie" resultType="map">
+		SELECT *
+		FROM 
+			schedule s
+		JOIN
+			movie m
+		ON
+			s.movie_code = m.movie_code
+		WHERE
+			s.theater_code = #{theater_code}
+			AND s.start_time Like '%${select_date}%'
+		ORDER BY s.start_time ASC;
+	</select>
 	
 </mapper>

@@ -16,12 +16,12 @@ section {
 }	
 
 #btnGroup01 {
-	width: 50%;
+	width: 70%;
 	float:left;
 }
 
 #btnGroup02 {
-	width: 50%;
+	width: 30%;
 	float: right;
 	text-align: right;
 }
@@ -61,15 +61,14 @@ table {
 }
 
 .modal {
-	margin-top: 10px;
     display: none;
     position: fixed;
     z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    width: 30%;
+    height: 75%;
     overflow: auto;
+    margin-top: 100px;
+    margin-left: 940px;
 /*     background-color: rgba(0, 0, 0, 0.4); */
 }
 
@@ -80,8 +79,6 @@ table {
 
 .modal_content {
     background-color: #fff;
-    margin-left: 950px;
-    margin-top: 110px;
     padding: 20px;
     border: 1px solid #888;
     width: 350px;
@@ -146,7 +143,8 @@ h2 {
 	height: 150px;
 	vertical-align: top;
 	text-align: center;
-	background-color: lightgray;
+	background-color: #e9ecef;
+    border-right: 1px solid #ccc;
 }
 
 .scheduleCheck>input[type="checkbox"] {
@@ -161,14 +159,21 @@ h2 {
 	height: 150px;
 	vertical-align: top;
 	font-size: 20px;
-	background-color: lightgray;
 	padding: 10px;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
 }
 
 .creaningTime {
-	text-align: center;
-	width: 98%;
-	border: 1px solid blue;
-	margin-bottom: 7px;
-	background-color: #A9A9A9;
+    text-align: center; 
+    width: 100%; 
+    border: none; 
+    font-size: 16px; 
+    color: #666;
+    margin: 15px 0; 
+    background-color: #f1f1f1;
+    padding: 5px;
+    border-radius: 6px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

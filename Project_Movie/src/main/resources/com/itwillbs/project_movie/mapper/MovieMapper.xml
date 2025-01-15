@@ -99,11 +99,11 @@
 		<if test="columnName2 != null and selectCondition2 != null">
 			AND ${columnName2} = #{selectCondition2}
 		</if>
-		<if test="olderColumn != null and howOlder != null">
-			ORDER BY ${olderColumn} ${howOlder}
+		<if test="orderColumn != null and howOrder != null">
+			ORDER BY ${orderColumn} ${howOrder}
 		</if>
-		<if test="olderColumn2 != null and howOlder2 != null">
-			, ${olderColumn2} ${howOlder2}
+		<if test="orderColumn2 != null and howOrder2 != null">
+			, ${orderColumn2} ${howOrder2}
 		</if>
 	</select>
 	

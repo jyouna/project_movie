@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.itwillbs.project_movie.vo.ScheduleVO;
 
@@ -15,5 +16,8 @@ public interface ScheduleMapper {
 	
 	// WHERE절 컬럼명에 따라 스케줄조회 가능한 메서드
 	List<ScheduleVO> selectSchedule(Map<String, String> conditionMap);
+	
+	// schedule와 movie테이블 조인 메서드
+	List<Map<String, Object>> selectScheduleJoinMovie(@Param("select_date") String select_date, @Param("theater_code") String theater_code);
 	
 }

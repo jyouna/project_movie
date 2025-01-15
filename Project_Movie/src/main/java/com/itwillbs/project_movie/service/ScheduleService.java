@@ -41,5 +41,9 @@ public class ScheduleService {
 		return scheduleMapper.selectSchedule(conditionMap);
 	}
 
+	public List<Map<String, Object>> getScheduleListJoinMovie(String select_date, String theater_code) {
+		return scheduleMapper.selectScheduleJoinMovie(select_date, theater_code);
+	}
+
 
 }

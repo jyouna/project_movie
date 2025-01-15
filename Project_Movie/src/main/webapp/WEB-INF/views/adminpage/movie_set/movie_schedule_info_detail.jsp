@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html lang="en">
 <html>
 <head>
@@ -25,11 +26,11 @@
 			<div id="title">스케줄 상세</div>
 			<div id="btnGroup01">
 				<select class="changeScheduleTable">
-					<option value="T1" <c:if test="${theater_code eq 'T1'}">selected</c:if>>1관</option>
-					<option value="T2" <c:if test="${theater_code eq 'T2'}">selected</c:if>>2관</option>
-					<option value="T3" <c:if test="${theater_code eq 'T3'}">selected</c:if>>3관</option>
+					<option value="T1" <c:if test="${param.theater_code eq 'T1'}">selected</c:if>>1관</option>
+					<option value="T2" <c:if test="${param.theater_code eq 'T2'}">selected</c:if>>2관</option>
+					<option value="T3" <c:if test="${param.theater_code eq 'T3'}">selected</c:if>>3관</option>
 				</select>
-				<input type="date" class="changeScheduleTable" value="${select_date}">
+				<input type="date" class="changeScheduleTable" value="${param.select_date}">
 				<input type="button" id="registScheduleBtn" value="스케줄등록">
 				<input type="button" value="스케줄삭제">
 			</div>
@@ -40,19 +41,39 @@
 		</div>
 		<div id="body_main">
 			<div class="scheduleInfoBoardList">
-				<div class="scheduleInfoBoard">
-					<div class="scheduleCheck"><input type="checkbox" name="schedule_code"></div>
-	<%-- 				value="${schedule.schedule_code}" --%>
-					<div class="boardContent">
-						예매현황 - 예매전 예매중 예매불가<br>
-						스케줄코드 상영관 좌석현황<br>
-						영화제목 러닝타임<br>
-						시작시간 끝시간 <br>
+				<c:forEach var="schedule" items="${scheduleList}" varStatus="status">
+					<div class="scheduleInfoBoard">
+						<div class="scheduleCheck"><input type="checkbox" name="schedule_code"></div>
+						<div class="boardContent">
+							스케줄코드 ${schedule.schedule_code}<br>
+							
+							상영관
+							<c:choose>
+								<c:when test="${schedule.theater_code eq 'T1'}">
+								 	(1관),
+								</c:when>
+								<c:when test="${schedule.theater_code eq 'T2'}">
+									(2관),
+								</c:when>
+								<c:otherwise>
+									(3관),
+								</c:otherwise>
+							</c:choose>
+							
+							좌석현황 (?? / ${schedule.avail_seat})<br>
+							<b>&lt;${schedule.movie_name}&gt;</b> 러닝타임 (${schedule.running_time}분)<br>
+							<fmt:parseDate var="parsedStartTime" value="${schedule.start_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
+							<fmt:parseDate var="parsedEndTime" value="${schedule.end_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
+							<fmt:formatDate value="${parsedStartTime}" pattern="yyyy/MM/dd HH:mm"/> ~ <fmt:formatDate value="${parsedEndTime}" pattern="HH:mm"/> <br>
+							
+						</div>
 					</div>
-				</div>
-				<div class="creaningTime">
-					청소 및 다음 상영 준비시간(30분)
-				</div>	
+					<c:if test="${status.count != scheduleList.size()}">
+						<div class="creaningTime">
+							청소 및 다음 상영 준비시간(30분)
+						</div>	
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 	</section>
@@ -60,7 +81,7 @@
 <!-- 	스케줄 등록 모달 -->
 	<div id="schedule_regist_modal" class="modal">
 		<div class="modal_content">
-			<form action="ScheduleRegistForm" method="Post">
+			<form action="ScheduleRegistForm" method="POST">
 				<h2>스케줄 등록</h2>
 				<hr>
 				   <label>영화선택</label>

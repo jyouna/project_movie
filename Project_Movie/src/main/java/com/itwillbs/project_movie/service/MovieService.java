@@ -100,8 +100,8 @@ public class MovieService {
 		Map<String, String> conditionMap = new HashMap<String, String>();
 		conditionMap.put("columnName", "movie_status");
 		conditionMap.put("selectCondition", "상영예정작");
-		conditionMap.put("olderColumn", "movie_type");
-		conditionMap.put("howOlder", "ASC");
+		conditionMap.put("orderColumn", "movie_type");
+		conditionMap.put("howOrder", "ASC");
 		return movieMapper.selectMovieListCheck(conditionMap);
 	}
 	
@@ -115,8 +115,8 @@ public class MovieService {
 		Map<String, String> conditionMap = new HashMap<String, String>();
 		conditionMap.put("columnName", "movie_status");
 		conditionMap.put("selectCondition", "현재상영작");
-		conditionMap.put("olderColumn", "movie_type");
-		conditionMap.put("howOlder", "ASC");
+		conditionMap.put("orderColumn", "movie_type");
+		conditionMap.put("howOrder", "ASC");
 		return movieMapper.selectMovieListCheck(conditionMap);
 	}
 	

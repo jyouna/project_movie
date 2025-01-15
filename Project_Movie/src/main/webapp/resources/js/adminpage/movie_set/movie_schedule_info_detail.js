@@ -23,10 +23,10 @@ $(function() {
 			columnName : "movie_status",
 			in1 : "현재상영작",
 			in2 : "상영예정작",
-			olderColumn : "movie_status",
-			howOlder : "DESC",
-			olderColumn2 : "movie_type",
-			howOlder2 : "ASC",
+			orderColumn : "movie_status",
+			howOrder : "DESC",
+			orderColumn2 : "movie_type",
+			howOrder2 : "ASC",
 		}
 	}).done(function(movieList) {
 		// 현재상영작 스케줄 등록 폼의 영화선택 설렉트박스에 추가
@@ -37,8 +37,8 @@ $(function() {
 		}
 		
 		// 상영예정작의 영화상영기간 미설정 여부 판단, 영화상영기간 설정이 완료된 후에 상영스케줄 설정 가능
-		// 아래에 selectbox 핸들러에 change이벤트시 경고창 및 영화상영기간 설정창으로 이동 작업예정
-		for(let index = 9; index <= movieList.length; index++) {
+		// 아래에 selectbox change 이벤트시 경고창 및 영화상영기간 설정창으로 이동 작업예정
+		for(let index = 9; index < movieList.length; index++) {
 			if(movieList[index].start_screening_date == null || movieList[index].end_screening_date == null) {
 				$("optgroup[label='상영예정작']").append(
 					"<option value='noPeriod'>" + movieList[index].movie_name + "</option>"
