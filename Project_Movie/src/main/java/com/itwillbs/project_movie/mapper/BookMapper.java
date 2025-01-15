@@ -28,6 +28,8 @@ public interface BookMapper {
 
 	List<ScheduleVO> selectScheduleList(Map<String, String> conditionMap);
 
+	Map<String, Object> selectScheduleInfoByScheduleCode(String schedule_code);
+
 
 
 

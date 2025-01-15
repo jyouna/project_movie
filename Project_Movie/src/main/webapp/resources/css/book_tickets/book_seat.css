@@ -286,11 +286,11 @@ form input[type="text"].count {
 	gap: 10px; /* 포스터와 제목 간 간격 */
 }
 
-.mv_poster {
+.mv_poster img {
 	background-color: gray;
     width: 80px;
     height: 100px;
-    flex-shrink: 0; /* 크기가 줄어들지 않도록 설정 */
+    flex-shrink: 0;
     font-size: 14px;
 }
 

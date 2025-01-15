@@ -92,7 +92,7 @@ public class BookController {
 	
 	// ========================= 좌석페이지 컨트롤러 =========================
 	@GetMapping("BookSeat")
-	public String bookSeatPage(HttpSession session, Model model, TicketVO ticket) {
+	public String bookSeatPage(String schedule_code, HttpSession session, Model model) {
 
 		// 로그인 후 좌석 선택 가능
 		// 미로그인 시 로그인 폼으로 이동
@@ -128,11 +128,14 @@ public class BookController {
 		model.addAttribute("colCount", colCount);
 		System.out.println(seatList);
 		
-		
 		List<TicketVO> ticketType = service.getTicketType();
 		model.addAttribute("ticketType", ticketType);
-		
 		System.out.println(ticketType);
+		
+		
+		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
+		model.addAttribute("schedule", schedule);
+		System.out.println(schedule);
 		
 		
 		

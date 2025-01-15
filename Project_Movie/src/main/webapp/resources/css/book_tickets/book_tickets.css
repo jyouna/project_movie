@@ -287,11 +287,13 @@ a .mv_title {
 }
 
 .movie_schedule_info h4 {
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 450px;
 	font-weight: 500;
 	color: #919499;
+	font-size: 16px;
 }
 
 .sec01 {

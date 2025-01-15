@@ -47,8 +47,9 @@
 			<!-- 		셀렉트박스 -->
 						<div class="mv_sel">
 							<select>
-								<option selected>별점순</option>
-								<option>가나다순</option>
+								<option value="" selected>선택</option>
+								<option value="movie_rating">별점순</option>
+								<option value="movie_name">가나다순</option>
 							</select>
 						</div>
 							
@@ -162,32 +163,6 @@
 							
 							<div class="movie_schedule_info">
 								<h4>날짜를 선택해주세요</h4>
-								<c:forEach var="movie" items="${movieList}">
-									<section class="sec01" id="${movie.movie_name}">
-									    <div class="movie_container">
-									        <div class="mv_age">
-										        <c:choose>
-													<c:when test="${movie.age_limit eq '12세이상관람가'}">
-														<img src="${pageContext.request.contextPath}/resources/images/mv_age(12).png">
-													</c:when>
-													<c:when test="${movie.age_limit eq '15세이상관람가'}">
-														<img src="${pageContext.request.contextPath}/resources/images/mv_age(15).png">
-													</c:when>
-													<c:when test="${movie.age_limit eq '청소년관람불가'}">
-														<img src="${pageContext.request.contextPath}/resources/images/mv_age(19).png">
-													</c:when>
-													<c:otherwise>
-														<img src="${pageContext.request.contextPath}/resources/images/mv_age(all).png">
-													</c:otherwise>
-												</c:choose>
-											</div>
-									        <div class="mv_title">${movie.movie_name}</div>
-									    </div>
-									
-									    <div class="time_seat_container" id="${movie.movie_code}">
-									    </div>
-									</section>
-								</c:forEach>
 							</div>
 						</div>
 					</div>

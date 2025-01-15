@@ -49,6 +49,10 @@ public class BookService {
 		return mapper.selectTicketType();
 	}
 
+	public Map<String, Object> getScheduleInfoByScheduleCode(String schedule_code) {
+		return mapper.selectScheduleInfoByScheduleCode(schedule_code);
+	}
+
 
 
 }

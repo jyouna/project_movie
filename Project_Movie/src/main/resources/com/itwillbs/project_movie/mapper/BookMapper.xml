@@ -71,6 +71,14 @@
 		WHERE ticket_type = #{ticket_type}
 	</select>
 	
+	<select id="selectScheduleInfoByScheduleCode" resultType="map">
+		SELECT *
+		FROM schedule s
+		JOIN movie m
+		ON s.movie_code = m.movie_code
+		WHERE s.schedule_code = #{schedule_code}
+	</select>
+	
 </mapper>
 
 
