@@ -60,22 +60,22 @@
  	</update>
  	
  	
-<!--  	이벤트 당첨자 글 갯수 -->
-	<select id="selectEventWinnerCount" resultType="int">
-		SELECT COUNT(*)
-		FROM event_winner_board
-		<if test="!searchKeyword.equals('')">
-			WHERE 
-			<choose>
-				<when test="searchType.equals('subject')">
-					winner_subject LIKE CONCAT ('%','{#searchKeyword}','%')
-				</when>		
-				<when test="searchType.equals('content')">
-					winner_content LIKE CONCAT ('%','{#searchKeyword}','%')
-				</when>	
-			</choose>	
-		</if>
-	</select>
+<!-- 	이벤트 당첨자 글 갯수 --> 
+<!-- 	<select id="selectEventWinnerCount" resultType="int"> -->
+<!-- 		SELECT COUNT(*) -->
+<!-- 		FROM event_winner_board -->
+<!-- 		<if test="!searchKeyword.equals('')"> -->
+<!-- 			WHERE  -->
+<!-- 			<choose> -->
+<!-- 				<when test="searchType.equals('subject')"> -->
+<!-- 					winner_subject LIKE CONCAT ('%','{#searchKeyword}','%') -->
+<!-- 				</when>		 -->
+<!-- 				<when test="searchType.equals('content')"> -->
+<!-- 					winner_content LIKE CONCAT ('%','{#searchKeyword}','%') -->
+<!-- 				</when>	 -->
+<!-- 			</choose>	 -->
+<!-- 		</if> -->
+<!-- 	</select> -->
 <!-- 	이벤트 당첨자 글 가져오기 -->
 <!-- 	<select id="selectEventWinnerList" resultType="eventWinnerBoard"> -->
 <!-- 		SELECT * -->

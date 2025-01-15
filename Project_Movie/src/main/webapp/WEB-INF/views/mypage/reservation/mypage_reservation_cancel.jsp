@@ -40,19 +40,19 @@
                <c:otherwise>
                   <c:forEach var="reservationCancel" items="${reservationCancel}" varStatus="status">
                      <tr>
-                        <td>${reservationCancel.r_moviename}</td>
-                        <td>${reservationCancel.r_date}</td>
-                        <td>${reservationCancel.r_people}</td>
+                        <td>${reservationCancel.movie_name}</td>
+                        <td>${reservationCancel.start_time}</td>
+                        <td>${reservationCancel.ticket_count}</td>
                         <td>
 	                   		<c:choose>
-						      	<c:when test="${reservationCancel.r_cancelstatus == 0}">승인전</c:when>
-						      	<c:when test="${reservationCancel.r_cancelstatus == 1}">취소 완료</c:when>
+						      	<c:when test="${reservationCancel.refund_status == 0}">승인전</c:when>
+						      	<c:otherwise>취소 완료</c:otherwise>
 						    </c:choose>
                         </td>
                         <td>
-                           <fmt:formatDate value="${reservationCancel.r_canceldate}" pattern="yy-MM-dd"/>
+                           <fmt:formatDate value="${reservationCancel.refund_completed_date}" pattern="yy-MM-dd"/>
                         </td>
-                        <td>${reservationCancel.r_cancelprice}</td>
+                        <td>${reservationCancel.refund_amount}</td>
                      </tr>
                   </c:forEach>
                </c:otherwise>               

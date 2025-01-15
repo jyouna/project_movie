@@ -17,26 +17,27 @@ $(function(){
 	// 그렇지 않으면, watched_movie_review_modal의 css display block으로 하고
 	//ajax를  
 	let r_moviename = "";
-	let r_date = "";
 	$("table").on("click", "tr", function(){
-		$(this).find("input[type='radio']").prop(checked, "true")       
+		$(this).find("input[type=radio]").prop("checked", true);      
 		r_moviename = $(this).find("td:eq(1)").text();
-		r_date = $(this).find("td:eq(2)").text();
-	})
+		r_date = $(this).find("td:eq(2)").text().trim();
+	});
 	$("#reviewRegister").on("click", function(){
-		const radioButtons = document.getElementsByName("watchedMovie");
-		let selectedRadio = null;
-		for(const radio of radioButtons){
-			if(radio.checked){
-				selectedRadio = radio.value;
-				break;
-			}
-		}//for
-		if(!selectedRadio){
+		
+//		if(r_moviename == ""){
+		if(false){
 			alert("리뷰 작성할 영화를 선택해주세요.");
 		}else{
-			
+			$("#watched_movie_review_modal").css("display","block");
+			$(".watched_movie_review input[name='r_moviename']").val(r_moviename);
 		}
 		
+	});
+		$(".close_modal").click(function() {
+		location.reload();
 	})
+	
+	$(".cancel_modal").click(function() {
+		location.reload(true);
+	});
 }); //function의 끝

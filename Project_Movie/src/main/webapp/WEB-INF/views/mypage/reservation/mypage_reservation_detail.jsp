@@ -27,12 +27,11 @@
 		<h1>예매내역</h1>
  	</div>
 		<!-- 로그인 한 회원 이름 +n건입니다. - 예매한 갯수로 연결 -->
-		<h6>정유나님 관람가능한 예매내역이 0건 입니다.</h6>
+		<h6>정유나님 관람가능한 예매내역이 4건 입니다.</h6>
       <section id="listForm">
          <table>
             <tr id="tr_top">
 	           	<td width="5%"><input type="radio" name="reservationRadio" disabled="disabled"></td>
-	           	<td width="7%">순서</td>
 				<td width="12%">예매번호</td>
 				<td width="20%">영화명</td>
 				<td width="11%">관람인원</td>
@@ -50,16 +49,20 @@
                   <c:forEach var="reservationDetail" items="${reservationDetail}" varStatus="status">
                      <tr>
                     	<td><input type="radio" name="reservationRadio"></td>
-                        <td>${reservationDetail.r_code}</td>
-                        <td>${reservationDetail.r_num}</td>
-                        <td>${reservationDetail.r_moviename}</td>
-                        <td>${reservationDetail.r_people}</td>
-                        <td>${reservationDetail.r_seat}</td>
-                        <td>${reservationDetail.r_theater}</td>
+                        <td>${reservationDetail.payment_code}</td>
+                        <td>${reservationDetail.movie_name}</td>
+                        <td>${reservationDetail.ticket_count}</td>
+                        <td>${reservationDetail.total_seat_code}</td>
                         <td>
-                           <fmt:formatDate value="${reservationDetail.r_date}" pattern="yy-MM-dd"/>
+                        	<c:choose>
+                        		<c:when test="${reservationDetail.theater_code eq 'T1'}">1관</c:when>
+                        		<c:when test="${reservationDetail.theater_code eq 'T2'}">2관</c:when>
+                        		<c:when test="${reservationDetail.theater_code eq 'T3'}">3관</c:when>
+                        	</c:choose>
+                        <td>
+                           <fmt:formatDate value="${reservationDetail.start_time}" pattern="yy-MM-dd"/>
                         </td>
-                        <td>${reservationDetail.r_price}</td>
+                        <td>${reservationDetail.total_amount}</td>
                      </tr>
                   </c:forEach>
                </c:otherwise>               
@@ -101,13 +104,13 @@
 		<div class="reservation_detail">
 		    <h2>상세 정보</h2>
 		    <hr>
-	        <label>예매번호</label><input type="text" name="r_num" readonly><br>
-	        <label>영화명</label><input type="text" name="r_moviename" readonly><br>
-	        <label>상영관</label><input type="text" name="r_theater" readonly><br>
-	        <label>좌석</label><input type="text" name="r_seat" readonly><br>
-	        <label>관람인원</label><input type="text" name="r_people" readonly><br>
-	        <label>관람일</label><input type="datetime-local" name="r_date" readonly><br>
-	        <label>가격</label><input type="text" name="r_price" readonly><br>
+	        <label>예매번호</label><input type="text" name="payment_code" readonly><br>
+	        <label>영화명</label><input type="text" name="movie_name" readonly><br>
+	        <label>상영관</label><input type="text" name="theater_code" readonly><br>
+	        <label>좌석</label><input type="text" name="total_seat_code" readonly><br>
+	        <label>관람인원</label><input type="text" name="ticket_count" readonly><br>
+	        <label>관람일</label><input type="datetime-local" name="start_time" readonly><br>
+	        <label>가격</label><input type="text" name="total_amount" readonly><br>
 	        <hr>
 			<h3>취소환불규정안내</h3>
 			<div id= "content">

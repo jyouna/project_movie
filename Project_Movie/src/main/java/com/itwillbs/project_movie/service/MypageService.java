@@ -1,32 +1,31 @@
 package com.itwillbs.project_movie.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.project_movie.mapper.MyPageMapper;
 import com.itwillbs.project_movie.vo.InquiryVO;
-import com.itwillbs.project_movie.vo.ReservationCancelVO;
-import com.itwillbs.project_movie.vo.ReservationDetailVO;
-import com.itwillbs.project_movie.vo.WatchedMovieVO;
 
 @Service
 public class MypageService {
 @Autowired
 private MyPageMapper mapper;
 // 예매내역 가져오기 
-	public int getReservationDetailCount() {
+	public int getReservationListCount() {
 		// TODO Auto-generated method stub
-		return mapper.selectReservationDetailCount();
+		return mapper.selectReservationListCount();
 	}
 // 예매내역 시작번호 끝번호~..
-	public List<ReservationDetailVO> getReservationDetail(int startRow, int listLimit) {
+	
+	public java.util.List<Map<String, Object>> getReservationList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
-		return mapper.selectReservationDetail(startRow, listLimit);
+		return mapper.selectReservationList(startRow, listLimit);
 	}
 	//예매내역 상세정보 창
-	public ReservationDetailVO searchdetail(String r_code) {
+	public Map<String, Object> searchdetail(String r_code) {
 		return mapper.selectReservationInfo(r_code);
 	}
 // 취소내역 글 전체 가져오기 
@@ -35,7 +34,7 @@ private MyPageMapper mapper;
 		return mapper.selectReservationCancelCount();
 	}
 // 취소내역 시작번호, 끝번호 어쩌고
-	public List<ReservationCancelVO> getReservationCancel(int startRow, int listLimit) {
+	public List<Map<String, Object>> getReservationCancel(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
 		return mapper.selectReservationCancel(startRow, listLimit);
 	}
@@ -45,15 +44,34 @@ private MyPageMapper mapper;
 		return mapper.selectWathedMovieCount();
 	}
 // 내가 본 영화 시작번호, 끝번호 어쩌고
-	public List<WatchedMovieVO> getWatchedMovie(int startRow, int listLimit) {
+	public List<Map<String, Object>> getWatchedMovie(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
 		return mapper.selectWatchedMovie(startRow, listLimit);
 	}
-	
 	//리뷰 등록창
-	public WatchedMovieVO searchWatchedmovieReview(String r_code) {
+	public Map<String, Object> searchWatchedmovieReview(String r_code) {
 		// TODO Auto-generated method stub
 		return mapper.selectWatchedmovieReview(r_code);
+	}
+	// 내가 본 영화 - 리뷰등록 
+	public int getReview(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.insertReview(map);
+	}
+	//내가 본 영화 - 리뷰등록 포함 출력 
+	public Map<String, Object> isRegistReview(String id, String movie_code) {
+		return mapper.selectRegistReview(id, movie_code);
+	}
+	//무비로그 - 관람평 
+	public int getReviewCount() {
+		// TODO Auto-generated method stub
+		return mapper.selectReviewCount();
+	}
+	
+	//무비로그 - 관람평 시작번호 끝번호
+	public List<Map<String, Object>> getReview(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return mapper.selectReview(startRow, listLimit);
 	}
 	
 // 1:1문의 글 전체 가져오기
@@ -86,5 +104,6 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.deleteInquiry(inquiry);
 	}
+	
 
 }

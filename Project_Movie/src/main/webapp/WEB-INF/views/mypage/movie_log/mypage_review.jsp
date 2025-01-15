@@ -34,43 +34,41 @@
 	      <section id="listForm">
 	         <table>
 	            <tr id="tr_top" align="center">
+	               <td width="30"><input type="radio" disabled="disabled"></td>
 	               <td width="30">순서</td>
 	               <td width="100">영화명</td>
 	               <td width="200">한줄평</td>
-	               <td width="50">추천 / 비추천</td>
-	               <td width="100">작성일자</td>
-	            </tr>
-	            <tr>
-	               <td><input type="checkbox"></td>
-	               <td>소방관</td>
-	               <td>눈물 펑펑</td>
-	               <td>추천</td>
-	               <td>2025.01.01</td>
+	               <td width="80">추천 / 비추천</td>
+	               <td width="90">작성자</td>
 	            </tr>
 	               
-<%-- 	            <c:choose> --%>
-<%-- 	               <c:when test="${empty boardList}">  --%>
-<!-- 	                  <tr><td colspan="6">게시물이 존재하지 않습니다</td></tr> -->
-<%-- 	               </c:when> --%>
-<%-- 	               <c:otherwise> --%>
-<%-- 	                  <c:forEach var="board" items="${boardList}" varStatus="status"> --%>
-<!-- 	                     <tr> -->
-<%-- 	                        <td class="board_num">${board.board_num}</td> --%>
-<%-- 	                        <td class="board_subject">${board.board_subject}</td> --%>
-<%-- 	                        <td>${board.board_name}</td> --%>
-<!-- 	                        <td> -->
-<%-- 	                           <fmt:formatDate value="${board.board_date}" pattern="yy-MM-dd - yy-MM-dd"/> --%>
-<!-- 	                        </td> -->
-<%-- 	                        <td>${board.board_readcount}</td> --%>
-<!-- 	                     </tr> -->
-<%-- 	                  </c:forEach> --%>
-<%-- 	               </c:otherwise>                --%>
-<%-- 	            </c:choose> --%>
+	            <c:choose>	
+	               <c:when test="${empty review}"> 
+	                  <tr><td colspan="7">게시물이 존재하지 않습니다</td></tr>
+	               </c:when>
+	               <c:otherwise>
+	                  <c:forEach var="review" items="${review}" varStatus="status">
+	                     <tr>
+	                        <td><input type="radio" ></td>
+	                        <td>${review.review_code}</td>
+	                        <td>${review.movie_name }</td>
+	                        <td>${review.review_content}</td>
+	                        <td>
+	                        	<c:choose>
+		                        	<c:when test=" ${review.review_recommend == 0}">추천</c:when>
+		                        	<c:when test=" ${review.review_recommend == 1}">비추천</c:when>
+	                        	</c:choose>
+	                       </td>
+	                        <td>${review.review_writer}</td>
+	                     </tr>
+	                  </c:forEach>
+	               </c:otherwise>               
+	            </c:choose>
 	         </table>
 	      </section>
 	            <section id="pageList">
 	         <input type="button" value="&lt" 
-	            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum - 1}'" 
+	            onclick="location.href='Review?pageNum=${pageInfo.pageNum - 1}'" 
 	             <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 	         
 	         <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -80,33 +78,17 @@
 	               
 	               </c:when>
 	               <c:otherwise>
-	                  <a href="BoardList?pageNum=${i}">${i}</a>
+	                  <a href="Review?pageNum=${i}">${i}</a>
 	               </c:otherwise>
 	            </c:choose>
 	         </c:forEach>
 	         
 	         
 	         <input type="button" value="&gt" 
-	            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum + 1}'" 
+	            onclick="location.href='Review?pageNum=${pageInfo.pageNum + 1}'" 
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>
-	<script type="text/javascript">
-		$(function () {
-			$("#reviewModify").on("click", function() {
-				window.open(
-					'reviewModify',
-					'리뷰 등록 창',
-					'width=400, height=700, scrollbars=no, resizeable=no');
-			});	
-			
-			$("#delete").on("click", function() {
-				confirm("리뷰 삭제하시겠습니까?")
-			});	
-		});
-		
-	
-	</script>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>
