@@ -22,13 +22,13 @@ $(function() {
 		if($(this).hasClass("selected")) {
 			$(this).removeClass("selected");
 			// 전체 스케줄 조회 메서드 호출
-			loadSchedule(selectedDate, "");
+			selectedMovie = "";
 		} else {
 			$(".mv_list").removeClass("selected");
 			$(this).addClass("selected");
+		}	
 			// 해당 영화 스케줄 조회 메서드 호출
 			loadSchedule(selectedDate, selectedMovie);
-		}	
 		
 	});
 	
@@ -41,12 +41,14 @@ $(function() {
 	    console.log("선택된 날짜 : " + selectedDate);
 		
 		// 스케줄 조회 메서드
-		loadSchedule(selectedDate, "");
+		loadSchedule(selectedDate, selectedMovie);
 	});
 	
-	$(".mv_sel select").change(function(){
-		$(this).val();
-	});
+//	$(".mv_sel select").change(function(){
+//		$(this).val();
+//		location.href="BookTickets?howOrder=" + $(this).val();
+//		console.log($(this).val());
+//	});
 	
 	
 	
@@ -145,8 +147,9 @@ $(function() {
 						location.href = "BookSeat?schedule_code=" + schCode;
 					}
 				});
+				
 			}).fail(function() {
-					alert("스케줄 조회에 실패하였습니다.")
+				alert("스케줄 조회에 실패하였습니다.")
 			});
 
 		}).fail(function() {

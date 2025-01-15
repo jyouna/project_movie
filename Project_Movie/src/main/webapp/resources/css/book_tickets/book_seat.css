@@ -288,8 +288,8 @@ form input[type="text"].count {
 
 .mv_poster img {
 	background-color: gray;
-    width: 80px;
-    height: 100px;
+    width: 90px;
+    height: 115px;
     flex-shrink: 0;
     font-size: 14px;
 }
@@ -300,7 +300,21 @@ form input[type="text"].count {
 	font-weight: bold;
     font-size: 14px;
 	color: #666666;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 105px;
+    animation: scroll-left 5s linear infinite;
 }
+
+/* @keyframes scroll-left { */
+/*     0% { */
+/*         transform: translateX(100%); 텍스트 시작 위치 */
+/*     } */
+/*     100% { */
+/*         transform: translateX(-100%); 텍스트 끝 위치 */
+/*     } */
+/* } */
 
 .tnb .mv_info, .tnb .ticket_info {
     flex: 2; /* 결제 정보와 영화 정보를 동일한 크기로 설정 */

@@ -7,7 +7,11 @@
 	<select id="selectMovieList" resultType="movie">
 		SELECT *
 		FROM movie
-		WHERE movie_status = '현재상영작'
+		WHERE movie_code IN (SELECT DISTINCT 
+								movie_code
+							 FROM schedule
+							 WHERE start_time > now())
+		
 		ORDER BY movie_type
 	</select>
 	
@@ -50,6 +54,7 @@
 		<if test="!movie_code.equals('')">
 			AND movie_code = #{movie_code}
 		</if> 
+		ORDER BY start_time
 	</select>
 	
 	<select id="selectSeat" resultType="seat">

@@ -71,7 +71,7 @@ public class BookController {
 	@ResponseBody
 	@GetMapping("GetMovieListScheduleToBooking")
 	public List<MovieVO> getMovieListScheduleToBooking(@RequestParam Map<String, String> conditionMap) {
-		List<MovieVO> movieList = service.getMovieList(conditionMap);
+		List<MovieVO> movieList = service.getMovieList2(conditionMap);
 		return movieList;
 	}
 	
@@ -151,9 +151,14 @@ public class BookController {
 	
 
 	@GetMapping("BookPay")
-	public String bookPay() {
+	public String bookPay(String schedule_code, Model model) {
+		
+		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
+		model.addAttribute("schedule", schedule);
+		
 		return "book_tickets/book_pay";
 	}
+	
 
 	@GetMapping("BookFinish")
 	public String bookFinish() {

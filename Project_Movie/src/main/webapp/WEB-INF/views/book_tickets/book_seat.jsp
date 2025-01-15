@@ -30,20 +30,21 @@
 				<div class="choice_seat">
 					<h2>인원/좌석 선택</h2>
 				</div>
-				<form action="BookSeat" name="seatChoice" method="post">
+				<form action="BookPay"  method="post">
+				<input type="hidden" name="schedule_code" value="${schedule.schedule_code}">
 					<ul>
 						<c:forEach var="type" items="${ticketType}">
 							<li>
 								<strong>${type.ticket_type}</strong>
 								<div class="ctrl_box">
-									<button type="button" class="minus_btn">-</button>
-									<input type="text" class="count" name="count" value="0" readonly>
-									<button type="button" class="plus_btn">+</button>
+									<button type="button" class="minus_btn" value="${schedule.showtime_type}">-</button>
+									<input type="text" class="count" name="" value="0" readonly)>
+									<button type="button" class="plus_btn" value="${schedule.showtime_type}">+</button>
 								</div>
 							</li>
 						</c:forEach>
 					</ul>
-					
+<!-- 					<input type="hidden" name="adult" id="adult"> -->
 					<span class="space_line"></span>
 					
 					<div class="seat_container">
@@ -111,7 +112,7 @@
 							</div>
 						
 							<div class="bottom_btn">
-								<button type="button" class="pay_btn" onclick="location.href='BookPay'">결제</button>
+								<button type="submit" class="pay_btn">결제</button>
 							</div>
 						</div>
 					</div>

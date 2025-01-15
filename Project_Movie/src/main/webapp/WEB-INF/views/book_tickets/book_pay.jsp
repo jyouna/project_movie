@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <!--
 	Escape Velocity by HTML5 UP
@@ -35,17 +36,29 @@
 			
 							<section class="book_info_container">
 								<div class="poster">
-									<div class="mv_poster">영화포스터</div>
+									<div class="mv_poster"><img src="${schedule.movie_img1}"></div>
 								</div>
 								<div class="mv_info">
-									<div class="mv_title">해피엔드</div>
+									<div class="mv_title">${schedule.movie_name}</div>
 							        <div class="row">
 							            <div class="header">일시</div>
 							            <div class="data">2024.12.30(월) 23:00</div>
 							        </div>
 							        <div class="row">
 							            <div class="header">상영관</div>
-							            <div class="data">1관</div>
+							            <div class="data">
+							            	<c:choose>
+												<c:when test="${schedule.theater_code eq 'T1'}">
+													1관
+												</c:when>
+												<c:when test="${schedule.theater_code eq 'T2'}">
+													2관
+												</c:when>
+												<c:otherwise>
+													3관
+												</c:otherwise>
+											</c:choose>
+							            </div>
 							        </div>
 							        <div class="row">
 							            <div class="header">인원</div>

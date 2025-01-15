@@ -35,8 +35,10 @@ $(function () {
 		
 		// 인원 변경 시 선택된 좌석 초기화 메서드
 		resetSeats();
-		ticketCount();
+		ticketCount($(this).val());
 		
+		let adultCount = parseInt($(".count").eq(0).val());
+		$("#adult").val(adultCount);
 
 		
 	});
@@ -55,7 +57,10 @@ $(function () {
 
 		// 인원 변경 시 선택된 좌석 초기화 메서드
 		resetSeats();
-		ticketCount();
+		ticketCount($(this).val());
+		
+		let adultCount = parseInt($(".count").eq(0).val());
+		$("#adult").val(adultCount);
 	});
 	
 	
@@ -105,7 +110,7 @@ $(function () {
 	
 	// 수정 필요
 	$(".pay_btn").click(function(event) {
-		event.preventDefault(); // 기본 동작 방지
+//		event.preventDefault(); // 기본 동작 방지
 		
 		let totalCount = 0;
 		$(".count").each(function() {
@@ -122,21 +127,34 @@ $(function () {
 			return false;
 		}
 		
-		location.href = 'BookPay';
+
 		
 	});		
 	
+	
+	
 	// 관객 타입 별 가격과 인원 수에 따른 총금액
-	function ticketCount() {
+	function ticketCount(showtime_type) {
 		
 		let adultCount = parseInt($(".count").eq(0).val());
 		let youthCount = parseInt($(".count").eq(1).val());
 		let seniorCount = parseInt($(".count").eq(2).val());
 		
+		console.log(adultCount);
+		console.log(youthCount);
+		console.log(seniorCount);
+		console.log("showtime : " + showtime_type);
+		
 		let adultAmount = 10000;
 		let youthAmount = 7000;
 		let seniorAmount = 5000;
 		
+		if(showtime_type !== "일반") {
+			adultAmount -= 2000; 
+			youthAmount -= 2000; 
+			seniorAmount -= 2000; 
+		}
+
 		let totalAmount = adultCount * adultAmount + youthCount * youthAmount + seniorCount * seniorAmount;
 //		console.log(totalAmount);
 		
@@ -216,8 +234,6 @@ $(function () {
 		
 		
 	}
-	
-	
 	
 	
 });

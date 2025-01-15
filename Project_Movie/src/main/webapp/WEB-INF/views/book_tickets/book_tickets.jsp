@@ -74,7 +74,7 @@
 												</c:otherwise>
 											</c:choose>
 										</span>
-										<span class="mv_title">${movie.movie_name}</span>
+										<span class="mv_title">${movie.movie_name}<c:if test="${movie.movie_type eq '시즌'}"> (Season)</c:if></span>
 										<input type="text" value="${movie.movie_code}" hidden>
 									</a>
 								</div>

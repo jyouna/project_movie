@@ -1,6 +1,5 @@
 package com.itwillbs.project_movie.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class BookService {
 		return mapper.selectSchWithMovie(conditionMap);
 	}
 	
-	public List<MovieVO> getMovieList(Map<String, String> conditionMap) {
+	public List<MovieVO> getMovieList2(Map<String, String> conditionMap) {
 		return mapper.selectMovieList2(conditionMap);
 	}
 
