@@ -41,6 +41,7 @@
 		</if>
 	</select>
 	
+	<!-- schedule 테이블과 movie 테이블 조인 후 상세정보 조회 -->
 	<select id="selectScheduleJoinMovie" resultType="map">
 		SELECT *
 		FROM 
@@ -54,5 +55,18 @@
 			AND s.start_time Like '%${select_date}%'
 		ORDER BY s.start_time ASC;
 	</select>
+	
+	<!-- 스케줄의 예매상태 변경 -->
+	<update id="updateScheduleBookingAvail">
+		UPDATE schedule
+		SET
+			booking_avail = #{booking_avail}
+		WHERE
+			schedule_code IN (
+				<foreach item="schedule_code" collection="scheduleCodeArr" separator=",">
+					#{schedule_code}
+				</foreach>
+			)
+	</update>
 	
 </mapper>

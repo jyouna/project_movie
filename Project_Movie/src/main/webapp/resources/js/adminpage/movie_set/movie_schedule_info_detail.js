@@ -1,7 +1,7 @@
 $(function() {
-	// 선택 날짜 변수저장, 스케줄 등록 폼에 입력
+	// 선택 날짜 변수저장
 	let scheduleDate = $("#btnGroup01 input[type=date]").val();
-	// 선택 상영관 변수저장, 스케줄 등록폼에 입력
+	// 선택 상영관 변수저장
 	let selectTheater = $("#btnGroup01>select").val();
 	$("input[name=theater_code]").val(selectTheater);
 	// 상영예정작의 상영기간과 비교해서 스케줄 등록가능일을 판별하기 위해 변수선언
@@ -222,6 +222,38 @@ $(function() {
 		} 
 		return isBetween;
 	}
+	
+	// 스케줄 보드 컨텐트 선택시 체크박스 클릭, 해제
+	$(".boardContent").click(function() {
+		$(this).siblings(".scheduleCheck").find("input[type='checkbox']").click();
+	});
+	
+	// 스케줄 보드의 헤더 체크박스 클릭시 모든 체크박스 클릭, 해제
+	$("#boardHead input[type='checkbox']").click(function() {
+		$(".scheduleCheck").click();
+	})
+	
+	// 예매 활성화 버튼 클릭시 해당스케줄의 예매여부 활성화로 변경
+	$("#ableBtn").click(function() {
+		// 체크된 영화의 코드들을 나열한 String
+		let checkMovieCodeStr = "";
+		$(".scheduleCheck:checked").each(function() {
+			checkMovieCodeStr += $(this).val() + " ";
+		})
+		
+		location.href = "ScheduleBookingStatusOn?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
+	});
+	
+	// 예매 활성화 버튼 클릭시 해당스케줄의 예매여부 활성화로 변경
+	$("#disableBtn").click(function() {
+		// 체크된 영화의 코드들을 나열한 String
+		let checkMovieCodeStr = "";
+		$(".scheduleCheck:checked").each(function() {
+			checkMovieCodeStr += $(this).val() + " ";
+		})
+		
+		location.href = "ScheduleBookingStatusOff?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
+	});
 	
 }); // document ready 끝
 	

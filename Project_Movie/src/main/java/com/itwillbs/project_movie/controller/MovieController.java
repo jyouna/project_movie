@@ -67,7 +67,17 @@ public class MovieController {
 	
 	// 영화안내 지난상영작 페이지 맵핑
 	@GetMapping("PastMovieInfo")
-	public String pastMovieInfo() {
+	public String pastMovieInfo(@RequestParam(defaultValue = "1") int pageNum, Model model,
+			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
+		// 기본 영화 리스트 페이징처리와 구분을 위한 변수선언
+		String howSearch2 = "movie_status";
+		String searchKeyword2 = "지난상영작";
+		
+		// 페이징처리 메서드 
+		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+			return "result/process";
+		}
+		
 		return "movie_info/past_movie_info";
 	}
 	
@@ -378,6 +388,14 @@ public class MovieController {
 		
 		// 조건에맞는 영화 리스트 조회
 		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+		
+		// 지난상영작 페이지 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정
+		// 다른 페이지 listLimit:9, 지난상영작 페이지 listLimit:10
+		if(listLimit == 10) {
+			for(MovieVO movie : movieList) {
+				movie.setMovie_synopsis(movie.getMovie_synopsis().substring(0, 90) + "...");
+			}
+		}
 		model.addAttribute("movieList", movieList);
 		return true;
 	}

@@ -54,9 +54,8 @@
 	                <th style="width:242px">영화제목</th>
 	                <th style="width:231px">장르</th>
 	                <th style="width:130px">관람등급</th>
+	                <th style="width:180px">상영기간</th>
 	                <th style="width:98px">영화상태</th>
-	                <th style="width:100px">등록일자</th>
-	                <th style="width:78px">등록계정</th>
 				</tr>
 				<c:choose>
 					<c:when test="${empty movieList}">
@@ -76,9 +75,12 @@
 				                <td>${movie.movie_name}</td>
 				                <td>${movie.movie_genre}</td>
 				                <td>${movie.age_limit}</td>
+				                <td>
+<%-- 				                	<fmt:formatDate value="${movie.start_screening_date}" pattern="yyyy-MM-dd"/> --%>
+<%-- 			                		~ <fmt:formatDate value="${movie.end_screening_date}" pattern="yyyy-MM-dd"/> --%>
+				                	${movie.start_screening_date} ~ ${movie.end_screening_date}
+			                	</td>
 				                <td>${movie.movie_status}</td>
-				                <td><fmt:formatDate value="${movie.regist_date}" pattern="yyyy-MM-dd"/></td>
-				                <td>${movie.regist_admin_id}</td>
 				            </tr>
 						</c:forEach>
 					</c:otherwise>

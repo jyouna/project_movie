@@ -35,37 +35,42 @@
 				<input type="button" value="스케줄삭제">
 			</div>
 			<div id="btnGroup02">
-				<input type="button" value="예매 활성화">
-				<input type="button" value="예매 비활성화">
+				<input type="button" id="ableBtn" value="예매 활성화">
+				<input type="button" id="disableBtn"value="예매 비활성화">
 			</div>
 		</div>
 		<div id="body_main">
 			<div class="scheduleInfoBoardList">
+				<div id="boardHead">
+					<div><input type="checkbox" name="schedule_code"></div>
+					<div>스케줄 목록</div>
+				</div>
 				<c:forEach var="schedule" items="${scheduleList}" varStatus="status">
 					<div class="scheduleInfoBoard">
-						<div class="scheduleCheck"><input type="checkbox" name="schedule_code"></div>
+						<div class="scheduleCheck"><input type="checkbox" class="scheduleCheck" value="${schedule.schedule_code}"></div>
 						<div class="boardContent">
+							<img src="${schedule.movie_img1}">
 							스케줄코드 ${schedule.schedule_code}<br>
 							
 							상영관
 							<c:choose>
-								<c:when test="${schedule.theater_code eq 'T1'}">
-								 	(1관),
-								</c:when>
-								<c:when test="${schedule.theater_code eq 'T2'}">
-									(2관),
-								</c:when>
-								<c:otherwise>
-									(3관),
-								</c:otherwise>
+								<c:when test="${schedule.theater_code eq 'T1'}">(1관),</c:when>
+								<c:when test="${schedule.theater_code eq 'T2'}">(2관),</c:when>
+								<c:otherwise>(3관),</c:otherwise>
 							</c:choose>
 							
 							좌석현황 (?? / ${schedule.avail_seat})<br>
 							<b>&lt;${schedule.movie_name}&gt;</b> 러닝타임 (${schedule.running_time}분)<br>
 							<fmt:parseDate var="parsedStartTime" value="${schedule.start_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
 							<fmt:parseDate var="parsedEndTime" value="${schedule.end_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
-							<fmt:formatDate value="${parsedStartTime}" pattern="yyyy/MM/dd HH:mm"/> ~ <fmt:formatDate value="${parsedEndTime}" pattern="HH:mm"/> <br>
-							
+							<fmt:formatDate value="${parsedStartTime}" pattern="yyyy/MM/dd HH:mm"/> ~ <fmt:formatDate value="${parsedEndTime}" pattern="HH:mm"/>
+							[
+								<c:choose>
+									<c:when test="${not empty schedule.isPassed}"><b>종료된 스케줄</b></c:when>
+									<c:when test="${schedule.booking_avail}"><b style = "color: blue;">예매 활성화</b></c:when>
+									<c:otherwise><b  style = "color: red;">예매 비활성화</b></c:otherwise>
+								</c:choose>
+							]
 						</div>
 					</div>
 					<c:if test="${status.count != scheduleList.size()}">
@@ -99,14 +104,14 @@
 			    <input type="text" name="running_time" readonly="readonly"><br>
 			    <label>상영관</label>
 			    <select disabled="disabled">
-					<option value="T1" <c:if test="${theater_code eq 'T1'}">selected</c:if>>1관</option>
-					<option value="T2" <c:if test="${theater_code eq 'T2'}">selected</c:if>>2관</option>
-					<option value="T3" <c:if test="${theater_code eq 'T3'}">selected</c:if>>3관</option>
+					<option value="T1" <c:if test="${param.theater_code eq 'T1'}">selected</c:if>>1관</option>
+					<option value="T2" <c:if test="${param.theater_code eq 'T2'}">selected</c:if>>2관</option>
+					<option value="T3" <c:if test="${param.theater_code eq 'T3'}">selected</c:if>>3관</option>
 				</select>
 				<input type="hidden" name="theater_code" required>	
 			    <br>
 			    <label>상영날짜</label>
-			    <input type="date" name="select_date" value="${select_date}" required readonly><br>
+			    <input type="date" name="select_date" value="${param.select_date}" required readonly><br>
 			    <label>상영시작시간</label>
 			    <input type="time" name="s_time" min="09:00" max="22:30" required><br>
 			    <input type="hidden" name="str_start_time">

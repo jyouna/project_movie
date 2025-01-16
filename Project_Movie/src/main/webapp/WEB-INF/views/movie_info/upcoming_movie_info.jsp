@@ -26,13 +26,13 @@
 				<div id="title">
 					상영예정작
 				</div>
-				<div id="select_search">
-					<select>
-						<option>제목순</option>
-						<option>별점순</option>
-						<option>예매율순</option>
-					</select>
-				</div>
+<!-- 				<div id="select_search"> -->
+<!-- 					<select> -->
+<!-- 						<option>제목순</option> -->
+<!-- 						<option>별점순</option> -->
+<!-- 						<option>예매율순</option> -->
+<!-- 					</select> -->
+<!-- 				</div> -->
 			</div>
 			<c:choose>
 				<c:when test="${totalCount eq 0}">

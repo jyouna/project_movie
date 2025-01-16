@@ -15,12 +15,12 @@
 			<div>
 				<c:forEach var="i" begin="0" end="${seasonMovieCount - 1}">
 					<div class="movie">
-						<label>${movieList[i].movie_name}</label><br>
+						<label>${movieList[i].movie_name}</label>(${movieList[i].movie_rating})<br>
 						<a href=""><img src="${movieList[i].movie_img1}"></a><br>
 						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
 						<input type="button" value="예매하기">
 						<div class="movie_info">
-	            			<${movieList[i].movie_name}>
+	            			&lt;${movieList[i].movie_name}&gt;
 				            <ul>
 					            <li>감독: ${movieList[i].movie_director}</li>
 					            <li>출연:<br> ${movieList[i].movie_actor}</li>
@@ -41,7 +41,7 @@
 	<div>
 		<c:forEach var="i" begin="${seasonMovieCount}" end="${seasonMovieCount + generalMovieCount - 1}">
 			<div class="movie">
-				<label>${movieList[i].movie_name}</label><br>
+				<label>${movieList[i].movie_name}</label>(${movieList[i].movie_rating})<br>
 				<a href=""><img src="${movieList[i].movie_img1}"></a><br>
 				<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
 				<input type="button" value="예매하기">

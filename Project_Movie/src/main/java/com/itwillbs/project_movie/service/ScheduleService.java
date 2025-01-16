@@ -40,9 +40,22 @@ public class ScheduleService {
 		conditionMap.put("selectCondition", movie_code);
 		return scheduleMapper.selectSchedule(conditionMap);
 	}
-
+	
+	// 스케줄 상세 페이지에서 보여줄 스케줄과 영화정보를 조회
 	public List<Map<String, Object>> getScheduleListJoinMovie(String select_date, String theater_code) {
 		return scheduleMapper.selectScheduleJoinMovie(select_date, theater_code);
+	}
+	
+	// 스케줄의 예매상태를 활성화로 변경
+	public int changeBookingStatusToOn(String[] scheduleCodeArr) {
+		int booking_avail = 1;
+		return scheduleMapper.updateScheduleBookingAvail(scheduleCodeArr, booking_avail);
+	}
+	
+	// 스케줄의 예매상태를 비활성화로 변경
+	public int changeBookingStatusToOff(String[] scheduleCodeArr) {
+		int booking_avail = 0;
+		return scheduleMapper.updateScheduleBookingAvail(scheduleCodeArr, booking_avail);
 	}
 
 

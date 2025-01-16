@@ -26,13 +26,13 @@
 				<div id="title">
 					현재상영작
 				</div>
-				<div id="select_search">
-					<select>
-						<option>제목순</option>
-						<option>별점순</option>
-						<option>예매율순</option>
-					</select>
-				</div>
+<!-- 				<div id="select_search"> -->
+<!-- 					<select> -->
+<!-- 						<option>제목순</option> -->
+<!-- 						<option>별점순</option> -->
+<!-- 						<option>예매율순</option> -->
+<!-- 					</select> -->
+<!-- 				</div> -->
 			</div>
 			<jsp:include page="/WEB-INF/views/inc/page/movie_info/currently_upcoming_movieList.jsp"></jsp:include>
 		</div>

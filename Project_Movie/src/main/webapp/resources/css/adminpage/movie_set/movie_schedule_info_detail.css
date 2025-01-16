@@ -159,7 +159,7 @@ h2 {
 	height: 150px;
 	vertical-align: top;
 	font-size: 20px;
-	padding: 10px;
+	padding: 0 10px;
     line-height: 1.6;
     color: #333;
     background-color: #fff;
@@ -167,7 +167,7 @@ h2 {
 
 .creaningTime {
     text-align: center; 
-    width: 100%; 
+    width: 99%; 
     border: none; 
     font-size: 16px; 
     color: #666;
@@ -176,4 +176,39 @@ h2 {
     padding: 5px;
     border-radius: 6px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#boardHead div:nth-child(1) {
+	width: 70px;
+	display: inline-block;
+	height: 30px;
+	text-align: center;
+	background-color: #e9ecef;
+    border-right: 1px solid #ccc;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+#boardHead input[type="checkbox"] {
+	margin-top: 5px;
+	width: 20px;
+	height: 20px;
+}
+
+#boardHead div:nth-child(2) {
+	width: 91%;
+	display: inline-block;
+	height: 30px;
+	vertical-align: top;
+	font-size: 20px;
+    color: #333;
+    background-color: #e9ecef;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+img {
+	width: 102px;
+	float: left;
+	margin-right: 20px;
 }

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.project_movie.service.ScheduleService;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 
+import retrofit2.http.GET;
+
 @Controller
 public class ScheduleController {
 
@@ -56,6 +58,21 @@ public class ScheduleController {
 	public String adminMovieSetScheduleDetail(String theater_code, String select_date, Model model) {
 		// 상세스케줄 페이지에 표시할 스케줄 리스트 조회
 		List<Map<String, Object>> scheduleList = scheduleService.getScheduleListJoinMovie(select_date, theater_code);
+		
+		// 상영스케줄 상세페이지에 예매종료 표시를 하기위해 start_time 현재 날짜 시간과 비교
+		for(Map<String, Object> schedule : scheduleList) {
+			// 현재 날짜 시간
+			LocalDateTime now = LocalDateTime.now();
+			// 스케줄 시작 날짜 시간
+			String startTime = schedule.get("start_time").toString();
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+			LocalDateTime formatStartTime = LocalDateTime.parse(startTime, formatter);
+			
+			if(formatStartTime.isBefore(now)) {
+				schedule.put("isPassed", true);
+			}
+		}
 		model.addAttribute("scheduleList", scheduleList);
 		return "adminpage/movie_set/movie_schedule_info_detail";
 	}
@@ -78,9 +95,7 @@ public class ScheduleController {
 		int insertCount = scheduleService.registSchedule(scheduleVO);
 		
 		if(insertCount > 0) {
-			model.addAttribute("theater_code", scheduleVO.getTheater_code());
-			model.addAttribute("select_date", select_date);
-			return "redirect:/AdminMovieSetScheduleDetail";
+			return "redirect:/AdminMovieSetScheduleDetail?theater_code=" + scheduleVO.getTheater_code() + "&select_date=" + select_date;
 		} else {
 			model.addAttribute("msg", "스케줄 등록 실패!");
 			return "result/process";
@@ -112,5 +127,33 @@ public class ScheduleController {
 			isExit = true;
 		}
 		return isExit;
+	}
+	
+	// 스케줄상세 페이지에서 스케줄의 예매상태 활성화로 변경
+	@GetMapping("ScheduleBookingStatusOn")
+	public String scheduleBookingStatusOn(String select_date, String theater_code, String scheduleCodeStr, Model model) {
+		// 전달받은 스케줄을 IN절에 사용하기위해 schedule_code 배열로 변경
+		String[] scheduleCodeArr = scheduleCodeStr.trim().split(" ");
+		int updateCount = scheduleService.changeBookingStatusToOn(scheduleCodeArr);
+		if(updateCount > 0) {
+			return "redirect:/AdminMovieSetScheduleDetail?theater_code=" + theater_code + "&select_date=" + select_date;
+		} else {
+			model.addAttribute("msg", "예매 활성화 실패");
+			return "result/process";
+		}
+	}
+	
+	// 스케줄상세 페이지에서 스케줄의 예매상태 비활성화로 변경
+	@GetMapping("ScheduleBookingStatusOff")
+	public String scheduleBookingStatusOff(String select_date, String theater_code, String scheduleCodeStr, Model model) {
+		// 전달받은 스케줄을 IN절에 사용하기위해 schedule_code 배열로 변경
+		String[] scheduleCodeArr = scheduleCodeStr.trim().split(" ");
+		int updateCount = scheduleService.changeBookingStatusToOff(scheduleCodeArr);
+		if(updateCount > 0) {
+			return "redirect:/AdminMovieSetScheduleDetail?theater_code=" + theater_code + "&select_date=" + select_date;
+		} else {
+			model.addAttribute("msg", "예매 비활성화 실패");
+			return "result/process";
+		}
 	}
 }

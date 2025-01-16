@@ -20,4 +20,7 @@ public interface ScheduleMapper {
 	// schedule와 movie테이블 조인 메서드
 	List<Map<String, Object>> selectScheduleJoinMovie(@Param("select_date") String select_date, @Param("theater_code") String theater_code);
 	
+	// schedule의 booking_avail 업데이트
+	int updateScheduleBookingAvail(@Param("scheduleCodeArr") String[] scheduleCodeArr, @Param("booking_avail") int booking_avail);
+	
 }
