@@ -35,7 +35,6 @@
 	         <table>
 	            <tr id="tr_top" align="center">
 	               <td width="30"><input type="radio" disabled="disabled"></td>
-	               <td width="30">순서</td>
 	               <td width="100">영화명</td>
 	               <td width="200">한줄평</td>
 	               <td width="80">추천 / 비추천</td>
@@ -50,7 +49,6 @@
 	                  <c:forEach var="review" items="${review}" varStatus="status">
 	                     <tr>
 	                        <td><input type="radio" ></td>
-	                        <td>${review.review_code}</td>
 	                        <td>${review.movie_name }</td>
 	                        <td>${review.review_content}</td>
 	                        <td>

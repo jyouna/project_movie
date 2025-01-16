@@ -26,13 +26,17 @@ public interface MyPageMapper {
 	//내가 본 영화 - 리뷰 창 띄우기 
 	Map<String, Object> selectWatchedmovieReview(String r_code);
 	//내가 본 영화 - 리뷰등록 포함 출력
-	Map<String, Object> selectRegistReview(@Param("id") String id, @Param("movie_code") String movie_code);
+	Map<String, Object> selectIsRegistReview(@Param("id") String id, @Param("movie_code") String movie_code);
+
 	//관람평 등록
-	int insertReview(Map<String, String> map);
 	//관람평 글 개수 조회
-	int selectReviewCount();
+	int selectReviewListCount();
 	//관람평 시작번호 끝번호
-	List<Map<String, Object>> selectReview(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<Map<String, Object>> selectReviewList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	//쿠폰 리스트 전체 조회
+	int selectCouponListCount();
+	//쿠폰 리스트 시작번호 끝번호 
+	List<Map<String, String>> selectCouponList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
 	
 	// 1:1문의 글 전체 가져오기
 	int selectInquiryListCount();
@@ -48,5 +52,11 @@ public interface MyPageMapper {
 	InquiryVO updateInquiry(InquiryVO inquiry);
 	//1:1문의 글 삭제 
 	int deleteInquiry(InquiryVO inquiry);
+	// 포인트 글 개수 조회
+	int selectPointListCount();
+	// 포인트 시작글 마지막글...어쩌고
+	List<Map<String, String>> selectPointList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+
+
 
 }

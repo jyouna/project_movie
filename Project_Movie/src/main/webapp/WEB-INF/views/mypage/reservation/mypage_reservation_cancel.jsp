@@ -44,10 +44,12 @@
                         <td>${reservationCancel.start_time}</td>
                         <td>${reservationCancel.ticket_count}</td>
                         <td>
+<!--                         true일때는 취소완, false일때는 승인전 -->
 	                   		<c:choose>
-						      	<c:when test="${reservationCancel.refund_status == 0}">승인전</c:when>
-						      	<c:otherwise>취소 완료</c:otherwise>
+						      	<c:when test="${reservationCancel.refund_status}">취소완료</c:when> 
+						      	<c:otherwise>승인전</c:otherwise>
 						    </c:choose>
+				
                         </td>
                         <td>
                            <fmt:formatDate value="${reservationCancel.refund_completed_date}" pattern="yy-MM-dd"/>

@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 .box {
-	width: 1000px;
+	width: 1200px;
 	height: 600px;
 	}
 /* Search bar styling */
@@ -197,4 +197,7 @@ article {
 .watched_movie_review input[type="datetime-local"] {
 	width: 203px !important;
 	height: 30px !important;
+}
+reivew{
+	margin: 13px;
 }

@@ -141,16 +141,16 @@ public class MypageController {
 	//3-1. 리뷰 등록창 
 	@ResponseBody
 	@PostMapping("reviewRegister")
-	public Map<String, Object> reviewRegister(String r_code) {
-		Map<String, Object> watchedMovie = service.searchWatchedmovieReview(r_code);
+	public Map<String, Object> reviewRegister(String review_code) {
+		Map<String, Object> watchedMovie = service.searchWatchedmovieReview(review_code);
 //		watchedMovie.setR_dateToString(watchedMovie.getR_date().toString().replace(".0", ""));
 		return watchedMovie;
 	}
 	
 	//4. 무비로그 - 관람평 
-	@GetMapping("Review")
-	public String review(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNum ) {
-		int listCount = service.getReviewCount();
+	@GetMapping("ReviewList")
+	public String reviewList(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNum ) {
+		int listCount = service.getReviewListCount();
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
@@ -171,27 +171,80 @@ public class MypageController {
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
-		List<Map<String, Object>> review = service.getReview(startRow, listLimit);
-		model.addAttribute("review", review);
+		List<Map<String, Object>> reviewList = service.getReviewList(startRow, listLimit);
+		model.addAttribute("reviewList", reviewList);
 		
 		return "mypage/movie_log/mypage_review";
 	}
-
+	// 4-1 watched movie에서 리뷰 등록한걸 넘기기 
+	@PostMapping("Review")
+	public String review() {
+		return "";
+	}
 	
-	//4-1. 리뷰 수정 버튼
+	//4-2. 리뷰 수정 버튼
 	@GetMapping("reviewModify")
 	public String reviewModify() {
 		return "mypage/movie_log/review_modify";
 	}
 	//5. 쿠폰 - 쿠폰 보기
-	@GetMapping("MycouponRegistration")
-	public String mycouponRegistration() {
+	@GetMapping("CouponList")
+	public String couponList( Model model, @RequestParam(defaultValue="1") int pageNum) {
+		int listCount = service.getCouponListCount();
+		int listLimit = 7;
+		int startRow = (pageNum - 1) * listLimit; 
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
+		if (maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
+		int endPage = startPage + pageListLimit -1;
+		if (endPage > maxPage) {
+			endPage = maxPage; 
+		}
+		
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
+			model.addAttribute("targetURL", "CouponList?pageNum=1");
+			return "result/fail";
+		}
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		model.addAttribute("pageInfo", pageInfo);
+		
+		List<Map<String, String>> couponList = service.getCouponList(startRow, listLimit);
+		model.addAttribute("couponList", couponList);
 		return "mypage/mycoupon/mycoupon_registration";
 	}
 	
 	//6. 포인트
 	@GetMapping("MypointReward")
-	public String mypointReward() {
+	public String mypointReward(@RequestParam(defaultValue = "1") int pageNum, Model model ) {
+		int listCount = service.getPointListCount();
+		int listLimit = 7;
+		int startRow = (pageNum - 1) * listLimit; 
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
+		if (maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
+		int endPage = startPage + pageListLimit -1;
+		if (endPage > maxPage) {
+			endPage = maxPage; 
+		}
+		
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
+			model.addAttribute("targetURL", "PointList?pageNum=1");
+			return "result/fail";
+		}
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		model.addAttribute("pageInfo", pageInfo);
+		
+		List<Map<String, String>> pointList = service.getPointList(startRow, listLimit);
+		model.addAttribute("pointList", pointList);
+		
 		return "mypage/mypoint/mypoint_reward";
 	}
 	//7. 1:1 문의 - 글 목록

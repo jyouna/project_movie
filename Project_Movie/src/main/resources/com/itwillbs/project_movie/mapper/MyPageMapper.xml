@@ -56,7 +56,7 @@
 	</select>
 <!-- 	2.내가 본 영화 글 전체 가져오기 -->
 	<select id="selectWathedMovieCount" resultType="int">
-		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count
+		SELECT COUNT(*)
 		FROM movie
 		JOIN schedule ON movie.movie_code = schedule.movie_code
 		JOIN payment ON schedule.schedule_code = payment.schedule_code
@@ -75,8 +75,16 @@
 			#{startRow}
 			, #{listLimit}
 	</select>
+	<select id="selectWatchedmovieReview" resultType="map">
+		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count
+		FROM movie
+		JOIN schedule ON movie.movie_code = schedule.movie_code
+		JOIN payment ON schedule.schedule_code = payment.schedule_code
+		WHERE
+			member_id = 'benddlx'
+	</select>
 <!-- 	리뷰 등록 -->
-	<insert id="insertReview">
+	<insert id="insertReviewList">
 		INSERT INTO review
 		VALUES(
 			#{review_code} + 1
@@ -86,31 +94,43 @@
 		)
 	</insert>
 	
-	<select id="selectWatchedmovieReview" resultType="map">
-		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count
-		FROM movie
-		JOIN schedule ON movie.movie_code = schedule.movie_code
-		JOIN payment ON schedule.schedule_code = payment.schedule_code
-		WHERE
-			member_id = 'benddlx'
-	</select>
 <!-- 	리뷰 총 개수 출력 -->
-	<select id="selectReviewCount" resultType="int">
+	<select id="selectReviewListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM review
 	</select>
-	<select id="selectReview" resultType="map">
+<!-- 	리뷰 글 시작번호 끝번호 -->
+	<select id="selectReviewList" resultType="map">
 		SELECT review.*, movie.movie_name
 		FROM review
 		JOIN movie ON review.movie_code = movie.movie_code
 		LIMIT #{startRow}, #{listLimit}
 	</select>
 	
-	<select id="selectRegistReview" resultType="map">
+	<select id="selectIsRegistReview" resultType="map">
 		SELECT *
 		FROM review
 		WHERE movie_code = #{movie_code}
 		AND review_writer = #{id}
+	</select>
+	
+	<select id="selectCouponListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM coupon
+	</select>
+	<select id="selectCouponList" resultType="map">
+		SELECT *
+		FROM coupon
+		LIMIT #{startRow}, #{listLimit}
+	</select>
+	<select id="selectPointListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM point
+	</select>
+	<select id="selectPointList" resultType="map">
+		SELECT *
+		FROM point
+		LIMIT #{startRow}, #{listLimit}
 	</select>
 <!-- 1:1문의 글 전체 가져오기 -->
  	<select id="selectInquiryListCount" resultType="int">

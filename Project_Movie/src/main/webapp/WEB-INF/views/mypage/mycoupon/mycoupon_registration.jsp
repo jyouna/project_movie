@@ -30,85 +30,81 @@
 <!-- 쿠폰 번호 입력 후 등록하기 버튼 클릭 -> 쿠폰 등록 -->
 <!-- 등록된 쿠폰 볼 수 있게 사용전 / 사용 완료 표시 -->
 <!-- 쿠폰 상태 / 쿠폰명 / 쿠폰 정보 / 사용기간 만 표시  -->
-  
-      	
-<div class="dateSearch_sec all_point">
-  <div class="in_sec">
-    <dl class="search_list">
-      <dt class="tit">기간선택</dt>
-      	<dd class="select_btn">
-        	<ul class="period_tab" data-control="dateDiff" data-handler="[data-control='datepicker']" data-selected-text="선택됨">
-	          <li class="on"><button type="button" data-val="7d" title="선택됨">1주일</button></li>
-	          <li><button type="button" data-val="1m">1개월</button></li>
-	          <li><button type="button" data-val="3m">3개월</button></li>
-	          <li><button type="button" data-val="6m">6개월</button></li>
-        	</ul>
-      	</dd>
-      	<dd class="select_datepicker">
-        <div class="datepicker_wrap" style="display: flex; align-items: center; gap: 8px;">
-          <div class="inp_datepicker">
-          <input type="date" class="text hasDatepicker" title="시작 날짜 선택 yyyy.mm.dd" name="stdt" id="stdt" autocomplete="off">
-          </div>
-          <span class="hyphen">-</span>
-          <div class="inp_datepicker">
-            <input type="date" class="text hasDatepicker" title="종료 날짜 선택 yyyy.mm.dd" name="eddt" id="eddt" autocomplete="off">
-          </div>
-          <button type="button" class="btn btn_search" id="search_btn" onclick="searchDates();">조회</button>
-		    <p class="bul_list"><span class="dot_arr">최근 2년 이내로 조회 가능</span></p>
-        </div>
-      </dd>
-    </dl>
-  </div>
-</div>
+	<div class="dateSearch_sec all_point">
+	  <div class="in_sec">
+	    <dl class="search_list">
+	      <dt class="tit">기간선택</dt>
+	      	<dd class="select_btn">
+	        	<ul class="period_tab" data-control="dateDiff" data-handler="[data-control='datepicker']" data-selected-text="선택됨">
+		          <li class="on"><button type="button" data-val="7d" title="선택됨">1주일</button></li>
+		          <li><button type="button" data-val="1m">1개월</button></li>
+		          <li><button type="button" data-val="3m">3개월</button></li>
+		          <li><button type="button" data-val="6m">6개월</button></li>
+	        	</ul>
+	      	</dd>
+	      	<dd class="select_datepicker">
+	        <div class="datepicker_wrap" style="display: flex; align-items: center; gap: 8px;">
+	          <div class="inp_datepicker">
+	          <input type="date" class="text hasDatepicker" title="시작 날짜 선택 yyyy.mm.dd" name="stdt" id="stdt" autocomplete="off">
+	          </div>
+	          <span class="hyphen">-</span>
+	          <div class="inp_datepicker">
+	            <input type="date" class="text hasDatepicker" title="종료 날짜 선택 yyyy.mm.dd" name="eddt" id="eddt" autocomplete="off">
+	          </div>
+	          <button type="button" class="btn btn_search" id="search_btn" onclick="searchDates();">조회</button>
+			    <p class="bul_list"><span class="dot_arr">최근 2년 이내로 조회 가능</span></p>
+	        </div>
+	      </dd>
+	    </dl>
+	  </div>
+	</div>
 
 
       <section id="listForm">
          <table>
             <tr id="tr_top">
                <td width="100px">쿠폰 상태</td>
-               <td width="100px">쿠폰명</td>
-               <td width="200px">쿠폰 정보</td>
+               <td width="100px">쿠폰타입</td>
+               <td width="200px">쿠폰 상세 정보</td>
                <td width="200px">사용기간</td>
             </tr>
             <tr>
-               <td>사용전</td>
-               <td>신규회원 웰컴쿠폰</td>
-               <td>예매 50% 할인 쿠폰</td>
-               <td>~ 2025.01.31</td>
-            </tr>
-            <tr>
-               <td>기간 만료</td>
-               <td>연말깜짝 쿠폰</td>
-               <td>예매 20% 할인 쿠폰</td>
-               <td>~ 2024.12.31</td>
-            </tr>
-               
-<%--             <c:choose> --%>
-<%--                <c:when test="${empty boardList}">  --%>
-<!--                   <tr><td colspan="5">게시물이 존재하지 않습니다</td></tr> -->
-<%--                </c:when> --%>
-<%--                <c:otherwise> --%>
-<%--                   <c:forEach var="board" items="${boardList}" varStatus="status"> --%>
-<!--                      <tr> -->
-<%--                         <td class="board_num">${board.board_num}</td> --%>
-<%--                         <td class="board_subject">${board.board_subject}</td> --%>
-<%--                         <td>${board.board_name}</td> --%>
-<!--                         <td> -->
-<%--                            <fmt:formatDate value="${board.board_date}" pattern="yy-MM-dd - yy-MM-dd"/> --%>
-<!--                         </td> -->
-<%--                         <td>${board.board_readcount}</td> --%>
-<!--                      </tr> -->
-<%--                   </c:forEach> --%>
-<%--                </c:otherwise>                --%>
-<%--             </c:choose> --%>
+	            <c:choose>
+	               <c:when test="${empty couponList}"> 
+            			<tr><td colspan="4">게시물이 존재하지 않습니다</td></tr>
+	               </c:when>
+	               <c:otherwise>
+					    <c:forEach var="coupon" items="${couponList}" varStatus="status">
+					        <tr>
+					            <td>${coupon.coupon_status}</td>
+					            <td>${coupon.coupon_type}</td>
+					            <td>    
+					                <c:choose>
+					                    <c:when test="${coupon.discount_amount eq '0'}">
+					                        ${coupon.discount_rate}% 할인권
+					                    </c:when>
+					                    <c:otherwise>
+					                        ${coupon.discount_amount}원 할인권
+					                    </c:otherwise>
+					                </c:choose>
+					            </td>
+					            <td>
+					                <fmt:formatDate value="${coupon.expired_date}" pattern="yy-MM-dd "/>
+					            </td>
+				       		 </tr>
+				   		 </c:forEach>
+					</c:otherwise>
+  
+            	</c:choose>
+           	</tr>
          </table>
       </section>
       <hr>
 
     
-            <section id="pageList">
+         <section id="pageList">
          <input type="button" value="&lt" 
-            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum - 1}'" 
+            onclick="location.href='CouponList?pageNum=${pageInfo.pageNum - 1}'" 
              <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
          
          <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -118,14 +114,14 @@
                
                </c:when>
                <c:otherwise>
-                  <a href="BoardList?pageNum=${i}">${i}</a>
+                  <a href="CouponList?pageNum=${i}">${i}</a>
                </c:otherwise>
             </c:choose>
          </c:forEach>
          
          
          <input type="button" value="&gt" 
-            onclick="location.href='BoardList?pageNum=${pageInfo.pageNum + 1}'" 
+            onclick="location.href='CouponList?pageNum=${pageInfo.pageNum + 1}'" 
              <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
       </section>
 		</article>

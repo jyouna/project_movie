@@ -19,7 +19,6 @@ private MyPageMapper mapper;
 		return mapper.selectReservationListCount();
 	}
 // 예매내역 시작번호 끝번호~..
-	
 	public java.util.List<Map<String, Object>> getReservationList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
 		return mapper.selectReservationList(startRow, listLimit);
@@ -48,32 +47,39 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectWatchedMovie(startRow, listLimit);
 	}
+	// 내가 본 영화 시작번호 끝번호 - 2 
+	public Map<String, Object> isRegistReview(String id, String string) {
+		// TODO Auto-generated method stub
+		return mapper.selectIsRegistReview(id,string);
+	}
 	//리뷰 등록창
 	public Map<String, Object> searchWatchedmovieReview(String r_code) {
 		// TODO Auto-generated method stub
 		return mapper.selectWatchedmovieReview(r_code);
 	}
-	// 내가 본 영화 - 리뷰등록 
-	public int getReview(Map<String, String> map) {
+
+	//무비로그 - 관람평 글 전체 가져오기
+	public int getReviewListCount() {
 		// TODO Auto-generated method stub
-		return mapper.insertReview(map);
-	}
-	//내가 본 영화 - 리뷰등록 포함 출력 
-	public Map<String, Object> isRegistReview(String id, String movie_code) {
-		return mapper.selectRegistReview(id, movie_code);
-	}
-	//무비로그 - 관람평 
-	public int getReviewCount() {
-		// TODO Auto-generated method stub
-		return mapper.selectReviewCount();
+		return mapper.selectReviewListCount();
 	}
 	
 	//무비로그 - 관람평 시작번호 끝번호
-	public List<Map<String, Object>> getReview(int startRow, int listLimit) {
+	public List<Map<String, Object>> getReviewList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
-		return mapper.selectReview(startRow, listLimit);
+		return mapper.selectReviewList(startRow, listLimit);
 	}
-	
+	//쿠폰 리스트 조회
+	public int getCouponListCount() {
+		// TODO Auto-generated method stub
+		return mapper.selectCouponListCount();
+	}
+	//쿠폰 리스트 시작번호 끝번호 
+	public List<Map<String, String>> getCouponList(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return mapper.selectCouponList(startRow, listLimit);
+	}
+
 // 1:1문의 글 전체 가져오기
 	public int getInquiryListCount() {
 		// TODO Auto-generated method stub
@@ -104,6 +110,18 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.deleteInquiry(inquiry);
 	}
+	//포인트 글 개수
+	public int getPointListCount() {
+		// TODO Auto-generated method stub
+		return mapper.selectPointListCount();
+	}
+	//포인트 시작번호 끝번호..
+	public List<Map<String, String>> getPointList(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return mapper.selectPointList(startRow, listLimit);
+	}
+
+
 	
 
 }

@@ -39,7 +39,6 @@
 					<input type="submit" value="조회">
 				</form>
 			</div>
-	<!-- 			순서 체크하고 리뷰등록 누를경우 작성팝업 생성 -->
 			<div style="text-align: right;">
 				<input type="button" value="리뷰 등록" id="reviewRegister" >
 			</div>
@@ -78,7 +77,7 @@
 	            </c:choose>
 	         </table>
 	      </section>
-	            <section id="pageList">
+          <section id="pageList">
 	         <input type="button" value="&lt" 
 	            onclick="location.href='WatchedMovie?pageNum=${pageInfo.pageNum - 1}'" 
 	             <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
@@ -104,15 +103,15 @@
 			    <h2>리뷰 등록</h2>
 			    <hr>
 			    <div>
-			        <label id="review_content">영화명<input type="text" name="r_moviename" readonly></label><br>
+			        <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
 			        <label id="review_content">한줄리뷰</label>
 			        <br>
-			        <textarea cols="40" rows="3">
+			        <textarea cols="40" rows="3" name="reivew">
 			        
 			        </textarea>
-			        <br>
-			        <label>추천</label><input type="radio" name="review_recommend" value="0"><br>
-			        <label>비추천</label><input type="radio" name="review_recommend" value="1"><br>
+			        <br> 
+			        <label id="review_recommend">추천</label><input type="radio" name="review_recommend" value="0">
+			        <label id="review_recommend">비추천</label><input type="radio" name="review_recommend" value="1"><br>
 			    </div>
 		        <hr>
 		        <div class="btnGroup">
