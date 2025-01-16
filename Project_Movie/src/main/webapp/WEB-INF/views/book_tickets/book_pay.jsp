@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <!--
 	Escape Velocity by HTML5 UP
@@ -42,7 +43,13 @@
 									<div class="mv_title">${schedule.movie_name}</div>
 							        <div class="row">
 							            <div class="header">일시</div>
-							            <div class="data">2024.12.30(월) 23:00</div>
+							            <div class="data">
+						            	<fmt:parseDate var="parsedReplyDate"
+														value="${schedule.start_time}"
+														pattern="yyyy-MM-dd HH:mm"
+														type="both" />
+										<fmt:formatDate value="${parsedReplyDate}" pattern="yyyy.MM.dd'('E')' HH:mm"/>
+						            </div>
 							        </div>
 							        <div class="row">
 							            <div class="header">상영관</div>

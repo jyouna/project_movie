@@ -29,7 +29,7 @@
 	height: 750px;
 	padding: 40px;
 	border-radius: 5px;
-	overflow-y: auto;
+/* 	overflow-y: auto; */
 }
 
 .modal_content h2 {
@@ -330,6 +330,10 @@ form input[type="text"].count {
     align-items: flex-start;
     min-height: 150px; /* 정보 섹션의 최소 높이 */
     box-sizing: border-box;
+}
+
+.tnb .ticket_info .row:last-of-type {
+	margin-top: 5px;
 }
 
 .tnb .mv_info {

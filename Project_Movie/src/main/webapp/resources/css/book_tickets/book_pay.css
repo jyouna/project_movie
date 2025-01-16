@@ -88,7 +88,7 @@ h4 {
 	gap: 10px; /* 포스터와 제목 간 간격 */
 }
 
-.mv_poster {
+.mv_poster img {
 	display: flex;
     align-items: flex-end;
 	background-color: gray;
@@ -101,6 +101,7 @@ h4 {
 .mv_title {
 	font-weight: bold;
 	font-size: 20px;
+	margin-bottom: 10px;
 }
 
 .mv_info {

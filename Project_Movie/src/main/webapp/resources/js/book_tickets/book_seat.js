@@ -1,5 +1,6 @@
 $(function () {
 	let selectedSeats = "";
+	let totalAmount = 0;
 	
 	// 인원수 변경 시 선택된 좌석 초기화 메서드 정의
 	function resetSeats() {
@@ -36,11 +37,8 @@ $(function () {
 		// 인원 변경 시 선택된 좌석 초기화 메서드
 		resetSeats();
 		ticketCount($(this).val());
-		
-		let adultCount = parseInt($(".count").eq(0).val());
-		$("#adult").val(adultCount);
-
-		
+		$("#totalAmount").val(totalAmount);
+		eachTicketCount();
 	});
 	
 	// - 버튼 클릭 시 인원수 감소
@@ -59,8 +57,7 @@ $(function () {
 		resetSeats();
 		ticketCount($(this).val());
 		
-		let adultCount = parseInt($(".count").eq(0).val());
-		$("#adult").val(adultCount);
+		eachTicketCount();
 	});
 	
 	
@@ -108,8 +105,7 @@ $(function () {
 	});
 	
 	
-	// 수정 필요
-	$(".pay_btn").click(function(event) {
+	$(".pay_btn").click(function() {
 //		event.preventDefault(); // 기본 동작 방지
 		
 		let totalCount = 0;
@@ -127,11 +123,19 @@ $(function () {
 			return false;
 		}
 		
-
+		$("#totalAmount").val(totalAmount);
 		
 	});		
 	
-	
+	// 타입 별 인원 수 jsp value에 넘기기
+	function eachTicketCount() {
+		let adultCount = parseInt($(".count").eq(0).val());
+		$("#adult").val(adultCount);
+		let youthCount = parseInt($(".count").eq(1).val());
+		$("#youth").val(youthCount);
+		let seniorCount = parseInt($(".count").eq(2).val());
+		$("#senior").val(seniorCount);
+	}
 	
 	// 관객 타입 별 가격과 인원 수에 따른 총금액
 	function ticketCount(showtime_type) {
@@ -155,7 +159,7 @@ $(function () {
 			seniorAmount -= 2000; 
 		}
 
-		let totalAmount = adultCount * adultAmount + youthCount * youthAmount + seniorCount * seniorAmount;
+		totalAmount = adultCount * adultAmount + youthCount * youthAmount + seniorCount * seniorAmount;
 //		console.log(totalAmount);
 		
 		$(".ticket_info").empty();
@@ -224,8 +228,8 @@ $(function () {
 	        <div class="row">
 	            <div class="header">총금액</div>
 	            <div class="data">
-	            	<span class="price"></span>
-	                <span class="won">`+  totalAmount + ` 원</span>
+	            	<span class="price">` + totalAmount + `</span>
+	                <span class="won"> 원</span>
 	            </div>
 	        </div>
 		`);

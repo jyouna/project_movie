@@ -94,6 +94,16 @@
     margin: 0 auto; /* 중앙 정렬 */
 }
 
+.movie_schedule_info h4 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 300px;
+	font-weight: 500;
+	color: #919499;
+	font-size: 16px;
+}
+
 .sec01 {
     display: flex;
     flex-direction: column;
@@ -106,7 +116,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    gap: 10px;
+    gap: 5px;
 }
 
 .mv_age img {
@@ -130,10 +140,13 @@
 }
 
 .mv_title {
+	text-align: center;
     font-size: 16px;
     font-weight: bold;
-    color: black;
+    color: #000;
+
 }
+
 
 /* 시간/좌석 버튼들 */
 .time_seat_container {
@@ -181,15 +194,11 @@
     background-color: #ddd;
 }
 
-.time {
+
+.mv_time {
 	font-weight: bold;
     font-size: 16px;
     color: #000;
-    margin-bottom: 10px;
-}
-
-.seat {
-	font-size: 12px;
 }
 
 .details {
@@ -205,6 +214,7 @@
 /* 좌석 수 스타일 */
 .details .seat {
     text-align: left; /* 좌측 정렬 */
+	font-size: 12px;
 }
 
 /* 관 이름 스타일 */

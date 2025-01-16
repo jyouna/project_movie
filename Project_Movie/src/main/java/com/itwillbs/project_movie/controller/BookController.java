@@ -29,41 +29,8 @@ public class BookController {
 	@Autowired private BookService service;
 	
 	@GetMapping("MovieScheduleInfo")
-	public String movieScheduleInfo(Model model, @RequestParam Map<String, String> conditionMap) {
+	public String movieScheduleInfo(Model model, @RequestParam Map<String, String> conditionMap, HttpSession session) {
 		
-		// 상영중인 영화 목록 조회
-		List<MovieVO> movieList = service.getMovieList();
-		model.addAttribute("movieList", movieList);
-		
-//		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(conditionMap);
-//		model.addAttribute("schWithMovie", schWithMovie);
-//		
-////		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(conditionMap);
-////		model.addAttribute("schWithMovie", schWithMovie);
-//		
-//		// 상영 시작시간 형식 변환
-//		for(Map<String, Object> map : schWithMovie) {
-//			
-//			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
-//			
-//			String start_time = timeFormatter.format(map.get("start_time"));
-//			String end_time = timeFormatter.format(map.get("end_time"));
-//			
-//			map.put("start_time", start_time);
-//			map.put("end_time", end_time);
-//		}
-		
-		
-//		List<ScheduleVO> scheduleList = service.getScheduleList(conditionMap);
-//		
-//		// 시작, 끝 시간 형식변환
-//		for(ScheduleVO schedule: scheduleList) {
-//			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
-//			schedule.setStr_start_time(timeFormatter.format(schedule.getStart_time()));
-//			schedule.setStr_end_time(timeFormatter.format(schedule.getEnd_time()));
-//		}
-//		
-//		System.out.println("sch : " + scheduleList);
 		
 		return "book_tickets/movie_schedule_info";
 	}
@@ -105,8 +72,9 @@ public class BookController {
 	
 	@ResponseBody
 	@GetMapping("GetMovieListScheduleToBooking")
-	public List<MovieVO> getMovieListScheduleToBooking(@RequestParam Map<String, String> conditionMap) {
+	public List<MovieVO> getMovieListScheduleToBooking(@RequestParam Map<String, String> conditionMap, Model model) {
 		List<MovieVO> movieList = service.getMovieList2(conditionMap);
+		model.addAttribute("movieList", movieList);
 		return movieList;
 	}
 	
@@ -184,12 +152,19 @@ public class BookController {
 		return ticketList;
 	}
 	
-
+	//  결제 페이지로 이동
 	@GetMapping("BookPay")
-	public String bookPay(String schedule_code, Model model) {
+	public String bookPayPage(String schedule_code, Model model) {
+		
+		return "book_tickets/book_pay";
+	}
+	
+	@PostMapping("BookPay")
+	public String bookPay(String schedule_code, Model model, @RequestParam Map<String, String> map) {
 		
 		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
+		
 		
 		return "book_tickets/book_pay";
 	}

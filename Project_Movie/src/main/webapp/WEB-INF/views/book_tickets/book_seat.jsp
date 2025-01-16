@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <!--
 	Escape Velocity by HTML5 UP
@@ -31,20 +32,23 @@
 					<h2>인원/좌석 선택</h2>
 				</div>
 				<form action="BookPay"  method="post">
-				<input type="hidden" name="schedule_code" value="${schedule.schedule_code}">
+					<input type="hidden" name="schedule_code" value="${schedule.schedule_code}">
 					<ul>
 						<c:forEach var="type" items="${ticketType}">
 							<li>
 								<strong>${type.ticket_type}</strong>
 								<div class="ctrl_box">
 									<button type="button" class="minus_btn" value="${schedule.showtime_type}">-</button>
-									<input type="text" class="count" name="" value="0" readonly)>
+									<input type="text" class="count" value="0" readonly)>
 									<button type="button" class="plus_btn" value="${schedule.showtime_type}">+</button>
 								</div>
 							</li>
+					
 						</c:forEach>
 					</ul>
-<!-- 					<input type="hidden" name="adult" id="adult"> -->
+					<input type="hidden" name="adult" id="adult">
+					<input type="hidden" name="youth" id="youth">
+					<input type="hidden" name="senior" id="senior">
 					<span class="space_line"></span>
 					
 					<div class="seat_container">
@@ -81,7 +85,13 @@
 							<div class="mv_info">
 						        <div class="row">
 						            <div class="header">일시</div>
-						            <div class="data">${schedule.start_time}</div>
+						            <div class="data">
+						            	<fmt:parseDate var="parsedReplyDate"
+														value="${schedule.start_time}"
+														pattern="yyyy-MM-dd HH:mm"
+														type="both" />
+										<fmt:formatDate value="${parsedReplyDate}" pattern="yyyy.MM.dd'('E')' HH:mm"/>
+						            </div>
 						        </div>
 						        <div class="row">
 						            <div class="header">상영관</div>
@@ -111,10 +121,12 @@
 							
 							<!-- 결제 정보 섹션 -->
 						   	<div class="ticket_info">
+						   		<input type="hidden" id="totalAmount" name="totalAmount">
 							</div>
 						
 							<div class="bottom_btn">
 								<button type="submit" class="pay_btn">결제</button>
+<%-- 								<input type="hidden" value="${schedule.schedule_code}"> --%>
 							</div>
 						</div>
 					</div>
@@ -131,7 +143,7 @@
 			
 			let contextPath = "${pageContext.request.contextPath}";
 			
-			// 긴 영화제목 스크롤 애니메이션 효과
+// 			긴 영화제목 스크롤 애니메이션 효과
 			$(document).ready(function () {
 			    $('.mv_title').each(function () {
 			        let title = $(this); // 현재 mv_title 요소

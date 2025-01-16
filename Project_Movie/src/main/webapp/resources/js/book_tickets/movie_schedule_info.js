@@ -1,9 +1,12 @@
 $(function() {
+	let selectedDate = "";
+	let selectedMovie = "";
+	// 페이지 로드됐을 때 상영시간 안보이게 처리하고
+	// "날짜를 선택해주세요" 출력
 	
 	// 날짜 선택 시 ajax로 해당 날짜 시간표 출력
 	$(".date_item").click(function() {
 		$(".sec01").css("display", "flex");
-		isDateSelected = true;
 		selectedDate = $(this).data("date");
 	    console.log("선택된 날짜 : " + selectedDate);
 		
@@ -11,18 +14,10 @@ $(function() {
 		loadSchedule(selectedDate, selectedMovie);
 	});
 	
-//	$(".mv_sel select").change(function(){
-//		$(this).val();
-//		location.href="BookTickets?howOrder=" + $(this).val();
-//		console.log($(this).val());
-//	});
-	
-	
-	
 	// 예매 날짜 영화 선택시 스케줄 표시 메서드
 	function loadSchedule(selectedDate, selectedMovie) {
 		
-		// 날짜 및 영화 선택시 조건에 해당하는 영화만 연령등급 영화명 표시
+		// 날짜 선택시 조건에 해당하는 영화만 연령등급 영화명 표시
 		$.ajax({
 			type : "GET",
 			url : "GetMovieListScheduleToBooking",
@@ -32,7 +27,7 @@ $(function() {
 			}
 		}).done(function(movieList) {
 			$(".movie_schedule_info").empty();
-			$(".movie_schedule_info").css("display", "none");
+//			$(".movie_schedule_info").css("display", "none");
 			
 			for(let movie of movieList) {
 				let ageLimit = movie.age_limit;
@@ -62,7 +57,7 @@ $(function() {
 			}
 				
 			
-			// 날짜 및 영화 선택시 조건에 해당하는 스케줄 해당영화 섹션에 표시
+			// 날짜 선택시 조건에 해당하는 스케줄 해당영화 섹션에 표시
 			$.ajax({
 				type : "GET",
 				url : "GetScheduleListToBooking",
@@ -100,7 +95,7 @@ $(function() {
 				} else if(true) {
 					$(".movie_schedule_info").empty();
 					$(".movie_schedule_info").append(`
-						<h4>해당 영화의 스케줄이 존재하지 않습니다.</h4>
+						<h4>해당 날짜의 스케줄이 존재하지 않습니다.</h4>
 					`);
 				}
 				
@@ -123,8 +118,6 @@ $(function() {
 			alert("영화 정보 조회에 실패하였습니다.")
 		});
 	}
-	
-	
 	
 	
 

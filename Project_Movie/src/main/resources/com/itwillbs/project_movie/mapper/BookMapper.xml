@@ -67,7 +67,6 @@
 	<select id="selectTicketType" resultType="map">
 		SELECT *
 		FROM ticket
-<!-- 		WHERE ticket_type = #{ticket_type} -->
 	</select>
 	
 	<select id="selectTicketTypeAmount" resultType="int">
