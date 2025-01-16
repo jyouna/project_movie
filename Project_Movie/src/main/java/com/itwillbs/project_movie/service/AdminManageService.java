@@ -305,4 +305,19 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getMemberCount();
 	}
+
+	public Map<String, String> getTotalMemberJoinStatics(Map<String, List<String>> period) {
+		// TODO Auto-generated method stub
+		List<String> list = period.get("period");
+		Map<String, String> map = new HashMap<String, String>();
+
+		System.out.println("서비스 리스트 객체 저장한 값 : " + list);
+		
+		for(String year : list) {
+			map.put(year, manageMapper.getTotalPeriodMemberJoin(year));
+		}
+		System.out.println("서비스 map에 저장받은 값 : " + map);
+		
+		return map;
+	}
 }

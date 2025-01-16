@@ -134,6 +134,8 @@ public interface AdminManageMapper {
 
 	int getMemberCount();
 
+	String getTotalPeriodMemberJoin(@Param("year") String year);
+
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

@@ -538,4 +538,16 @@
 		SELECT count(*)
 		FROM member
 	</select>
+	
+	<select id="getTotalPeriodMemberJoin">
+		SELECT count(*) AS member_count
+		FROM member
+		WHERE year(regis_date) = #{year}
+	</select> 
+	
  </mapper>
+ 
+ 
+ 
+ 
+ 

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,8 @@ import com.itwillbs.project_movie.vo.GetGiveCouponInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 import com.itwillbs.project_movie.vo.PointVO;
+
+import kotlinx.serialization.json.JsonObject;
 
 @Controller
 public class AdminStaticsController {
@@ -123,7 +127,7 @@ public class AdminStaticsController {
 		
 		int totalNewMember = adminService.monthlyTotalNewMemberStatics(year, month);
 		
-		System.out.printf("%d년 %d월 가입자 수 : %d", year, month, totalNewMember);
+		System.out.printf("%d년 %d월 가입자 수 : %d\n", year, month, totalNewMember);
 		
 		return totalNewMember;
 	}
@@ -138,7 +142,25 @@ public class AdminStaticsController {
 		
 		map = adminService.getMonthlyNewMember(year);
 		
+		System.out.println("컨트롤러 map에 저장된 값 : " + map);
+		
+//		JSONObject jo = new JSONObject(map);
+//		System.out.println("jsonobject에 저장된 값 : " + jo);
 		return map;
 	}
+	
+	@PostMapping("getTotalPeriodMemberJoinStatics")
+	@ResponseBody
+	public Map<String, String> totalPeriodMemberJoinStatics(@RequestBody Map<String, List<String>> period) {
+		System.out.println("컨트롤러에서 전달받은 period : " + period);
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map = adminService.getTotalMemberJoinStatics(period);
+		
+		System.out.println("컨트롤러 map에 저장된 값 : " + map);
+		
+		return map;
+	}
+	
 }
 
