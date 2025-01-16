@@ -109,6 +109,11 @@
     gap: 10px;
 }
 
+.mv_age img {
+	width: 30px; height: 30px;
+	border-radius: 5px;
+}
+
 .mv_age {
     background-color: #f4c542;
     color: white;

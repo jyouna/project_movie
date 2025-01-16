@@ -29,7 +29,42 @@ public class BookController {
 	@Autowired private BookService service;
 	
 	@GetMapping("MovieScheduleInfo")
-	public String movieScheduleInfo() {
+	public String movieScheduleInfo(Model model, @RequestParam Map<String, String> conditionMap) {
+		
+		// 상영중인 영화 목록 조회
+		List<MovieVO> movieList = service.getMovieList();
+		model.addAttribute("movieList", movieList);
+		
+//		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(conditionMap);
+//		model.addAttribute("schWithMovie", schWithMovie);
+//		
+////		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(conditionMap);
+////		model.addAttribute("schWithMovie", schWithMovie);
+//		
+//		// 상영 시작시간 형식 변환
+//		for(Map<String, Object> map : schWithMovie) {
+//			
+//			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+//			
+//			String start_time = timeFormatter.format(map.get("start_time"));
+//			String end_time = timeFormatter.format(map.get("end_time"));
+//			
+//			map.put("start_time", start_time);
+//			map.put("end_time", end_time);
+//		}
+		
+		
+//		List<ScheduleVO> scheduleList = service.getScheduleList(conditionMap);
+//		
+//		// 시작, 끝 시간 형식변환
+//		for(ScheduleVO schedule: scheduleList) {
+//			SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+//			schedule.setStr_start_time(timeFormatter.format(schedule.getStart_time()));
+//			schedule.setStr_end_time(timeFormatter.format(schedule.getEnd_time()));
+//		}
+//		
+//		System.out.println("sch : " + scheduleList);
+		
 		return "book_tickets/movie_schedule_info";
 	}
 	

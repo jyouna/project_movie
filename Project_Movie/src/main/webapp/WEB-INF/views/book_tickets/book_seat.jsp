@@ -73,7 +73,9 @@
 							</div>
 							<div class="poster">
 								<div class="mv_poster"><img src="${schedule.movie_img1}"></div>
-								<div class="mv_title">${schedule.movie_name}</div>
+								<div class="mv_title">
+									<div>${schedule.movie_name}</div>
+								</div>
 							</div>
 							<!-- 영화관 정보 섹션 -->
 							<div class="mv_info">
@@ -126,7 +128,24 @@
 				$(".modal").css("display", "none");
 				$(".modal_content").css("display", "none");
 			});
+			
 			let contextPath = "${pageContext.request.contextPath}";
+			
+			// 긴 영화제목 스크롤 애니메이션 효과
+			$(document).ready(function () {
+			    $('.mv_title').each(function () {
+			        let title = $(this); // 현재 mv_title 요소
+			        let inner = title.find('div'); // 내부 텍스트 div 선택
+
+			        // 실제 텍스트 너비와 컨테이너 너비 비교
+			        if (inner[0].scrollWidth > title.width()) {
+			        	inner.css("animation", "marquee-scroll 5s linear infinite");
+			            inner.addClass('marquee-scroll'); // 애니메이션 클래스 추가
+			        } else {
+			            $inner.removeClass('marquee-scroll'); // 애니메이션 클래스 제거
+			        }
+			    });
+			});	
 		</script>
 	</article>
 

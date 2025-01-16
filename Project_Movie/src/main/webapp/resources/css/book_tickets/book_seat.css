@@ -280,10 +280,12 @@ form input[type="text"].count {
 }
 
 .poster {
+	flex:2;
 	display: flex; /* 포스터와 텍스트를 가로로 배치 */
     align-items: flex-start; /* 세로로 중앙 정렬 */
-	margin: 0 30px;
+	margin-left: 30px;
 	gap: 10px; /* 포스터와 제목 간 간격 */
+    position: relative;
 }
 
 .mv_poster img {
@@ -295,26 +297,30 @@ form input[type="text"].count {
 }
 
 .mv_title {
-	text-align: center;
+	display: inline-block;
 	margin-top: 10px;
 	font-weight: bold;
     font-size: 14px;
 	color: #666666;
 	white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: clip;
     width: 105px;
-    animation: scroll-left 5s linear infinite;
+    position: relative;
 }
 
-/* @keyframes scroll-left { */
-/*     0% { */
-/*         transform: translateX(100%); 텍스트 시작 위치 */
-/*     } */
-/*     100% { */
-/*         transform: translateX(-100%); 텍스트 끝 위치 */
-/*     } */
+/* .mv_title div { */
+/*     animation: marquee-scroll 5s linear infinite;  */
 /* } */
+
+@keyframes marquee-scroll {
+/*      0% { */
+/*         transform: translateX(100%); */
+/*     } */
+    100% {
+        transform: translateX(-100%); /* 텍스트가 왼쪽 끝으로 이동 */
+    }
+}
 
 .tnb .mv_info, .tnb .ticket_info {
     flex: 2; /* 결제 정보와 영화 정보를 동일한 크기로 설정 */
