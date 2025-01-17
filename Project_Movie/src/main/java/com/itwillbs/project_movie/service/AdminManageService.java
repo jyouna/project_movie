@@ -193,10 +193,6 @@ public class AdminManageService {
 			listCount = manageMapper.getCouponListCount(searchKeyword, searchContent); break;
 		case "pointList" : 
 			listCount = manageMapper.getPointListCount(searchKeyword, searchContent); break;
-//		case "eventWinnerList" : 
-//			int count1 = manageMapper.getPointListCount(searchKeyword, searchContent);
-//			int count2 = manageMapper.getCouponListCount(searchKeyword, searchContent); 
-//			listCount = count1 + count2; break;
 		}
 		return listCount;
 	}
@@ -319,5 +315,16 @@ public class AdminManageService {
 		System.out.println("서비스 map에 저장받은 값 : " + map);
 		
 		return map;
+	}
+
+	public void createMembers(MemberVO member) {
+		manageMapper.createMembers(member);
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Map<String, Object> getAllEventWinnerList() {
+		// TODO Auto-generated method stub
+		return manageMapper.getAllEventWinnerList(getMemberCount(), getBoardListCount(), null, null);
 	}
 }

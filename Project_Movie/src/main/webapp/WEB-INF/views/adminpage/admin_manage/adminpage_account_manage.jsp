@@ -24,8 +24,8 @@ input[type="checkbox"] {
     transform: scale(1.5); /* 1.5배 확대 */
     margin: 5px;}
 </style>
-
 </head>
+
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<h3>관리자 계정관리</h3>
@@ -41,7 +41,7 @@ input[type="checkbox"] {
 	<div id="tableDiv" class="view">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="50"><input type="checkbox" id="selectAll"></th>
+				<th width="50"><input type="checkbox" id="selectAll" class="deleteCheck"></th>
 				<th width="70">번호</th>
 				<th width="90">ID</th>
 				<th width="90">비밀번호</th>
@@ -115,7 +115,7 @@ input[type="checkbox"] {
 			});	
 			
 			// 권한 설정
-		  $("#setAuth").on("click", function () {
+		$("#setAuth").on("click", function () {
 			alert("권한 설정은 개별 아이디를 클릭하여 진행해주시기 바랍니다.");
 	    });
 		
@@ -135,11 +135,9 @@ input[type="checkbox"] {
 // 		        console.log(selectedIds);
 		        selectedCheckbox.each(function () {
 		            selectedIds.push($(this).val());// 체크박스의 value 값 (admin_id)을 배열에 추가
-// 		        	console.log(selectedIds.push($(this).val()));
 		        });
 
 		        if (confirm("해당 계정을 삭제하시겠습니까? 되돌릴 수 없습니다.")) {
-		            // 선택된 ID를 서버로 전송
 		            location.href = "DeleteAdminAccount?admin_id=" + selectedIds.join(",");
 		        }
 		    } else {
@@ -148,8 +146,6 @@ input[type="checkbox"] {
 		});
 		
 		$("#selectAll").on("click", function(){
-			// 1. 현재페이지
-			// 2. 다른페이지로 갔다 돌아왔을 때 
 		    let checkboxes = $(".deleteCheck");  // 체크박스 항목들을 다루기 위한 객체 생성
 		    let isChecked = $(this).data("checked") || false; // 전체선택 버튼의 현재 체크 상태값 저장. 없는 경우 false 값으로 설정.
 		    $(this).data("checked", !isChecked); // 체크가 안된 상태에서 클릭했으면 true로 변경

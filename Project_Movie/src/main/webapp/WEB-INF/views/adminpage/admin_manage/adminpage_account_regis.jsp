@@ -136,7 +136,7 @@ input[type="checkbox"] {
 					$("#checkIdResult2").text("아이디 양식 일치").css("color", "blue");
 				} else {
 					check_id1 = false;
-					$("#checkIdResult2").text("아이디 양식 불일치").css("color", "red");
+					$("#checkIdResult2").text("ID 양식 : admin + 0~99999").css("color", "red");
 				}
 				
 				$.ajax({
@@ -166,7 +166,7 @@ input[type="checkbox"] {
 					$("#checkPasswdResult").text("비밀번호 양식 일치").css("color", "blue");
 				} else {
 					check_passwd = false;
-					$("#checkPasswdResult").text("비밀번호 양식 불일치").css("color", "red");
+					$("#checkPasswdResult").text("p/w: 소문자와 숫자만 사용 8~10자리").css("color", "red");
 				}
 				$("#passwd2").trigger("blur");
 			});
@@ -193,7 +193,7 @@ input[type="checkbox"] {
 					$("#checkNameResult").text("사용 가능").css("color", "blue");
 				} else {
 					check_name = false;
-					$("#checkNameResult").text("사용 불가능").css("color", "red");
+					$("#checkNameResult").text("이름 : 관리자 + 1~999 형태").css("color", "red");
 				}
 			});
 			

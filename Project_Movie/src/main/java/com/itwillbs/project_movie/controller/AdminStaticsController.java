@@ -1,10 +1,15 @@
 package com.itwillbs.project_movie.controller;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -29,6 +34,7 @@ import com.itwillbs.project_movie.vo.PageInfo;
 import com.itwillbs.project_movie.vo.PointVO;
 
 import kotlinx.serialization.json.JsonObject;
+import retrofit2.http.GET;
 
 @Controller
 public class AdminStaticsController {
@@ -154,13 +160,56 @@ public class AdminStaticsController {
 	public Map<String, String> totalPeriodMemberJoinStatics(@RequestBody Map<String, List<String>> period) {
 		System.out.println("컨트롤러에서 전달받은 period : " + period);
 		Map<String, String> map = new HashMap<String, String>();
-		
 		map = adminService.getTotalMemberJoinStatics(period);
-		
 		System.out.println("컨트롤러 map에 저장된 값 : " + map);
 		
 		return map;
 	}
 	
+	
+	
+	// 회원 자동 생성 메크로
+	@GetMapping("createNewmember")
+	public void createNewMember() {
+		Random r = new Random();
+		r.nextInt(5000);
+		
+		
+		MemberVO member = new MemberVO();
+		LocalDate localDate = LocalDate.of(2002, 2, 2);
+		Date date = Date.valueOf(localDate);
+		
+		int year = 2020;
+		int month = 0;
+		int day = 10;
+		
+		for(int i = 1; i < 4; i++) { // 4년
+			for(int j = 1; j <= 12; j++) { // 12개월
+				month = j; // 1~12월 
+				int repetitionCount = (int) ((Math.random()*200)+100);
+				for(int k = 0; k < repetitionCount; k++) { // k 반복횟수만큼 계정 생성
+					LocalDateTime time = LocalDateTime.of(year, month, day, 11, 11, 11, 11);
+					Timestamp regis_date = Timestamp.valueOf(time);
+					member.setMember_id(r.nextInt(999) + "tes" + r.nextInt(999) + r.nextInt(999) + r.nextInt(999));
+					member.setMember_passwd("abcdedfg");
+					member.setMember_name("tester" + r.nextInt(55));
+					member.setBirth_date(date);
+					member.setEmail(r.nextInt(999) + "abc@awe"+r.nextInt(999)+r.nextInt(9999)+".com");
+					member.setPhone(r.nextInt(10000) + "010-" + r.nextInt(10000) + "-" + r.nextInt(10000));
+					member.setGender('M');
+					member.setGenre("액션");
+					member.setText_receive(true);
+					member.setEmail_receive(true);
+					member.setInfo_open(true);
+					member.setRegis_date(regis_date);
+					
+					adminService.createMembers(member);
+				}
+			}
+			year += i; // 반복 끝날 때마다 1년씩 증가
+		}
+	}
 }
+
+
 

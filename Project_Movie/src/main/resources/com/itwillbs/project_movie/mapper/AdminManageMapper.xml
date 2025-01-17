@@ -459,19 +459,19 @@
 	</select>
 	
 	<select id="getPointListCount" resultType="int">
-		SELECT COUNT(*)
-		FROM point
-		<if test="!searchContent.equals('')">
-		WHERE
-			<choose>
-				<when test="searchKeyword.equals('pointHolder')">
-					point_holder LIKE '%${searchContent}%'
-				</when>
-				<when test="searchKeyword.equals('eventCode')">
-					event_code LIKE '%${searchContent}%'
-				</when>
-			</choose>		
-		</if>
+      SELECT COUNT(*)
+      FROM point
+      <if test="!searchContent.equals('')">
+      WHERE
+         <choose>
+            <when test="searchKeyword.equals('pointHolder')">
+               point_holder LIKE '%${searchContent}%'
+            </when>
+            <when test="searchKeyword.equals('eventCode')">
+               event_code LIKE '%${searchContent}%'
+            </when>
+         </choose>      
+      </if>	
 	</select>
 	
 	<select id="getPointRecord" resultType="point">
@@ -544,6 +544,26 @@
 		FROM member
 		WHERE year(regis_date) = #{year}
 	</select> 
+	
+		<!-- 회원 생성 메크로 -->
+	<insert id="createMembers">
+	INSERT INTO member (
+		member_id, member_passwd,
+		member_name, birth_date,
+	    email, phone, gender, genre,
+		text_receive, email_receive, info_open, 
+		point,member_type, email_auth_status, 
+		phone_auth_status, member_status, regis_date
+		
+	) VALUES (
+		#{member_id}, #{member_passwd},
+	    #{member_name}, #{birth_date},
+	    #{email}, #{phone},
+	    #{gender}, #{genre},
+	    #{text_receive}, #{email_receive}, #{info_open},
+		0,1,0,1,1, #{regis_date}
+	)
+	</insert>
 	
  </mapper>
  

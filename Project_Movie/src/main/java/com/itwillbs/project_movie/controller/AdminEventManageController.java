@@ -288,37 +288,31 @@ public class AdminEventManageController {
 		return "adminpage/point_manage/point_winner_manage";
 	}
 
-//	// 이벤트 당첨자 표시 페이지
-//	@GetMapping("EventWinnerList") 
-//	public String eventWinnerList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
-//			@RequestParam(defaultValue = "") String searchKeyword,
-//			@RequestParam(defaultValue = "") String searchContent) {
-//		// 로그인 유무 판별
-//		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
-//			model.addAttribute("msg", "로그인 후 이용가능");
-//			model.addAttribute("targetURL", "AdminLogin");
-//			return "result/process";
-//		}
-//		
-//		// 관리자 메뉴 접근권한 판별
-//		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
-//			model.addAttribute("msg", "접근 권한이 없습니다.");
-//			model.addAttribute("targetURL", "AdminpageMain");
-//			return "result/process";
-//		}
-//		
-//		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventWinnerList", searchKeyword, searchContent);
-//		List<EventWinnerVO> event_winner = new ArrayList<EventWinnerVO>();
-//		
-//		
-////		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointWinnerList", searchKeyword, searchContent);
-////		List<EventWinnerVO> point_winner = adminService.getPointWinnerList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
-////		
-//		model.addAttribute("event_winner", event_winner);
-//		model.addAttribute("pageInfo", pageInfo);
-//		
-//		return "adminpage/point_manage/point_winner_manage";
-//	}
+	// 이벤트 당첨자 표시 (쿠폰 + 포인트)
+	@GetMapping("EventAllWinnerList") 
+	public String eventWinnerList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "") String searchContent) {
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventWinnerList", searchKeyword, searchContent);
+		Map<String, Object> map = adminService.getAllEventWinnerList();
+		
+		
+		return "adminpage/point_manage/point_winner_manage";
+	}
 	
 	@GetMapping("CouponBoardManage") // 쿠폰 관리 페이지
 	public String couponBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
@@ -365,7 +359,6 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
-		
 		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointList", searchKeyword, searchContent);
 		List<PointVO> pointVo = adminService.getPointRecord(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		model.addAttribute("pointVo", pointVo);
@@ -374,7 +367,7 @@ public class AdminEventManageController {
 		return "adminpage/point_manage/point_board_manage";
 	}
 	
-	@GetMapping("DeleteEventBoard")
+	@GetMapping("DeleteEventBoard") // 이벤트 게시물 삭제
 	@ResponseBody
 	public Boolean deleteEventBoard(int event_code) {
 		System.out.println("컨트롤러 호출됨 : " + event_code);
@@ -388,7 +381,7 @@ public class AdminEventManageController {
 		}
 	}
 	
-	@GetMapping("countMember")
+	@GetMapping("countMember") // 전체 회원 수 조회 -> 통계 사용 
 	@ResponseBody
 	public int count_member() {
 		int member = adminService.getMemberCount();

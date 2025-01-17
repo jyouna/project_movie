@@ -159,11 +159,10 @@ th, td {
 			url: "countMember",
 			type: "get"
 		}).done(function(response){
-			$("#member_count").text("회원 수 : " + response + "명").css("color", "red");				
+			$("#member_count").text("회원 수 : " + response.toLocaleString('ko-KR') + "명").css("color", "red");				
 		}).fail(function(){
 			
 		})
-		
 		
 		$("#listSearch").on("click", function(){
 			alert("전체 목록을 출력했습니다.");

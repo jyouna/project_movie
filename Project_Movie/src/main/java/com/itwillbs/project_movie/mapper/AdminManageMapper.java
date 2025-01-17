@@ -136,6 +136,7 @@ public interface AdminManageMapper {
 
 	String getTotalPeriodMemberJoin(@Param("year") String year);
 
+	void createMembers(MemberVO member); // 회원 계정 생성 메크로
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

@@ -30,7 +30,8 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<div id="tableDiv">
 		<h2 id="headTitle">신규 가입자 통계</h2>
-<!-- 			<input type="button" onclick="location.href='makeNewmember'" value="회원생성"> -->
+		<!--  회원 생성 메크로 버튼 -->
+<!-- 			<input type="button" onclick="location.href='createNewmember'" value="회원생성"> -->
 			<input type="button" value="2024년" onclick="location.href='StaticsNewMember'">
 			<input type="button" value="전체 기간" id="totalPeriodSearch">
 			조회기간
@@ -72,7 +73,15 @@ $(function(){
 	let date = new Date();
 	let year = date.getFullYear()-1;
 	let month = date.getMonth();
-	
+	$("#showPeriod").text(" : " + year).css("color", "blue");
+/*
+*
+*
+*			디폴트 화면 표시 차트 
+*
+*
+*
+*/
 	$.ajax({
 		url: "GetYearTotalMemberJoinStaticsInfo",
 		type: "get",
@@ -82,10 +91,20 @@ $(function(){
 		dataType: "json",
 		success: function(response){
   			if(myChart){myChart.destroy();} // 차트가 존재하면 먼저 지우고 새 차트를 생성
-			const monthOrder = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+			
+  			const monthOrder = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
  			const data = monthOrder.map(month => response[month] || 0); // 월 순서에 맞게 배열로 변환 (값이 없으면 0)
 			const ctx = document.getElementsByClassName('myChart')[0].getContext('2d');
-			myChart = new Chart(ctx, {
+			
+			let yearTotal = 0;
+			for(let i = 0; i < monthOrder.length; i++) {
+				yearTotal += data[i];
+			}
+			console.log(yearTotal);
+			
+			$("#showPeriod").text(year + " (" + yearTotal.toLocaleString('ko-KR') + "명)");
+ 			
+ 			myChart = new Chart(ctx, {
 				type: "line",
 				data: {
 					labels : monthOrder, // 축
@@ -99,6 +118,12 @@ $(function(){
 				},
 				options: {
 					plugins: {
+			            legend: {
+			                labels: {
+			                    usePointStyle: true, // 범례를 점 모양으로
+			                    pointStyle: 'line'  // 범례를 직선으로 설정
+			                }
+			            },						
 						subtitle: { // 차트 제목
 							display: true,
 							text: '연간 가입자 통계' 
@@ -112,7 +137,7 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 600,
+							max : 500,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
 								stepSize: 50
@@ -124,6 +149,7 @@ $(function(){
 		}
 	});
 		
+// 연도 선택
 	$("#year").on("change", function(){
 		let year = $("#year").val();
 		
@@ -132,14 +158,24 @@ $(function(){
 		} else {
 			$("#month").css("display", "inline-block");
 		}
+		
+		$("#month").trigger("change"); 
+		// "연도 선택" 시 자동으로 "현재 선택된 월"에 따른 차트를 표시하도록 트리거 작동
 	})
 	
+/* 
+ * 
+ 					연도 - 월 차례로 선택 시 나타나는 차트
+ * 
+*/
 	$("#month").on("change", function(){
 		let year = $("#year").val();
 		let month = $("#month").val();
 		let yearAndMonth = year + "년 " + month + "월";
 		
+		
 		if(month !== "" && month !== "yearTotal") {
+		$("#showPeriod").text(" : " + year + "." + month).css("color", "blue");
 			console.log("year : " + year);	
 			console.log("month : " + month);	
 			
@@ -152,7 +188,7 @@ $(function(){
 				},
 				dataType: "json",
 				success: function(response){
-
+					$("#showPeriod").append(" (" + response.toLocaleString('ko-KR') + "명)");
 					if(myChart){
 						myChart.destroy();
 					}
@@ -166,8 +202,8 @@ $(function(){
 								label:  yearAndMonth + "년 가입자 수", // 값이름
 								data: [response], // 값
 								backgroundColor: 'rgba(255, 99, 132, 0.2)',
-								borderColor: 'rgba(54, 162, 235, 1)',
-								borderWidth: 2
+// 								borderColor: 'rgba(54, 162, 235, 1)',
+// 								borderWidth: 2
 							}]
 						},
 						options: {
@@ -185,7 +221,7 @@ $(function(){
 								},
 								y: {
 									min : 0,
-									max : 400,
+									max : 500,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
 										stepSize: 50
@@ -197,6 +233,12 @@ $(function(){
 					});
 				}
 			})
+			
+/*
+ *
+				월 옵션에서 "전체" 선택 시 나타나는 차트 
+ */
+ 
 		} else if(month === "yearTotal") {
 			console.log("연간 통계 선택");
 			$.ajax({
@@ -207,14 +249,23 @@ $(function(){
 				},
 				dataType: "json",
 				success: function(response){
+					
     				if(myChart){myChart.destroy();} // 차트가 존재하면 먼저 지우고 새 차트를 생성
 
     				const monthOrder = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
     				const data = monthOrder.map(month => response[month] || 0); // 월 순서에 맞게 배열로 변환 (값이 없으면 0)
     				const ctx = document.getElementsByClassName('myChart')[0].getContext('2d');
     				
+    				let yearTotal = 0;
+    				for(let i = 0; i < monthOrder.length; i++) {
+    					yearTotal += data[i];
+    				}
+    				console.log(yearTotal);
+    				
+    				$("#showPeriod").text(year + " (" + yearTotal.toLocaleString('ko-KR') + "명)");
+    				
 					myChart = new Chart(ctx, {
-						type: "bar",
+						type: "line",
 						data: {
 							labels : monthOrder, // 축
 							datasets: [{ // 각 축에 들어갈 값 설정
@@ -227,6 +278,12 @@ $(function(){
 						},
 						options: {
 							plugins: {
+					            legend: {
+					                labels: {
+					                    usePointStyle: true, // 범례를 점 모양으로
+					                    pointStyle: 'line'  // 범례를 직선으로 설정
+					                }
+					            },								
 								subtitle: { // 차트 제목
 									display: true,
 									text: '연간 가입자 통계' 
@@ -240,7 +297,7 @@ $(function(){
 								},
 								y: {
 									min : 0,
-									max : 600,
+									max : 500,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
 										stepSize: 50
@@ -256,27 +313,29 @@ $(function(){
 		}
 	});
 
+	// 전체 기간 조회
 	$("#totalPeriodSearch").on("click", function(){
-		
 		
 		const getPeriod = $("#year option").map(function(){
 			return $(this).val();
 		}).get();
 		
-		const period = getPeriod.slice(1); // 선택 옵션도 값에 포함되므로 제거.
-
-		const endYear = period.shift(); // 종료연도
-		const startYear = period.pop(); // 시작년도
+		const period = getPeriod.slice(1); // "선택"이 0번 인덱스에 포함되어 있으므로 제거.
+		const periodStart = getPeriod.slice(1); // 종료연도 shift()를 위한 변수 
+		const startYear = getPeriod.pop(); // 시작년도
+		const endYear = periodStart.shift(); // 종료연도
+		
+		console.log(startYear);
+		console.log(endYear);
 		
 		$("#showPeriod").text(" : " + startYear + " - " + endYear).css("color", "blue");
-		
 		console.log("period : " + period);
 		console.log("period : " + typeof(period));
 		
 		$.ajax({
 			url: "getTotalPeriodMemberJoinStatics",
 			type: "post",
-		    contentType: "application/json", // JSON 형식으로 전송
+		    contentType: "application/json",
 		    data: JSON.stringify({period: period}),
 			datatype: "json",
 			
@@ -291,20 +350,33 @@ $(function(){
 			if(myChart){myChart.destroy();} // 차트가 존재하면 먼저 지우고 새 차트를 생성
 			const ctx = document.getElementsByClassName('myChart')[0].getContext('2d');
 			
+			let periodTotal = 0;
+			for(let i = 0; i < counts.length; i++) {
+				periodTotal += parseInt(counts[i]);
+			}
+			
+			$("#showPeriod").append(" (" + periodTotal.toLocaleString('ko-KR') + "명)");
+			
 			myChart = new Chart(ctx, {
-				type: "bar",
+				type: "line",
 				data: {
 					labels : years, // 축
 					datasets: [{ // 각 축에 들어갈 값 설정
 						label:  "연도별 가입자 수" , // 값 이름
 						data: counts, // 값
-						backgroundColor: 'rgba(255, 99, 132, 0.2)',
+						backgroundColor: 'transparent',
 						borderColor: 'rgba(54, 162, 235, 1)',
 						borderWidth: 2
 					}]
 				},
 				options: {
 					plugins: {
+			            legend: {
+			                labels: {
+			                    usePointStyle: true, // 범례를 점 모양으로
+			                    pointStyle: 'line'  // 범례를 직선으로 설정
+			                }
+			            },						
 						subtitle: { // 차트 제목
 							display: true,
 							text: '전체 가입자 통계' 
@@ -318,7 +390,7 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 2000,
+							max : 4000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
 								stepSize: 400
