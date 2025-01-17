@@ -15,5 +15,4 @@ public class PointVO {
 	private String point_holder; // 포인트 소유자
 	private String booking_code; // 포인트 차감 요인 기록(예매)
 	private Timestamp regis_date; // 등록일시
-	private int refund_code; // 취소코드 0 => 대기 1 => 승인 2 => 거부
 }

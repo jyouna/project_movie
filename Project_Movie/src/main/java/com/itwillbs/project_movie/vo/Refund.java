@@ -14,5 +14,5 @@ public class Refund {
 	private Timestamp refund_request_date;  // 취소 요청일
 	private Timestamp refund_completed_date; // 취소 완료일
 	private int refund_amount;                // 환블 완료 금액
-	private int refund_status; // 취소 상태 => 0 미완 1 완료
+	private int refund_status; // 취소 상태 => 0 신청중 1 승인 2 거부
 }
