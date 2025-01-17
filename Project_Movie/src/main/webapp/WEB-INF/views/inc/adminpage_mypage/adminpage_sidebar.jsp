@@ -133,17 +133,20 @@
 					        <a class="nav-link" href="EventBoardManage">
 					            이벤트관리
 					        </a>
+					        <a class="nav-link" href="EventAllWinnerList">
+					            이벤트당첨자
+					        </a>
 					        <a class="nav-link" href="CouponWinnerManage">
-					            이벤트쿠폰당첨자
+					            쿠폰당첨목록
 					        </a>
 					        <a class="nav-link" href="PointWinnerManage">
-					            이벤트포인트당첨자
+					            포인트당첨목록
 					        </a>
 					        <a class="nav-link" href="CouponBoardManage">
-					            쿠폰내역
+					            쿠폰변동내역
 					        </a>
 					        <a class="nav-link" href="PointBoardManage">
-					            포인트내역
+					            포인트변동내역
 					        </a>
 					    </nav>
 					</div>
@@ -168,9 +171,10 @@
 					</a>
 					<div class="collapse" id="collapseStatistics" aria-labelledby="headingStatistics" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionStatistics">
-					        <a class="nav-link" href="StaticsVisitors">
-					            방문자통계
-					        </a>
+<!-- 					        <a class="nav-link" href="StaticsVisitors"> -->
+<!-- 					            방문자통계 -->
+<!-- 					        </a> -->
+					        <!-- 구현 및 테스트하기 어려움 -->
 					        <a class="nav-link" href="StaticsSales">
 					            매출통계
 					        </a>

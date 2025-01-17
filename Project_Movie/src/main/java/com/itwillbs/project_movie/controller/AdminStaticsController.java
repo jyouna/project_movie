@@ -91,7 +91,7 @@ public class AdminStaticsController {
 			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
-		return "\"adminpage/statics_manage/statics_voteResult";
+		return "adminpage/statics_manage/statics_voteResult";
 	}
 	
 	@GetMapping("StaticsNewMember") // 신규 가입자 통계

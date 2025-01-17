@@ -121,7 +121,7 @@ public interface AdminManageMapper {
 	int getMonthlyTotalNewMember(@Param("year")int year,
 								@Param("month")int month);
 
-	Map<String, Object> getAllEventWinnerList(@Param("startRow") int startRow, 
+	List<EventWinnerVO> getAllEventWinnerList(@Param("startRow") int startRow, 
 											@Param("listLimit") int listLimit, 
 											@Param("searchKeyword") String searchKeyword, 
 											@Param("searchContent") String searchContent);
@@ -132,11 +132,14 @@ public interface AdminManageMapper {
 
 	int checkEventStatusForDelete(@Param("event_code") int event_code);
 
-	int getMemberCount();
+	int getMemberCount(@Param("searchKeyword") String searchKeyword, @Param("searchContent") String searchContent);
 
 	String getTotalPeriodMemberJoin(@Param("year") String year);
 
 	void createMembers(MemberVO member); // 회원 계정 생성 메크로
+
+	int getAllEventWinnerCount(@Param("searchKeyword") String searchKeyword, 
+							  @Param("searchContent") String searchContent);
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

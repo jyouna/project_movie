@@ -26,6 +26,7 @@
 	
 		<div id="divTop" class="view">
 			<div id="divTopLeft">
+<!-- 				<input type="button" onclick="location.href='EventAllWinnerList'" value="이벤트 당첨자 리스트"> -->
 				<input type="button" value="등록하기" id="board_regis">
 				<input type="button" id="eventStart" value="이벤트 시작">
 				<input type="button" id="eventEnd" value="이벤트 종료">
@@ -58,7 +59,7 @@
 						</th>
 						<th width="100">
 							<select class="selectNoOption">
-								<option>번호</option>
+								<option>이벤트코드</option>
 							</select>
 						</th>
 						<th width="350">

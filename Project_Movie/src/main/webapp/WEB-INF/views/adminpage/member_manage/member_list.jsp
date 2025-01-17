@@ -15,7 +15,6 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <style type="text/css">
@@ -39,12 +38,12 @@ th, td {
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<form action="MemberList" method="get">
 				<input type="hidden" name="pageNum" value="${param.pageNum}">	
-				<select name="searchKeyword">
-					<option value="searchId">ID</option>
-					<option value="searchEmail">이메일</option>
-					<option value="searchPhone">연락처</option>
+				<select name="searchKeyword" id="searchKeyword">
+					<option value="searchId" <c:if test="${param.searchKeyword == 'searchId'}">selected</c:if>>ID</option>
+					<option value="searchEmail" <c:if test="${param.searchKeyword == 'searchEmail'}">selected</c:if>>이메일</option>
+					<option value="searchPhone" <c:if test="${param.searchKeyword == 'searchPhone'}">selected</c:if>>연락처</option>
 				</select>
-				<input type="text" placeholder="검색어를입력하세요" name="searchContent">
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}" id="searchContent">
 				<input type="submit" value="검색" id="searchBtn">
 <%-- 				<input type="hidden" value="${param.pageNum}" name="pageNum"> --%>
 			</form>	
@@ -155,11 +154,23 @@ th, td {
 	
 	<script type="text/javascript">
 	$(function(){
+		const urlParams = new URLSearchParams(window.location.search);
+		
+		const searchKeyword = urlParams.get("searchKeyword");
+		const searchContent = urlParams.get("searchContent");
+		
+		console.log(searchKeyword);
+		console.log(searchContent);
+		
 		$.ajax({
 			url: "countMember",
-			type: "get"
+			type: "get",
+			data: {
+				searchKeyword : searchKeyword,
+				searchContent : searchContent
+			}
 		}).done(function(response){
-			$("#member_count").text("회원 수 : " + response.toLocaleString('ko-KR') + "명").css("color", "red");				
+			$("#member_count").text("조회 수 : " + response.toLocaleString('ko-KR') + "명").css("color", "red");	
 		}).fail(function(){
 			
 		})

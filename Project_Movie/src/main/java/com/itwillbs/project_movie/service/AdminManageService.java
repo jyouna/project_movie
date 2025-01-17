@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.project_movie.mapper.AdminManageMapper;
 import com.itwillbs.project_movie.vo.AdminRegisVO;
@@ -140,7 +141,8 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.checkEventStatus(event_code);
 	}
-
+	
+	@Transactional
 	public void GivePointToWinner(List<String> member_id, int event_code, int point_amount) {
 		// TODO Auto-generated method stub
 		// 1. 회원에게 포인트 + 시키고
@@ -193,6 +195,8 @@ public class AdminManageService {
 			listCount = manageMapper.getCouponListCount(searchKeyword, searchContent); break;
 		case "pointList" : 
 			listCount = manageMapper.getPointListCount(searchKeyword, searchContent); break;
+		case "eventWinnerList" :
+			listCount = manageMapper.getAllEventWinnerCount(searchKeyword, searchContent); break;
 		}
 		return listCount;
 	}
@@ -297,9 +301,9 @@ public class AdminManageService {
 		return manageMapper.checkEventStatusForDelete(event_code);
 	}
 
-	public int getMemberCount() {
+	public int getMemberCount(String searchKeyword, String searchContent) {
 		// TODO Auto-generated method stub
-		return manageMapper.getMemberCount();
+		return manageMapper.getMemberCount(searchKeyword, searchContent);
 	}
 
 	public Map<String, String> getTotalMemberJoinStatics(Map<String, List<String>> period) {
@@ -323,8 +327,13 @@ public class AdminManageService {
 		
 	}
 
-	public Map<String, Object> getAllEventWinnerList() {
+	public List<EventWinnerVO> getAllEventWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) {
 		// TODO Auto-generated method stub
-		return manageMapper.getAllEventWinnerList(getMemberCount(), getBoardListCount(), null, null);
+		return manageMapper.getAllEventWinnerList(startRow, listLimit, searchKeyword, searchContent);
+	}
+
+	public int getWinnerCount(String searchKeyword, String searchContent) {
+		// TODO Auto-generated method stub
+		return manageMapper.getAllEventWinnerCount(searchKeyword, searchContent);
 	}
 }

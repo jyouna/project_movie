@@ -27,40 +27,30 @@ public class EventWinnerVO {
 /*
  * 	이벤트 당첨자 출력 구문
  *  
-   SELECT 
-	    e.event_code AS event_code,
-	    c.member_id AS winner_id,
-	    e.event_subject AS event_subject,
-	    e.event_start_date AS event_start_date,
-	    e.event_end_date AS event_end_date,
-	    
-	    CASE 
-	        WHEN c.discount_amount IS NOT NULL THEN c.discount_amount
-	        ELSE NULL
-	    END AS 할인,
-	    
-	    CASE 
-	        WHEN c.discount_rate IS NOT NULL THEN c.discount_rate
-	        ELSE NULL
-	    END AS 할인률,
-	    
-	    CASE 
-	        WHEN p.point_credited IS NOT NULL THEN p.point_credited
-	        ELSE NULL
-	    END AS 포인트,
-	    
-	    COALESCE(c.regis_date, p.regis_date) AS prize_datetime -- 첫번째로 NULL 값이 아닌 수를 반환! 
-	
-	FROM event_board e
-	LEFT JOIN coupon c ON e.event_code = c.event_code
-	LEFT JOIN point p ON e.event_code = p.event_code
-	
+<select id="getAllEventWinnerList" resultType="map">
+	SELECT 
+		e.event_code AS event_code,
+		CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) AS winner_id,
+		e.event_subject AS event_subject,
+		e.event_start_date AS event_start_date,
+		e.event_end_date AS event_end_date,
+	    IFNULL(c.discount_amount, NULL) AS discount_amount,
+	    IFNULL(c.discount_rate, NULL) AS discount_rate,
+	    IFNULL(p.point_credited, NULL) AS point_amount,
+		COALESCE(c.regis_date, p.regis_date) AS prize_datetime -- 첫번째로 NULL 값이 아닌 수를 반환! 
+	FROM event_board e 
+		LEFT JOIN coupon c ON e.event_code = c.event_code 
+		LEFT JOIN point p ON e.event_code = p.event_code
 	WHERE 
-	    (c.discount_amount IS NOT NULL AND p.point_credited IS NULL) 
-	    OR (c.discount_amount IS NULL AND p.point_credited IS NOT NULL)
-	
-	ORDER BY event_code ASC;
- * 
+		((c.discount_amount is null AND c.discount_rate is null) 
+			AND (p.point_credited is not null)) 
+	    OR ((c.discount_amount is not null AND c.discount_rate is not null) 
+	    	AND (p.point_credited is null))
+	ORDER BY event_code ASC
+	LIMIT
+		#{startRow},
+		#{listLimit}		
+</select>
  * 
  * 
  * 

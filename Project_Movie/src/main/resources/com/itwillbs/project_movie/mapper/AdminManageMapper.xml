@@ -164,7 +164,9 @@
 				</when>
 			</choose>		
 		</if>
-		ORDER BY event_code desc
+		ORDER BY 
+			event_status asc,
+			event_start_date desc
 		LIMIT
 			#{startRow},
 			#{listLimit}		
@@ -253,8 +255,8 @@
 			DEFAULT,
 			#{event_code},
 			#{id},
-			DEFAULT,
 			now(),
+			DEFAULT,
 			DEFAULT
 		)
 	</insert>
@@ -537,6 +539,20 @@
 	<select id="getMemberCount">
 		SELECT count(*)
 		FROM member
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('searchId')">
+					member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchEmail')">
+					email LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchPhone')">
+					phone LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
 	</select>
 	
 	<select id="getTotalPeriodMemberJoin">
@@ -547,23 +563,103 @@
 	
 		<!-- 회원 생성 메크로 -->
 	<insert id="createMembers">
-	INSERT INTO member (
-		member_id, member_passwd,
-		member_name, birth_date,
-	    email, phone, gender, genre,
-		text_receive, email_receive, info_open, 
-		point,member_type, email_auth_status, 
-		phone_auth_status, member_status, regis_date
-		
-	) VALUES (
-		#{member_id}, #{member_passwd},
-	    #{member_name}, #{birth_date},
-	    #{email}, #{phone},
-	    #{gender}, #{genre},
-	    #{text_receive}, #{email_receive}, #{info_open},
-		0,1,0,1,1, #{regis_date}
-	)
+		INSERT INTO member (
+			member_id, 
+			member_passwd,
+			member_name, 
+			birth_date,
+		    email, 
+		    phone, 
+		    gender, 
+		    genre,
+			text_receive, 
+			email_receive, 
+			info_open, 
+			point,
+			member_type, 
+			email_auth_status, 
+			phone_auth_status, 
+			member_status, 
+			regis_date
+			
+		) VALUES (
+			#{member_id}, 
+			#{member_passwd},
+		    #{member_name}, 
+		    #{birth_date},
+		    #{email}, 
+		    #{phone},
+		    #{gender}, 
+		    #{genre},
+		    #{text_receive}, 
+		    #{email_receive}, 
+		    #{info_open},
+			0,
+			1,
+			0,
+			1,
+			1, 
+			#{regis_date}
+		)
 	</insert>
+	
+	<select id="getAllEventWinnerCount" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM event_board e 
+			LEFT JOIN coupon c ON e.event_code = c.event_code 
+			LEFT JOIN point p ON e.event_code = p.event_code
+		WHERE 
+			(((c.discount_amount is null AND c.discount_rate is null) AND (p.point_credited is not null)) 
+			OR ((c.discount_amount is not null AND c.discount_rate is not null) AND (p.point_credited is null)))
+			<if test="!searchContent.equals('')">
+				AND
+				<choose>
+					<when test="searchKeyword.equals('winnerId')">
+						CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) LIKE '%${searchContent}%'
+					</when>
+					<when test="searchKeyword.equals('eventSubject')">
+						e.event_subject LIKE '%${searchContent}%'
+					</when>
+				</choose>		
+			</if>			
+	</select>
+	
+	<select id="getAllEventWinnerList" resultType="map">
+		SELECT 
+			e.event_code AS event_code,
+			CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) AS winner_id,
+			e.event_subject AS event_subject,
+			e.event_start_date AS event_start_date,
+			e.event_end_date AS event_end_date,
+		    IFNULL(c.discount_amount, NULL) AS discount_amount,
+		    IFNULL(c.discount_rate, NULL) AS discount_rate,
+		    IFNULL(p.point_credited, NULL) AS point_amount,
+			COALESCE(c.regis_date, p.regis_date) AS prize_datetime -- 첫번째로 NULL 값이 아닌 수를 반환! 
+		FROM event_board e 
+			LEFT JOIN coupon c ON e.event_code = c.event_code 
+			LEFT JOIN point p ON e.event_code = p.event_code
+		WHERE 
+			(((c.discount_amount is null AND c.discount_rate is null) 
+				AND (p.point_credited is not null)) 
+		    OR ((c.discount_amount is not null AND c.discount_rate is not null) 
+		    	AND (p.point_credited is null)))
+			<if test="!searchContent.equals('')">
+				AND
+				<choose>
+					<when test="searchKeyword.equals('winnerId')">
+						CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) LIKE '%${searchContent}%'
+					</when>
+					<when test="searchKeyword.equals('eventSubject')">
+						e.event_subject LIKE '%${searchContent}%'
+					</when>
+				</choose>		
+			</if>		
+		ORDER BY event_code ASC
+		LIMIT
+			#{startRow},
+			#{listLimit}		
+	</select>
 	
  </mapper>
  

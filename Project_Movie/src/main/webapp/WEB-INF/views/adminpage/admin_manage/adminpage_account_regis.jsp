@@ -11,15 +11,27 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_account_regis.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <style type="text/css">
 
+#mainArticle {
+/* 	border: 1px solid; */
+	text-align: center;
+}
+
+h3 {
+	margin-top: 1em;
+}
+
 #mainTable {
-    width: 600px; /* 설정할 크기 */
-    max-width: 100%; /* 테이블이 상위 요소를 초과하지 않도록 */
-    table-layout: fixed;}
+    width: 600px;
+    max-width: 100%;
+    table-layout: fixed;
+    transform: translate(530px, 20px);
+    height: 700px;
+   	position: absolute;
+    }
 
 #mainTable th, 
 #mainTable td {
@@ -49,7 +61,7 @@ input[type="checkbox"] {
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<article id="accountRegis">
+	<article id="mainArticle">
 	<h3>관리자 계정 생성</h3>
 		<form action="AdminAccountRegis" name="joinForm" ID="accountRegisForm" method="post">
 			<table id="mainTable">
@@ -82,30 +94,30 @@ input[type="checkbox"] {
 						<div id="checkPasswd2Result"></div>
 					</td>
 				</tr>
-							<tr>
-				<th>회원목록관리</th>
-				<td><input type="checkbox" name="member_manage"></td>
-			</tr>
-			<tr>
-				<th>결제관리</th>
-				<td><input type="checkbox" name="payment_manage"></td>
-			</tr>
-			<tr>
-				<th>게시판관리</th>
-				<td><input type="checkbox" name="notice_board_manage"></td>
-			</tr>
-			<tr>
-				<th>영화관리</th>
-				<td><input type="checkbox" name="movie_manage"></td>
-			</tr>
-			<tr>
-				<th>상영관관리</th>
-				<td><input type="checkbox" name="theater_manage"></td>
-			</tr>
-			<tr>
-				<th>투표관리</th>
-				<td><input type="checkbox" name="vote_manage" ></td>
-			</tr>
+				<tr>
+					<th>회원목록관리</th>
+					<td><input type="checkbox" name="member_manage"></td>
+				</tr>
+				<tr>
+					<th>결제관리</th>
+					<td><input type="checkbox" name="payment_manage"></td>
+				</tr>
+				<tr>
+					<th>게시판관리</th>
+					<td><input type="checkbox" name="notice_board_manage"></td>
+				</tr>
+				<tr>
+					<th>영화관리</th>
+					<td><input type="checkbox" name="movie_manage"></td>
+				</tr>
+				<tr>
+					<th>상영관관리</th>
+					<td><input type="checkbox" name="theater_manage"></td>
+				</tr>
+				<tr>
+					<th>투표관리</th>
+					<td><input type="checkbox" name="vote_manage" ></td>
+				</tr>
 				<tr>
 					<td colspan="2" align="center">
 						<input type="submit" value="가입" class="btns">

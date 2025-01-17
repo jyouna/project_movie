@@ -40,7 +40,7 @@
         <th>아이디 *</th> <!-- 필수 입력 항목 -->
         <td>
           <input type="text" id="username" name="member_id" placeholder="영문자,숫자,_ 5자리이상" required>
-<!--           <button type="button">확인</button> -->
+<!--           <button type="button">확인</*button> -->
         </td>
       </tr>
         <tr>

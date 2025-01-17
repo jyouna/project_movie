@@ -213,7 +213,7 @@ public class AdminEventManageController {
 	@PostMapping("GiveCoupon")
 	public String giveCouponToWinner(GetGiveCouponInfoVO vo) {
 		adminService.insertCoupon(vo);
-		return "redirect:/CouponWinnerManage";
+		return "redirect:/EventAllWinnerList";
 	}
 	
 	@GetMapping("GivePoint") // 이벤트 당첨자 선택 후 포인트 지급 화면 이동
@@ -231,7 +231,7 @@ public class AdminEventManageController {
 		System.out.println("지급할 포인트 : " + point_amount);
 		adminService.GivePointToWinner(member_id, event_code, point_amount);
 		
-		return "redirect:/PointWinnerManage";
+		return "redirect:/EventAllWinnerList";
 	}
 	
 	@GetMapping("CouponWinnerManage") // 이벤트 당첨자 표시 페이지
@@ -288,32 +288,6 @@ public class AdminEventManageController {
 		return "adminpage/point_manage/point_winner_manage";
 	}
 
-	// 이벤트 당첨자 표시 (쿠폰 + 포인트)
-	@GetMapping("EventAllWinnerList") 
-	public String eventWinnerList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
-			@RequestParam(defaultValue = "") String searchKeyword,
-			@RequestParam(defaultValue = "") String searchContent) {
-		// 로그인 유무 판별
-		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
-			model.addAttribute("msg", "로그인 후 이용가능");
-			model.addAttribute("targetURL", "AdminLogin");
-			return "result/process";
-		}
-		
-		// 관리자 메뉴 접근권한 판별
-		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
-			model.addAttribute("msg", "접근 권한이 없습니다.");
-			model.addAttribute("targetURL", "AdminpageMain");
-			return "result/process";
-		}
-		
-		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventWinnerList", searchKeyword, searchContent);
-		Map<String, Object> map = adminService.getAllEventWinnerList();
-		
-		
-		return "adminpage/point_manage/point_winner_manage";
-	}
-	
 	@GetMapping("CouponBoardManage") // 쿠폰 관리 페이지
 	public String couponBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 										@RequestParam(defaultValue = "") String searchKeyword,
@@ -383,10 +357,56 @@ public class AdminEventManageController {
 	
 	@GetMapping("countMember") // 전체 회원 수 조회 -> 통계 사용 
 	@ResponseBody
-	public int count_member() {
-		int member = adminService.getMemberCount();
+	public int count_member(String searchKeyword, String searchContent) {
+		
+		System.out.println("멤버 카운트 컨트롤러 호출");
+		System.out.println(searchKeyword);
+		System.out.println(searchContent);
+		
+		int member = adminService.getMemberCount(searchKeyword, searchContent);
 		return member;
 	}
 
+	// 이벤트 당첨자 표시 (쿠폰 + 포인트)
+	@GetMapping("EventAllWinnerList") 
+	public String eventWinnerList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "") String searchContent) {
+		
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventWinnerList", searchKeyword, searchContent);
+		List<EventWinnerVO> voList = adminService.getAllEventWinnerList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+		
+		System.out.println("이벤트 당첨자 : " + voList);
+		model.addAttribute("voList", voList);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "adminpage/event_manage/event_allWinner_list";
+	}	
+	
+	
+	@GetMapping("GetWinnerCount")
+	@ResponseBody
+	public int getWinnerCount(String searchKeyword, String searchContent) {
+		System.out.println("당첨자 수 조회 컨트롤러 호출됨");
+		int winnerCount = adminService.getWinnerCount(searchKeyword, searchContent);
+		System.out.println("당첨자 수 : " + winnerCount);
+		return winnerCount;
+	}
+	
+	
 }
 
