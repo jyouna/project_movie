@@ -118,7 +118,7 @@
 						            <div class="data"></div>
 						        </div>
 							</div>
-							
+							<input type="hidden" name="totalSeat" id="totalSeat">
 							<!-- 결제 정보 섹션 -->
 						   	<div class="ticket_info">
 						   		<input type="hidden" id="totalAmount" name="totalAmount">

@@ -165,6 +165,9 @@ public class BookController {
 		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
+		int insertCount = service.registBookingTicket(map);
+		
+		
 		
 		return "book_tickets/book_pay";
 	}

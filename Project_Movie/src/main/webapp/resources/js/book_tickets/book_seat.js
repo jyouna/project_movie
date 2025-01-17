@@ -102,6 +102,9 @@ $(function () {
 			
 		$(".mv_info .data").eq(3).empty();
 		$(".mv_info .data").eq(3).append(selectedSeats);
+		$(".mv_info .data").eq(3).val(selectedSeats);
+		
+		$("#totalSeat").val(selectedSeats);
 	});
 	
 	
@@ -230,6 +233,7 @@ $(function () {
 	            <div class="data">
 	            	<span class="price">` + totalAmount + `</span>
 	                <span class="won"> 원</span>
+					<input type="hidden" name="totalAmount" value="` + totalAmount + `">
 	            </div>
 	        </div>
 		`);

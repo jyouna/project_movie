@@ -30,6 +30,8 @@ public interface BookMapper {
 
 	Map<String, Object> selectScheduleInfoByScheduleCode(String schedule_code);
 
+	int insertBookingTicket(Map<String, String> map);
+
 
 
 

@@ -52,6 +52,10 @@ public class BookService {
 		return mapper.selectScheduleInfoByScheduleCode(schedule_code);
 	}
 
+	public int registBookingTicket(Map<String, String> map) {
+		return mapper.insertBookingTicket(map);
+	}
+
 
 
 }

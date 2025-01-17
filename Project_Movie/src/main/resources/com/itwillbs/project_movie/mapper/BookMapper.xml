@@ -83,6 +83,16 @@
 		WHERE s.schedule_code = #{schedule_code}
 	</select>
 	
+	<insert id="insertBookingTicket">
+		INSERT
+		INTO payment
+		VALUES (
+			
+		)
+	</insert>
+	
+	
+	
 </mapper>
 
 
