@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
@@ -30,7 +31,17 @@ public interface BookMapper {
 
 	Map<String, Object> selectScheduleInfoByScheduleCode(String schedule_code);
 
-	int insertBookingTicket(Map<String, String> map);
+	void insertPaymentTable(Map<String, String> map);
+
+	int insertBookingTable(@Param("insertBookingList") List<Map<String, String>> insertBookingList);
+
+	int selectMyPoint(String id);
+
+	List<Map<String, Object>> selectMyCouponList(String id);
+
+	CouponVO selectMyCoupon(String coupon_code);
+
+	
 
 
 

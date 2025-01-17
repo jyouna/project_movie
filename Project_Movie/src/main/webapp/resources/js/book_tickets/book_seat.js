@@ -60,8 +60,6 @@ $(function () {
 		eachTicketCount();
 	});
 	
-	
-	
 	// 좌석 선택 & 선택된 좌석 값 가져오기
 	$(".seat").on("click", function() {
 		let totalCount = 0;
@@ -78,21 +76,21 @@ $(function () {
 		} else if(selectedSeats.length < totalCount) {
 			$(this).toggleClass("selected");
 			
-			// 선택된 좌석 값 가져오기
-			selectedSeats = $(".seat.selected").map(function() {
-				return $(this).text() + " ";
-			}).get();
-			
 		} else if(selectedSeats.length == totalCount) {
-			$(this).removeClass("selected");
-			alert("좌석 선택이 완료되었습니다");
-
-			// 선택된 좌석 값 가져오기
-			selectedSeats = $(".seat.selected").map(function() {
-				return $(this).text() + " ";
-			}).get();
+			if($(this).hasClass("selected")) {
+				$(this).removeClass("selected");
+			} else {
+				alert("좌석 선택이 완료되었습니다");
+			}
 		}
+		
+		// 선택된 좌석 값 가져오기
+		selectedSeats = $(".seat.selected").map(function() {
+			return $(this).text() + " ";
+		}).get();
 		console.log("선택된 좌석 : " + selectedSeats);
+		
+		
 		
 		// 휠체어석 선택 시 알림창
 		if(($(this).text() == "A8" || $(this).text() == "A9") && $(this).hasClass("selected")) {
@@ -152,9 +150,9 @@ $(function () {
 		console.log(seniorCount);
 		console.log("showtime : " + showtime_type);
 		
-		let adultAmount = 10000;
-		let youthAmount = 7000;
-		let seniorAmount = 5000;
+		let adultAmount = 13000;
+		let youthAmount = 11000;
+		let seniorAmount = 9000;
 		
 		if(showtime_type !== "일반") {
 			adultAmount -= 2000; 

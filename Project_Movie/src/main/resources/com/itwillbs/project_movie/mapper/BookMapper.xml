@@ -83,14 +83,61 @@
 		WHERE s.schedule_code = #{schedule_code}
 	</select>
 	
-	<insert id="insertBookingTicket">
+	<insert id="insertBookingTable">
+		INSERT
+		INTO booking
+		VALUES 
+		<foreach collection="insertBookingList" item="insertBookingInfo" separator=",">
+			(
+				#{insertBookingInfo.booking_code},
+				#{insertBookingInfo.payment_code},
+				#{insertBookingInfo.seat_code},
+				#{insertBookingInfo.schedule_code}
+			)
+		</foreach>
+	</insert>
+	
+	<insert id="insertPaymentTable">
 		INSERT
 		INTO payment
 		VALUES (
-			
+			#{payment_code}
+			, null
+			, #{member_id}
+			, #{schedule_code}
+			, #{adult} + #{youth} + #{senior}
+			, #{totalAmount}
+			, 0			-- point_discount
+			, 0			-- coupon_discount
+			, 0			-- total_discount
+			, null		-- total_payment
+			, NOW()		-- seat_selection_time
+			, null		-- payment_method
+			, 0			-- payment_status
+			, #{totalSeat}
 		)
 	</insert>
 	
+	<select id="selectMyPoint" resultType="int">
+		SELECT point
+		FROM member
+		WHERE member_id = #{id}
+	</select>
+	
+	<select id="selectMyCouponList" resultType="map">
+		SELECT *
+		FROM coupon c 
+		JOIN event_board e
+		ON c.event_code = e.event_code
+		WHERE c.member_id = #{id}
+	</select>
+	
+	<select id="selectMyCoupon" resultType="coupon">
+		SELECT *
+		FROM coupon
+		WHERE coupon_code = #{coupon_code}
+		AND coupon_status = 0
+	</select>
 	
 	
 </mapper>
