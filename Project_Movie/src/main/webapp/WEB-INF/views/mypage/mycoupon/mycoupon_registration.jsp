@@ -66,7 +66,7 @@
                <td width="100px">쿠폰 상태</td>
                <td width="100px">쿠폰타입</td>
                <td width="200px">쿠폰 상세 정보</td>
-               <td width="200px">사용기간</td>
+               <td width="150px">사용기간</td>
             </tr>
             <tr>
 	            <c:choose>
@@ -77,7 +77,12 @@
 					    <c:forEach var="coupon" items="${couponList}" varStatus="status">
 					        <tr>
 					            <td>${coupon.coupon_status}</td>
-					            <td>${coupon.coupon_type}</td>
+					            <td>
+					            	<c:choose>
+					            		<c:when test=" ${coupon.coupon_type == '0'}">금액</c:when>
+					            		<c:otherwise>할인율</c:otherwise>
+					            	</c:choose>
+					          	</td>
 					            <td>    
 					                <c:choose>
 					                    <c:when test="${coupon.discount_amount eq '0'}">
@@ -89,7 +94,7 @@
 					                </c:choose>
 					            </td>
 					            <td>
-					                <fmt:formatDate value="${coupon.expired_date}" pattern="yy-MM-dd "/>
+					                <fmt:formatDate value="${coupon.expired_date}" pattern="~ yy-MM-dd "/>
 					            </td>
 				       		 </tr>
 				   		 </c:forEach>

@@ -1,13 +1,16 @@
 package com.itwillbs.project_movie.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.project_movie.mapper.BookMapper;
+import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
@@ -51,9 +54,37 @@ public class BookService {
 	public Map<String, Object> getScheduleInfoByScheduleCode(String schedule_code) {
 		return mapper.selectScheduleInfoByScheduleCode(schedule_code);
 	}
-
+	
+	@Transactional
 	public int registBookingTicket(Map<String, String> map) {
-		return mapper.insertBookingTicket(map);
+		mapper.insertPaymentTable(map);
+		
+		List<Map<String, String>> insertBookingList = new ArrayList<Map<String,String>>();
+		
+		String[] seatArr = map.get("totalSeat").split(", ");
+		for(String seat : seatArr) {
+			Map<String, String> insertBookingInfo = new HashMap<String, String>();
+			String seat_code = map.get("theater_code") + "_" + seat.trim();
+			insertBookingInfo.put("booking_code", map.get("payment_code") + seat);
+			insertBookingInfo.put("seat_code", seat_code);
+			insertBookingInfo.put("payment_code", map.get("payment_code"));
+			insertBookingInfo.put("schedule_code", map.get("schedule_code"));
+			insertBookingList.add(insertBookingInfo);
+		}
+		System.out.println(insertBookingList);
+		return mapper.insertBookingTable(insertBookingList);
+	}
+
+	public int getMyPoint(String id) {
+		return mapper.selectMyPoint(id);
+	}
+
+	public List<Map<String, Object>> getMyCouponList(String id) {
+		return mapper.selectMyCouponList(id);
+	}
+
+	public CouponVO getMyCoupon(String coupon_code) {
+		return mapper.selectMyCoupon(coupon_code);
 	}
 
 

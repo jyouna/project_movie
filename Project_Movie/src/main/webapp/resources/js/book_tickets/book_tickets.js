@@ -119,8 +119,9 @@ $(function() {
 						
 						// 시간 버튼 출력
 						$("#" + schedule.movie_code).append(`
-						    <a class="time_seat_btn">
+						    <a class="time_seat_btn" id="${schedule.schedule_code}">
 						        <input type="hidden" value="${schedule.schedule_code}">
+						        <input type="hidden" id="isBookingAvail" value="${schedule.booking_avail}">
 						        <span class="mv_time">${schedule.str_start_time}</span>
 						        <span class="details">
 						            <span class="seat">70/${schedule.avail_seat}</span>
@@ -128,6 +129,10 @@ $(function() {
 						        </span>
 						    </a>
 						`);
+						
+						if(schedule.booking_avail == 0) {
+							$("#" + schedule.schedule_code).css("background", "#343A40");
+						}
 					}
 					
 				} else if(true) {
@@ -140,11 +145,15 @@ $(function() {
 				$(".movie_schedule_info").css("display", "block");
 				
 				$(".time_seat_btn").click(function() {
-					schCode = $(this).find("input[type='hidden']").val();
-					console.log(schCode);
-					
-					if(confirm("좌석선택 페이지로 이동하시겠습니까?")) {
-						location.href = "BookSeat?schedule_code=" + schCode;
+					if($("#isBookingAvail").val() == 1) {
+						schCode = $(this).find("input[type='hidden']").val();
+						console.log(schCode);
+						
+						if(confirm("좌석선택 페이지로 이동하시겠습니까?")) {
+							location.href = "BookSeat?schedule_code=" + schCode;
+						}
+					} else {
+						alert("예매종료된 스케줄입니다.")
 					}
 				});
 				

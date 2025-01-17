@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwillbs.project_movie.mapper.MyPageMapper;
+import com.itwillbs.project_movie.vo.EventBoardVO;
+import com.itwillbs.project_movie.vo.FaqBoardVO;
 import com.itwillbs.project_movie.vo.InquiryVO;
+import com.itwillbs.project_movie.vo.NoticeBoardVO;
 
 @Service
 public class MypageService {
@@ -101,10 +104,6 @@ private MyPageMapper mapper;
 		return mapper.insertInquiry(inquiry);
 	}
 	//1:1문의 글 수정
-	public InquiryVO getInquiry(InquiryVO inquiry) {
-		// TODO Auto-generated method stub
-		return mapper.updateInquiry(inquiry);
-	}
 	//1:1문의 글 삭제 
 	public int removeInquiry(InquiryVO inquiry) {
 		// TODO Auto-generated method stub
@@ -119,6 +118,37 @@ private MyPageMapper mapper;
 	public List<Map<String, String>> getPointList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
 		return mapper.selectPointList(startRow, listLimit);
+	}
+	//---------------------------여기서는 관리자 페이지 -------------------------------------------------------------------------------------------------
+	//관리자페이지 - 공지사항 글 개수
+	public int getNoticeListCount(String searchType, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return mapper.selectNoticeListCount(searchType, searchKeyword );
+	}
+	//관리자페이지 - 공지사항 시작번호 끝번호 
+	public List<NoticeBoardVO> getNoticeList(int startRow, int listLimit, String searchType, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return mapper.selectNoticeList(startRow,listLimit, searchType,searchKeyword);
+	}
+	//관리자페이지 - 공지사항 글 자세히보기 
+	public NoticeBoardVO getNotice(int notice_code, boolean b) {
+		// TODO Auto-generated method stub
+		return mapper.selectNotice(notice_code);
+	}
+	//faq 글 개수
+	public int getFaqListCount() {
+		// TODO Auto-generated method stub
+		return mapper.selectFaqListCount();
+	}
+	//faq 시작번호 끝번호 
+	public List<FaqBoardVO> getFaqList(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return mapper.selectFaqList(startRow,listLimit );
+	}
+	//faq 글 보기 
+	public FaqBoardVO getFaq(int faq_code) {
+		// TODO Auto-generated method stub
+		return mapper.selectFaq(faq_code);
 	}
 
 

@@ -111,13 +111,13 @@
 					</a>
 					<div class="collapse" id="collapseSupport" aria-labelledby="headingSupport" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionSupport">
-					        <a class="nav-link" href="notice_board_manage">
+					        <a class="nav-link" href="AdminNotice">
 					            공지사항관리
 					        </a>
-					        <a class="nav-link" href="faq_board_manage">
+					        <a class="nav-link" href="AdminFaq">
 					            FAQ관리
 					        </a>
-					        <a class="nav-link" href="inquiry_board_manage">
+					        <a class="nav-link" href="AdminInquiry">
 					            1:1문의관리
 					        </a>
 					    </nav>

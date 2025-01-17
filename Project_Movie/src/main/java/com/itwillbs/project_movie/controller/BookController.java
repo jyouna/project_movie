@@ -1,5 +1,6 @@
 package com.itwillbs.project_movie.controller;
 
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.javassist.bytecode.stackmap.MapMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.BookService;
+import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
+
+import retrofit2.http.GET;
 
 @Controller
 public class BookController {
@@ -99,13 +104,14 @@ public class BookController {
 
 		// 로그인 후 좌석 선택 가능
 		// 미로그인 시 로그인 폼으로 이동
-//		String id = (String)session.getAttribute("sId");
-//		
-//		if(id == null) {
-//			model.addAttribute("msg", "로그인 후 이용 가능합니다");
-//			model.addAttribute("targetURL", "MemberLogin");
-//			return "result/fail";
-//		}
+		session.setAttribute("sId", "testId1884");
+		String id = (String)session.getAttribute("sId");
+		
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용 가능합니다");
+			model.addAttribute("targetURL", "MemberLogin");
+			return "result/fail";
+		}
 		
 		// 좌석 정보 조회
 		List<SeatVO> seatList = service.getSeat();
@@ -160,17 +166,60 @@ public class BookController {
 	}
 	
 	@PostMapping("BookPay")
-	public String bookPay(String schedule_code, Model model, @RequestParam Map<String, String> map) {
+	public String bookPay(String schedule_code, HttpSession session, Model model, @RequestParam Map<String, String> map) {
+		String id = (String)session.getAttribute("sId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용 가능합니다");
+			model.addAttribute("targetURL", "MemberLogin");
+			return "result/fail";
+		}
+		
 		
 		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
+		String totalSeat = map.get("totalSeat").replace(" ,", ", ");
+		
+		map.put("theater_code", (String)schedule.get("theater_code"));
+		map.put("member_id", id);
+		map.put("totalSeat", totalSeat);
+		SecureRandom sr = new SecureRandom();
+		String payment_code = (String)schedule.get("theater_code") + sr.nextInt((int) Math.pow(10, 11));
+		
+		map.put("payment_code", payment_code);
 		int insertCount = service.registBookingTicket(map);
+		System.out.println("좌석수 : " + insertCount);
 		
+		model.addAttribute("totalSeat", totalSeat);
 		
+		// ================== 포인트 =====================
+		int myPoint = service.getMyPoint(id);
+		model.addAttribute("myPoint", myPoint);
+		
+		List<Map<String, Object>> myCouponList = service.getMyCouponList(id);
+		for(Map<String, Object> myCoupon : myCouponList) {
+			String discount_amount = !myCoupon.get("discount_amount").toString().equals("0") ?  myCoupon.get("discount_amount") + "원 할인권" : "";
+			String discount_rate = !myCoupon.get("discount_rate").toString().equals("0") ?  myCoupon.get("discount_rate") + "% 할인권" : "";
+			String coupon_name = myCoupon.get("event_subject") + " " + discount_amount + discount_rate;
+			myCoupon.put("coupon_name", coupon_name);
+		}
+		
+		model.addAttribute("myCouponList", myCouponList);
+		
+	
+		System.out.println(myCouponList);
 		
 		return "book_tickets/book_pay";
 	}
+	
+	@ResponseBody
+	@GetMapping("GetMyCouponDetailInfo")
+	public CouponVO getMyCouponDetailInfo(String coupon_code) {
+		CouponVO coupon = service.getMyCoupon(coupon_code);
+		return coupon;
+	}
+	
+	
 	
 
 	@GetMapping("BookFinish")

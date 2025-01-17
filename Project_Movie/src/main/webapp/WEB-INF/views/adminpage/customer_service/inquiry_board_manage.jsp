@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html lang="en">
 <html>
 <head>
@@ -10,9 +10,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>마이페이지</title>
+	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_list.css" rel="stylesheet"/>
 		<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -20,8 +20,7 @@
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
-	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
-
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<article class="box">
 		<div id="title">
 			<h1>1:1 문의 목록</h1>
@@ -34,7 +33,9 @@
 	      <input type="text" placeholder="검색어를 입력하세요.">
    		  <input type="button" value="검색" id="searchButton">
 	    </div>
-	    <input type="button" value="글쓰기" id ="writeButton" style="text-align: right;">
+	    <input type="button" value="전체선택">
+	    <input type="button" value="답변하기" id ="writeButton" style="text-align: right;">
+	    <input type="button" value="삭제하기">
 		<section id="listForm">
 			<table id="inquiryForm" border="1">
 				<tr id="tr_top" align="center">
@@ -59,7 +60,6 @@
 									<c:if test="${inquiry.response_status eq 1}">
 										답변 완료
 									</c:if>
-									
 								</td>
 								<td class="inquiry_subject">${inquiry.inquiry_subject}</td>
 								<td>
@@ -74,7 +74,7 @@
 		</section>
 				<section id="pageList">
 			<input type="button" value="&lt" 
-				onclick="location.href='InquiryList?pageNum=${pageInfo.pageNum - 1}'" 
+				onclick="location.href='AdminInquiry?pageNum=${pageInfo.pageNum - 1}'" 
 				 <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 			
 			<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -83,26 +83,26 @@
 						<strong>${i}</strong>
 					</c:when>
 					<c:otherwise>
-						<a href="InquiryList?pageNum=${i}">${i}</a>
+						<a href="AdminInquiry?pageNum=${i}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			
 			
 			<input type="button" value="&gt" 
-				onclick="location.href='InquiryList?pageNum=${pageInfo.pageNum + 1}'" 
+				onclick="location.href='AdminInquiry?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
 	
 	<script type="text/javascript">
 		$(function() {
 			$(".inquiry_subject").on("click", function(event) {
+				alert("클릭");
 				let inquiry_code = $(event.target).siblings(".inquiry_code").text();
-				location.href = "InquiryPost?inquiry_code=" + inquiry_code + "&pageNum=${pageInfo.pageNum}";
+				location.href = "AdminInquiryPost?inquiry_code=" + inquiry_code + "&pageNum=${pageInfo.pageNum}";
 			
 			});
 
-			
 			$("#writeButton").on("click", function () {
 				window.open(
 						'InquiryWrite',

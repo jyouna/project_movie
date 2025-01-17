@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/book_tickets/book_pay.css">
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/book_tickets/book_pay.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -30,7 +31,7 @@
 				<div class="top">
 					<h2>결제하기</h2>
 				</div>
-				<form action="BookPay" name="" method="post">
+				<form action="" method="post">
 					<div class="main_container">
 						<div class="left_section">
 							<h4>예매정보</h4>
@@ -69,27 +70,38 @@
 							        </div>
 							        <div class="row">
 							            <div class="header">인원</div>
-							            <div class="data">일반 2명, 청소년 1명</div>
+							            <div class="data">
+							            	<c:if test="${param.adult != 0}">
+							            		일반 ${param.adult}명&nbsp;
+							            	</c:if>
+							            	<c:if test="${param.youth != 0}">
+							            		청소년 ${param.youth}명&nbsp; 
+							            	</c:if>
+							            	<c:if test="${param.senior != 0}">
+							            		경로/우대 ${param.senior}명
+							            	</c:if>
+
+							            </div>
 							        </div>
 									 <div class="row">
 							            <div class="header">좌석</div>
-							            <div class="data">D5, D6, D7</div>
+							            <div class="data">${totalSeat}</div>
 							        </div>
 						        </div>
 							</section>
 							
 							<section class="discount_container">
-								<h4>할인/포인트</h4>
+								<div><h4>할인/포인트</h4><h6>(중복 적용 불가능)</h6></div>
 								<div class="discount_tab">
-									<button type="button" class="coupon_btn">쿠폰</button>
+									<button type="button" class="coupon_btn"> 쿠폰</button>
 									<button type="button" class="point_btn">포인트</button>
 								</div>
 								<div class="coupon_container">
 									<p>사용할 쿠폰을 선택해주세요</p>
-									<div class="coupon">
-										쿠폰번호 <input type="text" class="coupon_form">
-										<input type="button" value="등록" class="submit_btn">
-									</div>
+<!-- 									<div class="coupon"> -->
+<!-- 										쿠폰번호 <input type="text" class="coupon_form"> -->
+<!-- 										<input type="button" value="등록" class="submit_btn"> -->
+<!-- 									</div> -->
 									<div class="coupon_table">
 										<table border="1">
 											<tr>
@@ -97,24 +109,26 @@
 												<th>유효기간</th>
 												<th>사용</th>
 											</tr>
-											<tr>
-							                    <td>이벤트 날짜 30% 할인 쿠폰</td>
-							                    <td>2025-02-23</td>
-							                    <td><input type="checkbox"></td>
-							                </tr>
+											<c:forEach var="coupon" items="${myCouponList}">
+												<tr>
+								                    <td>${coupon.coupon_name}</td>
+								                    <td>${coupon.expired_date}</td>
+								                    <td><input class="CheckCouponRadio" name="coupon" value="${coupon.coupon_code}" type="radio"></td>
+								                </tr>
+											</c:forEach>
 										</table>
 									</div>
 								</div>
 								<div class="point_container">
-									<p>사용할 포인트를 입력해주세요</p>
+									<p>사용할 포인트를 입력해주세요 (최대 2000p 까지)</p>
 									<div class="my_point">
 										<div class="point01">보유 포인트</div>
-										<div class="point02">3000 p</div>
+										<div class="point02">${myPoint} p</div>
 									</div>
 									<div class="use_point">
 										<span>사용할 포인트</span>
 										<div class="form_btn">
-											<input type="text" class="point_form">
+											<input type="text" class="point_form" maxlength="4">
 										</div>
 									</div>
 								</div>
@@ -135,7 +149,7 @@
 									<div class="div01">
 										<div class="tit">금액</div>
 										<div class="row">
-											<div class="price">28000</div>
+											<div class="price">${param.totalAmount}</div>
 											<div class="won">원</div>
 										</div>
 									</div>
@@ -143,14 +157,14 @@
 									<div class="div02">
 										<div class="tit">할인적용</div>
 										<div class="row">
-											<div class="price">9000</div>
+											<div class="price">0</div>
 											<div class="won">원</div>
 										</div>
 									</div>
 									<div class="div03">
 										<div class="tit">총결제금액</div>
 										<div class="row">
-											<div class="price">19000</div>
+											<div class="price">${param.totalAmount}</div>
 											<div class="won">원</div>
 										</div>
 									</div>

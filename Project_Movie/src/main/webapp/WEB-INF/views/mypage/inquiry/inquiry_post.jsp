@@ -13,8 +13,11 @@
 	<title>마이페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_post.css" />
+			<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
 
@@ -43,8 +46,9 @@
 		</div>
 		<section id="commandCell">
 <%-- 				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }"> --%>
-					<input type="button" value="수정" id="modify">
-					<input type="button" value="삭제" id="delete">
+			<input type="button" value="수정" id="ModifyButton">
+			<input type="button" value="삭제" onclick="deleteInquiry()">
+
 <%-- 				</c:if> --%>
 		</section>
 		
@@ -62,27 +66,22 @@
 				<td></td>
 			</tr>
 		</table>
-		<script type="text/javascript">
+	<script type="text/javascript">
 		$(function () {
-			$("#inquiryModify").on("click", function() {
-				window.open(    
-					'inquiryModify',
-					'문의 내역 수정',
-					'width=400, height=700, scrollbars=no, resizable=no');
+			$("#ModifyButton").on("click", function () {
+				window.open(
+						'InquiryModify',
+						'1:1문의 글 수정',
+						'width=400, height=700, scrollbars=no, resizeable=no'); 
 			});
-			
-			$("#delete").on("click", function() {
-				confirm("정말 삭제하시겠습니까?"){
-					alert("삭제되었습니다.");
-				}
-			});
-			
-			
-		});//function
+			}); 
 		
-		
-		
-		</script>
+		function deleteInquiry() { 
+			if (confirm("삭제 하시겠습니까?")) { 
+				location.href = "InquiryDelete?inquiry_code=${Inquiry.inquiry_code}&pageNum=${param.pageNum}"; 
+				} 
+			}
+	</script>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

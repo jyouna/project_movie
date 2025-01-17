@@ -48,7 +48,7 @@
 					</a>
 					<div class="collapse" id="collapseCoupons" aria-labelledby="headingCoupons" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionCoupons">
-					        <a class="nav-link" href="MycouponRegistration">
+					        <a class="nav-link" href="CouponList">
 					            쿠폰등록
 					        </a>
 <!-- 					       쿠폰 등록과 내역을 합쳐서 주석처리함  -->
