@@ -50,11 +50,12 @@
 		    </dl>
 		  </div>
 		</div>
+        <p>* 포인트는 소멸되지 않습니다.</p>
 	      <section id="listForm">
 	         <table>
 	            <tr id="tr_top">
 	               <td width="100px">구분</td>
-	               <td width="100px">날짜</td>
+	               <td width="100px">적립날짜</td>
 	               <td width="180px">상세내용</td>
 	               <td width="100px">적립포인트</td>
 	               <td width="100px">인출포인트</td>
@@ -69,11 +70,11 @@
 	                     <tr>
 	                        <td>${point.point_code}</td>
 	                        <td>
-	                           <fmt:formatDate value="${point.board_date}" pattern="yy-MM-dd - yy-MM-dd"/>
+	                           <fmt:formatDate value="${point.regis_date}" pattern="yy-MM-dd"/>
 	                        </td>
-	                        <td>${point.board_subject}</td>
-	                        <td>${point.point_credited}</td>
-	                        <td>${point.point_debited}</td>
+	                        <td>${point.event_subject}</td>
+	                        <td>+${point.point_credited}</td>
+	                        <td>-${point.point_debited}</td>
 	                     </tr>
 	                  </c:forEach>
 	               </c:otherwise>               
@@ -82,7 +83,7 @@
 	      </section>
           <section id="pageList">
 	         <input type="button" value="&lt" 
-	            onclick="location.href='PointList?pageNum=${pageInfo.pageNum - 1}'" 
+	            onclick="location.href='MypointReward?pageNum=${pageInfo.pageNum - 1}'" 
 	             <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 	         
 	         <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -91,14 +92,14 @@
 	                  <strong>${i}</strong>
 	               </c:when>
 	               <c:otherwise>
-	                  <a href="PointList?pageNum=${i}">${i}</a>
+	                  <a href="MypointReward?pageNum=${i}">${i}</a>
 	               </c:otherwise>
 	            </c:choose>
 	         </c:forEach>
 	         
 	         
 	         <input type="button" value="&gt" 
-	            onclick="location.href='PointList?pageNum=${pageInfo.pageNum + 1}'" 
+	            onclick="location.href='MypointReward?pageNum=${pageInfo.pageNum + 1}'" 
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>

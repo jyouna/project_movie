@@ -13,13 +13,12 @@
 		 <table id="writeForm">
 		        <tr>
 		            <td width="80" style="text-align: center;">제목</td>
-		            <td colspan="3"><input type="text" required></td>
+		            <td colspan="3"><input type="text" name="inquiry_subject" required></td>
 		        </tr>
 		        <tr>
-		           <td width="80" style="text-align: center;">작성일자</td>
-		            <td><input type="date" required></td>
 		            <td width="80" style="text-align: center;">작성자</td>
-		            <td>${session.sId }</td>
+		            <td>${sessionScope. sMemberId }</td>
+		            <input type="hidden" name="inquiry_writer" value="${sessionScope. sMemberId }">
 		        </tr>
 		        <tr>
 		            <td colspan="4">

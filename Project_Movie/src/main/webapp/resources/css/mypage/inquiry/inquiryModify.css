@@ -1,0 +1,29 @@
+#writeForm {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#inquiry_content {
+   	width: 439px !important;
+    height: 349px !important;
+    box-sizing: border-box; /* Padding과 Border를 포함한 크기 조절 */
+	resize:none;
+	text-align: left;
+}
+th,td{
+	padding: 1px; 
+}
+#writeForm th, #writeForm td {
+    border: 1px solid black; /* 테두리 두께 1px */
+	padding: 3px; /* 내용과 테두리 사이 여백 */
+    vertical-align: top;
+}
+
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box; /* Padding과 Border를 포함한 크기 조정 */
+ }
+input[type="date"] {
+    width: 80%;
+    box-sizing: border-box; /* Padding과 Border를 포함한 크기 조정 */
+ }

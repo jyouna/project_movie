@@ -11,10 +11,9 @@
 		JOIN movie 
 		ON schedule.movie_code = movie.movie_code;
 	</select>
-
 <!-- 	예매내역 글 시작번호 끝번호 -->
 	<select id="selectReservationList" resultType="map">
-		SELECT payment.payment_code, payment.ticket_count, payment.payment_end_time, payment.total_amount, payment.total_seat_code, movie.movie_name, schedule.theater_code, schedule.start_time
+		SELECT payment.payment_code, payment.ticket_count, payment.total_amount, payment.total_seat_code, movie.movie_name, schedule.theater_code, schedule.start_time
 		FROM payment JOIN schedule 
 		ON payment.schedule_code = schedule.schedule_code
 		JOIN movie 
@@ -31,6 +30,7 @@
 		JOIN movie 
 		ON schedule.movie_code = movie.movie_code;
 	</select>
+	
 <!-- 	예매취소 글 개수 -->
 	<select id="selectReservationCancelCount" resultType="int">  
 		SELECT refund.refund_status, refund.refund_completed_date, refund.refund_amount, payment.ticket_count, schedule.start_time, movie.movie_name
@@ -54,6 +54,7 @@
 			#{startRow}
 			, #{listLimit}
 	</select>
+	
 <!-- 	2.내가 본 영화 글 전체 가져오기 -->
 	<select id="selectWathedMovieCount" resultType="int">
 		SELECT COUNT(*)
@@ -93,7 +94,6 @@
 			, ${review_writer}
 		)
 	</insert>
-	
 <!-- 	리뷰 총 개수 출력 -->
 	<select id="selectReviewListCount" resultType="int">
 		SELECT COUNT(*)
@@ -129,9 +129,11 @@
 	</select>
 	<select id="selectPointList" resultType="map">
 		SELECT *
-		FROM point
+		FROM point JOIN event_board
+		ON point.event_code = event_board.event_code
 		LIMIT #{startRow}, #{listLimit}
 	</select>
+	
 <!-- 1:1문의 글 전체 가져오기 -->
  	<select id="selectInquiryListCount" resultType="int">
  		SELECT COUNT(*)
@@ -152,19 +154,23 @@
  		WHERE inquiry_code = #{inquiry_code}
  	</select>
 <!-- 	1:1문의 글 작성-->
- 	<insert id="insertInquiry">
- 		INSERT INTO Inquiry
- 		VALUES(
- 			#{inquiry_code} + 1
- 			, #{inquiry_subject}
- 			, #{inquiry_writer}
- 			, #{inquiry_content}
- 			, #{inquiry_response}
- 			, #{response_status}
- 			, NOW()
- 			, #{inquiry_writer_ip}
- 		)
- 	</insert>
+	<insert id="insertInquiry">
+	    INSERT INTO Inquiry(
+	        inquiry_subject, 
+	        inquiry_writer,
+	        inquiry_content,
+	        inquriy_date,
+	        inquiry_writer_ip
+	    )
+	    VALUES(
+	        #{inquiry_subject},
+	        #{inquiry_writer},
+	        #{inquiry_content},
+	        NOW(),
+	        #{inquiry_writer_ip}
+	    )
+	</insert>
+
 <!--  	1:1문의 글 수정  -->
  	<update id="updateInquiry">
  		UPDATE Inquiry
@@ -179,4 +185,36 @@
 		FROM Inquiry
 		WHERE inquiry_code = #{inquiry_code}
 	</delete>
+	<select id="selectNoticeListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM notice_board
+	</select>
+	<select id="selectNoticeList" resultType="notice_board">
+		SELECT *
+		FROM notice_board
+		LIMIT 
+			#{startRow}
+			,#{listLimit}
+	</select>
+	<select id="selectNotice" resultType="notice_board">
+		SELECT *
+		FROM notice_board
+		WHERE notice_code = #{notice_board}
+	</select>
+	<select id="selectFaqListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM faq_board 
+	</select>
+	<select id="selectFaqList" resultType="faq_board">
+		SELECT *
+		FROM faq_board
+		LIMIT 
+			#{startRow}
+			,#{listLimit}
+	</select>
+	<select id="selectFaq" resultType="faq_board">
+		SELECT *
+		FROM faq_board
+		WHERE faq_code = #{faq_code}
+	</select>
  </mapper>

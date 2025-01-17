@@ -19,6 +19,9 @@
    <!-- targetURL 속성값이 비어있는지 판별(EL 로 직접 판별 = empty 활용) -->
    <c:choose>
       <c:when test="${empty targetURL}">
+      	<c:if test="${msg eq '1:1문의 등록 완료되었습니다'}">
+      		window.close();
+      	</c:if>
          history.back();
       </c:when>
       <c:otherwise>
