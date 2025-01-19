@@ -45,11 +45,11 @@
 		<hr>
 		<table id="postList">
 			<tr>
-				<th><input type="button" value="△이전글" id="tableButton" onclick="location.href='EventPost?event_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"></th>
+				<th><input type="button" value="△이전글" id="tableButton" onclick="location.href='FaqPost?event_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"></th>
 				<th>이거는 이전 글 </th>
 			</tr>
 			<tr>
-				<th><input type="button" value="▽다음글" id="tableButton" onclick="location.href='EventPost?event_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"></th>
+				<th><input type="button" value="▽다음글" id="tableButton" onclick="location.href='FaqPost?event_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"></th>
 				<th>여기는 다음글</th>
 			</tr>
 		</table>

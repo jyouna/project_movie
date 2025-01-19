@@ -30,7 +30,7 @@
 						<td colspan="3">${inquiry.inquiry_subject}</td>
 						<th width="120">등록일</th>
 						<td width="180">
-							<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/>
+							<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
 						</td>
 					</tr>
 				</table>
@@ -40,11 +40,11 @@
 		</section>
 		<hr>
 		<div style="text-align: right;" >
-		<input type="button" value="목록" id="listButton" onclick="location.href='InquiryList?pageNum=${param.pageNum}'">
+		<input type="button" value="목록" id="listButton" onclick="location.href='AdminInquiry?pageNum=${param.pageNum}'">
 		</div>
 		<section id="commandCell">
 <%-- 				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }"> --%>
-			<input type="button" value="수정" onclick="location.href='AdmininquiryModify?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum }'">
+			<input type="button" value="수정" onclick="location.href='AdmininquiryModify?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum}'">
 			<input type="button" value="삭제" onclick="deleteInquiry()">
 
 <%-- 				</c:if> --%>
@@ -53,14 +53,14 @@
 		<table>
 			<tr>
 				<td>
-					<input type="button" value="△이전글" onclick="location.href='InquiryPost?inquiry_code=${param.inquiry_code-1}&pageNum=${param.pageNum}'"
+					<input type="button" value="△이전글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code-1}&pageNum=${param.pageNum}'"
 					<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
 				</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><input type="button" value="▽다음글" onclick="location.href='InquiryPost?inquiry_code=${param.inquiry_code+1}&pageNum=${param.pageNum}'"
-				<c:if test="${param.inquiry_code-1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>></td>
+				<td><input type="button" value="▽다음글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code+1}&pageNum=${param.pageNum}'"
+				<c:if test="${param.inquiry_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>></td>
 				<td></td>
 			</tr>
 		</table>
@@ -68,7 +68,7 @@
 		
 		function deleteInquiry() { 
 			if (confirm("삭제 하시겠습니까?")) { 
-				location.href = "InquiryDelete?inquiry_code=${Inquiry.inquiry_code}&pageNum=${param.pageNum}"; 
+				location.href = "AdminInquiryDelete?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum}"; 
 				} 
 			}
 	</script>

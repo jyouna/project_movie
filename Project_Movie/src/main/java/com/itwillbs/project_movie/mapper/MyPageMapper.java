@@ -66,12 +66,20 @@ public interface MyPageMapper {
 	int selectNoticeListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	//관리자 페이지 - 공지사항 글 시작번호 끝번호 
 	List<NoticeBoardVO> selectNoticeList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("searchType") String searchType,@Param("searchKeyword") String searchKeyword);
+	//관리자 페이지 - 공지사항 글 등록 
+	int updateNoticeAdmin(NoticeBoardVO notice);
 	//관리자 페이지 - 공지사항 글 자세히
 	NoticeBoardVO selectNotice(int notice_code);
+	//관리자 페이지 - 공지사항 글 수정 
+	int updateNotice(NoticeBoardVO notice);
+	//공지사항 삭제
+	int deleteNotice(NoticeBoardVO notice);
 	//faq 글 개수
 	int selectFaqListCount();
 	//faq 글 시작번호 끝번호 
 	List<FaqBoardVO> selectFaqList(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
+	// faq 글 작성
+	int insertFaqAdmin(FaqBoardVO faq);
 	//faq 글 보기
 	FaqBoardVO selectFaq(int faq_code);
 	// faq 조회수 증가
@@ -83,7 +91,8 @@ public interface MyPageMapper {
 	// 1:1문의 글 수정 
 	int updateInquiryModify(int inquiry_code);
 	//1:1 문의 글 삭제
-	int deleteInquiryAdmin(int inquiry_code);
+	int deleteInquiryAdmin(InquiryVO inquiry);
+	
 
 
 

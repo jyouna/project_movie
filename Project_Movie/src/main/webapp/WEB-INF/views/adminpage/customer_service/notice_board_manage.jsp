@@ -14,6 +14,9 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/customer_service/notice_list.css" rel="stylesheet" />
+	<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -24,6 +27,7 @@
 		</div>
 		<div style="text-align:	left;">
 			<input type="button" value="전체선택">
+			<input type="button" value="글 작성" onclick="location.href='AdminNoticeWrite?notice_code=${notice_board.notice_code}&pageNum=${pageInfo.pageNum }'">
 			<input type="button" value="수정">
 			<input type="button" value="삭제">
 		</div>
@@ -93,9 +97,9 @@
 	</article>
 	<script type="text/javascript">
 	$(function () {
-	    // 제목 클릭 이벤트
 	    $(".notice_subject").on("click", function (event) {
-	        location.href = "AdminNoticePost?notice_code=" + notice_code + "&pageNum=${pageInfo.pageNum}";
+	    	let notice_code = $(event.target).siblings(".notice_code").text();
+	        location.href = "AdminNoticePost?notice_code="+ notice_code +"&pageNum=${pageInfo.pageNum}";
 	    });
     });
 	</script>

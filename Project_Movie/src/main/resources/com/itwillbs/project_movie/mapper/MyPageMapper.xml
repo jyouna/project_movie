@@ -203,6 +203,27 @@
 		FROM notice_board
 		WHERE notice_code = #{notice_board}
 	</select>
+	<insert id="updateNoticeAdmin">
+		INSERT INTO notice_board(
+		notice_subject
+		, notice_content
+		, regis_date
+		) VALUES(
+			#{notice_subject}
+			,#{notice_content}
+			,NOW()
+		)
+	</insert>
+	<update id="updateNotice">
+		UPDATE notice_board
+		SET notice_subject = #{notice_subject}
+		,notice_content = #{notice_content}
+		WHERE notice_code = #{notice_code}
+	</update>
+	<delete id="deleteNotice">
+		DELETE FROM notice_board
+		WHERE notice_code = #{notice_code}
+	</delete>
 <!-- 	faq 글 개수 -->
 	<select id="selectFaqListCount" resultType="int">
 		SELECT COUNT(*)
@@ -216,6 +237,16 @@
 			#{startRow}
 			,#{listLimit}
 	</select>
+<!-- 	FAQ 글 작성 -->
+	<insert id="insertFaqAdmin">
+		INSERT INTO faq_board(
+		faq_subject
+		,faq_content
+		)VALUES(
+			#{faq_subject}
+			,#{faq_content}
+		)
+	</insert>
 <!-- 	faq 글 자세히보기 -->
 	<select id="selectFaq" resultType="faq_board">
 		SELECT *

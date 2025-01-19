@@ -41,8 +41,9 @@
 				<tr id="tr_top" align="center">
 					<td width="25px">번호</td>
 					<td width="45px">상태</td>
-					<td width="300px">제목</td>
-					<td width="80px">등록일</td>
+					<td width="280px">제목</td>
+					<td width="80px">작성자</td>
+					<td width="100px">등록일</td>
 				</tr>
 					
 				<c:choose>
@@ -62,9 +63,9 @@
 									</c:if>
 								</td>
 								<td class="inquiry_subject">${inquiry.inquiry_subject}</td>
+								<td>${inquiry.inquiry_writer}</td>
 								<td>
-									<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yy-MM-dd"/>
-
+									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yy-MM-dd"/>
 								</td>
 							</tr>
 						</c:forEach>
@@ -73,8 +74,7 @@
 			</table>
 		</section>
 				<section id="pageList">
-			<input type="button" value="&lt" 
-				onclick="location.href='AdminInquiry?pageNum=${pageInfo.pageNum - 1}'" 
+			<input type="button" value="&lt" onclick="location.href='AdminInquiry?pageNum=${pageInfo.pageNum - 1}'" 
 				 <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 			
 			<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -87,10 +87,7 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			
-			
-			<input type="button" value="&gt" 
-				onclick="location.href='AdminInquiry?pageNum=${pageInfo.pageNum + 1}'" 
+			<input type="button" value="&gt" onclick="location.href='AdminInquiry?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 		</section>
 	
@@ -102,12 +99,6 @@
 			
 			});
 
-			$("#writeButton").on("click", function () {
-				window.open(
-						'InquiryWrite',
-						'1:1문의 글 작성',
-						'width=400, height=700, scrollbars=no, resizeable=no'); 
-			});
 		});
 	</script>
 	</article>

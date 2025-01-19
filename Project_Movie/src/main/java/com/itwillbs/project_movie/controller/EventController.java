@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.project_movie.service.EventService;
 import com.itwillbs.project_movie.vo.EventBoardVO;
+import com.itwillbs.project_movie.vo.EventWinnerAnnounceBoardVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 
 @Controller
@@ -59,46 +60,48 @@ public class EventController {
 		return "event/event_post";
 	}
 	
-//	// 이벤트 - 당첨자 목록
-//	@GetMapping("EventWinner")
-//	public String eventWinner(@RequestParam(defaultValue="1") int pageNum, Model model,
-//			@RequestParam(defaultValue="")String searchType,
-//			@RequestParam(defaultValue="")String searchKeyword) {
-//		int listCount = service.getEventWinnerListCount(searchType, searchKeyword);
-//		int listLimit = 5;
-//		int startRow = (pageNum - 1) * listLimit;
-//		int pageListLimit = 3;
-//		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 :0);
-//		if(maxPage == 0) {
-//			maxPage = 1;
-//		}
-//		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
-//		int endPage = startPage + pageListLimit -1;
-//		if(endPage > maxPage) {
-//			endPage = maxPage;
-//		}
-//		if(pageNum < 1 || pageNum > maxPage) {
-//			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
-//			model.addAttribute("targetURL", "EventWinner?pagenum=1");
-//			return "result/fail";
-//		}
-//		
-//		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
-//		model.addAttribute("pageinfo", pageinfo);
-//		List<EventWinnerBoardVO> eventWinnerBoardList = service.getEventWinnerList(startRow, listLimit, searchType, searchKeyword);
-//		model.addAttribute("eventWinnerBoardList", eventWinnerBoardList);
-//		return "event/event_winner";
-//	}
+	// 이벤트 - 당첨자 목록
+	@GetMapping("EventWinner")
+	public String eventWinner(@RequestParam(defaultValue="1") int pageNum, Model model,
+			@RequestParam(defaultValue="")String searchType,
+			@RequestParam(defaultValue="")String searchKeyword) {
+		int listCount = service.getEventWinnerListCount(searchType, searchKeyword);
+		int listLimit = 5;
+		int startRow = (pageNum - 1) * listLimit;
+		int pageListLimit = 3;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 :0);
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit -1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		if(pageNum < 1 || pageNum > maxPage) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
+			model.addAttribute("targetURL", "EventWinner?pagenum=1");
+			return "result/fail";
+		}
+		
+		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
+		model.addAttribute("pageinfo", pageinfo);
+		List<EventWinnerAnnounceBoardVO> eventWinnerBoardList = service.getEventWinnerList(startRow, listLimit, searchType, searchKeyword);
+		model.addAttribute("eventWinnerBoardList", eventWinnerBoardList);
+		return "event/event_winner";
+	}
 //	// 이벤트 - 당첨자 글 내용
-//	@GetMapping("EventWinnerPost")
-//	public String eventWinnerPost(EventWinnerBoardVO eventWinner ,int winner_code ,Model model) {
-//		System.out.println("controller = " + winner_code);
-//		eventWinner = service.getEventWinner(winner_code, true);
-//		if(eventWinner == null) {
-//			model.addAttribute("msg", "존재하지 않는 글입니다.");
-//			return "result/fail";
-//		}
-//		model.addAttribute("eventWinner", eventWinner);
-//		return "event/event_winner_post";
-//	}
+	@GetMapping("WinnerPost")
+	public String winnerPost(EventWinnerAnnounceBoardVO eventWinner ,int winner_code ,Model model) {
+		System.out.println("controller = " + winner_code);
+		eventWinner = service.getEventWinner(winner_code, true);
+//		int maxWinnerCode = service.getMaxWinnerCode(); // 최대값 계산
+//		model.addAttribute("maxWinnerCode", maxWinnerCode);
+		if(eventWinner == null) {
+			model.addAttribute("msg", "존재하지 않는 글입니다.");
+			return "result/fail";
+		}
+		model.addAttribute("eventWinner", eventWinner);
+		return "event/event_winner_post";
+	}
 }

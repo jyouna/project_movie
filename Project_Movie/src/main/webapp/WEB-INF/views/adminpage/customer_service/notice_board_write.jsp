@@ -13,8 +13,8 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_list.css" rel="stylesheet"/>
-		<!-- jQuery를 먼저 추가 -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customer_service/faq_post.css" />
+	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -22,29 +22,32 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<article id="articleForm">
-			<h1>1:1문의 - 글 </h1>
+		<h1>공지사항 - 글</h1>
+		<form action="AdminNoticeWrite" method="post">
 			<section id="basicInfoArea">
-			<form action="AdmininquiryModify" method="post">
-			<input type="hidden" name = "inquiry_code" value="${inquiry.inquiry_code }">
-			<input type="hidden" name = "pageNum" value="${param.pageNum }">
 				<table>
 					<tr>
-						<th width="100">제목</th>
-						<td colspan="3"><input type="text" name ="inquiry_subject" value="${inquiry.inquiry_subject}"></td>
-						<th width="120">등록일</th>
-						<td width="180">
-							<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/>
+						<th width="110px">제목 </th>
+						<td><input type="text" name="notice_subject"></td>
+						<th width="90px">등록일</th>
+						<td width="160px">
+							<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 						</td>
 					</tr>
+					<tr>
+						<th width="110px">첨부파일</th>
+						<td colspan="3" id="notice_file"></td>
+					</tr>
 				</table>
-				<textarea rows="15" cols="40" name ="inquiry_content">	${inquiry.inquiry_content}</textarea>
-				<hr>
-				<div style="text-align: right;" >
-					<input type="submit" value="등록">
-				</div>
-			</form>
-		</section>
+			</section>
+			<section id="articleContentArea">
+				<textarea rows="15" cols="40" name="notice_content"></textarea>
+			</section>
+			<hr>
+			<div>
+				<input type="submit" value="등록" onclick="location.href='AdminNotice?pageNum=${param.pageNum}'" >
+			</div>
+		</form>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
-</html>

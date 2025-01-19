@@ -394,6 +394,8 @@ public class MypageController {
 		}
 	}
 	
+	//------------------------------------ 관리자 페이지 중 고객지원 관리 부분 ------------------------------------------------------------------
+	
 	// 관리자 페이지 - 고객지원 관리 - 공지사항 관리
 	@GetMapping("AdminNotice")
 	public String adminNotice(@RequestParam(defaultValue="") String searchType,
@@ -437,17 +439,72 @@ public class MypageController {
 		model.addAttribute("noticeList", noticeList);
 		return "adminpage/customer_service/notice_board_manage";
 	}
+	//관리자 페이지 - 공지사항 작성
+	@GetMapping("AdminNoticeWrite")
+	public String adminNoticeWrite() {
+		
+		
+		return "adminpage/customer_service/notice_board_write";
+	}
+	//관리자 페이지 - 공지사항 작성 - post
+	@PostMapping("AdminNoticeWrite")
+	public String adminNoticeWrite2(HttpServletRequest request, HttpSession session, Model model, NoticeBoardVO notice) {
+		notice.setNotice_writer_ip(getClientIp(request));
+		int insertNoticeCount = service.registNotice(notice);
+		if(insertNoticeCount > 0) {
+			return "redirect:/AdminNotice";
+		}else {
+			model.addAttribute("msg", "공지사항 작성에 실패하셨습니다.");
+			return "result/fail";
+		}
+	}
+	
 	// 관리자페이지 - 공지사항 자세히보기
 	@GetMapping("AdminNoticePost")
 	public String adminNoticePost(NoticeBoardVO notice, Model model, int notice_code) {
-		notice = service.getNotice(notice_code, true);
+		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
 			return "result/fail";
 		}
 		model.addAttribute("notice", notice);
 		
-		return "adminpage/customer_service/notice_post";
+		return "adminpage/customer_service/notice_board_post";
+	}
+	
+	// 관리자페이지 - 공지사항 수정
+	@GetMapping("AdminNoticeModify")
+	public String adminNoticeModify(@RequestParam(defaultValue="1") int pageNum,int notice_code, Model model, NoticeBoardVO notice) {
+		notice = service.getNotice(notice_code, false);
+		if(notice == null) {
+			model.addAttribute("msg", "존재하지 않는 게시물 입니다.");
+			return "result/fail";
+		}
+		model.addAttribute("notice", notice);
+		return "adminpage/customer_service/notice_board_modify";
+	}
+	
+	// 관리자페이지 - 공지사항 수정 post
+	@PostMapping("AdminNoticeModify")
+	public String adminNoticeModify2(@RequestParam(defaultValue="1") int pageNum,int notice_code, Model model, NoticeBoardVO notice) {
+		int updateCount = service.getNoticeUpdate(notice);
+		if(updateCount > 0) {
+			return "redirect:/AdminNoticePost?notice_code=" + notice_code + "&pageNum=" + pageNum;
+		}else {
+			model.addAttribute("msg", "글 수정을 실패하셨습니다.");
+			return "result/fail";
+		}
+	}
+	// 관리자페이지 - 공지사항 삭제
+	@GetMapping("AdminNoticeDelete")
+	public String adminNoticeDelete(NoticeBoardVO notice, Model model) {
+		int deleteCount = service.getNoticeDelete(notice);
+		if(deleteCount > 0) {
+			return "redirect:/AdminNotice";
+		}else {
+			model.addAttribute("msg", "글 삭제를 실패하셨습니다.");
+			return "result/fail";
+		}
 	}
 	//관리자 페이지 - 고객지원 관리 - faq문의 관리
 	@GetMapping("AdminFaq")
@@ -493,6 +550,23 @@ public class MypageController {
 		model.addAttribute("faqList", faqList);
 		return "adminpage/customer_service/faq_board_manage";
 	}
+	// faq 글 작성 
+	@GetMapping("AdminFaqWrite")
+	public String adminFaqWrite() {
+		return "adminpage/customer_service/faq_board_write";
+	}
+	//faq 글 작성 - post
+	@PostMapping("AdminFaqWrite")
+	public String adminFaqWrite2(FaqBoardVO faq, Model model) {
+		int faqInsertCount = service.faqWrite(faq);
+		if(faqInsertCount > 0) {
+			return "redirect:/AdminFaq";
+		}else {
+			model.addAttribute("msg", "자주하는 문의 등록에 실패하셨습니다.");
+			return "result/fail";
+		}
+	}
+	
 	// 관리자 페이지 - 고객지원 관리 - Faq 글 보기 
 	@GetMapping("AdminFaqPost")
 	public String adminFaqPost(FaqBoardVO faq , int faq_code, Model model) {
@@ -508,8 +582,6 @@ public class MypageController {
 	@GetMapping("AdminFaqModify")
 	public String adminFaqModify(Model model, int faq_code, FaqBoardVO faq) {
 		faq = service.getFaq(faq_code, false);
-		System.out.println("faq modify " + faq);
-		System.out.println(faq_code);
 		if(faq == null) {
 			model.addAttribute("msg", "해당 게시물은 존재하지 않습니다.");
 			return "result/fail";
@@ -604,7 +676,7 @@ public class MypageController {
 	//1:1문의 - 글 수정 post
 	@PostMapping("AdmininquiryModify")
 	public String admininquiryModify(int inquiry_code, InquiryVO inquiry, @RequestParam(defaultValue= "1")int pageNum, Model model) {
-		int updateCount = service.getInquiryModify(inquiry_code);
+		int updateCount = service.getInquiryModify(inquiry);
 		if(updateCount > 0) {
 			return "redirect:/AdminInquiry?inquiry_code=" +inquiry.getInquiry_code() + "&pageNum=" + pageNum;
 		}else {
@@ -614,10 +686,10 @@ public class MypageController {
 	}
 	//1:1문의 - 글 삭제 
 	@GetMapping("AdminInquiryDelete")
-	public String adminInquiryDelete(int inquiry_code, Model model, InquiryVO inquiry, @RequestParam(defaultValue= "1")int pageNum) {
-		int inquiryDeleteCount = service.getInquiryDelete(inquiry_code);
+	public String adminInquiryDelete(Model model, InquiryVO inquiry, @RequestParam(defaultValue= "1")int pageNum) {
+		int inquiryDeleteCount = service.getInquiryDelete(inquiry);
 		if(inquiryDeleteCount > 0) {
-			return "redirect:/AdminInquiry&pageNum=" + pageNum;
+			return "redirect:/AdminInquiry";
 		}else {
 			model.addAttribute("msg", "글을 삭제하는데 실패하셨습니다.");
 			return "result/fail";

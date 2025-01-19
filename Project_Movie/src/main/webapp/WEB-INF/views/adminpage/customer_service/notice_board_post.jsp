@@ -45,8 +45,10 @@
 			${notice.notice_content}
 		</section>
 		<hr>
-		<div style="text-align: right;" >
-		<input type="button" value="목록" id="listButton" onclick="location.href='AdminNotice?pageNum=${param.pageNum}'">
+		<div>
+		<input type="button" value="수정하기" onclick="location.href='AdminNoticeModify?notice_code=${param.notice_code}&pageNum=${param.pageNum }'">
+		<input type="button" value="삭제하기" onclick="location.href='AdminNoticeDelete?notice_code=${param.notice_code}&pageNum=${param.pageNum }'">
+		<input type="button" value="목록" onclick="location.href='AdminNotice?pageNum=${param.pageNum}'" >
 		</div>
 <!-- 		다음글이 없을 경우 if문 사용해서 해당 글이 존재하지 x 라고 표시 -->
 		<table id="buttonTable">
@@ -70,9 +72,6 @@
 	</article>
 
 
-	<script type="text/javascript">
-	</script>
 	</section>
-	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

@@ -59,20 +59,6 @@
 			</tr>
 		</table>
 	</article>
-
-	<script type="text/javascript">
-		$(function(){
-			$(".faq_subject").on("click", function(event) {
-				console.log(event.target);
-				let faq_code = $(event.target).siblings(".faq_code").text();
-				console.log("siblings " + faq_code);
-				location.href = "AdminFaqPost?faq_code=" + faq_code + "&pageNum=${pageInfo.pageNum}";
-			
-			});
-		
-		});
-	</script>
 	</section>
-	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
