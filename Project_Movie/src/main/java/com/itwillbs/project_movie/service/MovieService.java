@@ -149,6 +149,16 @@ public class MovieService {
 		conditionMap.put("selectCondition2", "현재상영작");
 		return movieMapper.selectMovieCount(conditionMap);
 	}
+	
+	// 투표영화 리스트 조회
+	public List<MovieVO> getPickMovieList() {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("columnName", "movie_status");
+		conditionMap.put("selectCondition", "투표영화");
+		conditionMap.put("orderColumn", "movie_name");
+		conditionMap.put("howOrder", "ASC");
+		return movieMapper.selectMovieListCheck(conditionMap);
+	}
 
 	
 }

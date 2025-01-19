@@ -67,7 +67,7 @@
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-							<tr><th colspan="7">시즌 상영예정작이 존재하지 않습니다</th></tr>
+							<tr><th colspan="7">시즌 상영예정작 선정전입니다</th></tr>
 						</c:otherwise>
 					</c:choose>
 				</table>

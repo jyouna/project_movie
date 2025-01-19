@@ -209,7 +209,11 @@ $(function() {
 	
 	// 스케줄 보드의 헤더 체크박스 클릭시 모든 체크박스 클릭, 해제
 	$("#boardHead input[type='checkbox']").click(function() {
-		$(".scheduleCheck").click();
+		if($(this).prop("checked")) {
+			$(".scheduleCheck").prop("checked", true);
+		} else {
+			$(".scheduleCheck").prop("checked", false);
+		}
 	})
 	
 	// 예매 활성화 버튼 클릭시 해당스케줄의 예매여부 활성화로 변경
