@@ -95,13 +95,9 @@
 	$(function () {
 	    // 제목 클릭 이벤트
 	    $(".notice_subject").on("click", function (event) {
-	        location.href = "NoticePost?notice_code=" + notice_code + "&pageNum=${pageInfo.pageNum}";
+	        location.href = "AdminNoticePost?notice_code=" + notice_code + "&pageNum=${pageInfo.pageNum}";
 	    });
     });
-	
-	
-	
-	
 	</script>
 	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

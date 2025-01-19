@@ -97,7 +97,6 @@
 	<script type="text/javascript">
 		$(function() {
 			$(".inquiry_subject").on("click", function(event) {
-				alert("클릭");
 				let inquiry_code = $(event.target).siblings(".inquiry_code").text();
 				location.href = "AdminInquiryPost?inquiry_code=" + inquiry_code + "&pageNum=${pageInfo.pageNum}";
 			

@@ -57,9 +57,11 @@ public interface MyPageMapper {
 	//1:1문의 글 작성
 	int insertInquiry(InquiryVO inquiry);
 	//1:1문의 글 수정 
-	InquiryVO updateInquiry(InquiryVO inquiry_code);
+	int updateInquiry(InquiryVO inquiry_code);
 	//1:1문의 글 삭제 
 	int deleteInquiry(InquiryVO inquiry);
+	
+	
 	//관리자 페이지 - 공지사항 글 개수 
 	int selectNoticeListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	//관리자 페이지 - 공지사항 글 시작번호 끝번호 
@@ -72,6 +74,16 @@ public interface MyPageMapper {
 	List<FaqBoardVO> selectFaqList(@Param("startRow") int startRow, @Param("listLimit") int listLimit);
 	//faq 글 보기
 	FaqBoardVO selectFaq(int faq_code);
+	// faq 조회수 증가
+	void updateReadCount(FaqBoardVO faq);
+	// faq 글 수정
+	int updateFaq(FaqBoardVO faq);
+	// faq 글 삭제
+	int deleteFaq(FaqBoardVO faq);
+	// 1:1문의 글 수정 
+	int updateInquiryModify(int inquiry_code);
+	//1:1 문의 글 삭제
+	int deleteInquiryAdmin(int inquiry_code);
 
 
 

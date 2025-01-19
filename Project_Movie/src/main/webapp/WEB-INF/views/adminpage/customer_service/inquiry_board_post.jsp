@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html lang="en">
 <html>
 <head>
@@ -10,20 +10,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>마이페이지</title>
+	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_post.css" />
-			<!-- jQuery를 먼저 추가 -->
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_post.css" rel="stylesheet"/>
+		<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
-
-	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
-	
-		<article id="articleForm">
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
+	<article id="articleForm">
 			<h1>1:1문의 - 글 </h1>
 			<section id="basicInfoArea">
 				<table>
@@ -38,7 +36,7 @@
 				</table>
 		</section>
 		<section id="articleContentArea">
-			${inquiry.inquiry_content}
+				${inquiry.inquiry_content}
 		</section>
 		<hr>
 		<div style="text-align: right;" >
@@ -46,8 +44,8 @@
 		</div>
 		<section id="commandCell">
 <%-- 				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }"> --%>
-			<input type="button" value="수정" onclick="location.href='InquiryModify?inquiry_code=${param.inquiry_code}&pageNum=${param.pageNum}'">
-			<input type="button" value="삭제" id="deleteInquiry">
+			<input type="button" value="수정" onclick="location.href='AdmininquiryModify?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum }'">
+			<input type="button" value="삭제" onclick="deleteInquiry()">
 
 <%-- 				</c:if> --%>
 		</section>
@@ -68,13 +66,11 @@
 		</table>
 	<script type="text/javascript">
 		
-		$(function () {
-			$("#deleteInquiry").on("click", function() {
-				if (confirm("삭제 하시겠습니까?")) { 
-					location.href = "InquiryDelete?inquiry_code=${param.inquiry_code}&pageNum=${param.pageNum}"; 
-					} 
-			});
-		});
+		function deleteInquiry() { 
+			if (confirm("삭제 하시겠습니까?")) { 
+				location.href = "InquiryDelete?inquiry_code=${Inquiry.inquiry_code}&pageNum=${param.pageNum}"; 
+				} 
+			}
 	</script>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

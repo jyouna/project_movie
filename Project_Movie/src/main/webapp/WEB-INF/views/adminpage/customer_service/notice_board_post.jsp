@@ -24,53 +24,53 @@
 	
 	<section>
 <article id="articleForm">
-		<h1>FAQ - 글</h1>
+		<h1>공지사항 - 글</h1>
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th width="110px">제목</th>
-					<td width="220px">${faq.faq_subject}</td>
+					<th width="110px">제목 </th>
+					<td>${notice.notice_subject}</td>
 					<th width="90px">등록일</th>
 					<td width="160px">
-						<fmt:formatDate value="${faq.regis_date}" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 				<tr>
 					<th width="110px">첨부파일</th>
-					<td colspan="3" id="faq_file1"></td>
+					<td colspan="3" id="notice_file"></td>
 				</tr>
 			</table>
 		</section>
 		<section id="articleContentArea">
-			${faq.faq_content}
+			${notice.notice_content}
 		</section>
-		<input type="button" value="목록" onclick="location.href='AdminFaq?pageNum=${param.pageNum}'">
-		<input type="button" value="수정하기" onclick="location.href='AdminFaqModify?faq_code=${param.faq_code}&pageNum=${param.pageNum}'">
-		<input type="button" value="삭제하기" onclick="location.href='AdminFaqDelete?faq_code=${param.faq_code}&pageNum=${param.pageNum }'">
 		<hr>
-		<table id="postList">
+		<div style="text-align: right;" >
+		<input type="button" value="목록" id="listButton" onclick="location.href='AdminNotice?pageNum=${param.pageNum}'">
+		</div>
+<!-- 		다음글이 없을 경우 if문 사용해서 해당 글이 존재하지 x 라고 표시 -->
+		<table id="buttonTable">
 			<tr>
-				<th><input type="button" value="△이전글" id="tableButton" onclick="location.href='AdminFaq?faq_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"></th>
-				<th>이거는 이전 글 </th>
+				<td>
+					<input type="button" value="△이전글" id="tableButton" onclick="location.href='AdminNoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
+					<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+				</td>
+<!-- 				이전글 제목 가져오기 -->
+				<td>${param.notice_code-1}</td>
 			</tr>
 			<tr>
-				<th><input type="button" value="▽다음글" id="tableButton" onclick="location.href='AdminFaq?faq_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"></th>
-				<th>여기는 다음글</th>
+				<td>
+					<input type="button" value="▽다음글" id="tableButton" onclick="location.href='AdminNoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
+					<c:if test="${param.inquiry_code-1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+				</td>
+				<td><a href="onclick=location.href='AdminNoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'">${notice.notice_subject}</a></td>
 			</tr>
-		</table>
+		</table>		
+
 	</article>
 
+
 	<script type="text/javascript">
-		$(function(){
-			$(".faq_subject").on("click", function(event) {
-				console.log(event.target);
-				let faq_code = $(event.target).siblings(".faq_code").text();
-				console.log("siblings " + faq_code);
-				location.href = "AdminFaqPost?faq_code=" + faq_code + "&pageNum=${pageInfo.pageNum}";
-			
-			});
-		
-		});
 	</script>
 	</section>
 	

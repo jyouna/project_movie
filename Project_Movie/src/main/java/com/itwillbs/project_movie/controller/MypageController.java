@@ -31,7 +31,9 @@ import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.NoticeBoardVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 
+import kotlin.reflect.jvm.internal.impl.types.model.TypeSystemInferenceExtensionContext;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 @Controller
 public class MypageController {
@@ -342,10 +344,10 @@ public class MypageController {
 			return "result/fail";
 		}
 		InquiryVO inquiry = service.getInquiry(inquiry_code);
-		if(inquiry == null || !id.equals("admin") && !equals(inquiry.getInquiry_writer())) {
-			model.addAttribute("msg", "잘못된 접근입니다!");
-			return "result/fail";
-		}
+//		if(inquiry == null || !id.equals("admin") && !equals(inquiry.getInquiry_writer())) {
+//			model.addAttribute("msg", "잘못된 접근입니다!");
+//			return "result/fail";
+//		}
 		model.addAttribute("inquiry", inquiry);
 		// mypageservice에서 getInquiry메서드 재사용해서 게시물 1개 정보 조회
 		//조회결과가 없거나 관리자가 아니거나 작성자가 아닌경우 잘못된접근입니다. 후 fail 페이지로 리턴
@@ -353,10 +355,21 @@ public class MypageController {
 //		InquiryVO inquiry = service.getInquiry(inquiry);
 		return "mypage/inquiry/inquiryModify";
 	}
+	//7-4-1 1:1문의 - 글 수정 폼 post
+	@PostMapping("InquiryModify")
+	public String inquiryModify2(InquiryVO inquiry, Model model, @RequestParam(defaultValue="1") int pageNum) {
+		int inquiryUpdateCount = service.getInquiryModify(inquiry);
+		if(inquiryUpdateCount > 0) {
+			return "redirect:/InquiryPost?inquiry_code=" + inquiry.getInquiry_code() + "&pageNum=" + pageNum;
+		}else {
+			model.addAttribute("msg", "글 수정에 실패하셨습니다.");
+			return "result/fail";
+		}
+	}
 	//7-5. 1:1문의 - 글 삭제 
 	@GetMapping("InquiryDelete")
-	public String inquiryDelete(HttpSession session ,Model model, int pageNum,
-			InquiryVO inquiry) {
+	public String inquiryDelete(HttpSession session ,Model model,@RequestParam(defaultValue="1") int pageNum,
+			InquiryVO inquiry , int inquiry_code) {
 		String id = (String) session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
@@ -367,14 +380,14 @@ public class MypageController {
 		// service에서 removeCount() 호출해서 int deleteCount로 리턴
 		// deleteCount가 양수면 InquriyList의pageNum으로 리다이렉트
 		//아니면 글 삭제 실패 띄운 뒤 fail 페이지 리턴 
-		InquiryVO dbinquiry = service.getInquiry(inquiry.getInquiry_code());
-		if(inquiry == null || !id.equals("admin") && !id.equals(dbinquiry.getInquiry_writer())) {
+		inquiry = service.getInquiry(inquiry_code);
+		if(inquiry == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			return "result/fail";
 		}
 		int deleteCount = service.removeInquiry(inquiry);
 		if(deleteCount > 0) {
-			return "redirect:/InquiryList?pageNum=" + pageNum;
+			return "redirect:/InquiryList";
 		}else {
 			model.addAttribute("msg", "글 삭제하는데 실패했습니다");
 			return "result/fail";
@@ -480,10 +493,10 @@ public class MypageController {
 		model.addAttribute("faqList", faqList);
 		return "adminpage/customer_service/faq_board_manage";
 	}
-	
+	// 관리자 페이지 - 고객지원 관리 - Faq 글 보기 
 	@GetMapping("AdminFaqPost")
-	public String adminFaqPost(FaqBoardVO faq ,int faq_code, Model model) {
-		faq = service.getFaq(faq_code);
+	public String adminFaqPost(FaqBoardVO faq , int faq_code, Model model) {
+		faq = service.getFaq(faq_code, false);
 		if(faq == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
 			return "result/fail";
@@ -491,9 +504,50 @@ public class MypageController {
 		model.addAttribute("faq", faq);
 		return "adminpage/customer_service/faq_board_post";
 	}
+//	 관리자 페이지 - 고객지원 관리 -faq 글 수정 
+	@GetMapping("AdminFaqModify")
+	public String adminFaqModify(Model model, int faq_code, FaqBoardVO faq) {
+		faq = service.getFaq(faq_code, false);
+		System.out.println("faq modify " + faq);
+		System.out.println(faq_code);
+		if(faq == null) {
+			model.addAttribute("msg", "해당 게시물은 존재하지 않습니다.");
+			return "result/fail";
+		}
+		model.addAttribute("faq", faq);
+		return "adminpage/customer_service/faq_board_modify";
+	}	
+//	 관리자 페이지 - 고객지원 관리 -faq 글 수정 post
+	@PostMapping("AdminFaqModify")
+	public String adminFaqModify2(@RequestParam(defaultValue="1") int pageNum, Model model, FaqBoardVO faq) {
+		int updateCount = service.getFaqModify(faq);
+		
+		if(updateCount > 0 ) {
+			return "redirect:/AdminFaqPost?faq_code=" + faq.getFaq_code() + "&pageNum=" + pageNum;
+		} else {
+			model.addAttribute("msg", "글 수정을 실패했습니다.");
+			return "return/fail";
+		}
+	}
+	//관리자 페이지 - 고객지원 관리 -faq 글 삭제
+	@GetMapping("AdminFaqDelete")
+	public String adminFaqDelete(FaqBoardVO faq, Model model, int faq_code, int pageNum) {
+		faq = service.getFaq(faq_code, false);
+		if(faq == null) {
+			model.addAttribute("msg", "해당 글은 존재하지 않습니다.");
+			return "result/fail";
+		}
+		int faqDeleteCount = service.getFaqDelete(faq);
+		if(faqDeleteCount > 0) {
+			return "redirect:/AdminFaq?pageNum=" + pageNum;
+		}else {
+			model.addAttribute("msg", "글 삭제를 실패했습니다.");
+			return "result/fail";
+		}
+	}
 	//관리자 페이지 - 고객지원 관리 - 1:1문의 관리
 	@GetMapping("AdminInquiry")
-	public String adminInquiry(@RequestParam(defaultValue="1") int pageNum,Model model, HttpSession session) {
+	public String adminInquiry(@RequestParam(defaultValue="1") int pageNum, Model model, HttpSession session) {
 		// 관리자 로그인 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -533,11 +587,41 @@ public class MypageController {
 		model.addAttribute("inquiryList", inquiryList);
 		return "adminpage/customer_service/inquiry_board_manage";
 	}
-	//1:1문의 
+	//1:1문의 - 글보기 
 	@GetMapping("AdminInquiryPost")
-	public String adminInquiryPost() {
-		
-		return "";
+	public String adminInquiryPost(Model model, @RequestParam(defaultValue= "1") int pageNum, InquiryVO inquiry, int inquiry_code) {
+		inquiry = service.getInquiry(inquiry_code);
+		model.addAttribute("inquiry", inquiry);
+		return "adminpage/customer_service/inquiry_board_post";
+	}
+	//1:1문의 - 글 수정 
+	@GetMapping("AdmininquiryModify")
+	public String admininquiryModify(InquiryVO inquiry, Model model, @RequestParam(defaultValue= "1") int pageNum, int inquiry_code) {
+		inquiry = service.getInquiry(inquiry_code);
+		model.addAttribute("inquiry", inquiry); 
+		return "adminpage/customer_service/inquiry_board_modify";
+	}
+	//1:1문의 - 글 수정 post
+	@PostMapping("AdmininquiryModify")
+	public String admininquiryModify(int inquiry_code, InquiryVO inquiry, @RequestParam(defaultValue= "1")int pageNum, Model model) {
+		int updateCount = service.getInquiryModify(inquiry_code);
+		if(updateCount > 0) {
+			return "redirect:/AdminInquiry?inquiry_code=" +inquiry.getInquiry_code() + "&pageNum=" + pageNum;
+		}else {
+			model.addAttribute("msg", "글을 수정하는데 실패하셨습니다.");
+			return "result/fail";
+		}
+	}
+	//1:1문의 - 글 삭제 
+	@GetMapping("AdminInquiryDelete")
+	public String adminInquiryDelete(int inquiry_code, Model model, InquiryVO inquiry, @RequestParam(defaultValue= "1")int pageNum) {
+		int inquiryDeleteCount = service.getInquiryDelete(inquiry_code);
+		if(inquiryDeleteCount > 0) {
+			return "redirect:/AdminInquiry&pageNum=" + pageNum;
+		}else {
+			model.addAttribute("msg", "글을 삭제하는데 실패하셨습니다.");
+			return "result/fail";
+		}
 	}
 	//top에 있는 마이페이지 연결
 	@GetMapping("MypageMain")

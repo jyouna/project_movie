@@ -29,8 +29,7 @@
 		</div>
 		<div>
 			<input type="button" value="전체선택">
-			<input type="button" value="수정하기">
-			<input type="button" value="삭제하기">
+
 		</div>
 		<section id="listForm">
 			<table>
