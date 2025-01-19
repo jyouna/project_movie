@@ -69,4 +69,24 @@
 			)
 	</update>
 	
+	
+	<!-- 스케줄 삭제 -->
+	<delete id="deleteSchedule">
+		DELETE FROM schedule
+		WHERE 
+			schedule_code IN (
+				<foreach item="schedule_code" collection="scheduleCodeArr" separator=",">
+					#{schedule_code}
+				</foreach>
+			)
+	</delete>
+	
+	<!-- 선택된 달과 상영관의 날짜별 스케줄 수 조회 -->
+	<select id="selectScheduleCountOfDay" resultType="map">
+		SELECT DAY(start_Time) AS day, COUNT(*) AS count
+		FROM schedule
+		WHERE theater_code = #{theater_code}
+		AND start_time LIKE '%${selectedMonth}%'
+		group by day;
+	</select>
 </mapper>

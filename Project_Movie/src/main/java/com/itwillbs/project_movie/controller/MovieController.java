@@ -312,9 +312,22 @@ public class MovieController {
 		}
 	}
 	
-	// 관리자 영화관리에서 상영예정작을 다시 대기 영화로 벼녁ㅇ
-//	@GetMapping("RemoveFromUpcoming")
-//	public String removeFromUpcoming()
+	// 관리자 영화관리에서 상영예정작을 다시 대기 영화로 변경
+	@ResponseBody
+	@PostMapping("RemoveFromUpcoming")
+	public Map<String, String> removeFromUpcoming(@RequestParam Map<String, String> map) {
+		// 결과 전달을 위한 객체
+		Map<String, String> sendMsgMap = new HashMap<String, String>();
+		int updateResult = movieService.setMovieStatus(map);
+		
+		// 업데이트 결과 판별 후 메세지 전달
+		if(updateResult > 0) {
+			sendMsgMap.put("msg", "상영예정작에서 삭제 완료");
+		} else {
+			sendMsgMap.put("msg", "상영예정작에서 삭제 실패");
+		}
+		return sendMsgMap;
+	}
 	
 	// 관리자 영화관리에서 영화상태 지난상영작으로 변경
 	// 업데이트 후 alert창에 표시할 문구 리턴
@@ -326,7 +339,7 @@ public class MovieController {
 		int updateResult = movieService.setMovieStatus(map);
 		
 		// 업데이트 결과 판별 후 메세지 전달
-		if(updateResult>0) {
+		if(updateResult > 0) {
 			sendMsgMap.put("msg", "지난상영작 등록완료");
 		} else {
 			sendMsgMap.put("msg", "지난상영작 등록실패");

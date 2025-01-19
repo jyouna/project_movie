@@ -23,4 +23,10 @@ public interface ScheduleMapper {
 	// schedule의 booking_avail 업데이트
 	int updateScheduleBookingAvail(@Param("scheduleCodeArr") String[] scheduleCodeArr, @Param("booking_avail") int booking_avail);
 	
+	// schedule 삭제
+	int deleteSchedule(@Param("scheduleCodeArr") String[] scheduleCodeArr);
+	
+	// 각 날의 schedule 수 조회
+	List<Map<String, Object>> selectScheduleCountOfDay(@Param("theater_code") String theater_code, @Param("selectedMonth") String selectedMonth);
+	
 }

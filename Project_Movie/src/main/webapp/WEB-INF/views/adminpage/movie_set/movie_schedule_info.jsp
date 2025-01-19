@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -24,14 +25,57 @@
 		<div id="body_top">
 			<div id="title">상영스케줄</div>
 			<div id="btnGroup01">
-				<input type="button" value="스케줄등록">
-			</div>
-			<div id="btnGroup02">
-				<input type="button" value="영화정보">
+				<select class="changeScheduleTable">
+						<option value="T1" <c:if test="${param.theater_code eq 'T1'}">selected</c:if>>1관</option>
+						<option value="T2" <c:if test="${param.theater_code eq 'T2'}">selected</c:if>>2관</option>
+						<option value="T3" <c:if test="${param.theater_code eq 'T3'}">selected</c:if>>3관</option>
+				</select>
+				<!-- 처음 페이지 포워딩시 selectedMonth 파라미터가없어서 month태그에 오늘날짜의 달을 입력 -->
+				<c:choose>
+					<c:when test="${empty param.selectedMonth}">
+						<%
+					        LocalDate currentDate = LocalDate.now();
+					        int year = currentDate.getYear();
+					        int month = currentDate.getMonthValue();
+					        String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
+					        String selectedMonth = year + "-" + monthStr;
+						%>
+						<input type="month" class="changeScheduleTable" value="<%= selectedMonth %>">
+					</c:when>
+					<c:otherwise>
+						<input type="month" class="changeScheduleTable" value="${param.selectedMonth}">
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<div id="body_main">
-			
+			<table>
+				<tr>
+					<th>일요일</th>
+					<th>월요일</th>
+					<th>화요일</th>
+					<th>수요일</th>
+					<th>목요일</th>
+					<th>금요일</th>
+					<th>토요일</th>
+				</tr>
+				<tr>
+					<c:forEach var="day" items="${calendar}" varStatus="status">
+						<td class="${day}">
+							<span class="day">${day}</span>
+						</td>
+						<c:if test="${status.count % 7 == 0}">
+							</tr><tr>
+						</c:if>
+					</c:forEach>
+					<c:if test="${calendar.size() % 7 != 0}">
+						<c:forEach begin="1" end="${7 - calendar.size() % 7}">
+							<td></td>
+						</c:forEach>
+					</c:if>
+				</tr>
+				
+			</table>
 		</div>
 	</section>
 	

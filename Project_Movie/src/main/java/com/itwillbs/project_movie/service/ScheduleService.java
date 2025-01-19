@@ -57,6 +57,18 @@ public class ScheduleService {
 		int booking_avail = 0;
 		return scheduleMapper.updateScheduleBookingAvail(scheduleCodeArr, booking_avail);
 	}
-
+	
+	// 스케줄 정보 삭제
+	public int deleteScheduleFromDB(String[] scheduleCodeArr) {
+		for(String schedule : scheduleCodeArr) {
+			System.out.println(schedule);
+		}
+		return scheduleMapper.deleteSchedule(scheduleCodeArr);
+	}
+	
+	// 각 날의 스케줄 수 조회
+	public List<Map<String, Object>> getScheduleCountListOfday(String theater_code, String selectedMonth) {
+		return scheduleMapper.selectScheduleCountOfDay(theater_code, selectedMonth);
+	}
 
 }

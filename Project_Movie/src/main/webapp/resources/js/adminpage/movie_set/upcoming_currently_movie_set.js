@@ -123,6 +123,45 @@ $(function() {
 	});
 	
 	$("#remove_from_upcoming_btn").click(function() {
+		// 영화 선택 여부 판별
+		if(!isClicked()) {
+			return;
+		}
+		
+		if(confirm("<" + movie_name + ">을 상영예정작에서 삭제 하시겠습니까?")){
+			// 상영예정작에서 삭제 가능 여부 판별
+			$.ajax({
+				type : "GET",
+				url : "IsExistSchedule",
+				data : {
+					movie_code : movie_code	
+				},
+				dataType : "json"
+			}).done(function(result) {
+				// 스케줄 존재시 상영예정작에서 삭제 불가
+				if(!result) {
+					$.ajax({
+						type : "POST",
+						url : "RemoveFromUpcoming",
+						data : {
+							movie_code : movie_code,
+							movie_status : "대기",
+							movie_type : movie_type
+						},
+					}).done(function(result) {
+						alert(result.msg);
+						location.reload();
+					}).fail(function() {
+						alert("상영예정작에서 삭제 실패");
+					});
+				} else {
+					alert("해당영화는 상영예정작에서 삭제 할 수 없습니다\n(해당 영화로 등록된 스케줄이 존재합니다."
+						+ " 스케줄 삭제 후 시도하세요)");
+				}
+			}).fail(function() {
+				alert("상영예정작에서 삭제 실패");
+			});
+		}
 		
 	});
 	

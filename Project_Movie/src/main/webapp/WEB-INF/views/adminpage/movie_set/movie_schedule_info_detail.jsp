@@ -31,8 +31,9 @@
 					<option value="T3" <c:if test="${param.theater_code eq 'T3'}">selected</c:if>>3관</option>
 				</select>
 				<input type="date" class="changeScheduleTable" value="${param.select_date}">
+				<input type="button" id="toBeforePageBtn" value="이전페이지">
 				<input type="button" id="registScheduleBtn" value="스케줄등록">
-				<input type="button" value="스케줄삭제">
+				<input type="button" id="deleteScheduleBtn" value="스케줄삭제">
 			</div>
 			<div id="btnGroup02">
 				<input type="button" id="ableBtn" value="예매 활성화">
@@ -45,40 +46,48 @@
 					<div><input type="checkbox" name="schedule_code"></div>
 					<div>스케줄 목록</div>
 				</div>
-				<c:forEach var="schedule" items="${scheduleList}" varStatus="status">
-					<div class="scheduleInfoBoard">
-						<div class="scheduleCheck"><input type="checkbox" class="scheduleCheck" value="${schedule.schedule_code}"></div>
-						<div class="boardContent">
-							<img src="${schedule.movie_img1}">
-							스케줄코드 ${schedule.schedule_code}<br>
-							
-							상영관
-							<c:choose>
-								<c:when test="${schedule.theater_code eq 'T1'}">(1관),</c:when>
-								<c:when test="${schedule.theater_code eq 'T2'}">(2관),</c:when>
-								<c:otherwise>(3관),</c:otherwise>
-							</c:choose>
-							
-							좌석현황 (?? / ${schedule.avail_seat})<br>
-							<b>&lt;${schedule.movie_name}&gt;</b> 러닝타임 (${schedule.running_time}분)<br>
-							<fmt:parseDate var="parsedStartTime" value="${schedule.start_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
-							<fmt:parseDate var="parsedEndTime" value="${schedule.end_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
-							<fmt:formatDate value="${parsedStartTime}" pattern="yyyy/MM/dd HH:mm"/> ~ <fmt:formatDate value="${parsedEndTime}" pattern="HH:mm"/>
-							[
-								<c:choose>
-									<c:when test="${not empty schedule.isPassed}"><b>종료된 스케줄</b></c:when>
-									<c:when test="${schedule.booking_avail}"><b style = "color: blue;">예매 활성화</b></c:when>
-									<c:otherwise><b  style = "color: red;">예매 비활성화</b></c:otherwise>
-								</c:choose>
-							]
-						</div>
-					</div>
-					<c:if test="${status.count != scheduleList.size()}">
-						<div class="creaningTime">
-							청소 및 다음 상영 준비시간(30분)
-						</div>	
-					</c:if>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${scheduleList.size() eq 0}">
+						<div class="scheduleboardNone">스케줄이 존재하지 않습니다</div>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="schedule" items="${scheduleList}" varStatus="status">
+							<div class="scheduleInfoBoard">
+								<div class="scheduleCheck"><input type="checkbox" class="scheduleCheck" value="${schedule.schedule_code}"></div>
+								<div class="boardContent">
+									<img src="${schedule.movie_img1}">
+									스케줄코드 ${schedule.schedule_code}<br>
+									
+									상영관
+									<c:choose>
+										<c:when test="${schedule.theater_code eq 'T1'}">(1관),</c:when>
+										<c:when test="${schedule.theater_code eq 'T2'}">(2관),</c:when>
+										<c:otherwise>(3관),</c:otherwise>
+									</c:choose>
+									
+									좌석현황 (?? / ${schedule.avail_seat})<br>
+									<b>&lt;${schedule.movie_name}&gt;</b> 러닝타임 (${schedule.running_time}분)<br>
+									<fmt:parseDate var="parsedStartTime" value="${schedule.start_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
+									<fmt:parseDate var="parsedEndTime" value="${schedule.end_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
+									<fmt:formatDate value="${parsedStartTime}" pattern="yyyy/MM/dd HH:mm"/> ~ <fmt:formatDate value="${parsedEndTime}" pattern="HH:mm"/>
+									[
+										<c:choose>
+											<c:when test="${schedule.isPassed != null && schedule.isPassed}"><b>종료된 스케줄</b></c:when>
+											<c:when test="${schedule.isPassed != null && !schedule.isPassed}"><b style = "color: green;">상영중</b></c:when>
+											<c:when test="${schedule.isPassed == null && schedule.booking_avail}"><b style = "color: blue;">예매 활성화</b></c:when>
+											<c:otherwise><b  style = "color: red;">예매 비활성화</b></c:otherwise>
+										</c:choose>
+									]
+								</div>
+							</div>
+							<c:if test="${status.count != scheduleList.size()}">
+								<div class="creaningTime">
+									청소 및 다음 상영 준비시간(30분)
+								</div>	
+							</c:if>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</section>
