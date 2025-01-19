@@ -368,6 +368,24 @@ table tr th {
 	background-color: #ddd;
 	}
 
+.pay_type {
+	display: flex; 
+	gap: 15px; /* 라디오 버튼 사이의 간격을 조절 */
+}
+
+.pay_type label {
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	color: #777777;
+	margin: 0;
+	font-weight: 550;
+}
+
+.pay_type label input {
+	margin-right: 5px;
+}
+
 
 .pay {
 	min-width: unset;
@@ -377,6 +395,7 @@ table tr th {
     font-weight: bold;
     border: 1px solid #ccc;
     background-color: white;
+    color: #666666;
 }
 
 .pay:hover {

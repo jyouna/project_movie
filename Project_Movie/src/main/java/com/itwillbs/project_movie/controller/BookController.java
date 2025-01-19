@@ -2,16 +2,11 @@ package com.itwillbs.project_movie.controller;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.bytecode.stackmap.MapMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.vo.CouponVO;
+import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
 
-import retrofit2.http.GET;
 
 @Controller
 public class BookController {
@@ -100,7 +95,7 @@ public class BookController {
 	
 	// ========================= 좌석페이지 컨트롤러 =========================
 	@GetMapping("BookSeat")
-	public String bookSeatPage(String schedule_code, HttpSession session, Model model) {
+	public String bookSeatPage(String schedule_code, MemberVO member, HttpSession session, Model model) {
 
 		// 로그인 후 좌석 선택 가능
 		// 미로그인 시 로그인 폼으로 이동
@@ -112,6 +107,21 @@ public class BookController {
 			model.addAttribute("targetURL", "MemberLogin");
 			return "result/fail";
 		}
+		
+		session.setAttribute("sName", member.getMember_name());
+		session.setAttribute("sEmail", member.getEmail());
+		session.setAttribute("sPhone", member.getPhone());
+		System.out.println("아이디 : " + member.getMember_id());
+		System.out.println("세션아이디 : " + id);
+		System.out.println("이름 : " + member.getMember_name());
+		System.out.println("메일 : " + member.getEmail());
+		System.out.println("폰번호 : " + member.getPhone());
+		System.out.println("1 : " + session.getAttribute("sName"));
+		System.out.println("2 : " + session.getAttribute("sEmail"));
+		System.out.println("3 : " + session.getAttribute("sPhone"));
+		
+		// 스케줄 코드 세션에 저장
+		session.setAttribute("schedule_code", schedule_code);
 		
 		// 좌석 정보 조회
 		List<SeatVO> seatList = service.getSeat();
@@ -158,7 +168,7 @@ public class BookController {
 		return ticketList;
 	}
 	
-	//  결제 페이지로 이동
+	// 결제 페이지로 이동
 	@GetMapping("BookPay")
 	public String bookPayPage(String schedule_code, Model model) {
 		
@@ -167,10 +177,19 @@ public class BookController {
 	
 	@PostMapping("BookPay")
 	public String bookPay(String schedule_code, HttpSession session, Model model, @RequestParam Map<String, String> map) {
+		// 미 로그인 시 접근 불가
 		String id = (String)session.getAttribute("sId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
+			return "result/fail";
+		}
+		
+		// 스케줄 코드 없을 시 접근 불가
+		String schCode = (String)session.getAttribute("schedule_code");
+		if(schCode == null) {
+			model.addAttribute("msg", "잘못된 접근입니다");
+			model.addAttribute("targetURL", "BookTickets");
 			return "result/fail";
 		}
 		
@@ -192,7 +211,7 @@ public class BookController {
 		
 		model.addAttribute("totalSeat", totalSeat);
 		
-		// ================== 포인트 =====================
+		// ================== [ 포인트 ] =====================
 		int myPoint = service.getMyPoint(id);
 		model.addAttribute("myPoint", myPoint);
 		
@@ -219,14 +238,19 @@ public class BookController {
 		return coupon;
 	}
 	
-	
-	
-
+	// ================= [ 결제 완료 페이지 ] ==================
 	@GetMapping("BookFinish")
-	public String bookFinish() {
+	public String bookFinishPage() {
 		return "book_tickets/book_finish";
 	}
-
+	
+	@PostMapping("BookFinish")
+	public String bookFinish(@RequestParam Map<String, String> map, Model model, String schedule_code) {
+		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
+		model.addAttribute("schedule", schedule);
+		
+		return "book_tickets/book_finish";
+	}
 	
 	
 	

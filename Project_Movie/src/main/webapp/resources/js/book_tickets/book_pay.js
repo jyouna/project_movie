@@ -1,5 +1,5 @@
 $(function() {
-	$(".CheckCouponRadio").click(function() {
+	$(".checkCouponRadio").click(function() {
 		let coupon_code = $(this).val();
 		$.ajax({
 			type : "GET",
@@ -40,4 +40,43 @@ $(function() {
 		}
 	});
 	
+	// 결제 버튼 클릭 시 선택되어 있는 결제수단으로 결제
+	$(".payment_btn").click(function() {
+		if($(".pay:checked").length == 0) {
+			alert("결제수단을 선택해주세요");
+			return false;
+		} else if($(".pay").eq(0).is(':checked')) {
+			// 신용카드
+			KGmobilians();
+		} else if($(".pay").eq(1).is(':checked')) {
+			// 카카오페이
+			kakaopay();
+		} else if($(".pay").eq(2).is(':checked')) {
+			// 토스페이
+			tosspay();
+		}
+	});
+	
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
