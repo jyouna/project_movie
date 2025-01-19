@@ -1,5 +1,5 @@
 package com.itwillbs.project_movie.controller;
-//-1-5
+// 250119
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -194,6 +194,8 @@ public class MemberController {
    }
    */
    
+   // --------------------------------------------------------------------------- 아이디 찾기 시작
+  
    
    @GetMapping("MemberFind")
    public String memberFindIdForm() {
@@ -218,7 +220,7 @@ public class MemberController {
     	   System.out.println("찾는 아이디는 " + member_id);
            model.addAttribute("member_id", member_id);
            System.out.println("===============================");
-           System.out.println(member_name + birth_date + email);
+           System.out.println(member_name +" " + birth_date +" "+ email);
            
        } else {
            model.addAttribute("errorMsg", "입력한 정보로 등록된 계정이 없습니다.");
@@ -230,21 +232,64 @@ public class MemberController {
    
    
    
+  // -------------------------------------------------------------------------비밀번호찾기 시작
    
-   /*
    @GetMapping("MemberFindPasswd")
+   
    public String memberFindPasswdForm() {
-       return "member/member_find_form"; // 뷰: member_find_form.jsp
+	   
+       return "member/member_find_passwd_form"; // 뷰: member_find_form.jsp
    }
+   
+   
+  
    
    
    @PostMapping("MemberFindPasswd")
-   public String memberFindPasswd() {
-       return "member/member_find_form"; // 뷰: member_find_form.jsp
+   public String memberFindPasswd(MemberVO member, Model model) {
+       // 입력받은 정보 추출
+       String member_name = member.getMember_name();
+       Date birth_date = member.getBirth_date();
+       String email = member.getEmail();
+
+       // 1. 입력된 정보로 회원 인증
+       email = memberService.findMemberPasswd(member_name, birth_date, email); // 인증용 서비스 호출
+       System.out.println("비밀번호를 찾기위해 입력한 이메일이 인증됐고 " + email +" 인증된 이메일 주소");
+       
+       
+       
+       
+       if ( email == null) {
+           // 인증 실패
+           model.addAttribute("errorMsg", "입력한 정보와 일치하는 계정이 없습니다.");
+           return "member/member_find_passwd_form";
+       }
+
+       // 2. 인증 성공 시, 임시 비밀번호 생성 및 이메일 전송
+       boolean isTemporaryPasswordSent = mailService.sendTemporaryPassword(member,email);
+       if (!isTemporaryPasswordSent) {
+           // 임시 비밀번호 생성 또는 이메일 전송 실패
+           model.addAttribute("errorMsg", "임시 비밀번호 발급 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+           return "member/member_find_passwd_form";
+       }
+
+       // 3. 성공 메시지 전달
+       System.out.println("임시 비밀번호가 이메일로 발송되었습니다. 이메일을 확인하세요.");
+       
+       model.addAttribute("email",email);
+       return "member/member_find_passwd_form";
+     
    }
-   */    
-   
-   
+  
+   /*
+   int updateCount = memberService.modifyMembcer(map);
+   if(updateCount > 0) { // 성공
+       return "redirect:/MemberInfo";
+   } else { // 실패
+       model.addAttribute("msg", "회원정보 수정 실패!");
+       return "result/process";
+   }
+   */
    
    
    
@@ -259,7 +304,7 @@ public class MemberController {
 //   
    
    
-   // 240105 1900i ###############################################################################
+   // 240105 1900i ######################################################## 로그인 + 쿠키로 아이디 저장
    // 추가: 쿠키값을 읽어 로그인 폼에 전달
    @GetMapping("MemberLogin")
    public String memberLoginForm(@CookieValue(value = "rememberId", required = false)
@@ -457,7 +502,7 @@ public class MemberController {
 
    
    // 240105 1900i ####################
-   // 회원 정보 수정 처리 - POST
+   //---------------------------------------------------------------------------------------- 회원 정보 수정 처리 - POST
    @PostMapping("MemberModify")
    public String memberModify(
        @RequestParam Map<String, String> map, 
@@ -472,7 +517,8 @@ public class MemberController {
            model.addAttribute("targetURL", "MemberLogin");
            return "result/process";
        }
-
+       
+       
        // 비밀번호 검증
        MemberVO dbMember = memberService.getMember(id);
        if(dbMember == null || !passwordEncoder.matches(map.get("oldPasswd"), dbMember.getMember_passwd())) {
@@ -540,7 +586,7 @@ public class MemberController {
    }
 
 
-//   =========================================================================================================================== 폰인증
+//   ======================================================================================= 이메일인증
    
    
    @GetMapping("MemberEmailAuth")

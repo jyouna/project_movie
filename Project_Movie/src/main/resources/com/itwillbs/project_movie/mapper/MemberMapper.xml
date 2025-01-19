@@ -26,6 +26,7 @@
 	</insert>
 	
 	
+	
 	<!-- 	 아이디 찾기 판별 -->
 	<select id="findIdMember" resultType="string">
 	    SELECT member_id
@@ -36,9 +37,22 @@
 	</select>	
 	
 	
+	<!-- 	 비밀번호 찾기 판별 -->
+	<select id="findPasswdMember" resultType="string">
+	    SELECT email
+	    FROM member
+	    WHERE member_name = #{member_name}
+	      AND birth_date = CAST(#{birth_date} AS DATE)
+	      AND email = #{email}
+	</select>		
 	
-	
-	
+	<update id="updateMemberPassword">
+	    UPDATE member
+	    SET 
+	        member_passwd = #{member_passwd} <!-- 새 비밀번호 (암호화된 값) -->
+	    WHERE 
+	        email = #{email} <!-- 이메일을 기준으로 업데이트 -->
+	</update>
 	
 	
 	
@@ -88,6 +102,8 @@
 			member_status = #{member_status}
 		WHERE member_id = #{member_id}
 	</update>
+	
+	
 
 
 <!--  회원 정보 수정 (패스워드 제외 기능) -->
