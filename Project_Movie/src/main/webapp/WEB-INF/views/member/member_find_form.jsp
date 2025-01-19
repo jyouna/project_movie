@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <title>아이디/비밀번호 찾기</title>
+  <title>아이디찾기</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_find_form.css">
 </head>
@@ -28,7 +28,7 @@
   <input type="hidden" id="error_msg" value="${errorMsg != null ? errorMsg : ''}">
     
   <div class="container1">
-    <h1>아이디/비밀번호 찾기</h1>
+    <h1> 아이디 / 비밀번호 찾기 </h1>
     
 	<div class="tabs">
 	  <button id="find-id-tab" class="" onclick="location.href='${pageContext.request.contextPath}/MemberFind'">아이디 찾기</button>
@@ -39,9 +39,9 @@
 <form id="MemberFindId" action="MemberFind" method="post">
     <!-- 아이디 찾기 폼 -->
     <div id="find-id-form" class="form-container">
-      <h2>-아이디 찾기-</h2>
+      <h2></h2>
       <label for="member_name">이름</label>
-      <input type="text" id="member_name"  name="member_name" placeholder="이름 입력" autocomplete="name" required>
+      <input type="text" id="member_name"  name="member_name" placeholder="" autocomplete="name" required>
 <!--       id-name to name -->
       
       <label for="birth_date">생년월일</label>

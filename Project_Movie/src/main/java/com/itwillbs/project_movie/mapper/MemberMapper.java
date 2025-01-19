@@ -64,7 +64,8 @@ public interface MemberMapper {
 			@Param("birth_date") Date birth_date,
 			@Param("email") String email);
 
-	String findPasswdMember(@Param("member_name") String member_name, 
+	String findPasswdMember(@Param("member_id") String member_id, 
+			@Param("member_name") String member_name, 
 			@Param("birth_date") Date birth_date,
 			@Param("email") String email);
 
@@ -75,7 +76,10 @@ public interface MemberMapper {
 	//임시비밀번호를 비밀번호에 update한다.
 	int updateMemberPassword(MemberVO member);
 
+	int checkIdDuplicate(String member_id);
+
 	
+
 	
 	
 	

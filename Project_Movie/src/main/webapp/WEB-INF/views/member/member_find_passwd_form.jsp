@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <title>아이디/비밀번호 찾기</title>
+  <title>비밀번호찾기</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_find_form.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_find_passwd_form.css">
 </head>
 
 
@@ -28,7 +28,7 @@
     
   
   <div class="container1">
-    <h1>아이디/비밀번호 찾기</h1>
+    <h1> 아이디 / 비밀번호 찾기 </h1>
     
 	<div class="tabs">
 	  <button id="find-id-tab" class="" onclick="location.href='${pageContext.request.contextPath}/MemberFind'">아이디 찾기</button>
@@ -46,10 +46,16 @@
     <!-- 비밀번호 찾기 폼 -->
     <div id="find-pw-form" class="form-container ">
     
-      <h2>-비밀번호 찾기-</h2>
+      <h2></h2>
+      
+      <label for="member_id">아이디</label>
+      <input type="text" id="member_id"  name="member_id" placeholder="" autocomplete="member_id" required>
       
       <label for="member_name">이름</label>
-      <input type="text" id="member_name"  name="member_name" placeholder="이름 입력" autocomplete="name" required>
+      <input type="text" id="member_name"  name="member_name" placeholder="" autocomplete="name" required>
+      
+      
+      
 	  <!--  id-name to name -->
       
       <label for="birth_date">생년월일</label>

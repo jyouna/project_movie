@@ -17,7 +17,7 @@ body {
     margin-bottom: 10px;
   }
   
-  #find-pw-tab {
+  #find-id-tab {
     padding: 0px;
     width: 45%;
     border: 0px solid #007BFF;
@@ -25,12 +25,20 @@ body {
     cursor: pointer;
   }
   
-  #find-pw-tab:active {
+  #find-id-tab:active {
     background-color: #007BFF;
     color: white;
   }
   
-  #find-id-tab {
+  
+  
+  
+  
+  
+  
+  
+  
+  #find-pw-tab {
   background-color: #007BFF; /* 배경색을 회색으로 설정 */
   width: 45%;
   color: white; /* 텍스트 색상 */
@@ -39,11 +47,11 @@ body {
   cursor: pointer; /* 커서를 포인터로 변경 */
 }
 
-#find-id-tab:hover {
+#find-pw-tab:hover {
   background-color: #007BFF; /* 호버 시 조금 더 짙은 회색으로 변경 */
 }
 
-#find-id-tab:active {
+#find-pw-tab:active {
   background-color: #007BFF; /* 클릭 시 짙은 회색으로 변경 */
 }
   

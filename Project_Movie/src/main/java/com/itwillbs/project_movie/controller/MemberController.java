@@ -1,5 +1,5 @@
 package com.itwillbs.project_movie.controller;
-// 250119
+// 250120
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -11,6 +11,7 @@ import java.time.format.DateTimeParseException; // 날짜 형식 검증 예외 �
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;  //가입시 아이디 중복 찾기
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,6 +89,20 @@ public class MemberController {
    }
    */
    
+   
+   @PostMapping("checkId")
+   @ResponseBody
+   public ResponseEntity<Boolean> checkId(@RequestParam("member_id") String member_id) {
+       // Service 계층에서 중복 여부 확인
+       boolean isDuplicate = memberService.isIdDuplicate(member_id);
+
+       // 중복 여부를 JSON 형식으로 반환 (true: 중복, false: 사용 가능)
+       return ResponseEntity.ok(isDuplicate);
+   }
+   
+
+   
+   
    @GetMapping("MemberJoin")
    public String memberJoinForm() {
       return "member/member_join_form";
@@ -125,7 +140,7 @@ public class MemberController {
        
     } catch (Exception e) {
        e.printStackTrace();
-       model.addAttribute("msg", "c134)서버 오류가 발생했습니다.");
+       model.addAttribute("msg", "서버 오류가 발생했습니다. 다시 시도해주세요");
        return "result/process";
     }
     
@@ -140,13 +155,13 @@ public class MemberController {
       //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
       EmailAuthVO emailAuthVO = mailService.sendAuthMail(member);
       mailService.registMailAuthInfo(emailAuthVO);
-      System.out.println("c149)인증메일 정보 :" + emailAuthVO );
+      System.out.println("c143)인증메일 정보 :" + emailAuthVO );
       
       mailService.registMailAuthInfo(emailAuthVO);
       return "redirect:/";
    } else {
        // fail.jsp 페이지에서 출력할 메세지("회원가입 실패!")를 Model 객체에 저장(속성명 msg)
-       model.addAttribute("msg", "c155) 회원가입 실패!");
+       model.addAttribute("msg", "c149) 회원가입 실패!");
        return "result/process";
     }
     
@@ -248,12 +263,15 @@ public class MemberController {
    @PostMapping("MemberFindPasswd")
    public String memberFindPasswd(MemberVO member, Model model) {
        // 입력받은 정보 추출
-       String member_name = member.getMember_name();
+	   
+	   String member_id = member.getMember_id();
+	   String member_name = member.getMember_name();
        Date birth_date = member.getBirth_date();
        String email = member.getEmail();
+       
 
        // 1. 입력된 정보로 회원 인증
-       email = memberService.findMemberPasswd(member_name, birth_date, email); // 인증용 서비스 호출
+       email = memberService.findMemberPasswd(member_id,member_name, birth_date, email); // 인증용 서비스 호출
        System.out.println("비밀번호를 찾기위해 입력한 이메일이 인증됐고 " + email +" 인증된 이메일 주소");
        
        
@@ -274,7 +292,7 @@ public class MemberController {
        }
 
        // 3. 성공 메시지 전달
-       System.out.println("임시 비밀번호가 이메일로 발송되었습니다. 이메일을 확인하세요.");
+       System.out.println("임시 비밀번호가 이메일로 발송됨 이메일을 확인하세요.");
        
        model.addAttribute("email",email);
        return "member/member_find_passwd_form";
@@ -314,10 +332,6 @@ public class MemberController {
        return "member/member_login_form"; // 로그인 폼으로 이동
    }
 
-   
-   
-   // 회원 로그인 비즈니스 로직 처리(MemberLogin - POST)
-   // 연결된 서비스: getMember()
    @PostMapping("MemberLogin")
    public String memberLogin(
          MemberVO member,
@@ -325,45 +339,10 @@ public class MemberController {
          HttpSession session,Model model,
          BCryptPasswordEncoder passwordEncoder,
          HttpServletResponse response) {
-   
-   // MemberService - loginMember() 메서드 호출하여 로그인 여부 판별 요청
-   // => 파라미터 : MemberVO 객체   리턴타입 : String(조회 성공 시 아이디 리턴)
-   //            String result = service.loginMember(member);
-   //            System.out.println("로그인 판별 결과 : " + result);
-   // ==========================================================================
-   // [ BCryptPasswordEncoder 클래스를 활용하여 패스워드 비교 ]
-   // MemberService - getMember() 메서드 호출하여 암호화 된 패스워드 조회
-   //    (회원 상세정보 조회 재사용)
-   //    => 파라미터 : 아이디   리턴타입 : MemberVO(dbMember)
-   //    => 기존 MemberVO 객체에 덮어써도 되지만, 기존 패스워드를 유지하여 비교하기 위해 별도의 변수 선언
       
       
       //***** 수정전: passwd ----> 수정후: member_passwd *****
       MemberVO dbMember = memberService.getMember(member.getMember_id());
-      
-      /*
-       * [ BCryptPasswordEncoder 객체를 활용한 패스워드 비교 ]
-       * - 입력받은 패스워드(= 평문)와 DB에 저장된 패스워드(= 암호문) 간의 
-       *   직접적인 문자열 비교 시 무조건 두 문자열은 다름
-       * - 일반적인 해싱의 경우 새 패스워드도 해싱을 통해 암호문으로 변환하여 비교하면 되지만
-       *   현재, BCryptPasswordEncoder 객체를 통해 기존 패스워드를 암호화했기 때문에
-       *   솔팅값에 의해 두 암호는 서로 다른 문자열이 되어 
-       *   DB 에서 WHERE 절로 두 패스워드 비교 또는 String 클래스의 equals() 로 비교가 불가능하다!
-       * - BCryptPasswordEncoder 객체의 matches() 메서드를 활용하여 비교 필수!
-       *   (내부적으로 암호문으로부터 솔팅값을 추출하여 평문을 암호화하여 암호문끼리 비교)
-       * 
-       * < 기본 문법 >
-       * 객체명.matches(평문, 암호문) 호출 시 boolean 타입 결과 리턴
-       * ------------------------------------------------------------------------
-       * 검색 아이디가 존재하지 않을 경우 리턴되는 결과값 : null
-       * => MemberVO 객체(dbMember)가 null 일 경우(= 아이디 없음) 또는 
-       *    패스워드 일치하지 않을 경우(matches() 메서드 리턴값 false)
-       *    "result/fail.jsp" 페이지 포워딩(전달 메세지 : "로그인 실패!")
-       */
-      // 로그인을 위한 회원 상세정보 조회했을 때 처리 작업
-      // 1) 로그인 실패(아이디 또는 패스워드 틀렸을 경우) 판별
-      // 2) 로그인 불가능한 회원 상태(휴면(생략) or 탈퇴) 판별
-      // 3) 위의 모든 조건이 false 일 경우 로그인 성공 처리
       
       
       if(dbMember == null || !passwordEncoder.matches(member.getMember_passwd(), dbMember.getMember_passwd())) {
@@ -455,6 +434,8 @@ public class MemberController {
       } //else
    } //memberLogin
    
+   
+ // ===============================================================================  
 
    // 회원 로그아웃 처리(MemberLogout - GET)
    // 뷰 포워딩 없음, 메인페이지로 리다이렉트
@@ -544,7 +525,7 @@ public class MemberController {
    
    
    
-   // 250105
+ 
    
 //   휴대폰번호 인증 api   *************************************************************
    
@@ -610,7 +591,7 @@ public class MemberController {
        }
    }
 
-   
+ // ================================================================================================ 
    
    @GetMapping("MemberWithdraw")
    public String memberWithdrawForm(HttpSession session, Model model) {
