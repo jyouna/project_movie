@@ -47,7 +47,8 @@ public class AdminManageController {
 	@Autowired
 	private MemberService memberService;
 	
-	@GetMapping("AdminLogin") // 관리자 계정 로그인 폼 이동
+	@GetMapping("AdminLogin") 
+	// 관리자 계정 로그인 폼 이동
 	// 세션 admin_sId가 있을 시 바로 접속, 그렇지 않을 경우 관리자 로그인 페이지 이동
 	public String adminLogigForm(HttpSession session) {
 		System.out.println("관리자 로그인 세션 : " + session.getAttribute("admin_sId"));  
@@ -59,7 +60,7 @@ public class AdminManageController {
 		}
 	}
 	
-	@PostMapping("AdminLogin") // 관리자 로그인
+	@PostMapping("AdminLogin") // 관리자 로그인 폼 제출
 	public String adminLogin(AdminRegisVO adminLoginInfo, HttpSession session, Model model) {
 		System.out.println("입력한 아이디 : " + adminLoginInfo.getAdmin_id());
 		System.out.println("입력한 비밀번호" + adminLoginInfo.getAdmin_passwd());
