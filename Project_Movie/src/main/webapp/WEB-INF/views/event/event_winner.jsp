@@ -50,7 +50,12 @@
 						<c:forEach var="eventWinnerBoard" items="${eventWinnerBoardList}" varStatus="status">
 							<tr>
 								<td class="winner_code" id="winner_code">${eventWinnerBoard.winner_code}</td>
-								<td>${eventWinnerBoard.winner_division}</td>
+								<td>
+									<c:choose>
+										<c:when test="${eventWinnerBoard.winner_division eq 0}">포인트 이벤트</c:when>
+										<c:otherwise>쿠폰 이벤트</c:otherwise>
+									</c:choose>
+								</td>
 								<td class="winner_subject">${eventWinnerBoard.winner_subject}</td>
 								<td>
 									<fmt:formatDate value="${eventWinnerBoard.winner_announce_date}" pattern="yyyy-MM-dd"/>

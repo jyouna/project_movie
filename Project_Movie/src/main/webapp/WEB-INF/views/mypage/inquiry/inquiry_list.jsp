@@ -63,7 +63,7 @@
 								</td>
 								<td class="inquiry_subject">${inquiry.inquiry_subject}</td>
 								<td>
-									<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yy-MM-dd"/>
+									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yy-MM-dd"/>
 
 								</td>
 							</tr>
