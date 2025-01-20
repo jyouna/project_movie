@@ -155,6 +155,21 @@ public class AdminStaticsController {
 		return map;
 	}
 	
+	@GetMapping("AdminMainGetYearTotalMemberJoinStaticsInfo")
+	@ResponseBody
+	public Map<String, Object> adminMainForYearTotalNewMemeber(int year) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("관리자 메인페이지 가입자 통계 컨트롤러 호출됨 : " + year);
+		
+		map = adminService.getMonthlyNewMember(year);
+		
+		System.out.println("컨트롤러 map에 저장된 값 : " + map);
+		
+		return map;
+	}	
+	
+	
+	
 	@PostMapping("getTotalPeriodMemberJoinStatics")
 	@ResponseBody
 	public Map<String, String> totalPeriodMemberJoinStatics(@RequestBody Map<String, List<String>> period) {
@@ -165,7 +180,6 @@ public class AdminStaticsController {
 		
 		return map;
 	}
-	
 	
 	
 	// 회원 자동 생성 메크로

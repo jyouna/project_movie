@@ -1,0 +1,79 @@
+@charset "EUC-KR";
+
+
+#sec01 {
+	border: 1px solid;
+	width: 50%;
+	height: 100%;
+	display: inline-block;
+	overflow: auto;
+}
+
+#sec02 {
+	border: 1px solid;
+	width: 50%;
+	height: 100%;
+	display: inline-block;
+	float: right;
+	overflow: auto;
+}
+
+#sec03 {
+	border: 1px solid;
+	width: 50%;
+	height: 100%;
+	display: inline-block;
+	overflow: auto;
+}
+
+#sec04 {
+	border: 1px solid;
+	width: 50%;
+	height: 100%;
+	display: inline-block;
+	float: right;
+	overflow: auto;
+}
+
+#testArticle {
+	display: inline-block;
+	height: 42%;
+/* 	overflow: auto; */
+}
+
+h5 {
+	margin: 5px;
+} 
+
+#newMember_statics {
+	 transform: scale(0.5) translate(-400px, -400px);
+}
+
+.secitonBoard {
+	margin: 1em;
+	border: 1px solid;
+	width: 95%;
+	height: 60%;
+	overflow: auto;
+}
+
+#chartArea {
+/* 	transform: scale(0.7); */
+	margin: 0px;
+	width: 60%;
+	height: 60%;
+/* 	float: left;  */
+	
+}
+
+.myChart {
+/* 	background-color: ivory; */
+}
+
+#showPeriod {
+	margin: 3px;
+}
+
+body {
+	BACKGROUND-COLOR: whitesmoke;
+}
