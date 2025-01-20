@@ -29,6 +29,8 @@ import com.itwillbs.project_movie.vo.PageInfo;
 import com.itwillbs.project_movie.vo.PageInfo2;
 import com.itwillbs.project_movie.vo.PointVO;
 
+import retrofit2.http.GET;
+
 @Controller
 public class AdminEventManageController {
 	@Autowired
@@ -407,6 +409,32 @@ public class AdminEventManageController {
 		return winnerCount;
 	}
 	
+	@GetMapping("EventWinnerManage")
+	public String EventWinnerManage(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "") String searchContent) {
+
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		return "adminpage/event_manage/event_winner_manage";
+	}
 	
+	@GetMapping("winnerNoticeBoard")
+	public String winnerNoticeBoard() {
+		
+		return "adminpage/event_manage/event_winner_board_regis";
+	}
 }
 

@@ -136,12 +136,15 @@
 					        <a class="nav-link" href="EventAllWinnerList">
 					            이벤트당첨자
 					        </a>
-					        <a class="nav-link" href="CouponWinnerManage">
-					            쿠폰당첨목록
+					        <a class="nav-link" href="EventWinnerManage">
+					            당첨자발표
 					        </a>
-					        <a class="nav-link" href="PointWinnerManage">
-					            포인트당첨목록
-					        </a>
+<!-- 					        <a class="nav-link" href="CouponWinnerManage"> -->
+<!-- 					            쿠폰당첨목록 -->
+<!-- 					        </a> -->
+<!-- 					        <a class="nav-link" href="PointWinnerManage"> -->
+<!-- 					            포인트당첨목록 -->
+<!-- 					        </a> -->
 					        <a class="nav-link" href="CouponBoardManage">
 					            쿠폰변동내역
 					        </a>
