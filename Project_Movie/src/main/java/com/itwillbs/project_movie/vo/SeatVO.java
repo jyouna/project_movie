@@ -20,4 +20,5 @@ public class SeatVO {
 	private int seat_col;			// 좌석 열 (1 ~ 10)
 	private String seat_type;		// 좌석 타입 (일반석, 장애인석)
 	private String theater_code;	// 상영관 코드 (T1, T2, T3)
+	private int seat_avail;	        // 좌석예매가능 여부(0(false), 1(true));
 }
