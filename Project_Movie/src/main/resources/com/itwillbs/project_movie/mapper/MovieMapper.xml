@@ -135,9 +135,23 @@
 	<!-- 영화 상영시작일, 상영종료일 업데이트 -->
 	<update id="updateScreeningPeriod">
 		UPDATE movie
-		SET start_screening_date = #{start_screening_date}
+		SET 
+			start_screening_date = #{start_screening_date}
 			, end_screening_date = #{end_screening_date}
 		WHERE movie_code = #{movie_code}
+	</update>
+	
+	<!-- 영화 상태 대기로 변경(IN 사용) -->
+	<update id="updateMovieStatusToStandby">
+		UPDATE movie
+		SET 
+			movie_status = #{movie_status}
+		WHERE 
+			movie_code IN (
+			<foreach item="movie_code" collection="movieCodeArr" separator=",">
+				#{movie_code}
+			</foreach>
+			)
 	</update>
 	
 	<!-- 영화정보 삭제 -->

@@ -160,5 +160,10 @@ public class MovieService {
 		return movieMapper.selectMovieListCheck(conditionMap);
 	}
 
+	public int changeMovieStatusToStandby(String[] movieCodeArr) {
+		String movie_status = "대기";
+		return movieMapper.updateMovieStatusToStandby(movie_status, movieCodeArr);
+	}
+
 	
 }

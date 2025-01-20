@@ -20,4 +20,19 @@
 			, default
 		)
 	</insert>
+	
+	<!-- 현재날짜에 해당하는 시즌투표정보 조회 -->
+	<select id="selectVoteInfo" resultType="map">
+		SELECT *
+		FROM vote_info
+		WHERE 
+			now() BETWEEN start_date AND end_date
+	</select>
+	
+	<!-- 투표 상태 업데이트 -->
+	<update id="updateVoteStatus">
+		UPDATE vote_info
+		SET vote_status = #{vote_status}
+		WHERE vote_code = #{vote_code}
+	</update>
 </mapper>

@@ -41,5 +41,8 @@ public interface MovieMapper {
 	// 상영시작일, 상영종료일 업데이트
 	int updateScreeningPeriod(MovieVO movieVO);
 	
+	// 영화상태 대기로 변경
+	int updateMovieStatusToStandby(@Param("movie_status") String movie_status, @Param("movieCodeArr") String[] movieCodeArr);
+	
 	
 }

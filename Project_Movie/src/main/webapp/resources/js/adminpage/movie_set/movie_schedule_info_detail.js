@@ -219,12 +219,22 @@ $(function() {
 	// 예매 활성화 버튼 클릭시 해당스케줄의 예매여부 활성화로 변경
 	$("#ableBtn").click(function() {
 		let checkMovieCodeStr = getCheckedMovieCode();
+		// 스케줄 선택여부 판단
+		if(checkMovieCodeStr == "") {
+			alert("스케줄을 선택해 주세요");
+			return;
+		}
 		location.href = "ScheduleBookingStatusOn?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
 	});
 	
 	// 예매 비활성화 버튼 클릭시 해당스케줄의 예매여부 비활성화로 변경
 	$("#disableBtn").click(function() {
 		let checkMovieCodeStr = getCheckedMovieCode();
+		// 스케줄 선택여부 판단
+		if(checkMovieCodeStr == "") {
+			alert("스케줄을 선택해 주세요");
+			return;
+		}
 		location.href = "ScheduleBookingStatusOff?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
 	});
 	

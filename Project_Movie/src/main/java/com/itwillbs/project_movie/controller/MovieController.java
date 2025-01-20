@@ -229,6 +229,28 @@ public class MovieController {
 		}
 	}
 	
+	// 투표설정 페이지에서 투표영화 삭제
+	@GetMapping("RemoveMovieFromPick")
+	public String removeMovieFromPick(String movieCodeStr, Model model) {
+		String[] movieCodeArr = movieCodeStr.trim().split(" ");
+		int updateCount = movieService.changeMovieStatusToStandby(movieCodeArr);
+		
+		if(updateCount > 0) {
+			return "redirect:/RemoveMovieFromPickSuccess";
+		} else {
+			model.addAttribute("msg", "투표영화 삭제 실패");
+			return "result/process";
+		}
+	}
+	
+	// 투표영화삭제 성공
+	@GetMapping("RemoveMovieFromPickSuccess")
+	public String removeMovieFromPickSuccess(Model model) {
+		model.addAttribute("targetURL", "AdminMoviePickSet");
+		model.addAttribute("msg", "투표영화 삭제 성공");
+		return "result/process";
+	}
+	
 	
 	// 관리자 영화관리에서 영화삭제
 	@ResponseBody

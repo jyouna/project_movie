@@ -25,34 +25,57 @@
 			<div id="title">투표 설정</div>
 			<div id="btnGroup01">
 				<input type="button" id="registPickBtn" value="투표등록">
-				<input type="button" value="상영예정작으로 등록">
-				<input type="button" value="투표영화에서 삭제하기">
-				<input type="button" value="투표시작">
-				<input type="button" value="투표종료">
+				<input type="button" id="registUpcomingBtn" value="상영예정작으로 등록">
+				<input type="button" id="removeFromPickBtn" value="투표영화에서 삭제하기">
+				<input type="button" id="startVoteBtn" value="투표시작">
+				<input type="button" id="endVoteBtn" value="투표종료">
 			</div>
 		</div>
 		<div id="body_main">
 			<div id="pick_movie_list">
 				<table>
-					<tr><th colspan="8">투표 영화</th></tr>
+					<tr><th colspan="10">투표 정보</th></tr>
 					<tr>
-						<th><input type="checkbox" id="allCheck"></th>
-						<th>영화코드</th>
-						<th>영화제목</th>
-						<th>투표기간</th>
-						<th>상영시간</th>
-						<th>관람연령</th>
+					<c:choose>
+						<c:when test="${empty voteInfo}">
+							<td colspan="10">
+								등록된 투표정보가 없습니다. 투표 등록해주세요
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td>
+								투표명
+								<input type="hidden" id="voteCode" value="${voteInfo.vote_code}">
+								<input type="hidden" id="isActivation" value="${voteInfo.vote_status}">
+							</td>
+							<td>${voteInfo.vote_name}</td>
+							<td colspan="2">투표기간</td>
+							<td colspan="3">${voteInfo.start_date} ~ ${voteInfo.end_date}</td>
+							<td>투표상태</td>
+							<td colspan="2">
+								<c:choose>
+									<c:when test="${voteInfo.vote_status eq 0}">비활성화</c:when>
+									<c:otherwise>활성화</c:otherwise>
+								</c:choose>
+							</td>
+						</c:otherwise>
+					</c:choose>
 					</tr>
-					<c:forEach var="movie" items="${movieList}">
-						<tr>
-							<td><input type="checkbox" value="${movie.movie_code}" class="check"></td>
-							<td>${movie.movie_code}</td>
-							<td>${movie.movie_name}</td>
-							<td>투표등록전입니다</td>
-							<td>${movie.running_time}</td>
-							<td>${movie.age_limit}</td>
-						</tr>
-					</c:forEach>
+					<tr>
+						<th colspan="10">
+							<label>투표 영화 목록&nbsp;<input type="checkbox" id="allCheck"></label>
+						</th>
+					</tr>
+					<tr>
+						<c:forEach var="movie" items="${movieList}" varStatus="status">
+							<td colspan="2">
+								<label>
+									<input type="checkbox" value="${movie.movie_code}" class="check">
+									&nbsp;${movie.movie_name}
+								</label>
+							</td>
+						</c:forEach>
+					</tr>
 				</table>
 			</div>
 			<div  id="pick_currently_status">
