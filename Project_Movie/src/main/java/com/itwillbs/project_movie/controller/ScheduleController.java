@@ -3,6 +3,8 @@ package com.itwillbs.project_movie.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itwillbs.project_movie.service.ScheduleService;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 
-import retrofit2.http.GET;
 
 @Controller
 public class ScheduleController {
@@ -27,30 +28,50 @@ public class ScheduleController {
 
 	// 관리자페이지 영화관리 상영스케줄관리 페이지 맵핑
 	@GetMapping("AdminMovieSetSchedule")
-	public String adminMovieSetSchedule() {
+	public String adminMovieSetSchedule(@RequestParam(defaultValue = "T1") String theater_code, @RequestParam(required = false) String selectedMonth, Model model) {
+		LocalDate date;
 		
-//	    // 오늘 날짜로 설정
-//	    Calendar calendar = Calendar.getInstance();
-//	    
-//	    // 해당 달의 첫날 계산
-//	    calendar.set(Calendar.DAY_OF_MONTH, 1);
-//	    int firstDay = calendar.get(Calendar.DAY_OF_MONTH);
-//	    int firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-//	    
-//	    // 해당 달의 마지막 날 계산
-//	    int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-//	    calendar.set(Calendar.DAY_OF_MONTH, lastDay);
-//	    int lastDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-//	    
-//	    // 요일 배열 (1: 일요일, 2: 월요일, ... , 7: 토요일)
-//	    String[] days = {"", "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"};
-//	    
-//	    System.out.println("해당 달의 첫날: " + firstDay + "일 (" + days[firstDayOfWeek] + ")");
-//	    System.out.println("해당 달의 마지막 날: " + lastDay + "일 (" + days[lastDayOfWeek] + ")");
-
+		// 처음 뷰페이지 포워딩시 오늘날짜기준 달력 생성
+		// 상영스케줄 관리 페이지에서 날짜 선택시 해당 날짜 달력 생성
+		if(selectedMonth == null) {
+			date = LocalDate.now();
+		} else {
+			date = LocalDate.parse(selectedMonth + "-01");
+		}
 		
+		// 뷰페이지에서 달력그리기 위해 해당 달의 1일이 첫째주의 몇번째 날인지 판별후 앞에 빈날짜에 "" 입력
+		// 예시) 일요일부터 시작하는 달력이므로 1일이 수요일이면 "" 3개를 달력 List에 추가
+		// 해당 달의 첫날 요일 계산
+		LocalDate firstDayOfMonth = date.withDayOfMonth(1);
+		int nullStringCount = firstDayOfMonth.getDayOfWeek().getValue();
+		List<String> calendar = new ArrayList<String>();
+		
+		// 뷰페이지에서 달력을 그릴때 해당 달의 첫 날이 일요일이면 한 주가 ""으로 표시되는걸 방지
+		if(nullStringCount != 7) {
+			for(int i = 1; i <= nullStringCount; i++) {
+				calendar.add("");
+			}
+		}
+		
+		// 해당 달의 마지막 날짜
+		int lastDay = date.lengthOfMonth();
+		
+		// 달력 List에 해당달의 첫날부터 끝날까지 추가
+		for(int day = 1; day <= lastDay; day++) {
+			calendar.add(Integer.toString(day));
+		}
+		
+		model.addAttribute("calendar", calendar);
 		
 		return "adminpage/movie_set/movie_schedule_info";
+	}
+	
+	// 관리자페이지 영화관리 상영스케줄 관리 페이지 달력에 추가할 각 날의 스케줄 수 조회
+	@ResponseBody
+	@GetMapping("GetScheduleCountOfDay")
+	public List<Map<String, Object>> getScheduleCountOfDay(String theater_code, String selectedMonth) {
+		List<Map<String, Object>> scheduleCountList = scheduleService.getScheduleCountListOfday(theater_code, selectedMonth);
+		return scheduleCountList;
 	}
 
 	// 관리자페이지 영화관리 상영스케줄 상세페이지 맵핑
@@ -63,14 +84,21 @@ public class ScheduleController {
 		for(Map<String, Object> schedule : scheduleList) {
 			// 현재 날짜 시간
 			LocalDateTime now = LocalDateTime.now();
-			// 스케줄 시작 날짜 시간
+			// 스케줄 시작,끝 날짜 시간
 			String startTime = schedule.get("start_time").toString();
+			String endTime = schedule.get("end_time").toString();
 			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 			LocalDateTime formatStartTime = LocalDateTime.parse(startTime, formatter);
+			LocalDateTime formatendTime = LocalDateTime.parse(endTime, formatter);
 			
-			if(formatStartTime.isBefore(now)) {
+			// 스케줄이 종료되었는지 판단하여 뷰페이지에 표시
+			if(formatendTime.isBefore(now)) {
+				// 종료된 스케줄
 				schedule.put("isPassed", true);
+			} else if(formatStartTime.isBefore(now) && formatendTime.isAfter(now)) {
+				// 상영중인 스케줄
+				schedule.put("isPassed", false);
 			}
 		}
 		model.addAttribute("scheduleList", scheduleList);
@@ -129,7 +157,7 @@ public class ScheduleController {
 		return isExit;
 	}
 	
-	// 스케줄상세 페이지에서 스케줄의 예매상태 활성화로 변경
+	// 스케줄 상세페이지에서 스케줄의 예매상태 활성화로 변경
 	@GetMapping("ScheduleBookingStatusOn")
 	public String scheduleBookingStatusOn(String select_date, String theater_code, String scheduleCodeStr, Model model) {
 		// 전달받은 스케줄을 IN절에 사용하기위해 schedule_code 배열로 변경
@@ -142,8 +170,8 @@ public class ScheduleController {
 			return "result/process";
 		}
 	}
-	
-	// 스케줄상세 페이지에서 스케줄의 예매상태 비활성화로 변경
+
+	// 스케줄 상세페이지에서 스케줄의 예매상태 비활성화로 변경
 	@GetMapping("ScheduleBookingStatusOff")
 	public String scheduleBookingStatusOff(String select_date, String theater_code, String scheduleCodeStr, Model model) {
 		// 전달받은 스케줄을 IN절에 사용하기위해 schedule_code 배열로 변경
@@ -153,6 +181,30 @@ public class ScheduleController {
 			return "redirect:/AdminMovieSetScheduleDetail?theater_code=" + theater_code + "&select_date=" + select_date;
 		} else {
 			model.addAttribute("msg", "예매 비활성화 실패");
+			return "result/process";
+		}
+	}
+	
+	// 스케줄 상세페이지에서 스케줄 삭제
+	@GetMapping("DeleteScheduleInfo")
+	public String deleteScheduleInfo(String select_date, String theater_code, String scheduleCodeStr, Model model) {
+		// 전달받은 스케줄을 IN절에 사용하기위해 schedule_code 배열로 변경
+		String[] scheduleCodeArr = scheduleCodeStr.trim().split(" ");
+		
+		int deleteCount = 0;
+		
+		try {
+			deleteCount = scheduleService.deleteScheduleFromDB(scheduleCodeArr);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "예매중인 스케줄과 지난 스케줄은 삭제 할 수 없습니다.");
+			return "result/process";
+		}
+		
+		if(deleteCount > 0) {
+			return "redirect:/AdminMovieSetScheduleDetail?theater_code=" + theater_code + "&select_date=" + select_date;
+		} else {
+			model.addAttribute("msg", "스케줄 삭제 실패");
 			return "result/process";
 		}
 	}

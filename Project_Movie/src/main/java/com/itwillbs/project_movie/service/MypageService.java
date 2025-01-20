@@ -104,6 +104,10 @@ private MyPageMapper mapper;
 		return mapper.insertInquiry(inquiry);
 	}
 	//1:1문의 글 수정
+	public int getInquiryModify(InquiryVO inquiry) {
+		// TODO Auto-generated method stub
+		return mapper.updateInquiry(inquiry);
+	}
 	//1:1문의 글 삭제 
 	public int removeInquiry(InquiryVO inquiry) {
 		// TODO Auto-generated method stub
@@ -130,10 +134,24 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectNoticeList(startRow,listLimit, searchType,searchKeyword);
 	}
+	//공지사항 글 등록
+	public int registNotice(NoticeBoardVO notice) {
+		// TODO Auto-generated method stub
+		return mapper.updateNoticeAdmin(notice);
+	}
 	//관리자페이지 - 공지사항 글 자세히보기 
-	public NoticeBoardVO getNotice(int notice_code, boolean b) {
+	public NoticeBoardVO getNotice(int notice_code, boolean isIncreaseReadcount) {
 		// TODO Auto-generated method stub
 		return mapper.selectNotice(notice_code);
+	}
+	// 공지사항 글 수정 
+	public int getNoticeUpdate(NoticeBoardVO notice) {
+		// TODO Auto-generated method stub
+		return mapper.updateNotice(notice);
+	}
+	public int getNoticeDelete(NoticeBoardVO notice) {
+		// TODO Auto-generated method stub
+		return mapper.deleteNotice(notice);
 	}
 	//faq 글 개수
 	public int getFaqListCount() {
@@ -145,10 +163,38 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectFaqList(startRow,listLimit );
 	}
-	//faq 글 보기 
-	public FaqBoardVO getFaq(int faq_code) {
+	//faq 글 작성 
+	public int faqWrite(FaqBoardVO faq) {
 		// TODO Auto-generated method stub
-		return mapper.selectFaq(faq_code);
+		return mapper.insertFaqAdmin(faq);
+	}
+	//faq 글 보기 
+	public FaqBoardVO getFaq(int faq_code, boolean isIncreaseReadcount) {
+		FaqBoardVO faq = mapper.selectFaq(faq_code);
+		if(faq != null && isIncreaseReadcount) {
+			mapper.updateReadCount(faq);
+		}
+		return faq;
+	}
+	//faq 글 수정
+	public int getFaqModify(FaqBoardVO faq) {
+		// TODO Auto-generated method stub
+		return mapper.updateFaq(faq);
+	}
+	//faq 글 삭제 
+	public int getFaqDelete(FaqBoardVO faq) {
+		// TODO Auto-generated method stub
+		return mapper.deleteFaq(faq);
+	}
+	//1:1문의 글 수정 
+	public int getInquiryModify(int inquiry_code) {
+		// TODO Auto-generated method stub
+		return mapper.updateInquiryModify(inquiry_code);
+	}
+	//1:1문의 글 삭제
+	public int getInquiryDelete(InquiryVO inquiry) {
+		// TODO Auto-generated method stub
+		return mapper.deleteInquiryAdmin(inquiry);
 	}
 
 

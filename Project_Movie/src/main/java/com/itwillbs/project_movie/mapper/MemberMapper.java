@@ -44,7 +44,9 @@ public interface MemberMapper {
 
 	// 기존 인증 정보 수정
 	void updateMailAuthInfo(EmailAuthVO email_auth); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
-
+ 
+	
+	
 	// 메일 인증 상태 변경
 	void updateMailAuthStatus(EmailAuthVO email_auth); //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
 
@@ -61,6 +63,23 @@ public interface MemberMapper {
 	String findIdMember(@Param("member_name") String member_name, 
 			@Param("birth_date") Date birth_date,
 			@Param("email") String email);
+
+	String findPasswdMember(@Param("member_id") String member_id, 
+			@Param("member_name") String member_name, 
+			@Param("birth_date") Date birth_date,
+			@Param("email") String email);
+
+	
+	
+	
+	//비밀번호찾기시 인증이 완료후 이메일을 통해 임시비밀번호를 보내기전에
+	//임시비밀번호를 비밀번호에 update한다.
+	int updateMemberPassword(MemberVO member);
+
+	int checkIdDuplicate(String member_id);
+
+	
+
 	
 	
 	

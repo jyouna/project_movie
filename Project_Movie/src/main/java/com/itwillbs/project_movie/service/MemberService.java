@@ -28,6 +28,7 @@ public class MemberService {
       // MemberMapper - selectMemberIdForLogin()
       return mapper.selectMemberIdForLogin(member);
    }
+   
 
    // 회원 상세정보 조회 요청
    public MemberVO getMember(String id) {
@@ -62,6 +63,16 @@ public class MemberService {
 		// TODO Auto-generated method stub
 	    return mapper.findIdMember(member_name, birth_date, email);
 	}
-   
-   
+   // 비밀번호  찾기 조회 요청
+	public String findMemberPasswd(String member_id, String member_name, Date birth_date, String email) {
+		return mapper.findPasswdMember(member_id,member_name, birth_date, email);
+		
+	}
+
+	public boolean isIdDuplicate(String member_id) {
+		// TODO Auto-generated method stub
+	    return mapper.checkIdDuplicate(member_id) > 0; // 중복된 아이디가 있으면 true
+	}
+
+
 }

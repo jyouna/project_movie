@@ -16,7 +16,7 @@ public class InquiryVO {
 	private String inquiry_content;
 	private String inquiry_response;
 	private String response_status;
-	private Timestamp inquiry_date;
+	private Timestamp inquriy_date;
 	private String admin_id;
 	private Timestamp response_date;
 	private String inquiry_writer_ip;

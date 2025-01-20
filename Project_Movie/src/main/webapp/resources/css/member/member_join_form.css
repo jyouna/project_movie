@@ -77,6 +77,7 @@ input, select, button {
 
 input#username,
 input#password,
+input#id,
 input#confirm-password ,
 input#name,
 input#email,
@@ -86,6 +87,12 @@ input#phone-code{
     padding: 0 !important; /* 우선순위 강제 적용 */
 }
 
+input#id {
+    width: 90%;
+    height: 30px;
+}
+
+
 
 input#username {
   width: 60%; 
@@ -94,11 +101,11 @@ input#username {
 }
 
 input#password {
-  width: 80%; 
+  width: 90%; 
   height: 30px;
 }
 input#confirm-password{
-  width: 50%; 
+  width: 90%; 
   height: 30px;
 }
 
@@ -303,7 +310,17 @@ input[type="checkbox"]:focus {
 }
 
 #sendAuthCodeBtn {
-    height: 30px; /* 버튼 높이 조정 */
+    height: 25px; /* 버튼 높이 조정 */
+      display: flex;        /* Flexbox 사용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;  /* 수직 중앙 정렬 */
+}
+
+#verifyAuthCodeBtn {
+    height: 25px; /* 버튼 높이 */
+      display: flex;        /* Flexbox 사용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;  /* 수직 중앙 정렬 */
 }
 
 .auth-code-section {
@@ -318,9 +335,7 @@ input[type="checkbox"]:focus {
      height: 30px;
 }
 
-#verifyAuthCodeBtn {
-    height: 30px; /* 버튼 높이 */
-}
+
 
 /* ===== 전화번호 인증 섹션 ===== */
 /* 변경된 JSP에 따라 추가된 부분 */

@@ -14,4 +14,5 @@ public class NoticeBoardVO {
 	private String notice_writer;
 	private Timestamp regis_date;
 	private int view_count;	
+	private String notice_writer_ip;
 }

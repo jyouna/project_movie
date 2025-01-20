@@ -14,7 +14,11 @@
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_join_form.css" /> --%>
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_join_form.css" />
+   
+   
+   
 </head>
+
 <body class="left-sidebar is-preload">
 
    <jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
@@ -33,31 +37,49 @@
     <!-- 회원가입 폼 -->
 <!--        <form id="registerForm" action="http://localhost:8081/project_movie/" method="post"> -->
    <form id="registerForm" action="MemberJoin" method="post">
+    <!-- CSRF 토큰 필드 추가 -->
+    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+    
+    
+    
       <!-- 아이디 입력 -->
       <table class="form-table">
         <!-- 아이디 입력 -->
       <tr>
         <th>아이디 *</th> <!-- 필수 입력 항목 -->
         <td>
-          <input type="text" id="username" name="member_id" placeholder="영문자,숫자,_ 5자리이상" required>
-<!--           <button type="button">확인</*button> -->
+          <input type="text" id="id" name="member_id" placeholder="영문자,숫자,_ 5자리이상" required>
+                  <div id="id-check-result"></div> 
         </td>
       </tr>
+      
+      
         <tr>
           <th>비밀번호 *</th>
-          <td><input type="password" id="password" name="member_passwd" placeholder="영문자,숫자,특수문자(!@#$%) 8글자이상" required></td>
+          <td>
+          
+
+          <input type="password" id="password" name="member_passwd" placeholder=" 영문자,숫자,특수문자(!@#$%) 8글자이상" required>
+                  <div id="password-check-result"></div> <!-- 비밀번호 복잡도 검사 결과 -->
+          </td>
         </tr>
+        
+        
         <tr>
           <th>비밀번호 확인 *</th>
-          <td><input type="password" id="confirm-password" name="confirm-password" placeholder="비밀번호 확인 입력" required></td>
+          <td><input type="password" id="confirm-password" name="confirm-password" placeholder=" 비밀번호 확인 입력" required>
+          		  <div id="confirm-password-check-result"></div> <!-- 비밀번호 확인 결과 -->
+          	</td>	
         </tr>
+        
+        
       </table>
 
       <!-- 이름, 생년월일, 이메일, 전화번호, 성별 -->
       <table class="form-table">
         <tr>
           <th>이름 *</th>
-          <td><input type="text" id="name" name="member_name" placeholder="이름 입력" required></td>
+          <td><input type="text" id="name" name="member_name" placeholder=" 이름 입력" required></td>
         </tr>
         <tr>
           <th>생년월일 *</th>
@@ -66,7 +88,7 @@
         <tr>
           <th>이메일 *</th>
           <td>
-            <input type="email" id="email" name="email" placeholder="이메일 입력" required>
+            <input type="email" id="email" name="email" placeholder=" 이메일 입력" required>
 <!--             <button type="button">발송</button> -->
 <!--             <input type="text" id="email-code" name="email-code" placeholder="인증번호 입력"> -->
 <!--             <button type="button">확인</button> -->
@@ -100,7 +122,7 @@
              <!-- 독립된 폼으로 분리 -->
              <form id="authCodeForm" onsubmit="return false;">
                <div class="phone-verification">
-                 <input type="text" id="phone" name="phone" placeholder="전화번호 입력 *주의* -없이 11자리" required>
+                 <input type="text" id="phone" name="phone" placeholder=" 전화번호 입력 *주의* -없이 11자리" required>
                  <button type="button" id="sendAuthCodeBtn">전송</button>
                </div>
                <div class="auth-code-section">
@@ -112,14 +134,7 @@
          </tr>
                         
             
-            
-            
-            
-        
-        </td>
-        
-        
-      </tr>
+     
       
       <!-- 성별 -->
    <tr>
@@ -203,7 +218,14 @@
    
 <%--       <jsp:include page="/WEB-INF/views/member/member_join_form_test.jsp"></jsp:include> --%>
    </article>
-
+   
+   
+	<script>
+    // 컨텍스트 경로를 JavaScript 변수에 전달
+    const contextPath = "${pageContext.request.contextPath}";
+	</script>
+	
+	
    <jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
    <script src="${pageContext.request.contextPath}/resources/js/member/member_join_form.js"></script>
 </body>

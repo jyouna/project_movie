@@ -131,7 +131,15 @@ $(function() {
 						`);
 						
 						if(schedule.booking_avail == 0) {
-							$("#" + schedule.schedule_code).css("background", "#343A40");
+							$("#" + schedule.schedule_code).css({
+							    "background": "#ddd",
+							    "color": "#999",
+							    "border": "1px solid #ccc",
+							    "cursor": "default",
+								"box-shadow": "inset 0px 0px 5px rgba(0, 0, 0, 0.2)"
+							});
+
+
 						}
 					}
 					
@@ -145,7 +153,8 @@ $(function() {
 				$(".movie_schedule_info").css("display", "block");
 				
 				$(".time_seat_btn").click(function() {
-					if($("#isBookingAvail").val() == 1) {
+//					if($("#isBookingAvail").val() == 1) {
+					if($("#isBookingAvail").val("1")) {
 						schCode = $(this).find("input[type='hidden']").val();
 						console.log(schCode);
 						

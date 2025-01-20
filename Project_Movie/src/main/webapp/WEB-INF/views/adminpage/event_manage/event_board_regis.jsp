@@ -68,7 +68,7 @@
 	</div>
 <script type="text/javascript">
 $(function(){
-	let time = new Date()
+	let time = new Date();
 	time.setHours(time.getHours() + 9); // UTC+9 적용
 	let today = time.toISOString().split('T')[0];
 	

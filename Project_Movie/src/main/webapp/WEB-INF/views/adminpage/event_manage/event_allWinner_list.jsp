@@ -24,7 +24,7 @@
 	<h3>이벤트 당첨자 목록</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-		<h4>이벤트 당첨자</h4>
+<!-- 		<h4>이벤트 당첨자</h4> -->
 			<span id="winnerCount"></span>
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->

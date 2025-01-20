@@ -52,6 +52,11 @@ $(function() {
 		
 	});
 	
+	// 이전페이지 버튼 클릭시 스케줄관리페이지로이동
+	$("#toBeforePageBtn").click(function() {
+		location.href = "AdminMovieSetSchedule?theater_code=" + selectTheater;
+	});
+	
 	// 스케줄 등록 모달 오픈
 	$("#registScheduleBtn").click(function() {
 		$("#schedule_regist_modal").css("display", "block");
@@ -197,6 +202,47 @@ $(function() {
 		}
 	});
 	
+	// 스케줄 보드 컨텐트 선택시 체크박스 클릭, 해제
+	$(".boardContent").click(function() {
+		$(this).siblings(".scheduleCheck").find("input[type='checkbox']").click();
+	});
+	
+	// 스케줄 보드의 헤더 체크박스 클릭시 모든 체크박스 클릭, 해제
+	$("#boardHead input[type='checkbox']").click(function() {
+		if($(this).prop("checked")) {
+			$(".scheduleCheck").prop("checked", true);
+		} else {
+			$(".scheduleCheck").prop("checked", false);
+		}
+	})
+	
+	// 예매 활성화 버튼 클릭시 해당스케줄의 예매여부 활성화로 변경
+	$("#ableBtn").click(function() {
+		let checkMovieCodeStr = getCheckedMovieCode();
+		location.href = "ScheduleBookingStatusOn?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
+	});
+	
+	// 예매 비활성화 버튼 클릭시 해당스케줄의 예매여부 비활성화로 변경
+	$("#disableBtn").click(function() {
+		let checkMovieCodeStr = getCheckedMovieCode();
+		location.href = "ScheduleBookingStatusOff?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
+	});
+	
+	// 스케줄삭제 버튼 클릭시 해당 스케줄 삭제
+	$("#deleteScheduleBtn").click(function() {
+		let checkMovieCodeStr = getCheckedMovieCode();
+		
+		if(checkMovieCodeStr == "") {
+			alert("스케줄을 선택해주세요.");
+			return;
+		} else {
+			if(confirm("<" + checkMovieCodeStr + ">\n스케줄을 삭제 하시겠습니까?")) {
+				location.href = "DeleteScheduleInfo?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
+			}
+		}
+		
+	});
+	
 	// 날짜 변환 메서드
 	function dateFormatter(startDateTime2) {
 		formatYear = startDateTime2.getFullYear();
@@ -223,37 +269,13 @@ $(function() {
 		return isBetween;
 	}
 	
-	// 스케줄 보드 컨텐트 선택시 체크박스 클릭, 해제
-	$(".boardContent").click(function() {
-		$(this).siblings(".scheduleCheck").find("input[type='checkbox']").click();
-	});
-	
-	// 스케줄 보드의 헤더 체크박스 클릭시 모든 체크박스 클릭, 해제
-	$("#boardHead input[type='checkbox']").click(function() {
-		$(".scheduleCheck").click();
-	})
-	
-	// 예매 활성화 버튼 클릭시 해당스케줄의 예매여부 활성화로 변경
-	$("#ableBtn").click(function() {
-		// 체크된 영화의 코드들을 나열한 String
+	// 체크된 영화의 코드들을 변수에 초기화하는 메서드
+	function getCheckedMovieCode() {
 		let checkMovieCodeStr = "";
 		$(".scheduleCheck:checked").each(function() {
 			checkMovieCodeStr += $(this).val() + " ";
 		})
-		
-		location.href = "ScheduleBookingStatusOn?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
-	});
-	
-	// 예매 활성화 버튼 클릭시 해당스케줄의 예매여부 활성화로 변경
-	$("#disableBtn").click(function() {
-		// 체크된 영화의 코드들을 나열한 String
-		let checkMovieCodeStr = "";
-		$(".scheduleCheck:checked").each(function() {
-			checkMovieCodeStr += $(this).val() + " ";
-		})
-		
-		location.href = "ScheduleBookingStatusOff?select_date=" + scheduleDate + "&theater_code=" + selectTheater + "&scheduleCodeStr=" + checkMovieCodeStr;
-	});
-	
+		return checkMovieCodeStr;
+	}
 }); // document ready 끝
 	

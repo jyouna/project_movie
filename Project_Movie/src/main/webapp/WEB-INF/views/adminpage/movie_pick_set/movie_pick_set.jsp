@@ -14,6 +14,8 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/movie_pick_set/movie_pick_set.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_pick_set/movie_pick_set.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -22,41 +24,34 @@
 		<div id="body_top">
 			<div id="title">투표 설정</div>
 			<div id="btnGroup01">
-				<input type="button" value="투표등록">
+				<input type="button" id="registPickBtn" value="투표등록">
 				<input type="button" value="상영예정작으로 등록">
-				<input type="button" value="삭제하기">
+				<input type="button" value="투표영화에서 삭제하기">
 				<input type="button" value="투표시작">
 				<input type="button" value="투표종료">
-			</div>
-			<div id="btnGroup02">
-				<input type="button" value="영화정보">
 			</div>
 		</div>
 		<div id="body_main">
 			<div id="pick_movie_list">
 				<table>
-					<tr><th colspan="8">Season 영화</th></tr>
+					<tr><th colspan="8">투표 영화</th></tr>
 					<tr>
-						<th><input type="checkbox" class="check"></th>
+						<th><input type="checkbox" id="allCheck"></th>
 						<th>영화코드</th>
 						<th>영화제목</th>
 						<th>투표기간</th>
 						<th>상영시간</th>
 						<th>관람연령</th>
-						<th>등록일자</th>
-						<th>등록계정</th>
 					</tr>
-					<c:forEach var="i" begin="1" end="5">
+					<c:forEach var="movie" items="${movieList}">
 						<tr>
-							<th><input type="checkbox" class="check"></th>
-							<td>ABCDFD</td>
-							<td>극장판짱구는못말려</td>
-							<td>24.06.17 ~ 24.08.08</td>
-							<td>120분</td>
-							<td>전체관람과</td>
-							<td>24.05.31</td>
-							<td>admin</td>
-						<tr>
+							<td><input type="checkbox" value="${movie.movie_code}" class="check"></td>
+							<td>${movie.movie_code}</td>
+							<td>${movie.movie_name}</td>
+							<td>투표등록전입니다</td>
+							<td>${movie.running_time}</td>
+							<td>${movie.age_limit}</td>
+						</tr>
 					</c:forEach>
 				</table>
 			</div>
@@ -91,6 +86,27 @@
 			</div>
 		</div>
 	</section>
+	
+	<div id="screening_date_modal" class="modal">
+		<div class="modal_content">
+			<form action="RegistPickInfo" method="post">
+			   	   <h4>투표 등록</h4>
+			    <hr>
+		    	<label>투표명</label><input type="text" name="vote_name" placeholder="ex) 24년 겨울시즌 투표" required><br>
+	    	    <label>투표시작날짜</label><input type="date" name="start_date" required><br>
+	    	    <label>투표종료날짜</label><input type="date" name="end_date" required><br>
+	    	    <label>투표영화1</label><input type="text" name="vote_movie1" value="${movieList[0].movie_code}" required readonly><br>
+	    	    <label>투표영화2</label><input type="text" name="vote_movie2" value="${movieList[1].movie_code}" required readonly><br>
+	    	    <label>투표영화3</label><input type="text" name="vote_movie3" value="${movieList[2].movie_code}" required readonly><br>
+	    	    <label>투표영화4</label><input type="text" name="vote_movie4" value="${movieList[3].movie_code}" required readonly><br>
+	    	    <label>투표영화5</label><input type="text" name="vote_movie5" value="${movieList[4].movie_code}" required readonly><br>
+			    <div class="btnGroup">
+			        <input type="submit" value="등록">
+			        <input type="button" class="close_modal" value="닫기">
+			    </div>
+			</form>
+		</div>
+	</div>
 	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

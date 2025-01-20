@@ -10,7 +10,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_winner.css" />
-		<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -47,7 +50,12 @@
 						<c:forEach var="eventWinnerBoard" items="${eventWinnerBoardList}" varStatus="status">
 							<tr>
 								<td class="winner_code" id="winner_code">${eventWinnerBoard.winner_code}</td>
-								<td>${eventWinnerBoard.winner_division}</td>
+								<td>
+									<c:choose>
+										<c:when test="${eventWinnerBoard.winner_division eq 0}">포인트 이벤트</c:when>
+										<c:otherwise>쿠폰 이벤트</c:otherwise>
+									</c:choose>
+								</td>
 								<td class="winner_subject">${eventWinnerBoard.winner_subject}</td>
 								<td>
 									<fmt:formatDate value="${eventWinnerBoard.winner_announce_date}" pattern="yyyy-MM-dd"/>
@@ -85,11 +93,11 @@
 	<script type="text/javascript">
 		$(function () {
 			$(".winner_subject").on("click", function(event) {
-				let board_num = $(event.target).siblings(".winner_code").text();
+				let winner_code = $(event.target).siblings(".winner_code").text();
 				console.log("siblings " + winner_code);
 				location.href = "WinnerPost?winner_code=" + winner_code + "&pageNum=${pageInfo.pageNum}";
 			});
-
+		});
 	</script>
 
 

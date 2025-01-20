@@ -14,6 +14,7 @@ window.onload = function () {
     const errorMsg = document.getElementById("error_msg").value;
 
 
+
     // 디버깅 로그 출력
     console.log("찾으시는 아이디는 ", memberId," 입니다.");
     console.log("errorMsg: ", errorMsg ," 정보를 확인하여 다시 진행해주세요");

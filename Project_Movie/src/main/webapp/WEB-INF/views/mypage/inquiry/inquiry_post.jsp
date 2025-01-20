@@ -46,8 +46,8 @@
 		</div>
 		<section id="commandCell">
 <%-- 				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }"> --%>
-			<input type="button" value="수정" id="ModifyButton">
-			<input type="button" value="삭제" onclick="deleteInquiry()">
+			<input type="button" value="수정" onclick="location.href='InquiryModify?inquiry_code=${param.inquiry_code}&pageNum=${param.pageNum}'">
+			<input type="button" value="삭제" id="deleteInquiry">
 
 <%-- 				</c:if> --%>
 		</section>
@@ -67,20 +67,14 @@
 			</tr>
 		</table>
 	<script type="text/javascript">
-		$(function () {
-			$("#ModifyButton").on("click", function () {
-				window.open(
-						'InquiryModify',
-						'1:1문의 글 수정',
-						'width=400, height=700, scrollbars=no, resizeable=no'); 
-			});
-			}); 
 		
-		function deleteInquiry() { 
-			if (confirm("삭제 하시겠습니까?")) { 
-				location.href = "InquiryDelete?inquiry_code=${Inquiry.inquiry_code}&pageNum=${param.pageNum}"; 
-				} 
-			}
+		$(function () {
+			$("#deleteInquiry").on("click", function() {
+				if (confirm("삭제 하시겠습니까?")) { 
+					location.href = "InquiryDelete?inquiry_code=${param.inquiry_code}&pageNum=${param.pageNum}"; 
+					} 
+			});
+		});
 	</script>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

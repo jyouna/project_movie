@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Insert title here</title>
+	<title>로그인</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />

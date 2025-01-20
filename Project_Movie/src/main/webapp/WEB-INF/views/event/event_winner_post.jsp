@@ -27,22 +27,25 @@
 			<table>
 				<tr>
 					<th width="90px">제목</th>
-					<td width="220px">${eventWinnerBoard.winner_subject}</td>
+					<td width="220px">${eventWinner.winner_subject}</td>
 					<th width="90px">발표일</th>
 					<td>
-						<fmt:formatDate value="${eventWinnerBoard.winner_announce_date}" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${eventWinner.winner_announce_date}" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 			</table>
 		</section>
 		<section id="articleContentArea">
-			${eventWinnerBoard.winner_content}
+			${eventWinner.winner_content}
 		</section>
 		<section id="commandCell">
-			<%-- 목록 버튼 항상 표시 --%>
-			<input type="button" value="목록" onclick="location.href='EventWinnerList?pageNum=${param.pageNum}'">
-				<input type="button" value="△이전글" id="tableButton" onclick="location.href='EventWinnerPost?winner_code=${eventWinnerBoard.winner_code-1}&pageNum=${PageInfo.pageNum }'">
-				<input type="button" value="▽다음글" id="tableButton" onclick="location.href='EventWinnerPost?winner_code=${eventWinnerBoard.winner_code+1}&pageNum=${PageInfo.pageNum }'">
+	
+
+			<input type="button" value="목록" onclick="location.href='EventWinner?pageNum=${param.pageNum}'">
+				<input type="button" value="△이전글" id="tableButton" onclick="location.href='EventWinner?winner_code=${eventWinner.winner_code-1}&pageNum=${PageInfo.pageNum }'"
+				<c:if test="${eventWinner.winner_code-1 eq 0}">alert("해당글은 존재하지 않습니다") </c:if>>
+				
+				<input type="button" value="▽다음글" id="tableButton" onclick="location.href='EventWinner?winner_code=${eventWinner.winner_code+1}&pageNum=${PageInfo.pageNum }'">
 		</section>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>

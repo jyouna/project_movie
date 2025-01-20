@@ -45,6 +45,8 @@
 			${faq.faq_content}
 		</section>
 		<input type="button" value="목록" onclick="location.href='AdminFaq?pageNum=${param.pageNum}'">
+		<input type="button" value="수정하기" onclick="location.href='AdminFaqModify?faq_code=${param.faq_code}&pageNum=${param.pageNum}'">
+		<input type="button" value="삭제하기" onclick="location.href='AdminFaqDelete?faq_code=${param.faq_code}&pageNum=${param.pageNum }'">
 		<hr>
 		<table id="postList">
 			<tr>
@@ -57,20 +59,6 @@
 			</tr>
 		</table>
 	</article>
-
-	<script type="text/javascript">
-		$(function(){
-			$(".faq_subject").on("click", function(event) {
-				console.log(event.target);
-				let faq_code = $(event.target).siblings(".faq_code").text();
-				console.log("siblings " + faq_code);
-				location.href = "AdminFaqPost?faq_code=" + faq_code + "&pageNum=${pageInfo.pageNum}";
-			
-			});
-		
-		});
-	</script>
 	</section>
-	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

@@ -29,8 +29,8 @@
 		</div>
 		<div>
 			<input type="button" value="전체선택">
-			<input type="button" value="수정하기">
-			<input type="button" value="삭제하기">
+			<input type="button" value="글 작성" onclick="location.href='AdminFaqWrite'">
+
 		</div>
 		<section id="listForm">
 			<table>
@@ -76,8 +76,6 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			
-			
 			<input type="button" value="&gt" 
 				onclick="location.href='AdminFaq?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>

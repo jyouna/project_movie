@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <title>아이디/비밀번호 찾기</title>
+  <title>아이디찾기</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_find_form.css">
 </head>
@@ -17,33 +17,31 @@
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	
 	<div class = "gap">
-	<div class="sidebar1">	
-    <jsp:include page="/WEB-INF/views/inc/page/member_sidebar.jsp"></jsp:include>
-	</div>
+		<div class="sidebar1">	
+    		<jsp:include page="/WEB-INF/views/inc/page/member_sidebar.jsp"></jsp:include>
+		</div>
   	
+
 
 
   <input type="hidden" id="member_id" value="${member_id != null ? member_id : ''}">
   <input type="hidden" id="error_msg" value="${errorMsg != null ? errorMsg : ''}">
     
-  
   <div class="container1">
-    <h1>아이디/비밀번호 찾기</h1>
+    <h1> 아이디 / 비밀번호 찾기 </h1>
     
-    <div class="tabs">
-      <button id="find-id-tab" class="active">아이디 찾기</button>
-      <button id="find-pw-tab">비밀번호 찾기</button>
-    </div>
-
-
+	<div class="tabs">
+	  <button id="find-id-tab" class="" onclick="location.href='${pageContext.request.contextPath}/MemberFind'">아이디 찾기</button>
+	  <button id="find-pw-tab" class="" onclick="location.href='${pageContext.request.contextPath}/MemberFindPasswd'">비밀번호 찾기</button>
+	</div>
 
 
 <form id="MemberFindId" action="MemberFind" method="post">
     <!-- 아이디 찾기 폼 -->
     <div id="find-id-form" class="form-container">
-      <h2>아이디 찾기</h2>
+      <h2></h2>
       <label for="member_name">이름</label>
-      <input type="text" id="member_name"  name="member_name" placeholder="이름 입력" autocomplete="name" required>
+      <input type="text" id="member_name"  name="member_name" placeholder="" autocomplete="name" required>
 <!--       id-name to name -->
       
       <label for="birth_date">생년월일</label>
@@ -60,33 +58,6 @@
 
 </form>
 
-
-
-<form id="MemberFindPasswd" action="MemberFindPasswd" method="post">
-
-    <!-- 비밀번호 찾기 폼 -->
-    <div id="find-pw-form" class="form-container hidden">
-      <h2>비밀번호 찾기</h2>
-      <label for="pw-name">이름</label>
-      <input type="text" id="pw-name" placeholder="이름 입력" required>
-
-    <label for="pw-birthdate">생년월일</label>
-     <input type="date" id="pw-birthdate" required> <!-- 생년월일 추가 -->
-      
-     <label for="pw-phone">휴대폰 번호</label>
-     <input type="text" id="pw-phone" placeholder="숫자만 입력" required>
-     <button id="send-code-btn">인증번호 발송</button>
-      
-      <label for="pw-code">인증번호 입력</label>
-      <input type="text" id="pw-code" placeholder="인증번호 입력">
-     
-      
-      <button id="find-pw-btn">비밀번호 찾기</button>
-     
-      <a href="${pageContext.request.contextPath}/MemberLogin" class="link">로그인</a>
-      
-    </div>
-</form>  
 
   </div>
  
