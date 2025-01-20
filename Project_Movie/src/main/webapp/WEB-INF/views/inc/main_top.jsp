@@ -69,7 +69,6 @@
 						<a href="MoivePick">영화PICK</a>
 						<ul>
 							<li><a href="MoivePick">영화투표하기</a></li>
-							<li><a href="MoivePickStatus">PICK 현황</a></li>
 							<li><a href="MoivePickResult">PICK 결과보기</a></li>
 						</ul>
 					</li>

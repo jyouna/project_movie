@@ -3,7 +3,6 @@
 <div class="sidebar">
     <div class="menu-title">영화PICK</div>
 	    <a href="MoivePick" class="menu-item">영화투표하기</a>
-	    <a href="MoivePickStatus" class="menu-item">PICK 현황</a>
 	    <a href="MoivePickResult" class="menu-item">PICK 결과보기</a>
 	</div>
 </div>

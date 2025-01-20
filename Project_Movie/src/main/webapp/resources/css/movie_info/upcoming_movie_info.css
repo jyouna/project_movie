@@ -106,3 +106,10 @@
 	font-weight: bold;
 }
 
+#bookingBtn {
+	cursor: initial;
+}
+
+#bookingBtn:hover {
+	background-color: #444444;
+}

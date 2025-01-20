@@ -18,7 +18,7 @@
 						<label>${movieList[i].movie_name}</label>(${movieList[i].movie_rating})<br>
 						<a href=""><img src="${movieList[i].movie_img1}"></a><br>
 						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
-						<input type="button" value="예매하기">
+						<input type="button" value="예매하기" onclick="location.href='BookTickets'">
 						<div class="movie_info">
 	            			&lt;${movieList[i].movie_name}&gt;
 				            <ul>
@@ -27,7 +27,7 @@
 					            <li>등급: ${movieList[i].age_limit}</li>
 					            <li>장르: ${movieList[i].movie_genre}</li>
 					            <li>개봉일: ${movieList[i].release_date}</li>
-					            <li> 러닝 타임: ${movieList[i].running_time}</li>
+					            <li>러닝 타임: ${movieList[i].running_time}</li>
 					            <li>예매가: 10,000원</li>
 				            </ul>
 				        </div>
@@ -44,7 +44,7 @@
 				<label>${movieList[i].movie_name}</label>(${movieList[i].movie_rating})<br>
 				<a href=""><img src="${movieList[i].movie_img1}"></a><br>
 				<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
-				<input type="button" value="예매하기">
+				<input type="button" id="bookingBtn" value="예매하기" onclick="location.href='BookTickets'">
 				<div class="movie_info">
 	           		<${movieList[i].movie_name}>
 		            <ul>

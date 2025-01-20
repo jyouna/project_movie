@@ -14,6 +14,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/movie_info/upcoming_movie_info.css" />
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -44,8 +45,20 @@
 			</c:choose>
 		</div>
 	</article>
-
-	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
+	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
+	<script type="text/javascript">
+		$(function() {
+			$("#bookingBtn").prop("disabled", true);
+			
+			setTimeout(function() {
+				if(${seasonMovieCount < 3}) {
+					if(confirm("시즌 상영예정작 투표중입니다\n투표하러 가시겠습니까?")) {
+						location.href = "MoivePick";
+					}
+				}
+			}, 1000);
+		});
+	</script>
 </body>
 </html>

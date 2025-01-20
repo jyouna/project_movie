@@ -25,10 +25,10 @@
 }
 
 #pick_list_title {
-	background-image: url('../../images/pick_title.jpg');
+	background-image: url('../../images/sunflower.jpg');
 	background-size: cover;
 	background-position: center;
-	color: white;
+	color: #000000;
 	padding: 20px;
 	font-family: 'Arial', sans-serif;
 	font-size: 24px;
@@ -57,6 +57,7 @@
 
 .movie img {
 	width: 300px;
+	height: 450px;
 }
 
 .movie input[type=button] {
@@ -75,16 +76,22 @@
     top: 45px;
     left: 15px;
     width: 90%;
-    height: 79%;
+    height: 82%;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     box-sizing: border-box;
     text-align: left;
-    padding: 40px 20px;
+    padding: 20px 20px;
+    font-size: 17px;
 }
 
 .movie:hover .movie_info {
     display: block;
+}
+
+.movie label {
+	font-size: 20px;
+	font-weight: bold;
 }
 
 #pick_notice {

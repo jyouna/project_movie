@@ -9,11 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.MoviePickService;
 import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.MovieVO;
+
 
 
 
@@ -28,14 +30,24 @@ public class MoviePickController {
 	
 	// 영화투표하기 페이지 맵핑
 	@GetMapping("MoivePick")
-	public String moivePick() {
+	public String moivePick(Model model) {
+		// 투표영화 리스트 조회
+		List<MovieVO> movieList = movieService.getPickMovieList();
+		model.addAttribute("movieList", movieList);
 		return "movie_pick/movie_pick";
 	}
 	
-	// PICK현황 페이지 맵핑
-	@GetMapping("MoivePickStatus")
-	public String moivePickStatus() {
-		return "movie_pick/movie_pick_status";
+	// 투표현황 조회
+	@ResponseBody
+	@GetMapping("GetVoteStatusInfo")
+	public List<Map<String, Object>> getVoteStatusInfo() {
+		// 현재날짜 기준으로 등록되어있는 투표 정보 조회
+		Map<String, Object> voteInfo = moviePickService.getVoteInfo();
+		
+		// 현재 진행중인 투표현황 조회
+		List<Map<String, Object>> voteCurrentInfoList = moviePickService.getVoteCurrentInfo(voteInfo.get("vote_code"));
+		
+		return voteCurrentInfoList;
 	}
 	
 	// PICK결과보기 페이지 맵핑
@@ -47,7 +59,7 @@ public class MoviePickController {
 	//관리자페이지 투표관리 투표설정 페이지 맵핑
 	@GetMapping("AdminMoviePickSet")
 	public String adminMoviePickSet(Model model) {
-		// 투표영화리스트 조회
+		// 투표영화 리스트 조회
 		List<MovieVO> movieList = movieService.getPickMovieList();
 		model.addAttribute("movieList", movieList);
 		

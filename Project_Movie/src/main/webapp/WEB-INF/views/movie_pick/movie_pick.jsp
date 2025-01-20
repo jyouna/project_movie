@@ -14,6 +14,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/movie_pick/movie_pick.css"/>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/movie_pick/movie_pick.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -26,55 +29,58 @@
 				영화투표하기
 			</div>
 			<div id="pick_event_info">
-				<img src="${pageContext.request.contextPath}/resources/images/movie_pick_event_poster.png">
+				<img src="${pageContext.request.contextPath}/resources/images/familyMonth.webp">
 			</div>
 			<div id="pick_movie_list">
 				<div id="pick_list_title">
-					2024 WINTER SEASON 영화 투표 리스트
+					2025 SPRING SEASON 영화 투표
 				</div>
 				<div id="row01">
-					<c:forEach var="i" begin="1" end="3">
+					<c:forEach var="i" begin="0" end="2">
 						<div class="movie">
-							<label>바람</label><br>
-							<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
+							<label>${movieList[i].movie_name}(${movieList[i].movie_rating})</label><br>
+							<a href=""><img src="${movieList[i].movie_img1}"></a><br>
+							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
 							<input type="button" value="투표하기">
 							<div class="movie_info">
+					            &lt;${movieList[i].movie_name}&gt;
 					            <ul>
-			            			<li>영화 제목: 모아나 2</li>
-						            <li>감독: 데이빗 테드 주니어</li>
-						            <li>출연: 아웃이 크래랙존, 드웨인 존슨</li>
-						            <li>등급: 전체 관람가</li>
-						            <li>장르: 애니메이션</li>
-						            <li>개봉일: 2024.1.27</li>
-						            <li> 러닝 타임: 100분</li>
-						            <li>발권: 10,000원</li>
+						            <li>감독: ${movieList[i].movie_director}</li>
+						            <li>출연:<br> ${movieList[i].movie_actor}</li>
+						            <li>등급: ${movieList[i].age_limit}</li>
+						            <li>장르: ${movieList[i].movie_genre}</li>
+						            <li>개봉일: ${movieList[i].release_date}</li>
+						            <li>러닝 타임: ${movieList[i].running_time}</li>
+						            <li>예매가: 10,000원</li>
 					            </ul>
 					        </div>
 						</div>
 					</c:forEach>
 				</div>
 				<div id="row02">
-					<c:forEach var="i" begin="1" end="2">
+					<c:forEach var="i" begin="3" end="4">
 						<div class="movie">
-							<label>바람</label><br>
-							<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
+							<label>${movieList[i].movie_name}(${movieList[i].movie_rating})</label><br>
+							<a href=""><img src="${movieList[i].movie_img1}"></a><br>
+							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
 							<input type="button" value="투표하기">
 							<div class="movie_info">
 					            <ul>
-			            			<li>영화 제목: 모아나 2</li>
-						            <li>감독: 데이빗 테드 주니어</li>
-						            <li>출연: 아웃이 크래랙존, 드웨인 존슨</li>
-						            <li>등급: 전체 관람가</li>
-						            <li>장르: 애니메이션</li>
-						            <li>개봉일: 2024.1.27</li>
-						            <li> 러닝 타임: 100분</li>
-						            <li>발권: 10,000원</li>
+			            			<li>영화 제목: ${movieList[i].movie_name}</li>
+						            <li>감독: ${movieList[i].movie_director}</li>
+						            <li>출연: ${movieList[i].movie_actor}</li>
+						            <li>등급: ${movieList[i].age_limit}</li>
+						            <li>장르: ${movieList[i].movie_genre}</li>
+						            <li>개봉일: ${movieList[i].release_date}</li>
+						            <li>러닝 타임: ${movieList[i].running_time}</li>
+						            <li>예매가: 13,000원</li>
 					            </ul>
 					        </div>
 						</div>
 					</c:forEach>
+					<div class="movie">
+						<canvas id="voteCurrentChart" width="450px"></canvas>
+					</div>
 				</div>
 			</div>
 			<div id="pick_notice">
