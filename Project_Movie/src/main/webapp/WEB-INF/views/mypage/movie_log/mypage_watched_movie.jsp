@@ -59,7 +59,7 @@
 	               <c:otherwise>
 	                  <c:forEach var="watchedMovie" items="${watchedMovie}" varStatus="status">
 	                     <tr>
-	                      	<td><input type="radio" name="movieList"></td>
+	                      	<td><input type="radio" name="movieList" value="${watchedMovie.movie_code}" class="get_movie_code"></td>
 	                        <td>${watchedMovie.movie_name}</td>
 	                        <td>
 	                        	<fmt:formatDate value="${watchedMovie.start_time}" />
@@ -100,24 +100,26 @@
 		</article>
 		<div id="watched_movie_review_modal" class="modal">
 			<div class="watched_movie_review">
-			    <h2>리뷰 등록</h2>
-			    <hr>
-			    <div>
-			        <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
-			        <label id="review_content">한줄리뷰</label>
-			        <br>
-			        <textarea cols="40" rows="3" name="reivew">
-			        
-			        </textarea>
-			        <br> 
-			        <label id="review_recommend">추천</label><input type="radio" name="review_recommend" value="0">
-			        <label id="review_recommend">비추천</label><input type="radio" name="review_recommend" value="1"><br>
-			    </div>
-		        <hr>
-		        <div class="btnGroup">
-		        	<button type="submit" class="submit_modal">등록</button>
-		        	<button type="button" class="cancel_modal">취소</button>
-		        </div>
+<!-- 				<form action="Review" method="post"> -->
+				    <h2>리뷰 등록</h2>
+				    <hr>
+				    <div>
+				        <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
+				        <label id="review_content">한줄리뷰</label>
+				        <br>
+				        <textarea cols="40" rows="3" name="reivew">
+				        
+				        </textarea>
+				        <br> 
+				        <label id="review_recommend">추천</label><input type="radio" name="review_recommend" value="0">
+				        <label id="review_recommend">비추천</label><input type="radio" name="review_recommend" value="1"><br>
+				    </div>
+			        <hr>
+			        <div class="btnGroup">
+			        	<button type="button" class="submit_modal">등록</button>
+			        	<button type="button" class="cancel_modal">취소</button>
+			        </div>
+<!-- 		        </form> -->
 			</div>
 		</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

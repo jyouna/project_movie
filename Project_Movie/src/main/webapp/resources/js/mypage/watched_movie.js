@@ -18,35 +18,53 @@ $(function(){
     $(".close_modal").click(function() {
         location.reload();
     });
+	
+	let getMovieCode="";
+	
+	$(".get_movie_code").on("click", function(){
+		getMovieCode = $(this).val();
+		console.log("영화코드 : " + getMovieCode);
+	})
+	
 	$(".submit_modal").click(function(){
-		var reviewContent = $("textarea").val().trim();
-		var reviewRecommend = $("input[name='review_recommend']:checked").val();
+		getMovieCode = $(".get_movie_code:checked").val();
+
+		console.log("ajax 영화코드 : " + getMovieCode);
+		
+		let reviewContent = $("textarea").val().trim();
+		let reviewRecommend = $("input[name='review_recommend']:checked").val();
+		
 		if (reviewContent == ""){ 
 			alert("리뷰 내용을 작성해주세요."); 
 			return; 
-		}else if(!reviewRecommend){
+		} 
+		
+		if(!reviewRecommend){
 			alert("추천 또는 비추천을 선택해주세요.")
 			return;
 		}
-//		else{
-//			
-//		    $.ajax({
-//		        type: "POST",
-//		        url: "Review", 
-//		        data: {
-//		            moviename: $("input[name='movie_name']").val(),
-//		            reviewContent: reviewContent,
-//		            review_recommend: reviewRecommend
-//				}
-//		        }).done(function(result) {
-//		            alert("리뷰가 성공적으로 제출되었습니다.");
-//					// isRegist 값 변경 0에서 1로
-//		            location.reload(); 
-//		        }).error(function() {
-//		            alert("리뷰 제출 중 오류가 발생했습니다. 다시 시도해주세요.");
-//		    });
-//		}
-	});
+	
+	    $.ajax({
+	        type: "POST",
+	        url: "reviewRegister", 
+	        data: {
+	            moviename: $("input[name='movie_name']").val(),
+	            reviewContent: reviewContent,
+	            review_recommend: reviewRecommend,
+				movie_code : getMovieCode
+			}
+	        }).done(function(result) {
+	            if(result) {
+					alert("리뷰가 성공적으로 제출되었습니다.");
+					// isRegist 값 변경 0에서 1로
+		            location.reload();
+				} 
+	        }).error(function() {
+	            alert("리뷰 제출 중 오류가 발생했습니다. 다시 시도해주세요.");
+	    });
+
+		}
+	);
 
     $(".cancel_modal").click(function() {
         location.reload(true);

@@ -33,7 +33,7 @@
 					<option value="content">내용</option>
 				</select>
 	<!-- 			검색어에는 name값을 searchKeyword로 준다 -->
-				<input type="text" name ="searchKeyword" placeholder="검색어를 입력하세요.">
+				<input type="text" name ="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요.">
 				<input type="submit" value="검색">
 			</form>
 		</div>

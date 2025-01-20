@@ -27,12 +27,14 @@
 			<h1>1:1 문의 목록</h1>
 		</div>
 	    <div class="search-bar" style="text-align: right;">
-	      <select>
-	        <option>제목</option>
-	        <option>내용</option>
-	      </select>
-	      <input type="text" placeholder="검색어를 입력하세요.">
-   		  <input type="button" value="검색" id="searchButton">
+    		<form action="InquiryList" method="get">
+		      <select name="searchType">
+		        <option value="subject" <c:if test="${param.searchType eq subject}">selected</c:if>>제목</option>
+		        <option value="content" <c:if test="${param.searchType eq content}">selected</c:if>>내용</option>
+		      </select>
+		      <input type="text"  name="searchKeyWord" value="${param.searchKeyWord}" placeholder="검색어를 입력하세요.">
+	   		  <input type="submit" value="검색" id="searchButton">
+   		  	</form>
 	    </div>
 	    <input type="button" value="글쓰기" id ="writeButton" style="text-align: right;">
 		<section id="listForm">
@@ -59,9 +61,18 @@
 									<c:if test="${inquiry.response_status eq 1}">
 										답변 완료
 									</c:if>
-									
+									<c:if test="${inquiry.response_status eq 2}">
+										답변
+									</c:if>
 								</td>
-								<td class="inquiry_subject">${inquiry.inquiry_subject}</td>
+								<td class="inquiry_subject">
+									<c:if test="${inquiry.inquiry_re_lev > 0}">
+										<c:forEach begin="1" end="${inquiry.inquiry_re_lev }">
+											&nbsp;&nbsp; ↳ &nbsp;
+										</c:forEach>
+									</c:if>
+									${inquiry.inquiry_subject}
+								</td>
 								<td>
 									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yy-MM-dd"/>
 

@@ -21,7 +21,7 @@
 					<td width="220px"><input type ="text"  name ="inquiry_subject" value ="${inquiry.inquiry_subject}" required></td>
 					<th width="90px">등록일</th>
 					<td width="160px">
-						<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
 					</td>
 				</tr>
 				<tr>

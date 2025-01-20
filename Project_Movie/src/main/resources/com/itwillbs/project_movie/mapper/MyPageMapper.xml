@@ -24,7 +24,7 @@
 	</select>
 <!-- 	예매내역 상세보기 -->
 	<select id="selectReservationInfo" resultType="map">
-		SELECT payment.payment_code, payment.ticket_count, payment.payment_end_time, payment.total_amount, payment.total_seat_code, movie.movie_name, schedule.theater_code, schedule.start_time
+		SELECT payment.payment_code, payment.ticket_count, payment.payment_date, payment.total_amount, payment.total_seat_code, movie.movie_name, schedule.theater_code, schedule.start_time
 		FROM payment JOIN schedule 
 		ON payment.schedule_code = schedule.schedule_code
 		JOIN movie 
@@ -76,24 +76,29 @@
 			#{startRow}
 			, #{listLimit}
 	</select>
-	<select id="selectWatchedmovieReview" resultType="map">
-		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count
-		FROM movie
-		JOIN schedule ON movie.movie_code = schedule.movie_code
-		JOIN payment ON schedule.schedule_code = payment.schedule_code
-		WHERE
-			member_id = 'benddlx'
-	</select>
-<!-- 	리뷰 등록 -->
-	<insert id="insertReviewList">
-		INSERT INTO review
-		VALUES(
-			#{review_code} + 1
-			, ${movie_code}
-			, ${review_content}
-			, ${review_writer}
+	<insert id="insertReview">
+		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(review_code),0)
+			FROM review;
+		</selectKey>
+		INSERT INTO review(
+			review_content,
+			review_recommend
+		)VALUES(
+			#{review_content},
+			#{review_recommmend}
 		)
 	</insert>
+<!-- 	이건뭐지 -->
+<!-- 	<select id="selectWatchedmovieReview" resultType="map"> -->
+<!-- 		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count -->
+<!-- 		FROM movie -->
+<!-- 		JOIN schedule ON movie.movie_code = schedule.movie_code -->
+<!-- 		JOIN payment ON schedule.schedule_code = payment.schedule_code -->
+<!-- 		WHERE -->
+<!-- 			member_id = 'benddlx' -->
+<!-- 	</select> -->
+<!-- 	리뷰 등록 -->
 <!-- 	리뷰 총 개수 출력 -->
 	<select id="selectReviewListCount" resultType="int">
 		SELECT COUNT(*)
@@ -113,7 +118,6 @@
 		WHERE movie_code = #{movie_code}
 		AND review_writer = #{id}
 	</select>
-	
 	<select id="selectCouponListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM coupon
@@ -138,11 +142,33 @@
  	<select id="selectInquiryListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM Inquiry
+ 		<if test="!searchKeyword.equals('')">
+ 			WHERE 
+ 			<choose>
+ 				<when test="searchType.equals('subject')">
+		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
+ 				</when>
+ 				<when test="searchType.equals('content')">
+		 			inquiry_content LIKE CONCAT('%', #{searchKeyword},'%')
+ 				</when>
+ 			</choose>
+ 		</if>
 	</select>
 <!-- 	1:1문의 글 시작번호,끝번호 -->
  	<select id="selectInquiryList" resultType="inquiry">
  		SELECT *
  		FROM Inquiry
+ 		<if test="!searchKeyword.equals('')">
+ 			WHERE 
+ 			<choose>
+ 				<when test="searchType.equals('subject')">
+		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
+ 				</when>
+ 				<when test="searchType.equals('content')">
+		 			inquiry_content LIKE CONCAT('%', #{searchKeyword},'%')
+ 				</when>
+ 			</choose>
+ 		</if>
  		LIMIT 
  			#{startRow}
  			,#{listLimit}
@@ -160,14 +186,20 @@
 	        inquiry_writer,
 	        inquiry_content,
 	        inquriy_date,
-	        inquiry_writer_ip
+	        inquiry_writer_ip,
+	        inquiry_re_ref,
+	        inquiry_re_lev,
+	        inquiry_re_seq
 	    )
 	    VALUES(
 	        #{inquiry_subject},
 	        #{inquiry_writer},
 	        #{inquiry_content},
 	        NOW(),
-	        #{inquiry_writer_ip}
+	        #{inquiry_writer_ip},
+	        0,
+	        0,
+	     	0
 	    )
 	</insert>
 
@@ -183,7 +215,7 @@
 		DELETE FROM Inquiry
 		WHERE inquiry_code = #{inquiry_code}
 	</delete>
-<!-- 	+==========================여기서부터 관리자 페이지 ================================================ -->
+<!-- 	==========================여기서부터 관리자 페이지 ================================================ -->
 <!-- 공지사항 글 개수 -->
 	<select id="selectNoticeListCount" resultType="int">
 		SELECT COUNT(*)
@@ -203,6 +235,7 @@
 		FROM notice_board
 		WHERE notice_code = #{notice_board}
 	</select>
+<!-- 	공지사항 등록 -->
 	<insert id="updateNoticeAdmin">
 		INSERT INTO notice_board(
 		notice_subject
@@ -214,12 +247,14 @@
 			,NOW()
 		)
 	</insert>
+<!-- 	공지사항 수정 -->
 	<update id="updateNotice">
 		UPDATE notice_board
 		SET notice_subject = #{notice_subject}
 		,notice_content = #{notice_content}
 		WHERE notice_code = #{notice_code}
 	</update>
+<!-- 	공지사항 삭제 -->
 	<delete id="deleteNotice">
 		DELETE FROM notice_board
 		WHERE notice_code = #{notice_code}
@@ -253,25 +288,69 @@
 		FROM faq_board
 		WHERE faq_code = #{faq_code}
 	</select>
+<!-- 	faq 글 수정 -->
 	<update id="updateFaq">
 		UPDATE faq_board
 		SET faq_subject = #{faq_subject}
 			, faq_content = #{faq_content}
 		WHERE faq_code = #{faq_code}
 	</update>
+<!-- 	faq 글 삭제 -->
 	<delete id="deleteFaq">
 		DELETE 
 		FROM faq_board
 		WHERE faq_code = #{faq_code}
 	</delete>
+<!-- 	1:1문의 수정 -->
 	<update id="updateInquiryModify">
  		UPDATE Inquiry
  		SET inquiry_subject = #{inquiry_subject}
  		, inquiry_content = #{inquiry_content}
 		WHERE inquiry_code = #{inquiry_code}
 	</update>
+<!-- 	1:1문의 삭제 -->
 	<delete id="deleteInquiryAdmin">
 		DELETE FROM Inquiry
 		WHERE inquiry_code = #{inquiry_code}
 	</delete>
+	
+<!-- 	1:1문의 답변 순서조정  -->
+<!-- 참조글 번호가 원본 게시물의 참조글번호와 같고, -->
+<!-- 순서번호가 대상 게시물의 순서번호보다 더 큰 레코드들의 순서번호를 1씩 증가 -->
+	<update id="updateInquiryReSeq">
+		UPDATE Inquiry
+		SET inquiry_re_seq  = inquiry_re_seq + 1
+		WHERE inquiry_re_ref = #{inquiry_re_ref}
+			AND inquiry_re_seq > #{inquiry_re_seq}
+	</update>
+<!-- 	1:1문의 답변 등록  -->
+	<insert id="insertInquiryReply">
+		<selectKey keyProperty="inquiry_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(inquiry_code),0)
+			FROM Inquiry;
+		</selectKey>
+		INSERT INTO Inquiry(
+			inquiry_code
+			,inquiry_subject
+			,inquiry_content
+			,inquriy_date
+			,response_status
+			,inquiry_writer_ip
+			,inquiry_re_ref
+			,inquiry_re_lev
+			,inquiry_re_seq
+		)
+		VALUES(
+			#{inquiry_code} + 1
+			,#{inquiry_subject}
+			,#{inquiry_content}
+			,NOW()
+<!-- 			답글 = 2로 고정  -->
+			,2
+			,#{inquiry_writer_ip}
+			,#{inquiry_re_ref}
+			,#{inquiry_re_lev} + 1
+			,#{inquiry_re_seq} + 1
+		)
+	</insert>
  </mapper>

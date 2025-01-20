@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itwillbs.project_movie.vo.EventBoardVO;
 import com.itwillbs.project_movie.vo.FaqBoardVO;
@@ -28,8 +29,10 @@ public interface MyPageMapper {
 	int selectWathedMovieCount();
 	//내가 본 영화 시작번호 끝번호
 	List<Map<String, Object>> selectWatchedMovie(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	// 내가 본 영화 - 리뷰 등록
+	int insertReview(@Param("map") Map<String, String> map);
 	//내가 본 영화 - 리뷰 창 띄우기 
-	Map<String, Object> selectWatchedmovieReview(String r_code);
+//	Map<String, Object> selectWatchedmovieReview(String movie_code);
 	//내가 본 영화 - 리뷰등록 포함 출력
 	Map<String, Object> selectIsRegistReview(@Param("id") String id, @Param("movie_code") String movie_code);
 
@@ -49,9 +52,9 @@ public interface MyPageMapper {
 	List<Map<String, String>> selectPointList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
 	
 	// 1:1문의 글 전체 가져오기
-	int selectInquiryListCount();
+	int selectInquiryListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	// 1:1문의 시작번호, 끝번호 어쩌고
-	List<InquiryVO> selectInquiryList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<InquiryVO> selectInquiryList(@Param("startRow")int startRow, @Param("listLimit")int listLimit, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	// 1:1문의 글 선택하면 글 불러오기
 	InquiryVO selectInquiry(int inquiry_code);
 	//1:1문의 글 작성
@@ -62,6 +65,11 @@ public interface MyPageMapper {
 	int deleteInquiry(InquiryVO inquiry);
 	
 	
+	
+	//============================관리자 페이지 ======================================
+	
+	
+
 	//관리자 페이지 - 공지사항 글 개수 
 	int selectNoticeListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 	//관리자 페이지 - 공지사항 글 시작번호 끝번호 
@@ -90,8 +98,12 @@ public interface MyPageMapper {
 	int deleteFaq(FaqBoardVO faq);
 	// 1:1문의 글 수정 
 	int updateInquiryModify(int inquiry_code);
-	//1:1 문의 글 삭제
+	// 1:1 문의 글 삭제
 	int deleteInquiryAdmin(InquiryVO inquiry);
+	//1:1문의 답글 순서번호 조정
+	void updateInquiryReSeq(InquiryVO inquiry);
+	// 1:1문의 글 답변
+	int insertInquiryReply(InquiryVO inquiry);
 	
 
 

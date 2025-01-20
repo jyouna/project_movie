@@ -42,8 +42,7 @@
 	
 
 			<input type="button" value="목록" onclick="location.href='EventWinner?pageNum=${param.pageNum}'">
-				<input type="button" value="△이전글" id="tableButton" onclick="location.href='EventWinner?winner_code=${eventWinner.winner_code-1}&pageNum=${PageInfo.pageNum }'"
-				<c:if test="${eventWinner.winner_code-1 eq 0}">alert("해당글은 존재하지 않습니다") </c:if>>
+				<input type="button" value="△이전글" id="tableButton" onclick="location.href='EventWinner?winner_code=${eventWinner.winner_code-1}&pageNum=${PageInfo.pageNum }'">
 				
 				<input type="button" value="▽다음글" id="tableButton" onclick="location.href='EventWinner?winner_code=${eventWinner.winner_code+1}&pageNum=${PageInfo.pageNum }'">
 		</section>

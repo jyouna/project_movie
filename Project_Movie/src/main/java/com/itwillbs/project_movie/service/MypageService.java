@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.project_movie.mapper.MyPageMapper;
 import com.itwillbs.project_movie.vo.EventBoardVO;
@@ -56,10 +57,10 @@ private MyPageMapper mapper;
 		return mapper.selectIsRegistReview(id,string);
 	}
 	//리뷰 등록창
-	public Map<String, Object> searchWatchedmovieReview(String r_code) {
-		// TODO Auto-generated method stub
-		return mapper.selectWatchedmovieReview(r_code);
-	}
+//	public Map<String, Object> searchWatchedmovieReview(String movie_code) {
+//		// TODO Auto-generated method stub
+//		return mapper.selectWatchedmovieReview(movie_code);
+//	}
 
 	//무비로그 - 관람평 글 전체 가져오기
 	public int getReviewListCount() {
@@ -84,14 +85,14 @@ private MyPageMapper mapper;
 	}
 
 // 1:1문의 글 전체 가져오기
-	public int getInquiryListCount() {
+	public int getInquiryListCount(String searchType, String searchKeyWord) {
 		// TODO Auto-generated method stub
-		return mapper.selectInquiryListCount();
+		return mapper.selectInquiryListCount(searchType, searchKeyWord);
 	}
 // 1:1문의 시작번호, 끝번호 어쩌고
-	public List<InquiryVO> getInquiryList(int startRow, int listLimit) {
+	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType, String searchKeyWord) {
 		// TODO Auto-generated method stub
-		return mapper.selectInquiryList(startRow, listLimit);
+		return mapper.selectInquiryList(startRow, listLimit, searchType, searchKeyWord);
 	}
 // 1:1문의 글 선택하면 글 불러오기
 	public InquiryVO getInquiry(int inquiry_code) {
@@ -195,6 +196,17 @@ private MyPageMapper mapper;
 	public int getInquiryDelete(InquiryVO inquiry) {
 		// TODO Auto-generated method stub
 		return mapper.deleteInquiryAdmin(inquiry);
+	}
+	//1:1문의 글 답변
+	@Transactional
+	public int addReply(InquiryVO inquiry) {
+		mapper.updateInquiryReSeq(inquiry);
+		return mapper.insertInquiryReply(inquiry);
+	}
+	//관람한 영화 리뷰 등록 
+	public int getReview(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.insertReview(map);
 	}
 
 

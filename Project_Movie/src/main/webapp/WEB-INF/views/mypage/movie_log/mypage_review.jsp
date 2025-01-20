@@ -42,19 +42,19 @@
 	            </tr>
 	               
 	            <c:choose>	
-	               <c:when test="${empty review}"> 
+	               <c:when test="${empty reviewList}"> 
 	                  <tr><td colspan="7">게시물이 존재하지 않습니다</td></tr>
 	               </c:when>
 	               <c:otherwise>
-	                  <c:forEach var="review" items="${review}" varStatus="status">
+	                  <c:forEach var="review" items="${reviewList}" varStatus="status">
 	                     <tr>
 	                        <td><input type="radio" ></td>
-	                        <td>${review.movie_name }</td>
+	                        <td>${review.movie_name}</td>
 	                        <td>${review.review_content}</td>
 	                        <td>
 	                        	<c:choose>
-		                        	<c:when test=" ${review.review_recommend == 0}">추천</c:when>
-		                        	<c:when test=" ${review.review_recommend == 1}">비추천</c:when>
+		                        	<c:when test=" ${review.review_recommend eq 0}">추천</c:when>
+		                        	<c:when test=" ${review.review_recommend eq 1}">비추천</c:when>
 	                        	</c:choose>
 	                       </td>
 	                        <td>${review.review_writer}</td>

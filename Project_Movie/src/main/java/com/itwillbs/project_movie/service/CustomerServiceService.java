@@ -17,13 +17,13 @@ public class CustomerServiceService {
 	// 공지사항 목록 조회
 	public int getNoticeListCount(String searchType, String searchKeyword) {
 		// TODO Auto-generated method stub
-		System.out.println( "servicegetcount " + searchKeyword);
+//		System.out.println( "servicegetcount " + searchKeyword);
 		return mapper.selectNoticeListCount(searchType,searchKeyword);
 	}
 	// 공지사항 
 	public List<NoticeBoardVO> getNoticeList(int startRow, int listLimit, String searchType, String searchKeyword) {
 		// TODO Auto-generated method stub
-		System.out.println( "servicegetlist " + searchKeyword);
+//		System.out.println( "servicegetlist " + searchKeyword);
 		return mapper.selectNoticeList(startRow, listLimit, searchType,searchKeyword);
 	}
 	// 공지사항 글 조회 및 조회수 

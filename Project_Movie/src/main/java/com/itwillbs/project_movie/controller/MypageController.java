@@ -44,7 +44,12 @@ public class MypageController {
 	
 	//1.결제내역 - 예매 내역
 	@GetMapping("ReservationDetail")
-	public String reservationDetail(@RequestParam (defaultValue="1") int pageNum, Model model) {
+	public String reservationDetail(@RequestParam (defaultValue="1") int pageNum, Model model, HttpSession session) {
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "result/fail";
+		}
 		int listCount = service.getReservationListCount();
 		int listLimit = 5; 
 		int startRow = (pageNum - 1) * listLimit; 
@@ -85,7 +90,12 @@ public class MypageController {
 	
 	//2. 결제내역 - 예매 취소내역 
 	@GetMapping("ReservationCancel")
-	public String reservationCancel(@RequestParam (defaultValue="1") int pageNum, Model model) {
+	public String reservationCancel(@RequestParam (defaultValue="1") int pageNum, Model model, HttpSession session) {
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "result/fail";
+		}
 		int listCount = service.getReservationCancelCount();
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
@@ -113,8 +123,13 @@ public class MypageController {
 	}
 	//3. 무비로그 - 내가 본 영화
 	@GetMapping("WatchedMovie")
-	public String watchedMovie(@RequestParam(defaultValue="1") int pageNum, Model model) {
-		String id = "benddlx";
+	public String watchedMovie(@RequestParam(defaultValue="1") int pageNum, Model model, HttpSession session, 
+			@RequestParam(defaultValue="") String searchYear) {
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "result/fail";
+		}
 		int listCount = service.getWatchedMovieCount();
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
@@ -136,7 +151,7 @@ public class MypageController {
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
-		List<Map<String, Object>> watchedMovie = service.getWatchedMovie(startRow, listLimit);
+		List<Map<String, Object>> watchedMovie = service.getWatchedMovie(startRow, listLimit );
 		for(Map<String, Object> movie : watchedMovie) {
 			Map<String, Object> review = service.isRegistReview(id, movie.get("movie_code").toString());
 			if(review == null) {
@@ -152,15 +167,26 @@ public class MypageController {
 	//3-1. 리뷰 등록창 
 	@ResponseBody
 	@PostMapping("reviewRegister")
-	public Map<String, Object> reviewRegister(String review_code) {
-		Map<String, Object> watchedMovie = service.searchWatchedmovieReview(review_code);
-//		watchedMovie.setR_dateToString(watchedMovie.getR_date().toString().replace(".0", ""));
-		return watchedMovie;
+	public Boolean reviewRegister(@RequestParam Map<String, String> map, Model model, HttpSession session) {
+		System.out.println("넘어온 값 : " + map);
+		int insertCount = service.getReview(map);
+		if(insertCount > 0) {
+			 System.out.println("insert 했습니다...");
+			return true;
+		}else {
+			model.addAttribute("msg", "리뷰작성에 실패했습니다.");
+			return false;
+		}
 	}
 	
 	//4. 무비로그 - 관람평 
 	@GetMapping("Review")
 	public String review(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNum ) {
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "result/fail";
+		}
 		int listCount = service.getReviewListCount();
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
@@ -187,11 +213,12 @@ public class MypageController {
 		
 		return "mypage/movie_log/mypage_review";
 	}
-	// 4-1 watched movie에서 리뷰 등록한걸 넘기기 
-	@PostMapping("Review")
-	public String review() {
-		return "";
-	}
+//	// 4-1 watched movie에서 리뷰 등록한걸 넘기기 
+//	@PostMapping("Review")
+//	public String review() {
+////		List<Map<String, Object>> = service.getReview(
+//		return "mypage/movie_log/mypage_review";
+//	}
 	
 	//4-2. 리뷰 수정 버튼
 	@GetMapping("reviewModify")
@@ -200,7 +227,12 @@ public class MypageController {
 	}
 	//5. 쿠폰 - 쿠폰 보기
 	@GetMapping("CouponList")
-	public String couponList( Model model, @RequestParam(defaultValue="1") int pageNum) {
+	public String couponList(Model model, @RequestParam(defaultValue="1") int pageNum, HttpSession session) {
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "result/fail";
+		}
 		int listCount = service.getCouponListCount();
 		int listLimit = 7;
 		int startRow = (pageNum - 1) * listLimit; 
@@ -230,7 +262,12 @@ public class MypageController {
 	
 	//6. 포인트
 	@GetMapping("MypointReward")
-	public String mypointReward(@RequestParam(defaultValue = "1") int pageNum, Model model ) {
+	public String mypointReward(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "result/fail";
+		}
 		int listCount = service.getPointListCount();
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit; 
@@ -260,8 +297,14 @@ public class MypageController {
 	}
 	//7. 1:1 문의 - 글 목록
 	@GetMapping("InquiryList")
-	public String inquiryList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
-		int listCount = service.getInquiryListCount();
+	public String inquiryList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session, 
+			@RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="")String searchKeyWord) {
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용해주세요.");
+			return "result/fail";
+		}
+		int listCount = service.getInquiryListCount(searchType, searchKeyWord);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -283,7 +326,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit);
+		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType, searchKeyWord);
 		model.addAttribute("inquiryList", inquiryList);
 		return "mypage/inquiry/inquiry_list";
 	}
@@ -619,7 +662,9 @@ public class MypageController {
 	}
 	//관리자 페이지 - 고객지원 관리 - 1:1문의 관리
 	@GetMapping("AdminInquiry")
-	public String adminInquiry(@RequestParam(defaultValue="1") int pageNum, Model model, HttpSession session) {
+	public String adminInquiry(@RequestParam(defaultValue="1") int pageNum, Model model, HttpSession session,
+			@RequestParam(defaultValue="") String searchType,
+			@RequestParam(defaultValue ="") String searchKeyword) {
 		// 관리자 로그인 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -633,7 +678,7 @@ public class MypageController {
 			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
-		int listCount = service.getInquiryListCount();
+		int listCount = service.getInquiryListCount(searchType,searchKeyword);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -655,7 +700,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit);
+		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType,searchKeyword);
 		model.addAttribute("inquiryList", inquiryList);
 		return "adminpage/customer_service/inquiry_board_manage";
 	}
@@ -692,6 +737,33 @@ public class MypageController {
 			return "redirect:/AdminInquiry";
 		}else {
 			model.addAttribute("msg", "글을 삭제하는데 실패하셨습니다.");
+			return "result/fail";
+		}
+	}
+	
+	// 1:1문의 - 글 답변
+	@GetMapping("AdminInquiryReply")
+	public String adminInquiryReply(int inquiry_code, Model model) {
+		InquiryVO inquiry = service.getInquiry(inquiry_code);
+		System.out.println("AdminInquiryReply === " + inquiry);
+		if(inquiry == null) {
+			model.addAttribute("msg", "존재하지 않는 글입니다.");
+		}
+		model.addAttribute("inquiry", inquiry);
+		return "adminpage/customer_service/inquiry_board_reply";
+	}
+	
+	// 1:1문의 - 글 답변 - post
+	@PostMapping("AdminInquiryReply")
+	public String adminInquiryReply2(InquiryVO inquiry, Model model, HttpServletRequest request, @RequestParam(defaultValue= "1")int pageNum,
+			int inquiry_code) {
+		inquiry.setInquiry_writer_ip(getClientIp(request));
+		System.out.println("AdminInquiryReply2=========" + inquiry);
+		int insertReply = service.addReply(inquiry);
+		if(insertReply > 0) {
+			return "redirect:/AdminInquiryPost?inquiry_code=" + inquiry_code  + "&pageNum=" + pageNum;
+		}else {
+			model.addAttribute("msg", "답변 등록에 실패하셨습니다.");
 			return "result/fail";
 		}
 	}

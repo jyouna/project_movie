@@ -27,7 +27,7 @@
 		<h1>예매내역</h1>
  	</div>
 		<!-- 로그인 한 회원 이름 +n건입니다. - 예매한 갯수로 연결 -->
-		<h6>정유나님 관람가능한 예매내역이 건 입니다.</h6>
+		<h6>${sessionScope.sMemberId}님 관람가능한 예매내역이 건 입니다.</h6>
       <section id="listForm">
          <table>
             <tr id="tr_top">

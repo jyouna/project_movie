@@ -20,4 +20,9 @@ public class InquiryVO {
 	private String admin_id;
 	private Timestamp response_date;
 	private String inquiry_writer_ip;
+	private int inquiry_re_ref;
+	private int inquiry_re_lev;
+	private int inquiry_re_seq;
+	
+	
 }

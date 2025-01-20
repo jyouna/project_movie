@@ -26,16 +26,15 @@
 			<h1>1:1 문의 목록</h1>
 		</div>
 	    <div class="search-bar" style="text-align: right;">
-	      <select>
-	        <option>제목</option>
-	        <option>내용</option>
-	      </select>
-	      <input type="text" placeholder="검색어를 입력하세요.">
-   		  <input type="button" value="검색" id="searchButton">
+	    	<form action="AdminInquiry" method="get">
+		      <select name="searchType">
+		        <option value="subject" <c:if test="${param.searchType eq subject}">selected</c:if>>제목</option>
+		        <option value="content" <c:if test="${param.searchType eq content}">selected</c:if>>내용</option>
+		      </select>
+		      <input type="text" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요.">
+	   		  <input type="submit" value="검색" id="searchButton">
+   		  </form>
 	    </div>
-	    <input type="button" value="전체선택">
-	    <input type="button" value="답변하기" id ="writeButton" style="text-align: right;">
-	    <input type="button" value="삭제하기">
 		<section id="listForm">
 			<table id="inquiryForm" border="1">
 				<tr id="tr_top" align="center">
@@ -45,7 +44,6 @@
 					<td width="80px">작성자</td>
 					<td width="100px">등록일</td>
 				</tr>
-					
 				<c:choose>
 					<c:when test="${empty inquiryList}"> 
 						<tr><td colspan="4">게시글이 존재하지 않습니다. </td></tr>
@@ -61,9 +59,19 @@
 									<c:if test="${inquiry.response_status eq 1}">
 										답변 완료
 									</c:if>
+									<c:if test="${inquiry.response_status eq 2}">
+										답변
+									</c:if>
 								</td>
-								<td class="inquiry_subject">${inquiry.inquiry_subject}</td>
-								<td>${inquiry.inquiry_writer}</td>
+								<td class="inquiry_subject">
+									<c:if test="${inquiry.inquiry_re_lev > 0 }">
+										<c:forEach begin="1" end="${inquiry.inquiry_re_lev}">
+											&nbsp;&nbsp; ↳ &nbsp;
+										</c:forEach>
+									</c:if>
+									${inquiry.inquiry_subject}
+								</td>
+								<td>${sessionScope.sAdminId}</td>
 								<td>
 									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yy-MM-dd"/>
 								</td>

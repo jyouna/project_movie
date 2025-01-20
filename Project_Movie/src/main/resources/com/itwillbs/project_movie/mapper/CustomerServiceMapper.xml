@@ -11,10 +11,10 @@
  				WHERE 
  				<choose>
  					<when test="searchType.equals('subject')">
- 						notice_subject LIKE CONCAT('%','{#searchKeyword}','%')
+ 						notice_subject LIKE CONCAT('%',#{searchKeyword},'%')
  					</when>
  					<when test="searchType.equals('content')">
- 						notice_content LIKE CONCAT('%','{#searchKeyword}','%')
+ 						notice_content LIKE CONCAT('%',#{searchKeyword},'%')
  					</when>
  				</choose>
  			</if>
@@ -26,10 +26,10 @@
  				WHERE 
  				<choose>
  					<when test="searchType.equals('subject')">
- 						notice_subject LIKE CONCAT('%','{#searchKeyword}','%')
+ 						notice_subject LIKE CONCAT('%',#{searchKeyword},'%')
  					</when>
  					<when test="searchType.equals('content')">
- 						notice_content LIKE CONCAT('%','{#searchKeyword}','%')
+ 						notice_content LIKE CONCAT('%',#{searchKeyword},'%')
  					</when>
  				</choose>
  			</if>

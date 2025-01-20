@@ -32,7 +32,7 @@
 						<td colspan="3">${inquiry.inquiry_subject}</td>
 						<th width="120">등록일</th>
 						<td width="180">
-							<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/>
+							<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
 						</td>
 					</tr>
 				</table>
