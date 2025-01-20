@@ -336,4 +336,16 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getAllEventWinnerCount(searchKeyword, searchContent);
 	}
+	
+	// 메인화면 이벤트 당첨자 목록 출력
+	public List<EventWinnerVO> getWinnerList(int event_code) {
+		// TODO Auto-generated method stub
+		return manageMapper.getWinnerList(event_code);
+	}
+	
+	// 이벤트 당첨자 팝업창에 당첨자 수 ajax 전달 
+	public int getSingEventWinnerCount(int event_code) {
+		// TODO Auto-generated method stub
+		return manageMapper.getSingleEventWinnerCount(event_code);
+	}
 }

@@ -141,6 +141,10 @@ public interface AdminManageMapper {
 	int getAllEventWinnerCount(@Param("searchKeyword") String searchKeyword, 
 							  @Param("searchContent") String searchContent);
 
+	List<EventWinnerVO> getWinnerList(@Param("event_code") int event_code);
+
+	int getSingleEventWinnerCount(@Param("event_code") int event_code);
+
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 
 }
