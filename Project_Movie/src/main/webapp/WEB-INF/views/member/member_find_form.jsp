@@ -41,7 +41,7 @@
     <div id="find-id-form" class="form-container">
       <h2></h2>
       <label for="member_name">이름</label>
-      <input type="text" id="member_name"  name="member_name" placeholder="" autocomplete="name" required>
+      <input type="text" id="member_name"  name="member_name" placeholder="NAME" autocomplete="name" required>
 <!--       id-name to name -->
       
       <label for="birth_date">생년월일</label>

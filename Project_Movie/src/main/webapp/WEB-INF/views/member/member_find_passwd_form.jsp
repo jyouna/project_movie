@@ -49,10 +49,10 @@
       <h2></h2>
       
       <label for="member_id">아이디</label>
-      <input type="text" id="member_id"  name="member_id" placeholder="" autocomplete="member_id" required>
+      <input type="text" id="member_id"  name="member_id" placeholder="ID" autocomplete="member_id" required>
       
       <label for="member_name">이름</label>
-      <input type="text" id="member_name"  name="member_name" placeholder="" autocomplete="name" required>
+      <input type="text" id="member_name"  name="member_name" placeholder="NAME" autocomplete="name" required>
       
       
       

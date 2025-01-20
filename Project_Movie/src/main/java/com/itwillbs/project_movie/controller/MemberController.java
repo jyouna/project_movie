@@ -3,8 +3,11 @@ package com.itwillbs.project_movie.controller;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.io.IOException;
 import java.sql.Date; // SQL 날짜 타입
 import java.time.LocalDate; // 날짜 처리 (ISO 표준)
 import java.time.format.DateTimeParseException; // 날짜 형식 검증 예외 처리

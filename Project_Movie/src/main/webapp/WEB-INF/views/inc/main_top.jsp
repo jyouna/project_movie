@@ -7,15 +7,14 @@
 		<div class="navbar"> 
 			<div class="navbar-right"> 
 				<a href="${pageContext.request.contextPath}">홈</a> 
-				<a href="#" onclick="openMypage()">마이페이지</a> 
-				<a href="#" onclick="openAdminpage()">관리자페이지</a>
+				<a href="#" onclick="openAdminpage()">관리자(임시)</a>
 				<c:choose>
 					<c:when test="${empty sessionScope.sMemberId}">
 						<a href="MemberLogin">로그인</a> 
 		    			<a href="MemberAgree">회원가입</a> 
 					</c:when>
 					<c:otherwise>
-						<a href="MemberInfo">${sessionScope.sMemberId}</a>
+						<a href="#" onclick="openMypage()">${sessionScope.sMemberId}</a>
 		   				<a href="javascript:void(0)" onclick="logout()">로그아웃</a> 
 					
 					</c:otherwise>

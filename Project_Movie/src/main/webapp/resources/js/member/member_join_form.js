@@ -107,6 +107,9 @@ $(function() {
         }
     });
 
+
+
+
     // 비밀번호 확인
     $("#confirm-password").on("blur", function() {
         let passwd = $("#password").val();
@@ -119,38 +122,6 @@ $(function() {
         }
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
