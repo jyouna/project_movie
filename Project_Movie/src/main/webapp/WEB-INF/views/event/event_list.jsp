@@ -14,7 +14,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/event/event_list.js"></script>
 </head>
 <body class="left-sidebar is-preload">
-
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
 		<div id="title">
@@ -23,10 +22,10 @@
 	    <div class="search-bar" style="text-align: right;">
 	    	<form action="EventList" method="get" name="searchForm">
 		      <select name="searchType">
-		        <option value="subject" <c:if test="${param.searchType eq subject}">selected</c:if>>제목</option>
-		        <option value="content" <c:if test="${param.searchType eq content}">selected</c:if>>내용</option>
+		        <option value="subject" <c:if test="${param.searchType eq 'subject'}">selected</c:if>>제목</option>
+		        <option value="content" <c:if test="${param.searchType eq 'content'}">selected</c:if>>내용</option>
 		      </select>
-		      <input type="text" name="searchKeyword" value="${param.searchKeyWord}"placeholder="검색어를 입력하세요." required="required">
+		      <input type="text" name="searchKeyword" value="${param.searchKeyword}"placeholder="검색어를 입력하세요." required="required">
 	  		  <input type="submit" value="검색">
   			</form>
 	    </div>
@@ -36,8 +35,9 @@
 					<td width="35px">번호</td>
 					<td width="45px">상태</td>
 					<td width="200px" >제목</td>
-					<td width="125px">이벤트 기간</td>
-					<td width="35px">조회수</td>
+					<td width="100px">이벤트 기간</td>
+<!-- 					<td width="35px">조회수</td> -->
+					<td width="35px">당첨자</td>
 				</tr>
 				<c:choose>
 					<c:when test="${empty eventList}"> 
@@ -54,9 +54,12 @@
 <%-- 								<td class="event_subject"><a href="eventPost?event_code=${event_board.event_code}">${event_board.event_subject}</a></td> --%>
 								<td class="event_subject">${event_board.event_subject}</td>
 								<td>
-									<p>${event_board.event_start_date} - ${event_board.event_end_date}</p>
+									<p>${event_board.event_start_date} - <br> ${event_board.event_end_date}</p>
 								</td>
-								<td>${event_board.view_count}</td>
+<%-- 								<td>${event_board.view_count}</td> --%>
+								<td>
+									<button value="${event_board.event_code}" class="winnerList">보기</button>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>					
@@ -92,14 +95,27 @@
 				let event_code = $(event.target).siblings(".event_code").text(); //.은 클래스 가져오는거 
 				console.log("siblings " + event_code);
 				location.href = "EventPost?event_code=" + event_code + "&pageNum=${pageInfo.pageNum}";
-			
 			});
+			
+			$(".winnerList").on("click", function() {
+// 				let eventCode = $(this).closest("tr").find(".event_code").text();
+				let event_code = $(this).val();
+				console.log("event_code = " + event_code);
+// 				console.log("eventCode : "  + eventCode);
+				$.ajax({
+					url: "GetWinnerCountForShow",
+					type: "get",
+					data: {event_code : event_code}
+				}).done(function(response){			
+					if(response < 1) { // 당첨자 수(response)가 1보다 적을 시 당첨 추첨 미진행이므로 알림 팝업창 표시
+						alert("당첨자 추첨 후 확인 가능합니다.");
+					} else {
+						window.open("ShowEventWinnerList?event_code=" + event_code, "당첨자리스트", "width=800, height=800 left=590 top=140");
+					}
+				});
+			})
 		});
-				
-		
-		
 		</script>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	
 </body>
 </html>

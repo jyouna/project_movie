@@ -431,10 +431,24 @@ public class AdminEventManageController {
 		return "adminpage/event_manage/event_winner_manage";
 	}
 	
-	@GetMapping("winnerNoticeBoard")
-	public String winnerNoticeBoard() {
+	@GetMapping("ShowEventWinnerList")
+	public String showEventWinnerList(int event_code, Model model) {
+		System.out.println("당첨자 컨트롤러 호출됨");
 		
-		return "adminpage/event_manage/event_winner_board_regis";
+		List<EventWinnerVO> voList = adminService.getWinnerList(event_code);
+		System.out.println("당첨자 : " + voList);
+		model.addAttribute("voList", voList);
+		
+		return "adminpage/event_manage/event_winner_list_toShow";
+	}
+	
+	@GetMapping("GetWinnerCountForShow")
+	@ResponseBody
+	public int getWinnerCount(int event_code) {
+		System.out.println("당첨자 수 출력 컨트롤러 호출");
+		int winnerCount = adminService.getSingEventWinnerCount(event_code);
+		System.out.println(winnerCount);
+		return winnerCount;
 	}
 }
 
