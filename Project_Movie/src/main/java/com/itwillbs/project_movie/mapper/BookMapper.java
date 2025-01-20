@@ -12,6 +12,7 @@ import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
 
+
 @Mapper
 public interface BookMapper {
 

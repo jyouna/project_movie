@@ -7,6 +7,7 @@ $(function() {
 			data : {
 				coupon_code
 			}
+			
 		}).done(function(coupon) {
 			if(coupon.coupon_type == 0) {
 				let calAmount = $(".div01 .price").text() - coupon.discount_amount;

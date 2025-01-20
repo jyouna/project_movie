@@ -24,6 +24,7 @@ import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
 
 
+
 @Controller
 public class BookController {
 	@Autowired private BookService service;

@@ -2,6 +2,7 @@ $(function () {
 	let selectedSeats = "";
 	let totalAmount = 0;
 	
+	
 	// 인원수 변경 시 선택된 좌석 초기화 메서드 정의
 	function resetSeats() {
 		if($(".seat.selected").length > 0) {
