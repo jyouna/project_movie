@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html lang="en">
 <html>
 <head>
@@ -16,6 +17,7 @@
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_pick_set/movie_pick_set.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -80,12 +82,12 @@
 			</div>
 			<div  id="pick_currently_status">
 				<div>
-					투표현황 그래프 들어갈자리
+					<canvas id="voteCurrentChart" style="width: 250px; height: 250px;"></canvas>
 				</div>
 				<table>
 					<tr>
 						<th colspan="5">투표 집계 결과</th>
-						<th colspan="1"><input type="button" value="조회하기"></th>
+						<th colspan="1"><input type="button" id="searchVoteCurrentInfoBtn" value="조회하기"></th>
 					</tr>
 					<tr>
 						<th>순위</th>
@@ -93,18 +95,27 @@
 						<th>영화제목</th>
 						<th>투표수</th>
 						<th>전체투표수</th>
-						<th>백분율</th>
+						<th>백분율(%)</th>
 					</tr>
-					<c:forEach var="i" begin="1" end="5">
-						<tr>
-							<th>${i}</th>
-							<td>ABCDFD</td>
-							<td>극장판짱구는못말려</td>
-							<td>1560</td>
-							<td>3120</td>
-							<td>50%</td>
-						<tr>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${empty voteCurrentInfoList}">
+							<tr>
+								<td colspan="6">투표정보가 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="voteCurrentInfo" items="${voteCurrentInfoList}" varStatus="status">
+								<tr>
+									<th>${status.count}</th>
+									<td>${voteCurrentInfo.movie_code}</td>
+									<td class="movieName">${voteCurrentInfo.movie_name}</td>
+									<td>${voteCurrentInfo.count}</td>
+									<td>${totalCount}</td>
+									<td class="voteRatio"><fmt:formatNumber value="${voteCurrentInfo.count / totalCount * 100}" pattern="#0.0"></fmt:formatNumber></td>
+								<tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</table>
 			</div>
 		</div>

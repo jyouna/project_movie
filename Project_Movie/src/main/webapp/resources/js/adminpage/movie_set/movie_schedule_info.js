@@ -28,6 +28,11 @@ $(function() {
 	
 	// 달력의 날짜를 클릭했을 때 해당날의 상세스케줄 페이지로 이동
 	$("#body_main td").click(function() {
+		// 날짜가없는 td 선택시 이벤트헨들러 종료
+		if($(this).text().trim() == "") {
+			return;
+		}
+		
 		let select_date = selectedMonth + "-" + $(this).find(".day").text();
 		location.href = "AdminMovieSetScheduleDetail?select_date=" + select_date + "&theater_code=" + theater_code;
 	});

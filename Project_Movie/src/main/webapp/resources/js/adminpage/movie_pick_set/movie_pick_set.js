@@ -50,6 +50,11 @@ $(function() {
 		}
 	});
 	
+	// 투표현황 조회하기 버튼 클릭시 새로고침 진행
+	$("#searchVoteCurrentInfoBtn").click(function() {
+		location.reload(true);
+	});
+	
 	// 투표종료 버튼 클릭시 투표 비활성화
 	$("#endVoteBtn").click(function() {
 		if($("#voteCode").val() == null) {
@@ -67,6 +72,94 @@ $(function() {
 	$("#registUpcomingBtn").click(function() {
 	});
 	
+	// 투표현황 차트
+	let ctx = $('#voteCurrentChart')[0].getContext('2d');
+	let voteCurrentChart = new Chart(ctx, {
+	    type: 'doughnut',
+	    data: {
+	        labels: [$(".movieName").eq(0).text(), $(".movieName").eq(1).text(), $(".movieName").eq(2).text(), $(".movieName").eq(3).text(), $(".movieName").eq(4).text()],
+	        datasets: [{
+	            label: '백분율',
+	            data: [$(".voteRatio").eq(0).text(), $(".voteRatio").eq(1).text(), $(".voteRatio").eq(2).text(), $(".voteRatio").eq(3).text(), $(".voteRatio").eq(4).text()],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        responsive: true,
+			maintainAspectRatio: false,
+	        plugins: {
+	            legend: {
+	                display: false
+	            },
+	            tooltip: {
+	                enabled: false
+	            }
+	        }
+	    },
+	    plugins: [
+	        {
+	            id: 'doughnutLabels',
+	            afterDraw(chart, args, options) {
+	                const {ctx, data} = chart;
+	
+	                chart.getDatasetMeta(0).data.forEach((dataPoint, index) => {
+	                    const {x, y} = dataPoint.tooltipPosition();
+	                    const movieName = data.labels[index];
+	                    const ratio = data.datasets[0].data[index];
+	
+	                    ctx.save();
+	                    ctx.font = 'bold 12px Arial';
+	                    ctx.fillStyle = 'black';
+	                    ctx.textAlign = 'center';
+	                    ctx.textBaseline = 'middle';
+	
+	                    // 영화 이름
+	                    ctx.fillText(movieName, x, y - 5);
+	
+	                    // 비율 값
+	                    ctx.font = '12px Arial';
+	                    ctx.fillText(`${ratio}%`, x, y + 10);
+	                    ctx.restore();
+	                });
+	            }
+	        },
+	        {
+	            id: 'centerTitle',
+	            afterDraw(chart, args, options) {
+	                const {ctx, chartArea: {width, height}} = chart;
+	
+	                ctx.save();
+	                ctx.font = 'bold 16px Arial';
+	                ctx.fillStyle = 'black';
+	                ctx.textAlign = 'center';
+	                ctx.textBaseline = 'middle';
+	
+	                const centerX = width / 2;
+	                const centerY = height / 2;
+	
+	                // 중앙에 제목 표시
+	                ctx.fillText('투표 현황', centerX, centerY);
+	                ctx.restore();
+	            }
+	        }
+	    ]
+	});
+
+
 	// 체크된 영화의 코드들을 변수에 초기화하는 메서드
 	function getCheckedMovieCode() {
 		let checkMovieCodeStr = "";

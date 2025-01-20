@@ -37,6 +37,11 @@ public class MoviePickService {
 		int vote_status = 0;
 		return moviePickMapper.updateVoteStatus(vote_code, vote_status);
 	}
+	
+	// 투표 현황 조회
+	public List<Map<String, Object>> getVoteCurrentInfo(Object vote_code) {
+		return moviePickMapper.selectVoteCurrent(vote_code);
+	}
 
 		
 }

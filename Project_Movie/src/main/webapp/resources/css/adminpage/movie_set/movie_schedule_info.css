@@ -52,6 +52,7 @@ table td {
 	text-align: left;
 	vertical-align: top;
 	height: 90px;
+	cursor: pointer;
 }
 
 table th {

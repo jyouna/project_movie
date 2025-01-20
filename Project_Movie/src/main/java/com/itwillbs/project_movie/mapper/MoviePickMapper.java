@@ -20,6 +20,9 @@ public interface MoviePickMapper {
 	
 	// 투표 상태 업데이트
 	int updateVoteStatus(@Param("vote_code") String vote_code, @Param("vote_status") int vote_status);
+	
+	// 투표 현황 조회
+	List<Map<String, Object>> selectVoteCurrent(Object vote_code);
 
 
 }

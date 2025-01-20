@@ -1,8 +1,5 @@
 package com.itwillbs.project_movie.controller;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +54,19 @@ public class MoviePickController {
 		// 현재날짜 기준으로 등록되어있는 투표 정보 조회
 		Map<String, Object> voteInfo = moviePickService.getVoteInfo();
 		model.addAttribute("voteInfo", voteInfo);
+		
+		// 현재 진행중인 투표현황 조회
+		List<Map<String, Object>> voteCurrentInfoList = moviePickService.getVoteCurrentInfo(voteInfo.get("vote_code"));
+		
+		// 전체 투표수
+		int totalCount = 0;
+		
+		for(Map<String, Object> voteCurrentInfo : voteCurrentInfoList) {
+			totalCount += Integer.parseInt(voteCurrentInfo.get("count").toString());
+		}
+		
+		model.addAttribute("voteCurrentInfoList", voteCurrentInfoList);
+		model.addAttribute("totalCount", totalCount);
 		
 		return "adminpage/movie_pick_set/movie_pick_set";
 	}
