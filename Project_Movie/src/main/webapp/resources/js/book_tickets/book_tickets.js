@@ -121,7 +121,7 @@ $(function() {
 						$("#" + schedule.movie_code).append(`
 						    <a class="time_seat_btn" id="${schedule.schedule_code}">
 						        <input type="hidden" value="${schedule.schedule_code}">
-						        <input type="hidden" id="isBookingAvail" value="${schedule.booking_avail}">
+						        <input type="hidden" class="isBookingAvail" value="${schedule.booking_avail}">
 						        <span class="mv_time">${schedule.str_start_time}</span>
 						        <span class="details">
 						            <span class="seat">70/${schedule.avail_seat}</span>
@@ -153,8 +153,7 @@ $(function() {
 				$(".movie_schedule_info").css("display", "block");
 				
 				$(".time_seat_btn").click(function() {
-//					if($("#isBookingAvail").val() == 1) {
-					if($("#isBookingAvail").val("1")) {
+					if($(this).find(".isBookingAvail").val() == 1) {
 						schCode = $(this).find("input[type='hidden']").val();
 						console.log(schCode);
 						

@@ -38,7 +38,7 @@
 					<div class="book_detail">
 				        <div class="row">
 				            <div class="header">예매번호</div>
-				            <div class="data">0000-1234-5678-111</div>
+				            <div class="data">${param.payment_code}</div>
 				        </div>
 				        <div class="row">
 				            <div class="header">영화</div>
@@ -86,7 +86,7 @@
 				        </div>
 						 <div class="row">
 				            <div class="header">좌석</div>
-				            <div class="data">D5, D6, D7</div>
+				            <div class="data">${param.totalSeat}</div>
 				        </div>
 						 <div class="row">
 				            <div class="header">결제금액</div>

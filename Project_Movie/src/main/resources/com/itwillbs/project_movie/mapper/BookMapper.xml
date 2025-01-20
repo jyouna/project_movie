@@ -140,6 +140,19 @@
 		AND coupon_status = 0
 	</select>
 	
+	<select id="selectMemberWhoPayTicket" resultType="member">
+		SELECT *
+		FROM member
+		WHERE member_id = #{member_id}
+	</select>
+	
+	<select id="selectPaymentInfo" resultType="payment">
+		SELECT *
+		FROM payment
+		WHERE payment_code = #{payment_code}
+	</select>
+	
+	
 	
 </mapper>
 

@@ -68,9 +68,9 @@
     margin: 0;
 }
 
-.poster {
+.poster img {
     background-color: gray;
-    width: 200px;
+    width: 210px;
     height: 300px;
     flex-shrink: 0; /* 포스터 크기가 줄어들지 않도록 설정 */
 }

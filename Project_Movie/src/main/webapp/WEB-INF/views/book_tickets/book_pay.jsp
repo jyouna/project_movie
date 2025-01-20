@@ -40,8 +40,8 @@
 					<h2>결제하기</h2>
 				</div>
 				<form action="BookFinish" id="paymentForm" method="post">
+					<input type="hidden" name="schedule_code" value="${schedule.schedule_code}">
 					<input type="hidden" name="payment_code" value="${payment_code}">
-<!-- 					<input type="hidden" name="payment_method" id="paymentMethod"> -->
 					<input type="hidden" name="payment_status" id="paymentStatus">
 					<input type="hidden" name="total_payment" id="totalPayment">
 					<div class="main_container">
@@ -101,6 +101,7 @@
 							            <div class="header">좌석</div>
 							            <div class="data">${totalSeat}</div>
 							        </div>
+							        <input type="hidden" name="totalSeat" value="${totalSeat}">
 						        </div>
 							</section>
 							
@@ -138,7 +139,7 @@
 									<div class="use_point">
 										<span>사용할 포인트</span>
 										<div class="form_btn">
-											<input type="text" class="point_form" name="point_discount" maxlength="4">
+											<input type="text" class="point_form" name="point_discount" value="${param.point_discount}" maxlength="4">
 										</div>
 									</div>
 								</div>
@@ -229,7 +230,9 @@
 				    }
 				});
 			});
-			 
+			
+			// 결제 api
+			// 신용카드
 			function KGmobilians() {
 				IMP.init("imp33121188");
 
@@ -252,7 +255,8 @@
 				   }
 				);
 			}
-			 
+			
+			// 카카오페이
 			 function kakaopay() {
 				 IMP.init("imp33121188");
 				 
@@ -275,7 +279,8 @@
 					}
 				);
 			}
-			 
+			
+			// 토스페이
 			function tosspay() {
 				IMP.init("imp33121188");
 				 

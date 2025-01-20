@@ -7,7 +7,6 @@ $(function() {
 			data : {
 				coupon_code
 			}
-			
 		}).done(function(coupon) {
 			if(coupon.coupon_type == 0) {
 				let calAmount = $(".div01 .price").text() - coupon.discount_amount;
@@ -31,15 +30,25 @@ $(function() {
 	});
 	
 	$(".point_form").keyup(function() {
+		let myPoint = parseInt($(".point02").text().replace(" p", ""));
 		if($(this).val() > 2000) {
 			alert("최대 2000p 사용 가능합니다.")
 			$(".div02 .price").text(0);
+			$(".div03 .price").text($(".div01 .price").text());
 			$(this).val("");
 		} else {
-			$(".div02 .price").text($(this).val());
-			$(".div03 .price").text($(".div01 .price").text() - $(this).val());
+			if(myPoint < $(this).val()) {
+				alert("보유 포인트를 초과하여 사용하실 수 없습니다");
+				$(".div02 .price").text(0);
+				$(".div03 .price").text($(".div01 .price").text());
+				$(this).val("");
+			} else {
+				$(".div02 .price").text($(this).val());
+				$(".div03 .price").text($(".div01 .price").text() - $(this).val());
+			}
 		}
 	});
+
 	
 	// 결제 버튼 클릭 시 선택되어 있는 결제수단으로 결제
 	$(".payment_btn").click(function() {

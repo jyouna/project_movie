@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.itwillbs.project_movie.vo.CouponVO;
+import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
@@ -42,7 +44,11 @@ public interface BookMapper {
 
 	CouponVO selectMyCoupon(String coupon_code);
 
-	
+	MemberVO selectMemberWhoPayTicket(String id);
+
+	PaymentVO selectPaymentInfo(String payment_code);
+
+
 
 
 

@@ -19,6 +19,7 @@ import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
@@ -97,30 +98,15 @@ public class BookController {
 	// ========================= 좌석페이지 컨트롤러 =========================
 	@GetMapping("BookSeat")
 	public String bookSeatPage(String schedule_code, MemberVO member, HttpSession session, Model model) {
-
-		// 로그인 후 좌석 선택 가능
-		// 미로그인 시 로그인 폼으로 이동
-		session.setAttribute("sId", "testId1884");
-		String id = (String)session.getAttribute("sId");
+		String id = (String)session.getAttribute("sMemberId");
 		
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
 			return "result/fail";
 		}
-		
-		session.setAttribute("sName", member.getMember_name());
-		session.setAttribute("sEmail", member.getEmail());
-		session.setAttribute("sPhone", member.getPhone());
-		System.out.println("아이디 : " + member.getMember_id());
+//		System.out.println("디비아이디 : " + dbMember);
 		System.out.println("세션아이디 : " + id);
-		System.out.println("이름 : " + member.getMember_name());
-		System.out.println("메일 : " + member.getEmail());
-		System.out.println("폰번호 : " + member.getPhone());
-		System.out.println("1 : " + session.getAttribute("sName"));
-		System.out.println("2 : " + session.getAttribute("sEmail"));
-		System.out.println("3 : " + session.getAttribute("sPhone"));
-		
 		// 스케줄 코드 세션에 저장
 		session.setAttribute("schedule_code", schedule_code);
 		
@@ -194,7 +180,15 @@ public class BookController {
 			return "result/fail";
 		}
 		
+		// 회원 정보(이름, 메일, 전화번호) 세션에 저장
+		// 결제 정보에 필요
+		MemberVO member = service.getMemberWhoPayTicket(id);
+		session.setAttribute("sName", member.getMember_name());
+		session.setAttribute("sEmail", member.getEmail());
+		session.setAttribute("sPhone", member.getPhone());
+
 		
+		// 선택한 영화 스케줄 정보 조회
 		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
@@ -203,16 +197,21 @@ public class BookController {
 		map.put("theater_code", (String)schedule.get("theater_code"));
 		map.put("member_id", id);
 		map.put("totalSeat", totalSeat);
+
 		SecureRandom sr = new SecureRandom();
 		String payment_code = (String)schedule.get("theater_code") + sr.nextInt((int) Math.pow(10, 11));
-		
 		map.put("payment_code", payment_code);
+		model.addAttribute("payment_code", payment_code);
+		
 		int insertCount = service.registBookingTicket(map);
+		model.addAttribute("totalSeat", totalSeat);
 		System.out.println("좌석수 : " + insertCount);
 		
-		model.addAttribute("totalSeat", totalSeat);
+		PaymentVO paymentInfo = service.getPaymentInfo(payment_code);
+		model.addAttribute("paymentInfo", paymentInfo);
+		System.out.println(paymentInfo);
 		
-		// ================== [ 포인트 ] =====================
+		// ================== [ 포인트, 쿠폰 ] =====================
 		int myPoint = service.getMyPoint(id);
 		model.addAttribute("myPoint", myPoint);
 		
@@ -223,11 +222,8 @@ public class BookController {
 			String coupon_name = myCoupon.get("event_subject") + " " + discount_amount + discount_rate;
 			myCoupon.put("coupon_name", coupon_name);
 		}
-		
 		model.addAttribute("myCouponList", myCouponList);
-		
-	
-		System.out.println(myCouponList);
+
 		
 		return "book_tickets/book_pay";
 	}
@@ -246,12 +242,33 @@ public class BookController {
 	}
 	
 	@PostMapping("BookFinish")
-	public String bookFinish(@RequestParam Map<String, String> map, Model model, String schedule_code) {
+	public String bookFinish(@RequestParam Map<String, String> map, HttpSession session, Model model, String schedule_code) {
+		// 미 로그인 시 접근 불가
+		String id = (String)session.getAttribute("sId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용 가능합니다");
+			model.addAttribute("targetURL", "MemberLogin");
+			return "result/fail";
+		}
+		
+		// 스케줄 코드 없을 시 접근 불가
+		String schCode = (String)session.getAttribute("schedule_code");
+		if(schCode == null) {
+			model.addAttribute("msg", "잘못된 접근입니다");
+			model.addAttribute("targetURL", "BookTickets");
+			return "result/fail";
+		}
+		
+		
 		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
+//		int updateCount = addBookingTicket(map);
+		System.out.println(map);
+		
 		return "book_tickets/book_finish";
 	}
+
 	
 	
 	

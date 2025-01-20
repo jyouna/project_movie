@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.project_movie.mapper.BookMapper;
 import com.itwillbs.project_movie.vo.CouponVO;
+import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
@@ -86,6 +88,14 @@ public class BookService {
 
 	public CouponVO getMyCoupon(String coupon_code) {
 		return mapper.selectMyCoupon(coupon_code);
+	}
+
+	public MemberVO getMemberWhoPayTicket(String id) {
+		return mapper.selectMemberWhoPayTicket(id);
+	}
+
+	public PaymentVO getPaymentInfo(String payment_code) {
+		return mapper.selectPaymentInfo(payment_code);
 	}
 
 
