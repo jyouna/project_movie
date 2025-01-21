@@ -2,7 +2,7 @@
 
 
 #sec01 {
-	border: 1px solid;
+/* 	border: 1px solid; */
 	width: 50%;
 	height: 100%;
 	display: inline-block;
@@ -10,7 +10,7 @@
 }
 
 #sec02 {
-	border: 1px solid;
+/* 	border: 1px solid; */
 	width: 50%;
 	height: 100%;
 	display: inline-block;
@@ -19,7 +19,7 @@
 }
 
 #sec03 {
-	border: 1px solid;
+/* 	border: 1px solid; */
 	width: 50%;
 	height: 100%;
 	display: inline-block;
@@ -27,7 +27,7 @@
 }
 
 #sec04 {
-	border: 1px solid;
+/* 	border: 1px solid; */
 	width: 50%;
 	height: 100%;
 	display: inline-block;
@@ -52,15 +52,15 @@ h5 {
 .secitonBoard {
 	margin: 1em;
 	border: 1px solid;
-	width: 95%;
-	height: 60%;
+	width: 90%;
+	height: 75%;
 	overflow: auto;
 }
 
 #chartArea {
 /* 	transform: scale(0.7); */
 	margin: 0px;
-	width: 60%;
+	width: 90%;
 	height: 60%;
 /* 	float: left;  */
 	
@@ -72,6 +72,14 @@ h5 {
 
 #showPeriod {
 	margin: 3px;
+}
+
+.hiperLink {
+	text-decoration: none;
+}
+
+.hiperLink:hover {
+	background-color: lightyellow;
 }
 
 body {

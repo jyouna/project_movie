@@ -15,7 +15,8 @@ $(function(){
 	});
 	
 	$("#board_regis").on("click", function(){
-		location.href="EventBoardRegis";
+		console.log("클릭클릭");
+		window.open("EventBoardRegis", "이벤트등록", "width=1000, height=800, left=460, top=140");
 	});	
 	
 	$("#coupon_regis").on("click", function(){
@@ -219,5 +220,4 @@ $(function(){
 			}
 		}
 	});
-	
 });

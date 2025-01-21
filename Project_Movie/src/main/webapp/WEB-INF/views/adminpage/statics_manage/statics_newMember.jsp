@@ -405,10 +405,6 @@ $(function(){
 			
 		})
 	});
-
-
-
-
 });
 </script>
 </body>

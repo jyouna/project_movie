@@ -15,7 +15,6 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/account_manage.js"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/event.js"></script>
 
@@ -115,7 +114,8 @@
 								<tr>
 									<td><input type="radio" name="selectedEvent" class="eventSetRadio" value="${eventBoard.event_code}"></td>
 									<td>${eventBoard.event_code}</td>	
-									<td><a href="updateEventBoard?event_code=${eventBoard.event_code}">${eventBoard.event_subject}</a></td>	
+									<td><a href="#" onclick="window.open('updateEventBoard?event_code=${eventBoard.event_code}', '이벤트수정', 
+															'width=1000,height=800,top=460,left=140,scrollbars=yes,resizable=yes'); return false;">${eventBoard.event_subject}</a></td>	
 									<td><fmt:formatDate value="${eventBoard.regis_date}" pattern="yyyy-MM-dd"/></td>	
 									<td>${eventBoard.event_start_date}</td>	
 									<td>${eventBoard.event_end_date}</td>	

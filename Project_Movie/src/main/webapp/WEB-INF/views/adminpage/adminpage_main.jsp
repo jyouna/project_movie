@@ -25,62 +25,21 @@
 			<div id="noticeBoardMain" class="secitonBoard">
 				<p>공지사항 게시판 작성영역</p>
 			</div>
-			<ul>
-				<li>test</li>
-				<li>test</li>
-			</ul>
 		</section>
 		<section id="sec02" class="secMain">
 			<h5>※ 1:1 문의 내역</h5>
 			<div class="secitonBoard">
 				<p>1:1문의 상태 표시판</p>
 			</div>			
-			<ol>
-				<li>test</li>
-				<li>test</li>
-			</ol>
 		</section>
 		<section id="sec03" class="secMain">
 			<h5>※ 매출 통계</h5>
 			<div class="secitonBoard">
 				<p>매출 통계 그래프 표시판</p>
 			</div>				
-			<p>sec03</p>
 		</section>
 		<section id="sec04" >
-			<span id="showPeriod"></span><br>
-<!-- 			<h5>※ 가입자 통계</h5> -->
-<!-- 			<div class="secitonBoard"> -->
-<!-- 			<input type="button" value="2024년" onclick="location.href='StaticsNewMember'"> -->
-<!-- 			<input type="button" value="전체 기간" id="totalPeriodSearch"> -->
-<!-- 			조회기간 -->
-<!-- 			<br> -->
-<!-- 			<select id="year"> -->
-<!-- 				<option selected>연도</option> -->
-<!-- 				<option value="2025">2025</option> -->
-<!-- 				<option value="2024">2024</option> -->
-<!-- 				<option value="2023">2023</option> -->
-<!-- 				<option value="2022">2022</option> -->
-<!-- 				<option value="2021">2021</option> -->
-<!-- 				<option value="2020">2020</option> -->
-<!-- 			</select> -->
-<!-- 			<select id="month"> -->
-<!-- 				<option value="">월</option> -->
-<!-- 				<option value="1">1월</option> -->
-<!-- 				<option value="2">2월</option> -->
-<!-- 				<option value="3">3월</option> -->
-<!-- 				<option value="4">4월</option> -->
-<!-- 				<option value="5">5월</option> -->
-<!-- 				<option value="6">6월</option> -->
-<!-- 				<option value="7">7월</option> -->
-<!-- 				<option value="8">8월</option> -->
-<!-- 				<option value="9">9월</option> -->
-<!-- 				<option value="10">10월</option> -->
-<!-- 				<option value="11">11월</option> -->
-<!-- 				<option value="12">12월</option> -->
-<!-- 				<option value="yearTotal">전체</option> -->
-<!-- 			</select> -->
-<!-- 		</div> -->
+			<a href="StaticsNewMember" class="hiperLink"><span id="showPeriod"></span></a><br>
 		<div id="chartArea">
 			<canvas class="myChart"></canvas>
 		</div>
@@ -94,7 +53,7 @@ $(function(){
 	let date = new Date();
 	let year = date.getFullYear()-1;
 	let month = date.getMonth();
-	$("#showPeriod").text(" : " + year).css("color", "blue");
+	$("#showPeriod").text(" : " + year).css("color", "black");
 /*
 *
 *

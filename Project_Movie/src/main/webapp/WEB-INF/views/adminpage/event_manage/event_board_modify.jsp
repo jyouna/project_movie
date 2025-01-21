@@ -37,7 +37,12 @@
 				</tr>	
 				<tr>
 					<th>파일1</th>
-					<td colspan="4"><input type="file" name="event_file1" id="event_file1" value="${eventVo.event_file1}"></td>
+					<td colspan="4">
+<!-- 						<select> -->
+<!-- 							<option>투표선택</option> -->
+<!-- 						</select> -->
+						<input type="file" name="event_file1" id="event_file1" value="${eventVo.event_file1}">
+					</td>
 				</tr>	
 				<tr>
 					<th>파일2</th>
@@ -49,7 +54,7 @@
 				</tr>	
 				<tr>
 					<td colspan="5" align="center">
-						<input type="submit" value="등록" class="bottom">
+						<input type="submit" value="등록" class="bottom" id="uptdateSubmit">
 						<input type="reset" value="초기화" class="bottom">
 						<input type="button" value="취소" class="bottom" onclick="history.back()">
 					</td>
@@ -72,7 +77,6 @@
 			$("#event_file2").prop("disabled", true);
 			$("#event_file3").prop("disabled", true);
 		}
-		
 		
 		let regisDate = $("#regis_date").val().split("T")[0];
 		let startDate = $("#event_start_date").val();
@@ -99,6 +103,18 @@
 				$("#event_end_date").attr("min", startDate);
 			}
 		});
+	
+// 		$("#updateSubmit").on("click", function(){
+			
+// 			$.ajax({
+				
+// 			}).done(function(response){
+// 				window.close();
+// 				alert
+// 			});
+// 		});
+	
+	
 	})
 	</script>
 </body>
