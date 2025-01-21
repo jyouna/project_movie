@@ -98,6 +98,9 @@ public class BookController {
 	// ========================= 좌석페이지 컨트롤러 =========================
 	@GetMapping("BookSeat")
 	public String bookSeatPage(String schedule_code, MemberVO member, HttpSession session, Model model) {
+		// 스케줄 코드 세션에 저장
+		session.setAttribute("schedule_code", schedule_code);
+		
 		// 미 로그인 시 접근 불가
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
@@ -108,14 +111,13 @@ public class BookController {
 		
 		// 스케줄 코드 없을 시 접근 불가
 		String schCode = (String)session.getAttribute("schedule_code");
+		System.out.println(schCode);
 		if(schCode == null) {
 			model.addAttribute("msg", "잘못된 접근입니다");
 			model.addAttribute("targetURL", "BookTickets");
 			return "result/fail";
 		}
 
-		// 스케줄 코드 세션에 저장
-		session.setAttribute("schedule_code", schedule_code);
 		
 		// 좌석 정보 조회
 		List<SeatVO> seatList = service.getSeat();
@@ -280,6 +282,8 @@ public class BookController {
 			model.addAttribute("targetURL", "BookTickets");
 			return "result/process";
 		}
+		
+		System.out.println(schCode);
 		
 		// point_discount 값 없을 시 null로 변환
 		if(map.get("point_discount") != null && map.get("point_discount").trim().isEmpty()) {
