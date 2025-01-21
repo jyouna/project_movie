@@ -8,16 +8,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/movie_log/review_register.css"/>
 </head>
 <body>
-<!-- < 리뷰 등록 창 > -->
-<!-- 영화 제목 :  -->
-<!-- 추천 비추천 - 라디오 버튼 -->
-<!-- 한줄평 필수  -->
-<!-- 등록 / 취소 버튼 -->
 	<form>
 		<h3>리뷰 등록</h3>
 		<table>
 			<tr>
-<!-- 			선택했던 체크박스의 영화 제목 가져오기 -->
 				<td>영화 제목</td>
 			</tr>
 			<tr>
@@ -28,7 +22,7 @@
 				<td>한줄평 </td>
 			</tr>
 			<tr>
-				<td><input type="text"></td>
+				<td><input type="text" style="text-align: left;"></td>
 			</tr>
 		</table>
 		<div id="button_div">

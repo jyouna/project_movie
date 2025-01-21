@@ -76,19 +76,7 @@
 			#{startRow}
 			, #{listLimit}
 	</select>
-	<insert id="insertReview">
-		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(review_code),0)
-			FROM review;
-		</selectKey>
-		INSERT INTO review(
-			review_content,
-			review_recommend
-		)VALUES(
-			#{review_content},
-			#{review_recommmend}
-		)
-	</insert>
+
 <!-- 	이건뭐지 -->
 <!-- 	<select id="selectWatchedmovieReview" resultType="map"> -->
 <!-- 		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count -->
@@ -98,7 +86,6 @@
 <!-- 		WHERE -->
 <!-- 			member_id = 'benddlx' -->
 <!-- 	</select> -->
-<!-- 	리뷰 등록 -->
 <!-- 	리뷰 총 개수 출력 -->
 	<select id="selectReviewListCount" resultType="int">
 		SELECT COUNT(*)
@@ -118,19 +105,55 @@
 		WHERE movie_code = #{movie_code}
 		AND review_writer = #{id}
 	</select>
+	<!-- 	관람한 리뷰 작성 -->
+	<insert id="insertReview">
+		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(review_code),0)
+			FROM review;
+		</selectKey>
+		INSERT INTO review(
+			movie_code,
+			review_content,
+			review_recommend,
+			review_writer
+		)VALUES(
+			#{movieCode},
+			#{reviewContent},
+			#{reviewRecommend},
+			#{id}
+		)
+	</insert>
+<!-- 	관람한 영화 리뷰 수정 -->
+	<update id="updateReview">
+		UPDATE review
+		SET review_content = #{review_content},
+		review_recommend = #{review_recommend}
+		WHERE movie_code = #{movie_code}
+	</update>
+<!-- 	관람한 영화 리뷰 삭제 -->
+	<delete id="deleteReview">
+		DELETE FROM review
+		WHERE movie_code = #{movie_code}
+	</delete>
+	
+<!-- 	쿠폰 전체 조회 -->
 	<select id="selectCouponListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM coupon
 	</select>
+<!-- 	쿠폰 시작번호 끝번호 -->
 	<select id="selectCouponList" resultType="map">
 		SELECT *
 		FROM coupon
 		LIMIT #{startRow}, #{listLimit}
 	</select>
+	
+<!-- 	포인트 전체 조회 -->
 	<select id="selectPointListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM point
 	</select>
+<!-- 	포인트 시작번호 끝번호 -->
 	<select id="selectPointList" resultType="map">
 		SELECT *
 		FROM point JOIN event_board

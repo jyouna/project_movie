@@ -73,6 +73,16 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectReviewList(startRow, listLimit);
 	}
+	//관람한 영화 리뷰 수정 
+	public int getReviewModify(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.updateReview(map);
+	}
+	//관람한 영화 리뷰 삭제
+	public int removeReview(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.deleteReview(map);
+	}
 	//쿠폰 리스트 조회
 	public int getCouponListCount() {
 		// TODO Auto-generated method stub
@@ -204,9 +214,9 @@ private MyPageMapper mapper;
 		return mapper.insertInquiryReply(inquiry);
 	}
 	//관람한 영화 리뷰 등록 
-	public int getReview(Map<String, String> map) {
+	public int getReview(String movieName, String reviewContent, int reviewRecommend,int movieCode, String id) {
 		// TODO Auto-generated method stub
-		return mapper.insertReview(map);
+		return mapper.insertReview(movieName, reviewContent, reviewRecommend, movieCode, id);
 	}
 
 

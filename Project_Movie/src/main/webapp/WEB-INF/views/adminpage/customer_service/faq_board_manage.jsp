@@ -13,7 +13,7 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/customer_service/faq_list.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_list.css" rel="stylesheet" />
 	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
@@ -28,14 +28,12 @@
 			<h1>FAQ</h1>
 		</div>
 		<div>
-			<input type="button" value="전체선택">
 			<input type="button" value="글 작성" onclick="location.href='AdminFaqWrite'">
 
 		</div>
 		<section id="listForm">
 			<table>
 				<tr id="tr_top">
-					<td width="100px"><input type="checkbox" disabled="disabled"></td>
 					<td width="100px">번호</td>
 					<td>제목</td>
 					<td width="150px">등록일</td>
@@ -49,7 +47,6 @@
 					<c:otherwise>
 						<c:forEach var="faq_board" items="${faqList}" >
 							<tr>
-								<td><input type="checkbox" ></td>
 								<td class="faq_code">${faq_board.faq_code}</td>
 								<td class="faq_subject">${faq_board.faq_subject}</td>
 								<td><fmt:formatDate value="${faq_board.regis_date}" pattern="yy-MM-dd"/></td>

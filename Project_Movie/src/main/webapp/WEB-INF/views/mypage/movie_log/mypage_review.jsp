@@ -13,12 +13,12 @@
 	<title>마이페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/movie_log/mypage_review.css" />
 	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/mypage/review.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
@@ -28,7 +28,7 @@
 			<h1>관람평</h1>
 		</div>
 			<div id="topButton" style="text-align: right;">
-				<input type="button" value="수정" id="reviewModify">
+				<input type="button" value="수정" id="Modify">
 				<input type="button" value="삭제" id="delete">
 			</div>
 	      <section id="listForm">
@@ -48,14 +48,18 @@
 	               <c:otherwise>
 	                  <c:forEach var="review" items="${reviewList}" varStatus="status">
 	                     <tr>
-	                        <td><input type="radio" ></td>
+	                        <td><input type="radio" name="movie_code" value="${review.movie_code}" class="movie_code"></td>
 	                        <td>${review.movie_name}</td>
 	                        <td>${review.review_content}</td>
 	                        <td>
 	                        	<c:choose>
-		                        	<c:when test=" ${review.review_recommend eq 0}">추천</c:when>
-		                        	<c:when test=" ${review.review_recommend eq 1}">비추천</c:when>
-	                        	</c:choose>
+								    <c:when test="${review.review_recommend eq 0}">
+								        추천
+								    </c:when>
+								    <c:otherwise>
+								        비추천
+								    </c:otherwise>
+								</c:choose>
 	                       </td>
 	                        <td>${review.review_writer}</td>
 	                     </tr>
@@ -87,6 +91,28 @@
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>
+		<div id="watched_movie_modify_modal" class="modal">
+			<div class="watched_movie_modify">
+				    <h2>리뷰 수정</h2>
+				    <hr>
+				    <div>
+				        <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
+				        <label id="review_content">한줄리뷰</label>
+				        <br>
+				        <textarea cols="40" rows="3" name="review" required="required">
+				        
+				        </textarea>
+				        <br> 
+				        <label id="review_recommend0">추천</label><input type="radio" name="review_recommend" value="0" required="required">
+				        <label id="review_recommend1">비추천</label><input type="radio" name="review_recommend" value="1"><br>
+				    </div>
+			        <hr>
+			        <div class="btnGroup">
+			        	<button type="button" class="submit_modal">등록</button>
+			        	<button type="button" class="cancel_modal">취소</button>
+			        </div>
+			</div>
+		</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

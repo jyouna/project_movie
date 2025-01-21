@@ -30,7 +30,9 @@ public interface MyPageMapper {
 	//내가 본 영화 시작번호 끝번호
 	List<Map<String, Object>> selectWatchedMovie(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
 	// 내가 본 영화 - 리뷰 등록
-	int insertReview(@Param("map") Map<String, String> map);
+	int insertReview(@Param("movieName") String movieName, @Param("reviewContent")String reviewContent, @Param("reviewRecommend")int reviewRecommend, @Param("movieCode")int movieCode,
+			@Param("id") String id);
+//	int insertReview(@Param("map") Map<String, String> map);
 	//내가 본 영화 - 리뷰 창 띄우기 
 //	Map<String, Object> selectWatchedmovieReview(String movie_code);
 	//내가 본 영화 - 리뷰등록 포함 출력
@@ -40,6 +42,10 @@ public interface MyPageMapper {
 	int selectReviewListCount();
 	//관람평 시작번호 끝번호
 	List<Map<String, Object>> selectReviewList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	//관람한 영화 리뷰 수정 
+	int updateReview(Map<String, String> map);
+	//관람한 영화 리뷰 삭제
+	int deleteReview(Map<String, String> map);
 	
 	//쿠폰 리스트 전체 조회
 	int selectCouponListCount();
@@ -104,6 +110,8 @@ public interface MyPageMapper {
 	void updateInquiryReSeq(InquiryVO inquiry);
 	// 1:1문의 글 답변
 	int insertInquiryReply(InquiryVO inquiry);
+	
+	
 	
 
 

@@ -100,14 +100,13 @@
 		</article>
 		<div id="watched_movie_review_modal" class="modal">
 			<div class="watched_movie_review">
-<!-- 				<form action="Review" method="post"> -->
 				    <h2>리뷰 등록</h2>
 				    <hr>
 				    <div>
 				        <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
 				        <label id="review_content">한줄리뷰</label>
 				        <br>
-				        <textarea cols="40" rows="3" name="reivew">
+				        <textarea cols="40" rows="3" name="review">
 				        
 				        </textarea>
 				        <br> 
@@ -119,7 +118,6 @@
 			        	<button type="button" class="submit_modal">등록</button>
 			        	<button type="button" class="cancel_modal">취소</button>
 			        </div>
-<!-- 		        </form> -->
 			</div>
 		</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

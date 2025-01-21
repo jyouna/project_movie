@@ -2,6 +2,7 @@ package com.itwillbs.project_movie.controller;
 
 import java.net.http.HttpRequest;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
-			return "result/fail";
+			return "result/process";
 		}
 		int listCount = service.getReservationListCount();
 		int listLimit = 5; 
@@ -67,7 +68,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "ReservationDetail?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
@@ -78,14 +79,25 @@ public class MypageController {
 		return "mypage/reservation/mypage_reservation_detail";
 	}
 	//1.1 결제내역 - 상세정보 창
-	@ResponseBody
+//	@ResponseBody
+//	@PostMapping("ReservationDetail")
+//	public Map<String, Object> reservationDetail(String payment_code) {
+//		Map<String, Object> reservationDetail = service.searchdetail(payment_code);
+////		reservationDetail.setR_dateToString(reservationDetail.getR_date().toString().replace(".0", ""));
+////		System.out.println(reservationDetail.getR_dateToString());
+//		return reservationDetail;
+//	}
+	
 	@PostMapping("ReservationDetail")
-	public Map<String, Object> reservationDetail(String payment_code) {
-		Map<String, Object> reservationDetail = service.searchdetail(payment_code);
-//		reservationDetail.setR_dateToString(reservationDetail.getR_date().toString().replace(".0", ""));
-//		System.out.println(reservationDetail.getR_dateToString());
-		return reservationDetail;
+	@ResponseBody
+	public Map<String, Object> reservationDetail(@RequestParam("payment_code") String paymentCode, Model model) {
+	    // paymentCode를 사용해 DB 조회
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("paymentCode", paymentCode);
+	    System.out.println("response = " + response);
+	    return response;
 	}
+
 	//1.2 결제내역 - 예매 취소창
 	
 	//2. 결제내역 - 예매 취소내역 
@@ -94,7 +106,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
-			return "result/fail";
+			return "result/process";
 		}
 		int listCount = service.getReservationCancelCount();
 		int listLimit = 5;
@@ -112,7 +124,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "ReservationCancel?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
@@ -128,7 +140,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
-			return "result/fail";
+			return "result/process";
 		}
 		int listCount = service.getWatchedMovieCount();
 		int listLimit = 5;
@@ -146,7 +158,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "WatchedMovie?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
@@ -167,15 +179,19 @@ public class MypageController {
 	//3-1. 리뷰 등록창 
 	@ResponseBody
 	@PostMapping("reviewRegister")
-	public Boolean reviewRegister(@RequestParam Map<String, String> map, Model model, HttpSession session) {
-		System.out.println("넘어온 값 : " + map);
-		int insertCount = service.getReview(map);
+	public String reviewRegister(@RequestParam Map<String, String> map, Model model, HttpSession session) {
+		String movieName = map.get("moviename");
+		String reviewContent = map.get("review_content");
+		int reviewRecommend = Integer.parseInt(map.get("review_recommend"));
+		int movieCode = Integer.parseInt(map.get("movie_code"));
+		String id = (String)session.getAttribute("sMemberId");
+		int insertCount = service.getReview(movieName, reviewContent, reviewRecommend, movieCode, id);
 		if(insertCount > 0) {
-			 System.out.println("insert 했습니다...");
-			return true;
+			model.addAttribute("msg", "리뷰 등록에 성공하셨습니다.");
+			return "redirect:/Review";
 		}else {
 			model.addAttribute("msg", "리뷰작성에 실패했습니다.");
-			return false;
+			return "result/process";
 		}
 	}
 	
@@ -185,7 +201,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
-			return "result/fail";
+			return "result/process";
 		}
 		int listCount = service.getReviewListCount();
 		int listLimit = 5;
@@ -203,7 +219,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "Review?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
@@ -213,17 +229,26 @@ public class MypageController {
 		
 		return "mypage/movie_log/mypage_review";
 	}
-//	// 4-1 watched movie에서 리뷰 등록한걸 넘기기 
-//	@PostMapping("Review")
-//	public String review() {
-////		List<Map<String, Object>> = service.getReview(
-//		return "mypage/movie_log/mypage_review";
-//	}
 	
 	//4-2. 리뷰 수정 버튼
-	@GetMapping("reviewModify")
-	public String reviewModify() {
-		return "mypage/movie_log/review_modify";
+	@PostMapping("ReviewModify")
+	public String reviewModify(Model model,@RequestParam Map<String, String> map) {
+		System.out.println("map 잘 왔니? " + map); 
+		int updateCount = service.getReviewModify(map);
+		if(updateCount > 0) {
+			model.addAttribute("msg", "리뷰 수정 완료!");
+			return "redirect:/Review";
+		}else {
+			model.addAttribute("msg", "리뷰 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
+			return "result/process";
+		}
+
+	}
+	//4-3. 리뷰 삭제 버튼
+	@GetMapping("ReviewDelete")
+	public String reviewDelete(@RequestParam Map<String, String> map, Model model) {
+		int deleteCount = service.removeReview(map);
+		return "redirect:/Review";
 	}
 	//5. 쿠폰 - 쿠폰 보기
 	@GetMapping("CouponList")
@@ -231,7 +256,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
-			return "result/fail";
+			return "result/process";
 		}
 		int listCount = service.getCouponListCount();
 		int listLimit = 7;
@@ -250,7 +275,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "CouponList?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
@@ -266,7 +291,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
-			return "result/fail";
+			return "result/process";
 		}
 		int listCount = service.getPointListCount();
 		int listLimit = 5;
@@ -285,7 +310,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "MypointReward?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
@@ -302,7 +327,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
-			return "result/fail";
+			return "result/process";
 		}
 		int listCount = service.getInquiryListCount(searchType, searchKeyWord);
 		int listLimit = 5;
@@ -321,7 +346,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "InquiryList?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
@@ -336,7 +361,7 @@ public class MypageController {
 		inquiry = service.getInquiry(inquiry_code);
 		if(inquiry == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		model.addAttribute("inquiry", inquiry);
 		return "mypage/inquiry/inquiry_post";
@@ -347,7 +372,7 @@ public class MypageController {
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		return "mypage/inquiry/inquiryWrite";
 	}
@@ -364,7 +389,7 @@ public class MypageController {
 			return "result/success";
 		}else {
 			model.addAttribute("msg", "문의 글 작성을 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	//* 1:1문의 - 글 작성 post폼 유틸리티
@@ -384,12 +409,12 @@ public class MypageController {
 		String id = (String) session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		InquiryVO inquiry = service.getInquiry(inquiry_code);
 //		if(inquiry == null || !id.equals("admin") && !equals(inquiry.getInquiry_writer())) {
 //			model.addAttribute("msg", "잘못된 접근입니다!");
-//			return "result/fail";
+//			return "result/process";
 //		}
 		model.addAttribute("inquiry", inquiry);
 		// mypageservice에서 getInquiry메서드 재사용해서 게시물 1개 정보 조회
@@ -406,7 +431,7 @@ public class MypageController {
 			return "redirect:/InquiryPost?inquiry_code=" + inquiry.getInquiry_code() + "&pageNum=" + pageNum;
 		}else {
 			model.addAttribute("msg", "글 수정에 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	//7-5. 1:1문의 - 글 삭제 
@@ -416,7 +441,7 @@ public class MypageController {
 		String id = (String) session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		//Inquiryvo에서 getInquiry() 호출해서 게시글 상세정보 조회 요청(파라미터 = vo에서 inquiry_code 가져오기)
 		//만약 조회 결과가 없거나 관리자 or 작성자가 아닌 경우 경고메시지 출력 후 fail로 리턴
@@ -426,14 +451,14 @@ public class MypageController {
 		inquiry = service.getInquiry(inquiry_code);
 		if(inquiry == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		int deleteCount = service.removeInquiry(inquiry);
 		if(deleteCount > 0) {
 			return "redirect:/InquiryList";
 		}else {
 			model.addAttribute("msg", "글 삭제하는데 실패했습니다");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	
@@ -473,7 +498,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "AdminNotice?pagenum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
@@ -498,7 +523,7 @@ public class MypageController {
 			return "redirect:/AdminNotice";
 		}else {
 			model.addAttribute("msg", "공지사항 작성에 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	
@@ -508,7 +533,7 @@ public class MypageController {
 		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		model.addAttribute("notice", notice);
 		
@@ -521,7 +546,7 @@ public class MypageController {
 		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물 입니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		model.addAttribute("notice", notice);
 		return "adminpage/customer_service/notice_board_modify";
@@ -535,7 +560,7 @@ public class MypageController {
 			return "redirect:/AdminNoticePost?notice_code=" + notice_code + "&pageNum=" + pageNum;
 		}else {
 			model.addAttribute("msg", "글 수정을 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	// 관리자페이지 - 공지사항 삭제
@@ -546,7 +571,7 @@ public class MypageController {
 			return "redirect:/AdminNotice";
 		}else {
 			model.addAttribute("msg", "글 삭제를 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	//관리자 페이지 - 고객지원 관리 - faq문의 관리
@@ -584,7 +609,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다");
 			model.addAttribute("targetURL", "AdminFaq?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
@@ -606,7 +631,7 @@ public class MypageController {
 			return "redirect:/AdminFaq";
 		}else {
 			model.addAttribute("msg", "자주하는 문의 등록에 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	
@@ -616,7 +641,7 @@ public class MypageController {
 		faq = service.getFaq(faq_code, false);
 		if(faq == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		model.addAttribute("faq", faq);
 		return "adminpage/customer_service/faq_board_post";
@@ -627,7 +652,7 @@ public class MypageController {
 		faq = service.getFaq(faq_code, false);
 		if(faq == null) {
 			model.addAttribute("msg", "해당 게시물은 존재하지 않습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		model.addAttribute("faq", faq);
 		return "adminpage/customer_service/faq_board_modify";
@@ -650,14 +675,14 @@ public class MypageController {
 		faq = service.getFaq(faq_code, false);
 		if(faq == null) {
 			model.addAttribute("msg", "해당 글은 존재하지 않습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		int faqDeleteCount = service.getFaqDelete(faq);
 		if(faqDeleteCount > 0) {
 			return "redirect:/AdminFaq?pageNum=" + pageNum;
 		}else {
 			model.addAttribute("msg", "글 삭제를 실패했습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	//관리자 페이지 - 고객지원 관리 - 1:1문의 관리
@@ -695,7 +720,7 @@ public class MypageController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "AdminInquiry?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
@@ -726,7 +751,7 @@ public class MypageController {
 			return "redirect:/AdminInquiry?inquiry_code=" +inquiry.getInquiry_code() + "&pageNum=" + pageNum;
 		}else {
 			model.addAttribute("msg", "글을 수정하는데 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	//1:1문의 - 글 삭제 
@@ -737,7 +762,7 @@ public class MypageController {
 			return "redirect:/AdminInquiry";
 		}else {
 			model.addAttribute("msg", "글을 삭제하는데 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	
@@ -758,13 +783,12 @@ public class MypageController {
 	public String adminInquiryReply2(InquiryVO inquiry, Model model, HttpServletRequest request, @RequestParam(defaultValue= "1")int pageNum,
 			int inquiry_code) {
 		inquiry.setInquiry_writer_ip(getClientIp(request));
-		System.out.println("AdminInquiryReply2=========" + inquiry);
 		int insertReply = service.addReply(inquiry);
 		if(insertReply > 0) {
 			return "redirect:/AdminInquiryPost?inquiry_code=" + inquiry_code  + "&pageNum=" + pageNum;
 		}else {
 			model.addAttribute("msg", "답변 등록에 실패하셨습니다.");
-			return "result/fail";
+			return "result/process";
 		}
 	}
 	//top에 있는 마이페이지 연결

@@ -33,7 +33,7 @@
 		      </select>
 		      <input type="text" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요.">
 	   		  <input type="submit" value="검색" id="searchButton">
-   		  </form>
+   		  	</form>
 	    </div>
 		<section id="listForm">
 			<table id="inquiryForm" border="1">

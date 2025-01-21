@@ -49,16 +49,13 @@ $(function(){
 	        url: "reviewRegister", 
 	        data: {
 	            moviename: $("input[name='movie_name']").val(),
-	            reviewContent: reviewContent,
+	            review_content: reviewContent,
 	            review_recommend: reviewRecommend,
 				movie_code : getMovieCode
 			}
 	        }).done(function(result) {
-	            if(result) {
-					alert("리뷰가 성공적으로 제출되었습니다.");
-					// isRegist 값 변경 0에서 1로
-		            location.reload();
-				} 
+				alert("리뷰 등록 완료!");
+				location.reload(true);
 	        }).error(function() {
 	            alert("리뷰 제출 중 오류가 발생했습니다. 다시 시도해주세요.");
 	    });
