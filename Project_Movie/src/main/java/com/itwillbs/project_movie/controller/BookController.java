@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -117,12 +118,9 @@ public class BookController {
 			model.addAttribute("targetURL", "BookTickets");
 			return "result/fail";
 		}
-
 		
 		// 좌석 정보 조회
 		List<SeatVO> seatList = service.getSeat();
-		
-		
 		int rowCount = 0;
 		int colCount = 0;
 		
@@ -152,6 +150,10 @@ public class BookController {
 		model.addAttribute("schedule", schedule);
 		System.out.println(schedule);
 		
+		// 예매 완료된 좌석
+		List<Map<String, Object>> disabledSeatList = service.getDisabledSeat(schedule_code);
+		System.out.println("좌석코드 : " + disabledSeatList);
+		model.addAttribute("disabledSeatList", disabledSeatList);
 		
 		
 		return "book_tickets/book_seat";
@@ -216,7 +218,7 @@ public class BookController {
 		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
-		String totalSeat = map.get("totalSeat").replace(" ,", ", ");
+		String totalSeat = map.get("totalSeat").replace(" ,", ", ").trim();
 		
 		map.put("theater_code", (String)schedule.get("theater_code"));
 		map.put("member_id", id);
@@ -304,6 +306,7 @@ public class BookController {
 		}
 		System.out.println("결제 완료 : " + updateCount);
 		
+
 		
 		
 		return "book_tickets/book_finish";

@@ -54,6 +54,9 @@ public interface BookMapper {
 
 	void updateCouponStatus(Map<String, String> map);
 
+	List<Map<String, Object>> selectDisabledSeat(String schedule_code);
+
+
 
 
 

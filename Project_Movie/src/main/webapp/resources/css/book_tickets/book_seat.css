@@ -187,6 +187,7 @@ form input[type="text"].count {
     color: #bdbfc1;
     line-height: 1.75em;
     letter-spacing: 0.025em;
+    border: 4px double #fff;
 }
 
 .seat.selected {
@@ -432,14 +433,15 @@ button[name="wheelChairSeat"] {
  	color : #444;
 }
 
-button[name="wheelChairSeat"].selected {
-	background-color : #B79090;
- 	background : #B79090;
- 	color : #444;
+button[name="wheelChairSeat"]:hover {
+	background-color : #f98780;
 }
 
-
-
+button[name="wheelChairSeat"].selected {
+	background-color : #f98780;
+ 	background : #f98780;
+ 	color : #444;
+}
 
 
 

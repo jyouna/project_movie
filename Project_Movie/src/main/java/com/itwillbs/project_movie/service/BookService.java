@@ -68,13 +68,15 @@ public class BookService {
 		for(String seat : seatArr) {
 			Map<String, String> insertBookingInfo = new HashMap<String, String>();
 			String seat_code = map.get("theater_code") + "_" + seat.trim();
-			insertBookingInfo.put("booking_code", map.get("payment_code") + seat);
+			insertBookingInfo.put("booking_code", map.get("payment_code") + seat.trim());
 			insertBookingInfo.put("seat_code", seat_code);
 			insertBookingInfo.put("payment_code", map.get("payment_code"));
 			insertBookingInfo.put("schedule_code", map.get("schedule_code"));
 			insertBookingList.add(insertBookingInfo);
 		}
 		System.out.println(insertBookingList);
+		
+		
 		return mapper.insertBookingTable(insertBookingList);
 	}
 
@@ -100,15 +102,20 @@ public class BookService {
 
 	@Transactional
 	public int addBookingTicket(Map<String, String> map, String id) {
-		if(map.get("point_discount") != null) {
+		// 포인트 사용 시 사용 포인트 인서트
+		if(map.get("point_discount") != null && !map.get("point_discount").equals("")) {
 			mapper.insertPointDebited(map, id);
 		}
-		
-		if(map.get("coupon_discount") != null) {
+		// 쿠폰 사용 시 쿠폰 상태 업데이트
+		if(map.get("coupon_discount") != null && !map.get("coupon_discount").equals("")) {
 			mapper.updateCouponStatus(map);
 		}
 		
 		return mapper.updateBookingTicket(map);
+	}
+
+	public List<Map<String, Object>> getDisabledSeat(String schedule_code) {
+		return mapper.selectDisabledSeat(schedule_code);
 	}
 
 

@@ -2,7 +2,6 @@ $(function () {
 	let selectedSeats = "";
 	let totalAmount = 0;
 	
-	
 	// 인원수 변경 시 선택된 좌석 초기화 메서드 정의
 	function resetSeats() {
 		if($(".seat.selected").length > 0) {
@@ -87,7 +86,7 @@ $(function () {
 		
 		// 선택된 좌석 값 가져오기
 		selectedSeats = $(".seat.selected").map(function() {
-			return $(this).text() + " ";
+			return $(this).text().trim() + " ";
 		}).get();
 		console.log("선택된 좌석 : " + selectedSeats);
 		
@@ -236,13 +235,19 @@ $(function () {
 	            </div>
 	        </div>
 		`);
-		
-		
-		
-		
 	}
 	
-	
+	$(".seat").each(function() {
+		if($(this).prop("disabled")) {
+			$(this).text("");
+			$(this).css({
+				"border" : "4px solid #FFF",
+				"background-color" : "#444451",
+				"cursor" : "default",
+				"opacity": "0.5"
+			});
+		}
+	});
 });
 
 

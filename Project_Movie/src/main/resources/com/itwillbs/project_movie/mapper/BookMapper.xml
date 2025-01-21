@@ -115,7 +115,7 @@
 			, NOW()		-- seat_selection_time
 			, null		-- payment_method
 			, 0			-- payment_status
-			, #{totalSeat}
+			, TRIM(#{totalSeat})
 		)
 	</insert>
 	
@@ -153,19 +153,35 @@
 	</select>
 	
 	<update id="updateBookingTicket">
+<!-- 		<selectKey keyProperty="seat_code" resultType="map" order="AFTER"> -->
+<!-- 			SELECT DISTINCT SUBSTR(seat_code, 4) -->
+<!-- 			FROM booking b -->
+<!-- 			JOIN payment p -->
+<!-- 			ON b.payment_code = p.payment_code -->
+<!-- 			WHERE b.schedule_code = #{schedule_code} -->
+<!-- 			AND (payment_status = 1 -->
+<!-- 			OR DATE_ADD(seat_selection_time, INTERVAL 10 MINUTE) > now()); -->
+<!-- 		</selectKey> -->
+<!-- 		<selectKey keyProperty="total_seat_code" resultType="String" order="AFTER"> -->
+<!-- 			SELECT total_seat_code -->
+<!-- 			FROM payment -->
+<!-- 			WHERE schedule_code = #{schedule_code} -->
+<!-- 			AND payment_code = #{payment_code} -->
+<!-- 		</selectKey> -->
+	
 		UPDATE payment p
 		JOIN member m
 		ON p.member_id = m.member_id
 		SET 
 			p.payment_date = NOW()
 			<if test="point_discount != null">
-				, p.point_discount = #{point_discount}
-				, p.total_discount = #{point_discount}
-				, m.point = m.point - #{point_discount}
+				, p.point_discount = #{total_discount}
+				, p.total_discount = #{total_discount}
+				, m.point = m.point - #{total_discount}
 			</if>
 			<if test="coupon_discount != null">
-				, p.coupon_discount = #{coupon_discount}
-				, p.total_discount = #coupon_discount}
+				, p.coupon_discount = #{total_discount}
+				, p.total_discount = #{total_discount}
 			</if>
 			, p.total_payment = #{total_payment} 
 			, p.payment_method = #{payment_method}
@@ -191,8 +207,18 @@
 	<update id="updateCouponStatus">
 		UPDATE coupon
 		SET coupon_status = 1
-		WHERE coupon_code = #{discount_coupon}
+		WHERE coupon_code = #{coupon_discount}
 	</update>
+	
+	<select id="selectDisabledSeat" resultType="map">
+		SELECT DISTINCT SUBSTR(seat_code, 4) as "seat_code"
+		FROM booking b
+		JOIN payment p
+		ON b.payment_code = p.payment_code
+		WHERE b.schedule_code = #{schedule_code}
+		AND (payment_status = 1
+		OR DATE_ADD(seat_selection_time, INTERVAL 10 MINUTE) > now())
+	</select>
 
 	
 	

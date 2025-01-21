@@ -1,4 +1,5 @@
 $(function() {
+	// 쿠폰 버튼
 	$(".checkCouponRadio").click(function() {
 		let coupon_code = $(this).val();
 		$.ajax({
@@ -19,19 +20,25 @@ $(function() {
 				}
 				$(".div02 .price").text(coupon.discount_amount);
 				$(".div03 .price").text(calAmount);
+				$("input[name='total_discount']").val($(".div02 .price").text());
 			} else {
 				let discountAmount = $(".div01 .price").text() * coupon.discount_rate / 100;
 				$(".div02 .price").text(discountAmount);
 				$(".div03 .price").text($(".div01 .price").text() - discountAmount);
+				$("input[name='total_discount']").val($(".div02 .price").text());
 			}
 		}).fail(function() {
 			alert("쿠폰 적용에 실패하였습니다");
 		});
+		
+		
 	});
 	
+	// 포인트 칸
 	$(".point_form").keyup(function() {
 		let myPoint = parseInt($(".point02").text().replace(" p", ""));
-		if($(this).val() > 2000) {
+		
+		if($(this).val() > 2000) { // 입력값이 2000보다 클 때
 			alert("최대 2000p 사용 가능합니다.")
 			$(".div02 .price").text(0);
 			$(".div03 .price").text($(".div01 .price").text());
@@ -45,8 +52,10 @@ $(function() {
 			} else {
 				$(".div02 .price").text($(this).val());
 				$(".div03 .price").text($(".div01 .price").text() - $(this).val());
+				$("input[name='total_discount']").val($(".div02 .price").text());
 			}
 		}
+		
 	});
 
 	
@@ -67,6 +76,15 @@ $(function() {
 		}
 	});
 	
+	function sessionExpired() {
+	    alert('결제 시간이 만료되었습니다. 처음부터 다시 시도해 주세요.');
+		location.href="BookTickets";
+	}
+	
+	// 10분 후에 sessionExpired 메서드를 호출합니다.
+	setTimeout(sessionExpired, 600 * 1000);
+
+
 });
 
 

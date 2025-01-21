@@ -121,11 +121,13 @@
 												<th>사용</th>
 											</tr>
 											<c:forEach var="coupon" items="${myCouponList}">
-												<tr>
-								                    <td>${coupon.coupon_name}</td>
-								                    <td>${coupon.expired_date}</td>
-								                    <td><input class="checkCouponRadio" name="coupon_discount" value="${coupon.coupon_code}" type="radio"></td>
-								                </tr>
+												<c:if test="${coupon.coupon_status == false}">
+													<tr>
+									                    <td>${coupon.coupon_name}</td>
+									                    <td>${coupon.expired_date}</td>
+									                    <td><input class="checkCouponRadio" name="coupon_discount" value="${coupon.coupon_code}" type="radio"></td>
+									                </tr>
+												</c:if>
 											</c:forEach>
 										</table>
 									</div>
@@ -171,6 +173,7 @@
 											<div class="price">0</div>
 											<div class="won">원</div>
 										</div>
+										<input type="hidden" name="total_discount" value="0">
 									</div>
 									<div class="div03">
 										<div class="tit">총결제금액</div>
@@ -210,6 +213,7 @@
 					$(".point_form").val("");
 					$(".div02 .price").text("0");
 					$(".div03 .price").text($(".div01 .price").text());
+					$("input[name='total_discount']").val($(".div02 .price").text());
 				}
 			});
 
@@ -227,6 +231,7 @@
 				        $(this).prop("checked", false);
 				        $(".div02 .price").text("0");
 				        $(".div03 .price").text($(".div01 .price").text());
+				        $("input[name='total_discount']").val($(".div02 .price").text());
 				    }
 				});
 			});
