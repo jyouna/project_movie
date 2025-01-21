@@ -136,9 +136,9 @@
 					        <a class="nav-link" href="EventAllWinnerList">
 					            이벤트당첨자
 					        </a>
-					        <a class="nav-link" href="EventWinnerManage">
-					            당첨자발표
-					        </a>
+<!-- 					        <a class="nav-link" href="EventWinnerManage"> -->
+<!-- 					            당첨자발표 -->
+<!-- 					        </a> -->
 <!-- 					        <a class="nav-link" href="CouponWinnerManage"> -->
 <!-- 					            쿠폰당첨목록 -->
 <!-- 					        </a> -->
@@ -177,13 +177,12 @@
 <!-- 					        <a class="nav-link" href="StaticsVisitors"> -->
 <!-- 					            방문자통계 -->
 <!-- 					        </a> -->
-					        <!-- 구현 및 테스트하기 어려움 -->
 					        <a class="nav-link" href="StaticsSales">
 					            매출통계
 					        </a>
-					        <a class="nav-link" href="StaticsVoteResult">
-					            선호영화통계
-					        </a>
+<!-- 					        <a class="nav-link" href="StaticsVoteResult"> -->
+<!-- 					            선호영화통계 -->
+<!-- 					        </a> -->
 					        <a class="nav-link" href="StaticsNewMember">
 					            가입자통계
 					        </a>

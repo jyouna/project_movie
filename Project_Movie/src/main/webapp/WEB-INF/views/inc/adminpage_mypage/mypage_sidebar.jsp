@@ -69,7 +69,7 @@
 					</a>
 					
 <!-- 					회원정보관리 탭 -->
-					<a class="nav-link" href="">
+					<a class="nav-link" href="ShowMyInfo">
 					    회원정보관리
 					</a>
 		

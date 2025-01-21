@@ -56,7 +56,7 @@
 					<td colspan="5" align="center">
 						<input type="submit" value="등록" class="bottom" id="uptdateSubmit">
 						<input type="reset" value="초기화" class="bottom">
-						<input type="button" value="취소" class="bottom" onclick="history.back()">
+						<input type="button" value="취소" class="bottom" onclick="window.close()">
 					</td>
 				</tr>
 			</table>

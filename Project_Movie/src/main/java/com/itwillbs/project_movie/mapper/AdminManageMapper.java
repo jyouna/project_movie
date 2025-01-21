@@ -151,6 +151,12 @@ public interface AdminManageMapper {
 
 	List<InquiryVO> getInquiryBoardList();
 
+	MemberVO getMyInfo(@Param("sMemberId") String sMemberId);
+
+	String getDbPasswd(@Param("member_id") String member_id);
+
+	int updateMyInfo(MemberVO member);
+
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 
 }

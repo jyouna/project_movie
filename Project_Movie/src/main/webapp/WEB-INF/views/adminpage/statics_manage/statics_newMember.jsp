@@ -19,6 +19,8 @@
 <style type="text/css">
 #headTitle {
 	background-color: lightblue;
+	padding: 0.3em;
+	font-weight: bold;
 }
 #myChart {
 	width: 100%;

@@ -712,6 +712,35 @@
 		ORDER BY
 			inquriy_date DESC
 	</select>
+	
+	<select id="getMyInfo" resultType="member">
+		SELECT * 
+		FROM 
+			member
+		WHERE 
+			member_id = #{sMemberId}
+	</select> 
+	
+	<select id="getDbPasswd" resultType="String">
+		SELECT 
+			member_passwd
+		FROM 
+			member
+		WHERE
+			member_id = #{member_id}
+	</select>
+	
+	<update id="updateMyInfo">
+		UPDATE member
+		SET 
+			member_passwd = #{member_passwd},
+			genre = #{genre},
+			text_receive = #{text_receive},
+			email_receive = #{email_receive},
+			info_open = #{info_open}
+		WHERE
+			member_id = #{member_id}
+	</update>
  </mapper>
  
  

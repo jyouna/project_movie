@@ -351,14 +351,33 @@ public class AdminManageService {
 		return manageMapper.getSingleEventWinnerCount(event_code);
 	}
 
-	// 관리자 메인화면 출력 공지사항 게시판 리스트 조회
+	// 관리자 메인화면 출력 공지사항 게시판 리스트 출력
 	public List<NoticeBoardVO> getNoticeBoardList() {
 		// TODO Auto-generated method stub
 		return manageMapper.getNoticeBoardList();
 	}
-
+	
+	// 관리자 메인화면 1:1문의 게시판 리스트 출력
 	public List<InquiryVO> getInquiryBoardList() {
 		// TODO Auto-generated method stub
 		return manageMapper.getInquiryBoardList();
+	}
+
+	// 마이페이지 회원 정보 조회
+	public MemberVO getMyInfo(String sMemberId) {
+		// TODO Auto-generated method stub
+		return manageMapper.getMyInfo(sMemberId);
+	}
+	
+	// 회원정보 변경 시 기존 비밀번호 일치 여부 체크
+	public String getDbPasswd(String member_id) {
+		// TODO Auto-generated method stub
+		return manageMapper.getDbPasswd(member_id);
+	}
+	
+	// 마이페이지 회원 정보 수정
+	public int updateMyInfo(MemberVO member) {
+		// TODO Auto-generated method stub
+		return manageMapper.updateMyInfo(member);
 	}
 }

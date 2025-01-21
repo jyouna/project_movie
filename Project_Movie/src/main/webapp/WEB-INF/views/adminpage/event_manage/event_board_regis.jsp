@@ -35,7 +35,7 @@
 				<tr>
 					<th>내용</th>
 					<td colspan="4">
-						<textarea rows="20" cols="100" name="event_content" required>내용을 입력하세요</textarea>
+						<textarea rows="20" cols="100" name="event_content" id="event_content" required>내용을 입력하세요</textarea>
 					</td>
 				</tr>	
 				<tr>
@@ -60,7 +60,7 @@
 					<td colspan="5" align="center">
 						<input type="submit" value="등록" class="bottom">
 						<input type="reset" value="초기화" class="bottom">
-						<input type="button" value="취소" class="bottom" onclick="history.back()">
+						<input type="button" value="취소" class="bottom" onclick="window.close()">
 					</td>
 				</tr>
 			</table>

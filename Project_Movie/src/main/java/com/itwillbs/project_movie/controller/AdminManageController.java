@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -204,7 +205,61 @@ public class AdminManageController {
 		return "adminpage/member_manage/member_list";
 	}
 	
+	// 마이페이지 회원 정보란 이동
+	@GetMapping("ShowMyInfo")
+	public String showMyInfo(HttpSession session, Model model) {
+		String sMemberId = (String) session.getAttribute("sMemberId");
+		System.out.println("회원정보 로그인 세션 아이디 : " + sMemberId);
+		if(sMemberId == null) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		MemberVO member = adminService.getMyInfo(sMemberId);
+		System.out.println("member에 저장된 값 : " + member);
+		String gender =  Character.toString(member.getGender()); // char 타입이라 jstl에서 비교 안되어 별도 전달
+
+		model.addAttribute("member", member);
+		model.addAttribute("gender", gender);
+		return "mypage/myprofile/myprofile_correction";
+	}
 	
+	// 마이페이지 회원정보 수정 폼 제출 시
+	@GetMapping("UpdateMyInfo")
+	public String updateMyInfo(MemberVO member, BCryptPasswordEncoder passwordEncoder, Model model) {
+//		System.out.println("변경할 회원 정보 : " + member);
+	      String securedPasswd = passwordEncoder.encode(member.getMember_passwd());
+//	      System.out.println("비밀번호 : " + member.getMember_passwd());
+//	      System.out.println("암호화 : " + securedPasswd);
+	      member.setMember_passwd(securedPasswd);
+//	      System.out.println("암호화 후 정보 : " + member);
+	      
+	      int updateCount = adminService.updateMyInfo(member); 
+	      
+	      if(updateCount > 0) {
+	    	  return "redirect:/MypageMain";
+	      }	else {
+				model.addAttribute("msg", "회원정보 수정 실패");
+				model.addAttribute("targetURL", "MypageMain");
+				return "result/process";
+	      }
+	}
 	
+	// 회원정보 변경 비밀번호 확인 ajax
+	@GetMapping("checkOldPasswd")
+	@ResponseBody
+	public Boolean checkOldPasswd(String passwd, String member_id, BCryptPasswordEncoder passwordEncoder) {
+//		System.out.println("비밀번호 체크 컨트롤러 호출 : " + passwd + " " + member_id);
+		 String dbPasswd = adminService.getDbPasswd(member_id);
+//		 System.out.println("DB 비번 : " + dbPasswd);
+		 System.out.println("일치여부 확인 : " + (passwordEncoder.matches(passwd, dbPasswd)));
+		 
+		 if(passwordEncoder.matches(passwd, dbPasswd)) {
+			 return true;
+		 } else {
+			 return false;
+		 }
+	}
 }
 

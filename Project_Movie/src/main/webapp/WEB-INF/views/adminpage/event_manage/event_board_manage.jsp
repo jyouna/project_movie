@@ -114,7 +114,7 @@
 								<tr>
 									<td><input type="radio" name="selectedEvent" class="eventSetRadio" value="${eventBoard.event_code}"></td>
 									<td>${eventBoard.event_code}</td>	
-									<td><a href="#" onclick="window.open('updateEventBoard?event_code=${eventBoard.event_code}', '이벤트수정', 
+									<td><a href="#" id="event_subject_link" onclick="window.open('updateEventBoard?event_code=${eventBoard.event_code}', '이벤트수정', 
 															'width=1000,height=800,top=460,left=140,scrollbars=yes,resizable=yes'); return false;">${eventBoard.event_subject}</a></td>	
 									<td><fmt:formatDate value="${eventBoard.regis_date}" pattern="yyyy-MM-dd"/></td>	
 									<td>${eventBoard.event_start_date}</td>	

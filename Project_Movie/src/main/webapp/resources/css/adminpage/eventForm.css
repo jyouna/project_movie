@@ -60,7 +60,7 @@ input[type="file"] {
 	font-weight: bold;}
 
 textarea {
-	padding: 0px;
+	padding: 1em;
 	margin: 0px;
  	border: 1px solid #ddd;
 	border-radius: 15px;

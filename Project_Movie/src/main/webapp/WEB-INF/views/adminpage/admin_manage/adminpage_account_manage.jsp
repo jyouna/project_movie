@@ -20,7 +20,15 @@
 <style type="text/css">
 input[type="checkbox"] {
     transform: scale(1.5); /* 1.5배 확대 */
-    margin: 5px;}
+    margin: 5px;
+}
+
+#admin_id_link {
+	color: black;
+}    
+#admin_id_link:hover {
+	background-color: grey;
+}
 </style>
 </head>
 
@@ -64,7 +72,7 @@ input[type="checkbox"] {
 				        <tr>
 				            <td><input type="checkbox" class="deleteCheck" value="${vo.admin_id}"></td>
 				            <td>${status.count}</td>
-				            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}">${vo.admin_id}</a></td>
+				            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}" id="admin_id_link">${vo.admin_id}</a></td>
 				            <td>${vo.admin_passwd}</td>
 				            <td><fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/></td>
 				            <td>${vo.user_status ? '사용중' : '비사용'}</td>
