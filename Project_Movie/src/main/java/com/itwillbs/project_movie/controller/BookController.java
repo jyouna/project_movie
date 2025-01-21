@@ -98,15 +98,22 @@ public class BookController {
 	// ========================= 좌석페이지 컨트롤러 =========================
 	@GetMapping("BookSeat")
 	public String bookSeatPage(String schedule_code, MemberVO member, HttpSession session, Model model) {
+		// 미 로그인 시 접근 불가
 		String id = (String)session.getAttribute("sMemberId");
-		
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
 			return "result/fail";
 		}
-//		System.out.println("디비아이디 : " + dbMember);
-		System.out.println("세션아이디 : " + id);
+		
+		// 스케줄 코드 없을 시 접근 불가
+		String schCode = (String)session.getAttribute("schedule_code");
+		if(schCode == null) {
+			model.addAttribute("msg", "잘못된 접근입니다");
+			model.addAttribute("targetURL", "BookTickets");
+			return "result/fail";
+		}
+
 		// 스케줄 코드 세션에 저장
 		session.setAttribute("schedule_code", schedule_code);
 		
@@ -157,7 +164,22 @@ public class BookController {
 	
 	// 결제 페이지로 이동
 	@GetMapping("BookPay")
-	public String bookPayPage(String schedule_code, Model model) {
+	public String bookPayPage(String schedule_code, Model model, HttpSession session) {
+		// 미 로그인 시 접근 불가
+		String id = (String)session.getAttribute("sMemberId");
+		if(id == null) {
+			model.addAttribute("msg", "로그인 후 이용 가능합니다");
+			model.addAttribute("targetURL", "MemberLogin");
+			return "result/fail";
+		}
+		
+		// 스케줄 코드 없을 시 접근 불가
+		String schCode = (String)session.getAttribute("schedule_code");
+		if(schCode == null) {
+			model.addAttribute("msg", "잘못된 접근입니다");
+			model.addAttribute("targetURL", "BookTickets");
+			return "result/fail";
+		}
 		
 		return "book_tickets/book_pay";
 	}
@@ -165,7 +187,7 @@ public class BookController {
 	@PostMapping("BookPay")
 	public String bookPay(String schedule_code, HttpSession session, Model model, @RequestParam Map<String, String> map) {
 		// 미 로그인 시 접근 불가
-		String id = (String)session.getAttribute("sId");
+		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
@@ -236,19 +258,19 @@ public class BookController {
 	}
 	
 	// ================= [ 결제 완료 페이지 ] ==================
-	@GetMapping("BookFinish")
-	public String bookFinishPage() {
-		return "book_tickets/book_finish";
-	}
+//	@GetMapping("BookFinish")
+//	public String bookFinishPage() {
+//		return "book_tickets/book_finish";
+//	}
 	
 	@PostMapping("BookFinish")
 	public String bookFinish(@RequestParam Map<String, String> map, HttpSession session, Model model, String schedule_code) {
 		// 미 로그인 시 접근 불가
-		String id = (String)session.getAttribute("sId");
+		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		// 스케줄 코드 없을 시 접근 불가
@@ -256,15 +278,29 @@ public class BookController {
 		if(schCode == null) {
 			model.addAttribute("msg", "잘못된 접근입니다");
 			model.addAttribute("targetURL", "BookTickets");
-			return "result/fail";
+			return "result/process";
+		}
+		
+		// point_discount 값 없을 시 null로 변환
+		if(map.get("point_discount") != null && map.get("point_discount").trim().isEmpty()) {
+			map.put("point_discount", null);
 		}
 		
 		
 		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
-//		int updateCount = addBookingTicket(map);
+		// 결제 완료 시 payment 테이블에 정보 업데이트
+		int updateCount = service.addBookingTicket(map, id);
 		System.out.println(map);
+		
+		if(updateCount == 0) {
+			model.addAttribute("msg", "결제에 실패했습니다");
+			return "result/process";
+		}
+		System.out.println("결제 완료 : " + updateCount);
+		
+		
 		
 		return "book_tickets/book_finish";
 	}

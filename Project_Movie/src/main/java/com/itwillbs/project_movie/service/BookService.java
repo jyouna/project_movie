@@ -98,6 +98,19 @@ public class BookService {
 		return mapper.selectPaymentInfo(payment_code);
 	}
 
+	@Transactional
+	public int addBookingTicket(Map<String, String> map, String id) {
+		if(map.get("point_discount") != null) {
+			mapper.insertPointDebited(map, id);
+		}
+		
+		if(map.get("coupon_discount") != null) {
+			mapper.updateCouponStatus(map);
+		}
+		
+		return mapper.updateBookingTicket(map);
+	}
+
 
 
 }

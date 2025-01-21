@@ -48,6 +48,12 @@ public interface BookMapper {
 
 	PaymentVO selectPaymentInfo(String payment_code);
 
+	int updateBookingTicket(Map<String, String> map);
+
+	void insertPointDebited(@Param("map") Map<String, String> map, @Param("id") String id);
+
+	void updateCouponStatus(Map<String, String> map);
+
 
 
 

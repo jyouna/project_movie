@@ -152,6 +152,49 @@
 		WHERE payment_code = #{payment_code}
 	</select>
 	
+	<update id="updateBookingTicket">
+		UPDATE payment p
+		JOIN member m
+		ON p.member_id = m.member_id
+		SET 
+			p.payment_date = NOW()
+			<if test="point_discount != null">
+				, p.point_discount = #{point_discount}
+				, p.total_discount = #{point_discount}
+				, m.point = m.point - #{point_discount}
+			</if>
+			<if test="coupon_discount != null">
+				, p.coupon_discount = #{coupon_discount}
+				, p.total_discount = #coupon_discount}
+			</if>
+			, p.total_payment = #{total_payment} 
+			, p.payment_method = #{payment_method}
+			, p.payment_status = 1
+		WHERE p.payment_code = #{payment_code}
+	</update>
+	
+	<insert id="insertPointDebited">
+		INSERT
+		INTO point
+		VALUES (
+			null
+			, 0
+			, #{map.point_discount}
+			, null
+			, #{id}
+			, NOW()
+			, null
+			, #{map.payment_code}
+		)
+	</insert>
+	
+	<update id="updateCouponStatus">
+		UPDATE coupon
+		SET coupon_status = 1
+		WHERE coupon_code = #{discount_coupon}
+	</update>
+
+	
 	
 	
 </mapper>
