@@ -18,6 +18,7 @@ import com.itwillbs.project_movie.vo.InquiryVO;
 import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.NoticeBoardVO;
+import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.PointVO;
 
 @Service
@@ -273,7 +274,6 @@ public class AdminManageService {
 			int monthlyCount = manageMapper.getMonthlyTotalNewMember(year, i);
 			map.put(arr[i], monthlyCount);
 			System.out.println(arr[i] + " 가입자 : " + monthlyCount);
-//			System.out.println("월별 통계 : " + map);
 		}
 		
 		System.out.println("map에 저장된 값 : " + map);
@@ -379,5 +379,42 @@ public class AdminManageService {
 	public int updateMyInfo(MemberVO member) {
 		// TODO Auto-generated method stub
 		return manageMapper.updateMyInfo(member);
+	}
+	
+	// 매출 데이터 매크로 생성 
+	public void createSalesRecord(PaymentVO payment) {
+		// TODO Auto-generated method stub
+		manageMapper.createSalesRecord(payment);
+	}
+
+	
+	// 전년도 월간 매출 조회
+	public Map<String, Object> getYearSales(int year) {
+		// TODO Auto-generated method stub
+
+		// 월별 매출액 조회
+		// 월별 환불액 조회 
+		// 월별 최종 매출액 = 월별 매출액(결제상태1) - 월별 환불액(환불상태1, 환불일자 기준) 
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String[] arr = {"", "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"};
+		
+		for(int i = 1; i <= 12; i++) {
+			
+			// 월별 매출액
+			int monthlySales = manageMapper.getMonthlySales(year, i);
+			
+			// 월별 환불금액
+			int monthlyRefund = manageMapper.getMonthlyRefund(year, i);
+			System.out.println(arr[i] + "월 매출액 : " + monthlySales);
+			System.out.println(arr[i] + "월 환불액 : " + monthlyRefund);
+			map.put(arr[i], (monthlySales-monthlyRefund));
+			System.out.println(arr[i] + "월 순매출액 : " + (monthlySales-monthlyRefund));
+		}
+		
+		System.out.println("map에 저장된 값 : " + map);
+		
+		return map;
+		
 	}
 }

@@ -14,6 +14,7 @@ import com.itwillbs.project_movie.vo.InquiryVO;
 import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.NoticeBoardVO;
+import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.PointVO;
 
 @Mapper
@@ -156,6 +157,15 @@ public interface AdminManageMapper {
 	String getDbPasswd(@Param("member_id") String member_id);
 
 	int updateMyInfo(MemberVO member);
+
+	void createSalesRecord(PaymentVO payment); // 매출 생성 메크로
+	
+	// 월 총매출액 조회
+	int getMonthlySales(@Param("year") int year, @Param("month") int month);
+	
+	// 월 총환불액 조회
+	int getMonthlyRefund(@Param("year") int year, @Param("month") int month);
+
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

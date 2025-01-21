@@ -32,8 +32,6 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<div id="tableDiv">
 		<h2 id="headTitle">신규 가입자 통계</h2>
-		<!--  회원 생성 메크로 버튼 -->
-<!-- 			<input type="button" onclick="location.href='createNewmember'" value="회원생성"> -->
 			<input type="button" value="2024년" onclick="location.href='StaticsNewMember'">
 			<input type="button" value="전체 기간" id="totalPeriodSearch">
 			조회기간

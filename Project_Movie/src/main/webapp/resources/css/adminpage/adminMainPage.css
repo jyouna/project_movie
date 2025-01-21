@@ -88,13 +88,13 @@ h5 {
 	overflow: auto;
 }
 
-.myChart {
+.myChart, .myChart2{
 	transform: scale(0.95); /* 차트 크기 조정 */
 	transform-origin: top left; /* 변환 기준점을 상위 요소의 왼쪽 상단으로 설정 */
 	margin: 0; 
 }
 
-#showPeriod {
+#showPeriod, #showPeriod2 {
 	margin: 3px;
 	font-weight: bold;
 	font-size: 1.2em;

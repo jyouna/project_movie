@@ -145,13 +145,9 @@ public class AdminStaticsController {
 	public Map<String, Object> yearTotalNewMemeber(int year) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("연간 가입자 통계 컨트롤러 호출됨 : " + year);
-		
 		map = adminService.getMonthlyNewMember(year);
-		
 		System.out.println("컨트롤러 map에 저장된 값 : " + map);
 		
-//		JSONObject jo = new JSONObject(map);
-//		System.out.println("jsonobject에 저장된 값 : " + jo);
 		return map;
 	}
 	
@@ -168,8 +164,6 @@ public class AdminStaticsController {
 		return map;
 	}	
 	
-	
-	
 	@PostMapping("getTotalPeriodMemberJoinStatics")
 	@ResponseBody
 	public Map<String, String> totalPeriodMemberJoinStatics(@RequestBody Map<String, List<String>> period) {
@@ -181,48 +175,17 @@ public class AdminStaticsController {
 		return map;
 	}
 	
+	// 전년도 월간 매출 조회 
+	@GetMapping("GetYearSales")
+	@ResponseBody
+	public Map<String, Object> getYearSales(int year) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map = adminService.getYearSales(year);
 	
-	// 회원 자동 생성 메크로
-	@GetMapping("createNewmember")
-	public void createNewMember() {
-		Random r = new Random();
-		r.nextInt(5000);
-		
-		
-		MemberVO member = new MemberVO();
-		LocalDate localDate = LocalDate.of(2002, 2, 2);
-		Date date = Date.valueOf(localDate);
-		
-		int year = 2020;
-		int month = 0;
-		int day = 10;
-		
-		for(int i = 1; i < 4; i++) { // 4년
-			for(int j = 1; j <= 12; j++) { // 12개월
-				month = j; // 1~12월 
-				int repetitionCount = (int) ((Math.random()*200)+100);
-				for(int k = 0; k < repetitionCount; k++) { // k 반복횟수만큼 계정 생성
-					LocalDateTime time = LocalDateTime.of(year, month, day, 11, 11, 11, 11);
-					Timestamp regis_date = Timestamp.valueOf(time);
-					member.setMember_id(r.nextInt(999) + "tes" + r.nextInt(999) + r.nextInt(999) + r.nextInt(999));
-					member.setMember_passwd("abcdedfg");
-					member.setMember_name("tester" + r.nextInt(55));
-					member.setBirth_date(date);
-					member.setEmail(r.nextInt(999) + "abc@awe"+r.nextInt(999)+r.nextInt(9999)+".com");
-					member.setPhone(r.nextInt(10000) + "010-" + r.nextInt(10000) + "-" + r.nextInt(10000));
-					member.setGender('M');
-					member.setGenre("액션");
-					member.setText_receive(true);
-					member.setEmail_receive(true);
-					member.setInfo_open(true);
-					member.setRegis_date(regis_date);
-					
-					adminService.createMembers(member);
-				}
-			}
-			year += i; // 반복 끝날 때마다 1년씩 증가
-		}
+		return map;
 	}
+	
 }
 
 

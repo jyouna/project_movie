@@ -450,5 +450,6 @@ public class AdminEventManageController {
 		System.out.println(winnerCount);
 		return winnerCount;
 	}
+	
 }
 

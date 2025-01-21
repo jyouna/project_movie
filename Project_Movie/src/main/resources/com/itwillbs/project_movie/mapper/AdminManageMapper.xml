@@ -741,6 +741,52 @@
 		WHERE
 			member_id = #{member_id}
 	</update>
+	
+	<insert id="createSalesRecord">
+		INSERT INTO payment
+		VALUES(
+			#{payment_code},
+			#{payment_date},
+			#{member_id},
+			#{schedule_code},
+			#{ticket_count},
+			#{total_discount},
+			#{point_discount},
+			#{coupon_discount},
+			#{total_discount},
+			#{total_payment},
+			#{seat_selection_time},
+			#{payment_method},
+			#{payment_status},
+			#{total_seat_code}
+		)
+	</insert>
+	
+	<select id="getMonthlySales" resultType="int">
+		SELECT 
+			IFNULL(SUM(total_payment),0)
+		FROM 
+			payment
+		WHERE 
+			payment_status = 1
+			AND	
+				YEAR(payment_date) = #{year}
+			AND
+				MONTH(payment_date) = #{month}
+	</select>
+	
+	<select id="getMonthlyRefund" resultType="int">
+		SELECT 
+			IFNULL(SUM(refund_amount),0)
+		FROM 
+			refund
+		WHERE 
+			refund_status = 1
+			AND	
+				YEAR(refund_completed_date) = #{year}
+			AND
+				MONTH(refund_completed_date) = #{month}	
+	</select>
  </mapper>
  
  

@@ -33,10 +33,12 @@ input[type="checkbox"] {
 </head>
 
 <body>
-	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp" ></jsp:include>
 	<h3>관리자 계정관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
+			<input type="button" onclick="location.href='createNewmember'" value="회원생성">
+			<input type="button" value="매출생성" onclick="location.href='CreateSalesRecord'">
 			<input type="button" value="권한설정" id="setAuth">
 			<input type="button" value="계정생성" id="createId">
 			<input type="button" value="계정삭제" id="deleteId">

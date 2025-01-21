@@ -33,6 +33,7 @@ import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 import com.itwillbs.project_movie.vo.PageInfo2;
+import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.PointVO;
 
 import lombok.Builder.Default;
