@@ -11,15 +11,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.AdminManageService;
+import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.vo.FaqBoardVO;
 import com.itwillbs.project_movie.vo.InquiryVO;
+import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.NoticeBoardVO;
 
 
 @Controller
 public class MainController {
+	@Autowired
+	private MovieService movieService;
+	
 	@Autowired
 	AdminManageService adminService;
 	
@@ -47,5 +53,14 @@ public class MainController {
 
 		return "adminpage/adminpage_main";
 	}
+	
+	// 메인페이지 현재상영작 리스트 조회
+	@ResponseBody
+	@GetMapping("mainGetCurrentMovie")
+	public List<MovieVO> mainGetCurrentMovie() {
+		List<MovieVO> movieList = movieService.getCurrentlyMovieList();
+		return movieList;
+	}
+	
 	
 }

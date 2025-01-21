@@ -12,7 +12,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" />
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>    
+	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 </head>
 <body class="homepage is-preload">
 
@@ -20,17 +22,11 @@
 
 		<section id="intro" class="wrapper style1">
 			<div class="title">Currently Movies</div>
+				<div id="leftBtn">&lt;</div>
+				<div id="rightBtn">&gt;</div>
 			<div class="container">
 				<p class="style2">
-					<img src="${pageContext.request.contextPath}/resources/images/poster1.webp" width=400>
-					<img src="${pageContext.request.contextPath}/resources/images/poster2.jpg" width=400>
-					<img src="${pageContext.request.contextPath}/resources/images/poster3.webp" width=400>
 				</p>
-				<ul class="actions">
-					<li><input type="button" class="button style3 large" value="<"></li>
-					<li><input type="text" class="button style3 large" value="1관" readonly></li>
-					<li><input type="button" class="button style3 large" value=">"></li>
-				</ul>
 			</div>
 		</section>
 	

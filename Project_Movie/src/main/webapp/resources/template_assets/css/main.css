@@ -1745,7 +1745,6 @@ input, select, textarea {
 		button.large,
 		.button.large {
 			font-size: 1em;
-			min-width: 7em;
 		}
 
 		input[type="button"].style1,
@@ -2036,7 +2035,7 @@ input, select, textarea {
 
 	.wrapper {
 		position: relative;
-		padding: 6em 0 9em 0;
+		padding: 5em 0 9em 0;
 	}
 
 		.wrapper .title {
@@ -2314,10 +2313,10 @@ input, select, textarea {
 			border-radius: 0.35em;
 			box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.25);
 			font-size: 2.75em;
-			letter-spacing: 0.075em;
+			letter-spacing: 0.78em;
 			line-height: 1.35em;
-			padding: 1em 0 1em 0;
-			margin-bottom: 1em;
+			padding: 1em 0 0 0;
+			margin-bottom: 0;
 		}
 
 			#intro p.style2 a {
