@@ -14,8 +14,10 @@ import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
 import com.itwillbs.project_movie.vo.EventWinnerVO;
 import com.itwillbs.project_movie.vo.GetGiveCouponInfoVO;
+import com.itwillbs.project_movie.vo.InquiryVO;
 import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
+import com.itwillbs.project_movie.vo.NoticeBoardVO;
 import com.itwillbs.project_movie.vo.PointVO;
 
 @Service
@@ -347,5 +349,16 @@ public class AdminManageService {
 	public int getSingEventWinnerCount(int event_code) {
 		// TODO Auto-generated method stub
 		return manageMapper.getSingleEventWinnerCount(event_code);
+	}
+
+	// 관리자 메인화면 출력 공지사항 게시판 리스트 조회
+	public List<NoticeBoardVO> getNoticeBoardList() {
+		// TODO Auto-generated method stub
+		return manageMapper.getNoticeBoardList();
+	}
+
+	public List<InquiryVO> getInquiryBoardList() {
+		// TODO Auto-generated method stub
+		return manageMapper.getInquiryBoardList();
 	}
 }

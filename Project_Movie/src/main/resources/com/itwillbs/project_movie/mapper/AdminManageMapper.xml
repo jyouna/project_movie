@@ -695,6 +695,23 @@
 			AND e.event_code = #{event_code}	
 	</select>
 	
+	<select id="getNoticeBoardList" resultType="notice_board">
+		SELECT *
+		FROM 
+			notice_board
+		ORDER BY 
+			regis_date DESC
+	</select>
+	
+	<select id="getInquiryBoardList" resultType="inquiry">
+		SELECT *
+		FROM 
+			Inquiry
+		where 
+			response_status = 0	
+		ORDER BY
+			inquriy_date DESC
+	</select>
  </mapper>
  
  

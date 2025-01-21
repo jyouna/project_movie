@@ -10,8 +10,10 @@ import com.itwillbs.project_movie.vo.AdminRegisVO;
 import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.EventBoardVO;
 import com.itwillbs.project_movie.vo.EventWinnerVO;
+import com.itwillbs.project_movie.vo.InquiryVO;
 import com.itwillbs.project_movie.vo.MemberAllInfoVO;
 import com.itwillbs.project_movie.vo.MemberVO;
+import com.itwillbs.project_movie.vo.NoticeBoardVO;
 import com.itwillbs.project_movie.vo.PointVO;
 
 @Mapper
@@ -144,6 +146,10 @@ public interface AdminManageMapper {
 	List<EventWinnerVO> getWinnerList(@Param("event_code") int event_code);
 
 	int getSingleEventWinnerCount(@Param("event_code") int event_code);
+
+	List<NoticeBoardVO> getNoticeBoardList();
+
+	List<InquiryVO> getInquiryBoardList();
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

@@ -1,77 +1,103 @@
 @charset "EUC-KR";
 
-
-#sec01 {
-/* 	border: 1px solid; */
-	width: 50%;
-	height: 100%;
-	display: inline-block;
-	overflow: auto;
+body, article {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 크기 계산에 패딩 포함 */
 }
 
-#sec02 {
-/* 	border: 1px solid; */
-	width: 50%;
-	height: 100%;
-	display: inline-block;
-	float: right;
-	overflow: auto;
+body {
+	BACKGROUND-COLOR: whitesmoke;
 }
 
-#sec03 {
-/* 	border: 1px solid; */
-	width: 50%;
-	height: 100%;
-	display: inline-block;
-	overflow: auto;
+h3 {
+	padding: 10px;
+	background-color: gainsboro;
+	width: 100%;
+	text-align: center !important;
+	font-weight: bold;
+	margin-bottom: 0;
 }
 
-#sec04 {
-/* 	border: 1px solid; */
-	width: 50%;
-	height: 100%;
-	display: inline-block;
-	float: right;
-	overflow: auto;
+table {
+	width:100%;
+	height:80%;
+	border: 1px solid gainsboro;
+}
+
+th, td {
+    border: 1px solid gainsboro; /* 셀 경계 실선 */
+    padding: 4px; /* 셀 내부 여백 */
+    text-align: center; /* 텍스트 정렬 */
+}
+
+tr:hover {
+	background-color: grey;
+}
+
+.tr01 {
+	background-color: gainsboro;
+}
+
+
+h5 {
+	background-color: powderblue;
+	padding: 0.6em;
+	margin: 0px;
+	font-weight: bold;
+	font-size: 1.3em;	
+	box-sizing: border-box;
+	width: 100%;
+	border-radius: 10px;
+}
+
+#sec01, #sec03 {
+/*     margin: 10px;  */
+    margin-left: 1em;
+    padding: 10px; 
+    width: 49%;
+    height: 90%;
+    box-sizing: border-box;
+    display: inline-block;
+    overflow: atuo;
+}
+
+#sec02, #sec04 {
+/*     margin: 10px;  */
+    margin-right: 1em; 
+    padding: 10px;
+    width: 49%;
+    height: 90%;
+    box-sizing: border-box;
+    float: right;
+    display: inline-block; 
+    overflow: atuo;
 }
 
 #testArticle {
 	display: inline-block;
 	height: 42%;
-/* 	overflow: auto; */
-}
-
-h5 {
-	margin: 5px;
-} 
-
-#newMember_statics {
-	 transform: scale(0.5) translate(-400px, -400px);
 }
 
 .secitonBoard {
-	margin: 1em;
-	border: 1px solid;
-	width: 90%;
-	height: 75%;
+	border: 3px solid gainsboro;
+	border-radius: 10px;
+	padding: 1em;
+	width: 100%;
+	height: 90%;
 	overflow: auto;
 }
 
-#chartArea {
-/* 	transform: scale(0.7); */
-	margin: 0px;
-	width: 90%;
-	height: 60%;
-/* 	float: left;  */
-	
-}
-
 .myChart {
-/* 	background-color: ivory; */
+	transform: scale(0.95); /* 차트 크기 조정 */
+	transform-origin: top left; /* 변환 기준점을 상위 요소의 왼쪽 상단으로 설정 */
+	margin: 0; 
 }
 
 #showPeriod {
 	margin: 3px;
+	font-weight: bold;
+	font-size: 1.2em;
 }
 
 .hiperLink {
@@ -82,6 +108,13 @@ h5 {
 	background-color: lightyellow;
 }
 
-body {
-	BACKGROUND-COLOR: whitesmoke;
+.link {
+	margin-bottom: 5px;
+	margin-top:0px;
+	float: right;
+	text-decoration: none;
+}
+
+.link:hover {
+	background-color: grey;
 }

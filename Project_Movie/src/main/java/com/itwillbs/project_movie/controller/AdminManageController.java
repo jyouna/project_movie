@@ -204,29 +204,6 @@ public class AdminManageController {
 		return "adminpage/member_manage/member_list";
 	}
 	
-//	// 회원계정 메크로 생성기
-//	@GetMapping("makeNewmember")
-//	public String makeNewmember() {
-//		String email = "acvbqd@naver.com";
-//		String id = "testId";
-//		Random r = new Random();
-//		for(int i = 2105; i < 2222; i++) {
-//			Date date = Date.valueOf("2024-09-01");
-//			MemberVO vo = new MemberVO();
-//			vo.setMember_id(id + i + r.nextInt(50000));
-//			vo.setMember_passwd("12345678");
-//			vo.setMember_name("네이버");
-//			vo.setBirth_date(date);
-//			vo.setEmail(email + i + r.nextInt(50000));
-//			vo.setPhone("123-1123-1234");
-//			vo.setGender('M');
-//			vo.setGenre("액션");
-//			vo.setInfo_open(false);
-//			memberService.registMember(vo);
-//		}
-//		
-//		return "redirect:/MemberList";
-//	}
 	
 	
 }
