@@ -153,22 +153,6 @@
 	</select>
 	
 	<update id="updateBookingTicket">
-<!-- 		<selectKey keyProperty="seat_code" resultType="map" order="AFTER"> -->
-<!-- 			SELECT DISTINCT SUBSTR(seat_code, 4) -->
-<!-- 			FROM booking b -->
-<!-- 			JOIN payment p -->
-<!-- 			ON b.payment_code = p.payment_code -->
-<!-- 			WHERE b.schedule_code = #{schedule_code} -->
-<!-- 			AND (payment_status = 1 -->
-<!-- 			OR DATE_ADD(seat_selection_time, INTERVAL 10 MINUTE) > now()); -->
-<!-- 		</selectKey> -->
-<!-- 		<selectKey keyProperty="total_seat_code" resultType="String" order="AFTER"> -->
-<!-- 			SELECT total_seat_code -->
-<!-- 			FROM payment -->
-<!-- 			WHERE schedule_code = #{schedule_code} -->
-<!-- 			AND payment_code = #{payment_code} -->
-<!-- 		</selectKey> -->
-	
 		UPDATE payment p
 		JOIN member m
 		ON p.member_id = m.member_id
@@ -220,6 +204,11 @@
 		OR DATE_ADD(seat_selection_time, INTERVAL 10 MINUTE) > now())
 	</select>
 
+<!-- 	<select id="selectSeatAvail" resultType="map"> -->
+<!-- 		SELECT * -->
+<!-- 		FROM seat -->
+<!-- 		WHERE seat_avail = 0; -->
+<!-- 	</select> -->
 	
 	
 	

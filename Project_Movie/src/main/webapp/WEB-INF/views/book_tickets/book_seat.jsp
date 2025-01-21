@@ -47,30 +47,32 @@
 					
 						</c:forEach>
 					</ul>
+					<!-- 관객 타입별 인원수 받아오기 -->
 					<input type="hidden" name="adult" id="adult">
 					<input type="hidden" name="youth" id="youth">
 					<input type="hidden" name="senior" id="senior">
 					<span class="space_line"></span>
 					
+					<!-- 좌석 버튼 -->
 					<div class="seat_container">
 						<div class="msg">인원 선택 후 좌석을 선택해주세요</div>
 			            <div class="screen">SCREEN</div>
-				            <c:forEach var="j" begin="0" end="${rowCount-1}">
-					            <div class="seat_row">
-					            	<c:forEach var="i" begin="0" end="${colCount-1}">
-						                <button type="button" class="seat"
-						                	<c:forEach var="disabledSeat" items="${disabledSeatList}">
-						                		<c:if test="${seatList[i + j*10].seat_code eq disabledSeat.seat_code}">
-						                			disabled 
-						                		</c:if>
-						                	</c:forEach>
-						                	<c:if test="${(i eq 7 and j eq 0) or (i eq 8 and j eq 0)}">name="wheelChairSeat"</c:if>>
-						                	${seatList[i + j*10].seat_code}
-					                	</button>
-					            	</c:forEach>
-					            </div>
-				            </c:forEach>
-				            
+			            <c:forEach var="j" begin="0" end="${rowCount-1}">
+				            <div class="seat_row">
+				            	<c:forEach var="i" begin="0" end="${colCount-1}">
+					                <button type="button" class="seat"
+					                	<c:forEach var="disabledSeat" items="${disabledSeatList}">
+					                		<!-- 예매된 좌석 disabled 처리 -->
+					                		<c:if test="${seatList[i + j*10].seat_code eq disabledSeat.seat_code}">
+					                			disabled 
+					                		</c:if>
+					                	</c:forEach>
+					                	<c:if test="${(i eq 7 and j eq 0) or (i eq 8 and j eq 0)}">name="wheelChairSeat"</c:if>>
+					                	${seatList[i + j*10].seat_code}
+				                	</button>
+				            	</c:forEach>
+				            </div>
+			            </c:forEach>
 			        </div>
 					
 					<span class="space_line"></span>
@@ -119,6 +121,7 @@
 						            </div>
 						        </div>
 						        <div class="row">
+						        	<!-- data 부분 ajax로 append -->
 						            <div class="header">인원</div>
 						            <div class="data"></div>
 						        </div>
@@ -135,7 +138,6 @@
 						
 							<div class="bottom_btn">
 								<button type="submit" class="pay_btn">결제</button>
-<%-- 								<input type="hidden" value="${schedule.schedule_code}"> --%>
 							</div>
 						</div>
 					</div>
@@ -145,6 +147,7 @@
 		</div>
 		
 		<script>
+			// 모달창 닫기 버튼
 			$(".modal_close").click(function() {
 				$(".modal").css("display", "none");
 				$(".modal_content").css("display", "none");
@@ -152,7 +155,7 @@
 			
 			let contextPath = "${pageContext.request.contextPath}";
 			
-// 			긴 영화제목 스크롤 애니메이션 효과
+			// 긴 영화제목 스크롤 애니메이션 효과
 			$(document).ready(function () {
 			    $('.mv_title').each(function () {
 			        let title = $(this); // 현재 mv_title 요소
