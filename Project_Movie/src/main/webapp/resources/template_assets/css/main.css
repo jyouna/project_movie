@@ -7,6 +7,7 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -2039,22 +2040,22 @@ input, select, textarea {
 	}
 
 		.wrapper .title {
-			position: absolute;
-			top: 0;
-			left: 50%;
-			text-align: center;
-			text-transform: uppercase;
-			display: block;
-			font-weight: 700;
-			letter-spacing: 0.25em;
-			font-size: 1.5em;
-			width: 25em;
-			height: 3.25em;
-			top: -3.25em;
-			line-height: 3.25em;
-			margin-bottom: -3.25em;
-			margin-left: -12.5em;
-			padding-top: 0.5em;
+		    position: absolute;
+		    top: 0;
+		    left: 60%;
+		    text-align: center;
+		    text-transform: uppercase;
+		    display: block;
+		    font-weight: 700;
+		    letter-spacing: 0.25em;
+		    font-size: 1.5em;
+		    width: 10em;
+		    height: 2em;
+		    top: -1.1em;
+		    line-height: 1.25em;
+		    margin-bottom: -3.25em;
+		    margin-left: -12.5em;
+		    padding-top: 0.5em;
 		}
 
 			.wrapper .title:before {
@@ -2157,16 +2158,19 @@ input, select, textarea {
 		}
 
 		.homepage #header {
-			height: 35em;
+			height: 18em;
 		}
 
 /* Logo */
 
 	#logo {
+	    top: -2.5em;
+	    scale: 0.6;
+	    width: 100%;
+	    height: 300px;
 		width: 100%;
 		text-align: center;
 		position: relative;
-		top: 1.5em;
 	}
 
 		#logo h1 {
@@ -2190,15 +2194,16 @@ input, select, textarea {
 /* Nav */
 
 	#nav {
-		position: absolute;
-		display: block;
-		top: 2.5em;
-		left: 0;
-		width: 100%;
-		text-align: center;
+	    position: absolute;
+	    display: block;
+	    top: 9.5em;
+	    left: 0;
+	    width: 100%;
+	    text-align: center;
 	}
 
 		#nav > ul {
+			width: 62%;
 			display: inline-block;
 			border-radius: 0.35em;
 			box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.25);
@@ -2210,7 +2215,7 @@ input, select, textarea {
 			#nav > ul > li {
 				display: inline-block;
 				text-align: center;
-				padding: 0 1.5em 0 1.5em;
+				padding: 0 2.2em 0 2.2em;
 			}
 
 				#nav > ul > li > ul {
@@ -3068,4 +3073,17 @@ input, select, textarea {
 							margin-top: 0;
 						}
 
+	}
+
+	#logoImg {
+    	color: white;
+	    letter-spacing: 0.1em;
+	    font-size: 8em;
+	    width: 50px;
+	    background: url(/project_movie/resources/images/logo_nobg.png) no-repeat center center;
+	    background-size: cover;
+	    padding-top: 100px;
+	    padding-bottom: 100px;
+	    padding-left: 300px;
+	    margin-left: 20%;
 	}

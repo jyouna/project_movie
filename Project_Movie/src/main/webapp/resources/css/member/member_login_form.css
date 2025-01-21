@@ -1,10 +1,10 @@
 /* ========== 기본 스타일 ========== */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* 전체 박스 모델 설정 */
-} 
+/* body { */
+/*   font-family: Arial, sans-serif; */
+/*   margin: 0; */
+/*   padding: 0; */
+/*   box-sizing: border-box; 전체 박스 모델 설정 */
+/* }  */
 /* ========== 레이아웃 ========== */
 .container {
   display: flex; /* Flexbox로 레이아웃 구성 */

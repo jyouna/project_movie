@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 .season_movie {
     background-image: url('../../images/season_background.png'); /* 배경 이미지 */
     background-size: cover;

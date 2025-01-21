@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="page-wrapper">    
-	<section id="header" class="wrapper">
+	<section id="header" class="wrapper" style="height:18em;">
 		<!-- Top Nav -->
 		<div class="navbar"> 
 			<div class="navbar-right"> 
@@ -33,9 +33,10 @@
 		</script>
 
 		<!-- Logo -->
-			<div id="logo">
-				<h1><a href="${pageContext.request.contextPath}">Escape Velocity</a></h1>
-				<p>A free responsive site template by HTML5 UP</p>
+			<div id="logo" style="width: 100%; height: 300px;">
+			    <div id="logoImg" onclick="location.href='${pageContext.request.contextPath}'" style="cursor: pointer;">
+			        PICKCINE
+			    </div>
 			</div>
 
 			<!-- Nav -->
