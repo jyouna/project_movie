@@ -185,6 +185,9 @@ public interface AdminManageMapper {
 	
 	// 매출 데이터 생성에 필요한 멤버 아이디 조회 
 	List<String> getMemberIdList();
+	
+	// 일일 매출 데이터 조회
+	List<Map<String, Object>> getDailySales(@Param("firstDay") LocalDate firstDay, @Param("lastDay")LocalDate lastDay);
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

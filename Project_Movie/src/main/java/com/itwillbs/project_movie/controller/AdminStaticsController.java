@@ -4,7 +4,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,7 +182,37 @@ public class AdminStaticsController {
 		return map;
 	}
 	
-	// 2, 3번 차트 연 - 월 선택 시 해당 월 매출액 조회
+	
+	// 2번 차트 해당연도 월간 일일매출 조회
+	@GetMapping("GetDailySales")
+	@ResponseBody
+	public List<Map<String, Object>> getDailySales(@RequestParam("year") int year, @RequestParam("month") int month) {
+		// 해당 월 시작일
+		LocalDate firstDay = LocalDate.of(year, month, 1);
+		// 해당 월 마지막 날
+		LocalDate lastDay = YearMonth.of(year, month).atEndOfMonth();
+		List<Map<String, Object>> map = adminService.getDailySales(firstDay, lastDay);
+		System.out.println("일별 매출 : " + map);
+		
+		// map 객체 내 저장된 값 정렬
+		map.sort(new Comparator<Map<String, Object>>() {
+
+			@Override
+			public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+				// TODO Auto-generated method stub
+				return Integer.compare(
+			            (Integer) o1.get("day"), // Integer로 캐스팅
+			            (Integer) o2.get("day")  // Integer로 캐스팅
+	            );
+			}
+		});
+		
+		System.out.print("정렬 후 " + map);
+		
+		return map;
+	}
+	
+	// 3번 차트 연 - 월 선택 시 해당연도 월별 매출액 조회
 	@GetMapping("GetMonthSales")
 	@ResponseBody
 	public int getMonthSales(int year, int month) {

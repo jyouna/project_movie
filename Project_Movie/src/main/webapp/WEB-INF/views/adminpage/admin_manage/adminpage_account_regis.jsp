@@ -62,8 +62,6 @@ input[type="checkbox"] {
 }
 </style>
 <body>
-<%-- 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include> --%>
-	
 	<article id="mainArticle">
 		<h3>관리자등록</h3>
 		<form id="accountRegisForm">
@@ -131,9 +129,6 @@ input[type="checkbox"] {
 			</table>
 		</form>
 	</article>
-<%-- 		<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include> --%>
-	
-	<!-- 중복 아이디 체크 --> 
 <script type="text/javascript">
 $(function(){
 	let check_id1 = false;

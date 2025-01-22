@@ -831,11 +831,28 @@
 	</select>
 	
 	<select id="getMemberIdList" resultType="String">
-	SELECT 
-		member_id
-	FROM
-		member
+		SELECT 
+			member_id
+		FROM
+			member
 	</select>
+	
+	<select id="getDailySales" resultType="map">
+		SELECT 
+			DAY(payment_date) AS day, 
+			SUM(total_payment) AS total
+		FROM 
+			payment
+		WHERE
+			(DATE(payment_date) BETWEEN #{firstDay} AND #{lastDay})
+			AND
+			(payment_status = 1)
+		GROUP BY 
+			DAY(payment_date)
+		ORDER BY
+			DAY(payment_date) ASC
+	</select>
+	
  </mapper>
  
  

@@ -16,22 +16,11 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/statics.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-<style type="text/css">
-#headTitle {
-	background-color: lightblue;
-	padding: 0.3em;
-	font-weight: bold;
-}
-#myChart {
-	width: 100%;
-	height: 100%;
-}
-</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
+	<h2 id="headTitle">매출 통계</h2>
 	<div id="tableDiv">
-		<h2 id="headTitle">매출 통계</h2>
 			<input type="button" value="2024년" onclick="location.href='StaticsSales'">
 			<input type="button" value="전체 기간" id="totalPeriodSearch">
 			조회기간
@@ -108,10 +97,12 @@ $(function(){
 						data: data, // 값
 						backgroundColor: 'rgba(255, 99, 132, 0.2)',
 						borderColor: 'rgba(54, 162, 235, 1)',
-						borderWidth: 2
+						borderWidth: 1
 					}]
 				},
 				options: {
+			        responsive: true, // 반응형 차트 설정
+			        maintainAspectRatio: false, // 가로세로 비율 고정 해제	
 					plugins: {
 			            legend: {
 			                labels: {
@@ -163,13 +154,12 @@ $(function(){
 		year = $("#year").val();
 		month = $("#month").val();
 		let yearAndMonth = year + "년 " + month + "월";
+		let totalMonthSales = 0;
 		
 		if(month !== "" && month !== "yearTotal") {
 		$("#showPeriod").text(" : " + year + "." + month).css("color", "blue");
-// 			console.log("year : " + year);	
-// 			console.log("month : " + month);	
 			$.ajax({
-				url: "GetMonthSales",
+				url: "GetDailySales",
 				type: "get",
 				data : {
 					year : year,
@@ -177,24 +167,38 @@ $(function(){
 				},
 				dataType: "json",
 				success: function(response){
-					$("#showPeriod").append(" (" + response.toLocaleString('ko-KR') + "원)");
 					if(myChart){
 						myChart.destroy();
 					}
+					console.log(response);
 					const ctx = document.getElementsByClassName('myChart')[0].getContext('2d');
+					let labels = [];
+	                let totals = [];
+
+                    // 데이터 매핑
+	                $.each(response, function (index, item) {
+	                    labels.push("Day " + item.day);
+	                    totals.push(parseInt(item.total));
+	                    totalMonthSales += parseInt(item.total);
+	                });
+                    
+					$("#showPeriod").append(" (" + totalMonthSales.toLocaleString('ko-KR') + "원)");
+                    
 					myChart = new Chart(ctx, {
 						type: "bar",
 						data: {
-							labels : [month+"월"], // 축
+							labels : labels, // 축
 							datasets: [{ // 각 축에 들어갈 값 설정
 								label:  yearAndMonth + "년 매출액", // 값이름
-								data: [response], // 값
+								data: totals, // 값
 								backgroundColor: 'rgba(255, 99, 132, 0.2)',
-// 								borderColor: 'rgba(54, 162, 235, 1)',
-// 								borderWidth: 2
+								borderColor: 'rgba(54, 162, 235, 1)',
+								borderWidth: 1
 							}]
 						},
 						options: {
+					        responsive: true, // 반응형 차트 설정
+					        maintainAspectRatio: false, // 가로세로 비율 고정 해제	
 							plugins: {
 								subtitle: { // 차트 제목
 									display: true,
@@ -209,10 +213,10 @@ $(function(){
 								},
 								y: {
 									min : 0,
-									max : 30000000,
+									max : 1500000,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
-										stepSize: 3000000
+										stepSize: 100000
 									}
 									
 								}
@@ -261,6 +265,8 @@ $(function(){
 							}]
 						},
 						options: {
+					        responsive: true, // 반응형 차트 설정
+					        maintainAspectRatio: false, // 가로세로 비율 고정 해제	
 							plugins: {
 					            legend: {
 					                labels: {
@@ -354,6 +360,8 @@ $(function(){
 					}]
 				},
 				options: {
+			        responsive: true, // 반응형 차트 설정
+			        maintainAspectRatio: false, // 가로세로 비율 고정 해제	
 					plugins: {
 			            legend: {
 			                labels: {

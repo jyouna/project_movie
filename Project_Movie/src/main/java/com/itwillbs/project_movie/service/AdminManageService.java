@@ -468,5 +468,11 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getMemberIdList();
 	}
+	
+	// 일일 매출 조회
+	public List<Map<String, Object>> getDailySales(LocalDate firstDay, LocalDate lastDay) {
+		// TODO Auto-generated method stub
+		return manageMapper.getDailySales(firstDay, lastDay);
+	}
 
 }
