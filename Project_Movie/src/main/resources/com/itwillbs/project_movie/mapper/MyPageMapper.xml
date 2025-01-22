@@ -11,6 +11,7 @@
 		JOIN movie 
 		ON schedule.movie_code = movie.movie_code
 		WHERE member_id = #{id}
+		AND payment.payment_status = 1
 	</select>
 <!-- 	예매내역 글 시작번호 끝번호 -->
 	<select id="selectReservationList" resultType="map">
@@ -20,6 +21,7 @@
 		JOIN movie 
 		ON schedule.movie_code = movie.movie_code
 		WHERE member_id = #{id}
+		AND payment.payment_status = 1
  		LIMIT 
  			#{startRow}
  			,#{listLimit}
