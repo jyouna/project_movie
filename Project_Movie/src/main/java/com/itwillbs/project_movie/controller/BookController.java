@@ -330,10 +330,14 @@ public class BookController {
 	
 	@ResponseBody
 	@PostMapping("ReservationCancel")
-	public String reservationCancel(@RequestParam Map<String, Object> map) {
-		int insertCount = bookService.registRefundInfo(map);
+	public String reservationCancel(@RequestParam Map<String, Object> map, HttpSession session) {
+
+		int totalDiscount =  bookService.getTotalDiscount(map);
+		map.put("total_discount", totalDiscount);
+		
+		int updateCount = bookService.modifyRefundPayment(map);
 		System.out.println("map : " + map);
-		System.out.println("insertCount : " + insertCount);
+		System.out.println("updateCount : " + updateCount);
 		
 		return "";
 	}

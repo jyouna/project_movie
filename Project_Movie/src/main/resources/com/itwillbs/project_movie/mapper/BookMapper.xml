@@ -131,6 +131,7 @@
 		JOIN event_board e
 		ON c.event_code = e.event_code
 		WHERE c.member_id = #{id}
+		AND expired_date >= DATE(NOW())
 	</select>
 	
 	<select id="selectMyCoupon" resultType="coupon">
@@ -138,6 +139,7 @@
 		FROM coupon
 		WHERE coupon_code = #{coupon_code}
 		AND coupon_status = 0
+		AND expired_date >= DATE(NOW())
 	</select>
 	
 	<select id="selectMemberWhoPayTicket" resultType="member">
@@ -204,6 +206,13 @@
 		OR DATE_ADD(seat_selection_time, INTERVAL 10 MINUTE) > now())
 		OR s.seat_avail = 0
 	</select>
+	
+	<select id="selectTotalDiscount" resultType="int">
+		SELECT total_discount
+		FROM payment
+		WHERE payment_code = #{payment_code}
+	</select>
+	
 
 	<insert id="insertRefundInfo">
 		<selectKey keyProperty="refund_code" resultType="int" order="BEFORE">
@@ -217,37 +226,35 @@
 			, #{payment_code}
 			, #{total_payment}
 			, NOW()
-			, NOW()
+			, DATE_ADD(NOW(), INTERVAL 10 MINUTE)
 			, #{total_payment}
 			, 1
 		)
 	</insert>
 
-<!-- 	<update id="updateRefundPayment"> -->
-<!-- 		UPDATE payment -->
-<!-- 		SET payment_status = 2 -->
-<!-- 		WHERE payment_code = #{payment_code} -->
-<!-- 	</update> -->
+	<update id="updateRefundPayment">
+		<selectKey keyProperty="total_discount" resultType="int" order="BEFORE">
+			SELECT total_discount
+			FROM payment
+			WHERE payment_code = #{payment_code}
+		</selectKey>
+		
+		UPDATE payment p
+		JOIN member m ON p.member_id = m.member_id
+		SET payment_status = 2
+		<if test="total_discount != null and total_discount > 0">
+			, m.point = m.point + #{total_discount}
+		</if>
+		WHERE p.payment_code = #{payment_code}
+	</update>
 	
-<!-- 	<insert id="insertRefundPoint"> -->
-<!-- 		INSERT -->
-<!-- 		INTO point -->
-<!-- 		VALUES( -->
-<!-- 			null -->
-<!-- 			, #{total_discount} -->
-<!-- 			, null -->
-<!-- 			, #{id} -->
-<!-- 			, NOW() -->
-<!-- 			, #{refund_code} -->
-<!-- 			, #{payment_code} -->
-<!-- 		) -->
-<!-- 		INSERT INTO point -->
-<!-- 		SELECT null, pa.total_discount, null, null, 'orange111', NOW(), r.refund_code, pa.payment_code -->
-<!-- 		FROM payment pa -->
-<!-- 		JOIN point po ON pa.payment_code = po.payment_code -->
-<!-- 		JOIN refund r ON r.refund_code = po.refund_code -->
-<!-- 		WHERE pa.payment_code = 'T1292394137'; -->
-<!-- 	</insert> -->
+	<insert id="insertRefundPoint">
+		INSERT 
+		INTO point
+		SELECT null, p.total_discount, null, null, p.member_id, NOW(), #{refund_code}, null
+		FROM payment p
+		WHERE p.payment_code = #{payment_code};
+	</insert>
 	
 	
 	

@@ -70,12 +70,14 @@
 								, dataType : "JSON"
 							}).done(function(result) {
 								alert("예매가 취소되었습니다");
+								location.reload();
 //								$("input[name='movie_name']").val(result.movie_name);
 //								$("input[name='start_time']").val(result.start_time);
 //								$("input[name='r_people']").val(result.r_people);
 //								$("input[name='r_price']").val(result.r_price);
 						}).fail(function(){
 							alert("예매 취소에 실패하였습니다.\n다시 시도해주세요");
+							location.reload();
 						});
 					
 					}else{

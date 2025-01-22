@@ -56,7 +56,14 @@ public interface BookMapper {
 
 	List<Map<String, Object>> selectDisabledSeat(String schedule_code);
 
-	int insertRefundInfo(Map<String, Object> map);
+	int selectTotalDiscount(Map<String, Object> map);
+
+	void insertRefundInfo(Map<String, Object> map);
+
+	int updateRefundPayment(Map<String, Object> map);
+
+	void insertRefundPoint(Map<String, Object> map);
+
 
 
 

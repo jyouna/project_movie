@@ -119,9 +119,21 @@ public class BookService {
 		return mapper.selectDisabledSeat(schedule_code);
 	}
 
-	public int registRefundInfo(Map<String, Object> map) {
-		return mapper.insertRefundInfo(map);
+	public int getTotalDiscount(Map<String, Object> map) {
+		return mapper.selectTotalDiscount(map);
 	}
+
+	@Transactional
+	public int modifyRefundPayment(Map<String, Object> map) {
+		mapper.insertRefundInfo(map);
+		
+		if((Integer)map.get("total_discount") != 0 && map.get("total_discount") != null) {
+			mapper.insertRefundPoint(map);
+		}
+		
+		return mapper.updateRefundPayment(map);
+	}
+
 
 
 
