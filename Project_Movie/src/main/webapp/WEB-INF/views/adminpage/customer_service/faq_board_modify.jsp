@@ -23,31 +23,30 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<section>
 		<article id="articleForm">
-			<h1>FAQ - 글 수정하기</h1>
-			<section id="basicInfoArea">
-				<form action="AdminFaqModify" method="post">
-		<!-- 			hidden으로 해당 번호의 글을 가져온다 -->
-					<input type="hidden" name = "faq_code" value="${param.faq_code }">
-					<input type="hidden" name = "pageNum" value="${param.pageNum }">
+			<h4>FAQ - 글 수정</h4>
+			<br>
+			<form action="AdminFaqModify" method="post">
+				<input type="hidden" name = "faq_code" value="${param.faq_code }">
+				<input type="hidden" name = "pageNum" value="${param.pageNum }">
+				<section id="basicInfoArea">
 					<table>
 						<tr>
-							<th width="110px"> <label for="faq_subject"> </label>제목</th>
-							<td width="220px"><input type ="text"  name ="faq_subject" value ="${faq.faq_subject}" required></td>
-							<th width="90px">등록일</th>
-							<td width="160px">
+							<th width="13.46%">제목</th>
+							<td width="38.46%"><input type="text" name="faq_subject" value="${faq.faq_subject}"></td>
+							<th width="17.31%">등록일</th>
+							<td width="30.77%">	
 								<fmt:formatDate value="${faq.regis_date}" pattern="yyyy-MM-dd"/>
 							</td>
 						</tr>
-						<tr>
-							<th rowspan="4"><textarea id="faq_content" name="faq_content" rows="15" cols="40" required>${faq.faq_content}</textarea></th>
-						</tr>		
 					</table>
-					<input type="submit" value ="등록">
-				</form>
-			</section>
+				</section>
+				<section id="articleContentArea">
+					<textarea rows="15" cols="70" name="notice_content" required="required">${notice.notice_content}</textarea>
+				</section>
+				<hr>
+				<input type="submit" value ="등록" style="text-align: right;">
+			</form>
 		</article>
 	</section>
-		
-
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

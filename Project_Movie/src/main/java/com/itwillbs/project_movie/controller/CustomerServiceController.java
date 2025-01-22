@@ -45,7 +45,7 @@ public class CustomerServiceController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다");
 			model.addAttribute("targetURL", "NoticeList?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
@@ -61,7 +61,7 @@ public class CustomerServiceController {
 		notice = service.getNotice(notice_code, true);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		model.addAttribute("notice", notice);
 		
@@ -90,7 +90,7 @@ public class CustomerServiceController {
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다");
 			model.addAttribute("targetURL", "FaqList?pageNum=1");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
@@ -105,7 +105,7 @@ public class CustomerServiceController {
 		faq = service.getFaq(faq_code, true);
 		if(faq == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
-			return "result/fail";
+			return "result/process";
 		}
 		model.addAttribute("faq", faq);
 		return "customer_service/faq_post";

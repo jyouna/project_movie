@@ -25,7 +25,7 @@
 	
 	<article class="box post">
 		<div id="title">
-			<h1>관람평</h1>
+			<h1>${sessionScope.sMemberId } 님의 관람평</h1>
 		</div>
 			<div id="topButton" style="text-align: right;">
 				<input type="button" value="수정" id="Modify">

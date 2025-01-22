@@ -1,6 +1,6 @@
 		$(function () {
-			let payment_code = ""
-			let movie_name = ""
+			let payment_code = "";
+			let movie_name = "";
 			$("table").on("click", "tr", function() {
 				$(this).find("input[type='radio']").prop("checked", true);
 				payment_code = $(this).find("td:eq(1)").text();
@@ -11,7 +11,7 @@
 			        alert("영화를 선택해주세요.");
 			    } else {
 			        $("#reservation_detail_modal").css("display", "block");
-					console.log(payment_code);
+					console.log("payment_code" + payment_code);
 			        $.ajax({
 			            type: "POST",
 			            url: "ReservationDetail",
@@ -54,7 +54,7 @@
 						const currentTime = new Date();
 						const timeDifference = (reservationStartTime - currentTime) / (1000 * 60);
 						console.log(reservationStartTime,currentTime, timeDifference );
-						if(timeDifference > 30){
+			
 							$.ajax({
 								type : "POST"
 								, url : "ReservationCancel"
@@ -68,9 +68,7 @@
 						}).fail(function(jqXHR, textStatus, errorThrown){
 							alert("오류가 발생했습니다." + textStatus);
 						});
-						}else{
-							alert("시작 시간 30분 전까지만 취소할 수 있습니다.");
-						}
+					
 					}else{
 						location.reload();
 					}

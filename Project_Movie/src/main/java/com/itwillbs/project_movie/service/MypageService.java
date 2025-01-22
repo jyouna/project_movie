@@ -18,38 +18,38 @@ public class MypageService {
 @Autowired
 private MyPageMapper mapper;
 // 예매내역 가져오기 
-	public int getReservationListCount() {
+	public int getReservationListCount(String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectReservationListCount();
+		return mapper.selectReservationListCount(id);
 	}
 // 예매내역 시작번호 끝번호~..
-	public java.util.List<Map<String, Object>> getReservationList(int startRow, int listLimit) {
+	public java.util.List<Map<String, Object>> getReservationList(int startRow, int listLimit, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectReservationList(startRow, listLimit);
+		return mapper.selectReservationList(startRow, listLimit, id);
 	}
 	//예매내역 상세정보 창
-	public Map<String, Object> searchdetail(String r_code) {
-		return mapper.selectReservationInfo(r_code);
+	public Map<String, Object> searchdetail(String payment_code) {
+		return mapper.selectReservationInfo(payment_code);
 	}
 // 취소내역 글 전체 가져오기 
-	public int getReservationCancelCount() {
+	public int getReservationCancelCount(String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectReservationCancelCount();
+		return mapper.selectReservationCancelCount(id);
 	}
 // 취소내역 시작번호, 끝번호 어쩌고
-	public List<Map<String, Object>> getReservationCancel(int startRow, int listLimit) {
+	public List<Map<String, Object>> getReservationCancel(int startRow, int listLimit, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectReservationCancel(startRow, listLimit);
+		return mapper.selectReservationCancel(startRow, listLimit, id);
 	}
 // 내가 본 영화 글 전체 가져오기
-	public int getWatchedMovieCount() {
+	public int getWatchedMovieCount(String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectWathedMovieCount();
+		return mapper.selectWathedMovieCount(id);
 	}
 // 내가 본 영화 시작번호, 끝번호 어쩌고
-	public List<Map<String, Object>> getWatchedMovie(int startRow, int listLimit) {
+	public List<Map<String, Object>> getWatchedMovie(int startRow, int listLimit, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectWatchedMovie(startRow, listLimit);
+		return mapper.selectWatchedMovie(startRow, listLimit, id);
 	}
 	// 내가 본 영화 시작번호 끝번호 - 2 
 	public Map<String, Object> isRegistReview(String id, String string) {
@@ -63,15 +63,15 @@ private MyPageMapper mapper;
 //	}
 
 	//무비로그 - 관람평 글 전체 가져오기
-	public int getReviewListCount() {
+	public int getReviewListCount(String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectReviewListCount();
+		return mapper.selectReviewListCount(id);
 	}
 	
 	//무비로그 - 관람평 시작번호 끝번호
-	public List<Map<String, Object>> getReviewList(int startRow, int listLimit) {
+	public List<Map<String, Object>> getReviewList(int startRow, int listLimit, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectReviewList(startRow, listLimit);
+		return mapper.selectReviewList(startRow, listLimit, id);
 	}
 	//관람한 영화 리뷰 수정 
 	public int getReviewModify(Map<String, String> map) {
@@ -84,25 +84,25 @@ private MyPageMapper mapper;
 		return mapper.deleteReview(map);
 	}
 	//쿠폰 리스트 조회
-	public int getCouponListCount() {
+	public int getCouponListCount(String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectCouponListCount();
+		return mapper.selectCouponListCount(id);
 	}
 	//쿠폰 리스트 시작번호 끝번호 
-	public List<Map<String, String>> getCouponList(int startRow, int listLimit) {
+	public List<Map<String, String>> getCouponList(int startRow, int listLimit, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectCouponList(startRow, listLimit);
+		return mapper.selectCouponList(startRow, listLimit, id);
 	}
 
 // 1:1문의 글 전체 가져오기
-	public int getInquiryListCount(String searchType, String searchKeyWord) {
+	public int getInquiryListCount(String searchType, String searchKeyWord, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectInquiryListCount(searchType, searchKeyWord);
+		return mapper.selectInquiryListCount(searchType, searchKeyWord, id);
 	}
 // 1:1문의 시작번호, 끝번호 어쩌고
-	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType, String searchKeyWord) {
+	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType, String searchKeyWord, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectInquiryList(startRow, listLimit, searchType, searchKeyWord);
+		return mapper.selectInquiryList(startRow, listLimit, searchType, searchKeyWord, id);
 	}
 // 1:1문의 글 선택하면 글 불러오기
 	public InquiryVO getInquiry(int inquiry_code) {
@@ -125,14 +125,14 @@ private MyPageMapper mapper;
 		return mapper.deleteInquiry(inquiry);
 	}
 	//포인트 글 개수
-	public int getPointListCount() {
+	public int getPointListCount(String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectPointListCount();
+		return mapper.selectPointListCount(id);
 	}
 	//포인트 시작번호 끝번호..
-	public List<Map<String, String>> getPointList(int startRow, int listLimit) {
+	public List<Map<String, String>> getPointList(int startRow, int listLimit, String id) {
 		// TODO Auto-generated method stub
-		return mapper.selectPointList(startRow, listLimit);
+		return mapper.selectPointList(startRow, listLimit, id);
 	}
 	//---------------------------여기서는 관리자 페이지 -------------------------------------------------------------------------------------------------
 	//관리자페이지 - 공지사항 글 개수
@@ -214,9 +214,17 @@ private MyPageMapper mapper;
 		return mapper.insertInquiryReply(inquiry);
 	}
 	//관람한 영화 리뷰 등록 
-	public int getReview(String movieName, String reviewContent, int reviewRecommend,int movieCode, String id) {
+	public int getReview(String movieName, String reviewContent, int reviewRecommend, int movieCode, String id) {
 		// TODO Auto-generated method stub
 		return mapper.insertReview(movieName, reviewContent, reviewRecommend, movieCode, id);
+	}
+	public int getInquiryListCount(String searchType, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return mapper.selectAdminInquiryListCount(searchType, searchKeyword);
+	}
+	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return mapper.selectAdminInquiryList(startRow, listLimit, searchType, searchKeyword);
 	}
 
 

@@ -7,8 +7,8 @@ body {
     padding: 0;
 }
 .box {
-	width: 1200px;
-	height: 600px;
+	width: 1200px !important;
+	height: 600px !important;
 	}
 .dateSearch_sec {
     margin: 20px;

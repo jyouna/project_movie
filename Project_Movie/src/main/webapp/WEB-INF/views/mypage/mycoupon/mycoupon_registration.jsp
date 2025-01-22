@@ -25,11 +25,6 @@
 	<div id="title">
 		<h1>쿠폰</h1>
 	</div>
-<!-- 		이용할 수 있는 쿠폰 > 0건  -->
-<!-- 할인쿠폰 등록 버튼 생성 -->
-<!-- 쿠폰 번호 입력 후 등록하기 버튼 클릭 -> 쿠폰 등록 -->
-<!-- 등록된 쿠폰 볼 수 있게 사용전 / 사용 완료 표시 -->
-<!-- 쿠폰 상태 / 쿠폰명 / 쿠폰 정보 / 사용기간 만 표시  -->
 	<div class="dateSearch_sec all_point">
 	  <div class="in_sec">
 	    <dl class="search_list">
@@ -59,10 +54,10 @@
 	  </div>
 	</div>
 
-
-      <section id="listForm">
-         <table>
-            <tr id="tr_top">
+	<h6>${sessionScope.sMemberId } 님의 사용 가능한 쿠폰은 n장 입니다.</h6>
+	<section id="listForm">
+    	<table>
+        	<tr id="tr_top">
                <td width="100px">쿠폰 상태</td>
                <td width="100px">쿠폰타입</td>
                <td width="200px">쿠폰 상세 정보</td>
@@ -99,49 +94,28 @@
 				       		 </tr>
 				   		 </c:forEach>
 					</c:otherwise>
-  
             	</c:choose>
            	</tr>
          </table>
-      </section>
-      <hr>
-
-    
-         <section id="pageList">
-         <input type="button" value="&lt" 
-            onclick="location.href='CouponList?pageNum=${pageInfo.pageNum - 1}'" 
-             <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
-         
-         <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
-            <c:choose>
-               <c:when test="${i eq pageInfo.pageNum }">
-                  <strong>${i}</strong>
-               
-               </c:when>
-               <c:otherwise>
-                  <a href="CouponList?pageNum=${i}">${i}</a>
-               </c:otherwise>
-            </c:choose>
-         </c:forEach>
-         
-         
-         <input type="button" value="&gt" 
-            onclick="location.href='CouponList?pageNum=${pageInfo.pageNum + 1}'" 
-             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
-      </section>
-		</article>
+	</section>
+	<section id="pageList">
+		<input type="button" value="&lt" onclick="location.href='CouponList?pageNum=${pageInfo.pageNum - 1}'" 
+		<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
+		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+			<c:choose>
+				<c:when test="${i eq pageInfo.pageNum }">
+					<strong>${i}</strong>
+				</c:when>
+				<c:otherwise>
+					<a href="CouponList?pageNum=${i}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<input type="button" value="&gt" onclick="location.href='CouponList?pageNum=${pageInfo.pageNum + 1}'" 
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+	</section>
+	</article>
 	<script type="text/javascript">
-		$(function () {
-			$("#couponRegister").on("click", function () {
-				window.open(
-						'couponRegister',
-						'쿠폰 등록 창',
-						'width=400, height=700, scrollbars=no, resizeable=no'
-						);
-			});
-			
-		});
-		
 		// jQuery UI Datepicker 적용
 		$(function () {
 		  $("#stdt, #eddt").datepicker({

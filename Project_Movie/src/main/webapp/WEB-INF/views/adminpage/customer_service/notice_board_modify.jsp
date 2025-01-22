@@ -23,34 +23,29 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
 	<article id="articleForm">
-		<h1>공지사항 - 글 수정</h1>
+		<h4>공지사항 - 글 수정</h4>
+		<br>
 		<form action="AdminNoticeModify" method="post">
-		<input type="hidden" name="notice_code" value="${notice.notice_code}">
-		<input type="hidden" name="pageNum" value="${param.pageNum }">
+			<input type="hidden" name="notice_code" value="${notice.notice_code}">
+			<input type="hidden" name="pageNum" value="${param.pageNum }">
 			<section id="basicInfoArea">
 				<table>
 					<tr>
-						<th width="110px">제목 </th>
-						<td><input type="text" name ="notice_subject" value="${notice.notice_subject}" required="required"></td>
-						<th width="90px">등록일</th>
-						<td width="160px">
+						<th width="13.46%">제목</th>
+						<td width="38.46%"><input type="text" name="notice_subject" value="${notice.notice_subject}"></td>
+						<th width="17.31%">등록일</th>
+						<td width="30.77%">
 							<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 						</td>
-					</tr>
-					<tr>
-						<th width="110px">첨부파일</th>
-						<td colspan="3" id="notice_file"></td>
 					</tr>
 				</table>
 			</section>
 			<section id="articleContentArea">
-				<textarea rows="15" cols="40" name="notice_content" required="required">${notice.notice_content}</textarea>
+				<textarea rows="15" cols="70" name="notice_content" required="required">${notice.notice_content}</textarea>
 			</section>
 			<hr>
-			<input type="submit" value="등록">
+			<input type="submit" value="등록" style="text-align: right;">
 		</form>
 	</article>
-
-	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

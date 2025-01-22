@@ -36,7 +36,7 @@
 	   		  <input type="submit" value="검색" id="searchButton">
    		  	</form>
 	    </div>
-	    <input type="button" value="글쓰기" id ="writeButton" style="text-align: right;">
+	    <input type="button" value="글쓰기" onclick="location.href='InquiryWrite'" style="text-align: right;">
 		<section id="listForm">
 			<table id="inquiryForm" border="1">
 				<tr id="tr_top" align="center">
@@ -113,13 +113,6 @@
 			
 			});
 
-			
-			$("#writeButton").on("click", function () {
-				window.open(
-						'InquiryWrite',
-						'1:1문의 글 작성',
-						'width=400, height=700, scrollbars=no, resizeable=no'); 
-			});
 		});
 	</script>
 	</article>

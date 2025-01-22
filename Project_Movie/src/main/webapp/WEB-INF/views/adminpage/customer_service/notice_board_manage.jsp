@@ -25,10 +25,7 @@
 			<h1>공지사항</h1>
 		</div>
 		<div style="text-align:	left;">
-			<input type="button" value="전체선택">
-			<input type="button" value="글 작성" onclick="location.href='AdminNoticeWrite?notice_code=${notice_board.notice_code}&pageNum=${pageInfo.pageNum }'">
-			<input type="button" value="수정">
-			<input type="button" value="삭제">
+			<input type="button" value="글 작성" onclick="location.href='AdminNoticeWrite'">
 		</div>
 		<div id="search-bar" style="text-align:	right;">
 <!-- 		여기서 선택하고 검색한 값을 넘겨줘야하니까 form 태그로 감싸고 action = NoticeList , 전달방식 - get -->
@@ -46,7 +43,6 @@
 		<section id="listForm">
 			<table>
 				<tr id="tr_top">
-					<td width="100px"><input type="checkbox" disabled></td>
 					<td width="100px">번호</td>
 					<td>제목</td>
 					<td width="150px">등록일</td>
@@ -60,7 +56,6 @@
 					<c:otherwise>
 						<c:forEach var="notice_board" items="${noticeList}" varStatus="status">
 							<tr>
-								<td><input type="checkbox" name=""></td>
 								<td class="notice_code">${notice_board.notice_code}</td>
 								<td class="notice_subject">${notice_board.notice_subject}</td>
 								<td><fmt:formatDate value="${notice_board.regis_date}" pattern="yy-MM-dd"/></td>

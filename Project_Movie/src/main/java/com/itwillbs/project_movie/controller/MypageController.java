@@ -51,7 +51,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getReservationListCount();
+		int listCount = service.getReservationListCount(id);
 		int listLimit = 5; 
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -70,32 +70,23 @@ public class MypageController {
 			model.addAttribute("targetURL", "ReservationDetail?pageNum=1");
 			return "result/process";
 		}
-		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<Map<String, Object>> reservationList = service.getReservationList(startRow, listLimit);
+		List<Map<String, Object>> reservationList = service.getReservationList(startRow, listLimit,id);
 		model.addAttribute("reservationList", reservationList);
 		 
 		return "mypage/reservation/mypage_reservation_detail";
 	}
 	//1.1 결제내역 - 상세정보 창
-//	@ResponseBody
-//	@PostMapping("ReservationDetail")
-//	public Map<String, Object> reservationDetail(String payment_code) {
-//		Map<String, Object> reservationDetail = service.searchdetail(payment_code);
-////		reservationDetail.setR_dateToString(reservationDetail.getR_date().toString().replace(".0", ""));
-////		System.out.println(reservationDetail.getR_dateToString());
-//		return reservationDetail;
-//	}
-	
-	@PostMapping("ReservationDetail")
 	@ResponseBody
-	public Map<String, Object> reservationDetail(@RequestParam("payment_code") String paymentCode, Model model) {
-	    // paymentCode를 사용해 DB 조회
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("paymentCode", paymentCode);
-	    System.out.println("response = " + response);
-	    return response;
+	@PostMapping("ReservationDetail")
+	public Map<String, Object> reservationDetail(String payment_code) {
+		Map<String, Object> reservationDetail = service.searchdetail(payment_code);
+		System.out.println("controller paymentcode" + reservationDetail);
+//		reservationDetail.setR_dateToString(reservationDetail.getR_date().toString().replace(".0", ""));
+//		System.out.println(reservationDetail.getR_dateToString());
+		return reservationDetail;
 	}
 
 	//1.2 결제내역 - 예매 취소창
@@ -108,7 +99,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getReservationCancelCount();
+		int listCount = service.getReservationCancelCount(id);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
@@ -129,7 +120,7 @@ public class MypageController {
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
-		List<Map<String, Object>> reservationCancel = service.getReservationCancel(startRow, listLimit);
+		List<Map<String, Object>> reservationCancel = service.getReservationCancel(startRow, listLimit, id);
 		model.addAttribute("reservationCancel", reservationCancel);
 		return "mypage/reservation/mypage_reservation_cancel";
 	}
@@ -142,7 +133,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getWatchedMovieCount();
+		int listCount = service.getWatchedMovieCount(id);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
@@ -163,7 +154,7 @@ public class MypageController {
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
-		List<Map<String, Object>> watchedMovie = service.getWatchedMovie(startRow, listLimit );
+		List<Map<String, Object>> watchedMovie = service.getWatchedMovie(startRow, listLimit, id);
 		for(Map<String, Object> movie : watchedMovie) {
 			Map<String, Object> review = service.isRegistReview(id, movie.get("movie_code").toString());
 			if(review == null) {
@@ -203,7 +194,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getReviewListCount();
+		int listCount = service.getReviewListCount(id);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
@@ -211,7 +202,7 @@ public class MypageController {
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
-		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
+		int startPage = (pageNum -1) / pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
 			endPage = maxPage; 
@@ -224,7 +215,7 @@ public class MypageController {
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
-		List<Map<String, Object>> reviewList = service.getReviewList(startRow, listLimit);
+		List<Map<String, Object>> reviewList = service.getReviewList(startRow, listLimit, id);
 		model.addAttribute("reviewList", reviewList);
 		
 		return "mypage/movie_log/mypage_review";
@@ -233,7 +224,6 @@ public class MypageController {
 	//4-2. 리뷰 수정 버튼
 	@PostMapping("ReviewModify")
 	public String reviewModify(Model model,@RequestParam Map<String, String> map) {
-		System.out.println("map 잘 왔니? " + map); 
 		int updateCount = service.getReviewModify(map);
 		if(updateCount > 0) {
 			model.addAttribute("msg", "리뷰 수정 완료!");
@@ -242,7 +232,6 @@ public class MypageController {
 			model.addAttribute("msg", "리뷰 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
 			return "result/process";
 		}
-
 	}
 	//4-3. 리뷰 삭제 버튼
 	@GetMapping("ReviewDelete")
@@ -258,7 +247,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getCouponListCount();
+		int listCount = service.getCouponListCount(id);
 		int listLimit = 7;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -280,7 +269,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<Map<String, String>> couponList = service.getCouponList(startRow, listLimit);
+		List<Map<String, String>> couponList = service.getCouponList(startRow, listLimit, id);
 		model.addAttribute("couponList", couponList);
 		return "mypage/mycoupon/mycoupon_registration";
 	}
@@ -293,7 +282,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getPointListCount();
+		int listCount = service.getPointListCount(id);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -315,7 +304,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<Map<String, String>> pointList = service.getPointList(startRow, listLimit);
+		List<Map<String, String>> pointList = service.getPointList(startRow, listLimit, id);
 		model.addAttribute("pointList", pointList);
 		
 		return "mypage/mypoint/mypoint_reward";
@@ -329,7 +318,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getInquiryListCount(searchType, searchKeyWord);
+		int listCount = service.getInquiryListCount(searchType, searchKeyWord, id);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -351,7 +340,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType, searchKeyWord);
+		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType, searchKeyWord, id);
 		model.addAttribute("inquiryList", inquiryList);
 		return "mypage/inquiry/inquiry_list";
 	}

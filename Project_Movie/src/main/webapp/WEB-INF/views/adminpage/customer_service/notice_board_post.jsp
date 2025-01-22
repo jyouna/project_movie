@@ -45,7 +45,7 @@
 			${notice.notice_content}
 		</section>
 		<hr>
-		<div>
+		<div style="text-align: right;">
 		<input type="button" value="수정하기" onclick="location.href='AdminNoticeModify?notice_code=${param.notice_code}&pageNum=${param.pageNum }'">
 		<input type="button" value="삭제하기" onclick="location.href='AdminNoticeDelete?notice_code=${param.notice_code}&pageNum=${param.pageNum }'">
 		<input type="button" value="목록" onclick="location.href='AdminNotice?pageNum=${param.pageNum}'" >

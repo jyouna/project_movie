@@ -13,7 +13,7 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customer_service/faq_post.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminpage/notice_board_write.css" />
 	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
@@ -22,30 +22,30 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<article id="articleForm">
-		<h1>공지사항 - 글</h1>
+		<h4>공지사항 - 글 작성</h4>
 		<form action="AdminNoticeWrite" method="post">
 			<section id="basicInfoArea">
 				<table>
 					<tr>
-						<th width="110px">제목 </th>
-						<td><input type="text" name="notice_subject"></td>
-						<th width="90px">등록일</th>
-						<td width="160px">
+						<th width="13.46%">제목</th>
+						<td width="38.46%"><input type="text" name="notice_subject"></td>
+						<th width="17.31%">등록일</th>
+						<td width="30.77%">
 							<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 						</td>
 					</tr>
 					<tr>
-						<th width="110px">첨부파일</th>
-						<td colspan="3" id="notice_file"></td>
+						<td colspan="4">
+							<textarea rows="15" cols="70" name="notice_content"></textarea>
+						</td>
 					</tr>
 				</table>
 			</section>
-			<section id="articleContentArea">
-				<textarea rows="15" cols="40" name="notice_content"></textarea>
-			</section>
 			<hr>
 			<div>
-				<input type="submit" value="등록" onclick="location.href='AdminNotice?pageNum=${param.pageNum}'" >
+				<input type="submit" value="등록하기" style="text-align: right;">
+				<input type="reset" value="다시쓰기">
+				<input type="button" value="뒤로가기" onclick="location.href='AdminFaq'">
 			</div>
 		</form>
 	</article>

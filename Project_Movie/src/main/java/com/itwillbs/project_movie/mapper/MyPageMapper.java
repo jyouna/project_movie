@@ -14,21 +14,21 @@ import com.itwillbs.project_movie.vo.NoticeBoardVO;
 public interface MyPageMapper {
 	
 	// 예매내역 글 전체 가져오기
-	int selectReservationListCount();
+	int selectReservationListCount(String id);
 	// 예매내역 시작번호 끝번호 
-	List<Map<String, Object>> selectReservationList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<Map<String, Object>> selectReservationList(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id);
 	// 예매내역 상세 정보 조회
 	Map<String, Object> selectReservationInfo(String r_code);
 	
 	// 취소내역 글 전체 가져오기
-	int selectReservationCancelCount();
+	int selectReservationCancelCount(String id);
 	//취소내역 시작번호, 끝번호 어쩌고
-	List<Map<String, Object>> selectReservationCancel(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<Map<String, Object>> selectReservationCancel(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id);
 	
 	// 내가 본 영화 글 전체 가져오기
-	int selectWathedMovieCount();
+	int selectWathedMovieCount(String id);
 	//내가 본 영화 시작번호 끝번호
-	List<Map<String, Object>> selectWatchedMovie(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<Map<String, Object>> selectWatchedMovie(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id);
 	// 내가 본 영화 - 리뷰 등록
 	int insertReview(@Param("movieName") String movieName, @Param("reviewContent")String reviewContent, @Param("reviewRecommend")int reviewRecommend, @Param("movieCode")int movieCode,
 			@Param("id") String id);
@@ -39,28 +39,28 @@ public interface MyPageMapper {
 	Map<String, Object> selectIsRegistReview(@Param("id") String id, @Param("movie_code") String movie_code);
 
 	//관람평 글 개수 조회
-	int selectReviewListCount();
+	int selectReviewListCount(String id);
 	//관람평 시작번호 끝번호
-	List<Map<String, Object>> selectReviewList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<Map<String, Object>> selectReviewList(@Param("startRow")int startRow, @Param("listLimit")int listLimit, @Param("id") String id);
 	//관람한 영화 리뷰 수정 
 	int updateReview(Map<String, String> map);
 	//관람한 영화 리뷰 삭제
 	int deleteReview(Map<String, String> map);
 	
 	//쿠폰 리스트 전체 조회
-	int selectCouponListCount();
+	int selectCouponListCount(String id);
 	//쿠폰 리스트 시작번호 끝번호 
-	List<Map<String, String>> selectCouponList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<Map<String, String>> selectCouponList(@Param("startRow")int startRow, @Param("listLimit")int listLimit, @Param("id")String id);
 	
 	// 포인트 글 개수 조회
-	int selectPointListCount();
+	int selectPointListCount(String id);
 	// 포인트 시작글 마지막글...어쩌고
-	List<Map<String, String>> selectPointList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	List<Map<String, String>> selectPointList(@Param("startRow")int startRow, @Param("listLimit")int listLimit, @Param("id")String id);
 	
 	// 1:1문의 글 전체 가져오기
-	int selectInquiryListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	int selectInquiryListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword, @Param("id")String id);
 	// 1:1문의 시작번호, 끝번호 어쩌고
-	List<InquiryVO> selectInquiryList(@Param("startRow")int startRow, @Param("listLimit")int listLimit, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	List<InquiryVO> selectInquiryList(@Param("startRow")int startRow, @Param("listLimit")int listLimit, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword, @Param("id")String id);
 	// 1:1문의 글 선택하면 글 불러오기
 	InquiryVO selectInquiry(int inquiry_code);
 	//1:1문의 글 작성
@@ -102,6 +102,10 @@ public interface MyPageMapper {
 	int updateFaq(FaqBoardVO faq);
 	// faq 글 삭제
 	int deleteFaq(FaqBoardVO faq);
+	//1:1 문의 개수 
+	int selectAdminInquiryListCount(String searchType, String searchKeyword);
+	//1:1 문의 시작번호 끝번호 
+	List<InquiryVO> selectAdminInquiryList(int startRow, int listLimit, String searchType, String searchKeyword);
 	// 1:1문의 글 수정 
 	int updateInquiryModify(int inquiry_code);
 	// 1:1 문의 글 삭제
@@ -110,7 +114,6 @@ public interface MyPageMapper {
 	void updateInquiryReSeq(InquiryVO inquiry);
 	// 1:1문의 글 답변
 	int insertInquiryReply(InquiryVO inquiry);
-	
 	
 	
 
