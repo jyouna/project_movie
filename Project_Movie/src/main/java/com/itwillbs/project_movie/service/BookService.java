@@ -114,12 +114,16 @@ public class BookService {
 		return mapper.updateBookingTicket(map);
 	}
 
-	@Transactional
 	public List<Map<String, Object>> getDisabledSeat(String schedule_code) {
-//		mapper.selectSeatAvail();
 		
 		return mapper.selectDisabledSeat(schedule_code);
 	}
+
+	public int registRefundInfo(Map<String, Object> map) {
+		return mapper.insertRefundInfo(map);
+	}
+
+
 
 
 

@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.BookService;
+import com.itwillbs.project_movie.service.MypageService;
 import com.itwillbs.project_movie.vo.CouponVO;
 import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.PageInfo;
 import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
@@ -29,7 +31,8 @@ import com.itwillbs.project_movie.vo.TicketVO;
 
 @Controller
 public class BookController {
-	@Autowired private BookService service;
+	@Autowired private BookService bookService;
+	@Autowired private MypageService myPageService;
 	
 	@GetMapping("MovieScheduleInfo")
 	public String movieScheduleInfo(Model model, @RequestParam Map<String, String> conditionMap, HttpSession session) {
@@ -43,7 +46,7 @@ public class BookController {
 	public String bookTickets(Model model) {
 		
 		// 상영중인 영화 목록 조회
-		List<MovieVO> movieList = service.getMovieList();
+		List<MovieVO> movieList = bookService.getMovieList();
 		model.addAttribute("movieList", movieList);
 
 		return "book_tickets/book_tickets";
@@ -51,11 +54,10 @@ public class BookController {
 	
 	@ResponseBody
 	@PostMapping("BookTickets")
-	public List<Map<String, Object>> bookTicketsList(Model model,@RequestParam Map<String, String> conditionMap) {
+	public List<Map<String, Object>> bookTicketsList(Model model, @RequestParam Map<String, String> conditionMap) {
 		// 스케줄에 등록된 영화 정보 가져오는 List
-		List<Map<String, Object>> schWithMovie = service.getSchWithMovie(conditionMap);
+		List<Map<String, Object>> schWithMovie = bookService.getSchWithMovie(conditionMap);
 		model.addAttribute("schWithMovie", schWithMovie);
-//		System.out.println("schWithMovie : " + schWithMovie);
 		
 		// 상영 시작시간 형식 변환
 		for(Map<String, Object> map : schWithMovie) {
@@ -68,23 +70,23 @@ public class BookController {
 			map.put("start_time", start_time);
 			map.put("end_time", end_time);
 		}
-	
-		
+
 		return schWithMovie;
 	}
 	
 	@ResponseBody
 	@GetMapping("GetMovieListScheduleToBooking")
 	public List<MovieVO> getMovieListScheduleToBooking(@RequestParam Map<String, String> conditionMap, Model model) {
-		List<MovieVO> movieList = service.getMovieList2(conditionMap);
+		List<MovieVO> movieList = bookService.getMovieList2(conditionMap);
 		model.addAttribute("movieList", movieList);
+		
 		return movieList;
 	}
 	
 	@ResponseBody
 	@GetMapping("GetScheduleListToBooking")
 	public List<ScheduleVO> getScheduleListToBooking(@RequestParam Map<String, String> conditionMap) {
-		List<ScheduleVO> scheduleList = service.getScheduleList(conditionMap);
+		List<ScheduleVO> scheduleList = bookService.getScheduleList(conditionMap);
 		
 		// 시작, 끝 시간 형식변환
 		for(ScheduleVO schedule: scheduleList) {
@@ -95,6 +97,18 @@ public class BookController {
 		
 		return scheduleList;
 	}
+	
+	// ajax로 예매 완료된 좌석 보내기
+	@ResponseBody
+	@GetMapping("GetAvailSeatFromSchedule")
+	public List<Map<String, Object>> getAvailSeatFromSchedule(String schedule_code) {
+		List<Map<String, Object>> disabledSeatList = bookService.getDisabledSeat(schedule_code);
+		System.out.println("예매된 좌석 : " + disabledSeatList);
+		
+		return disabledSeatList;
+	}
+	
+	
 	
 	// ========================= 좌석페이지 컨트롤러 =========================
 	@GetMapping("BookSeat")
@@ -120,7 +134,7 @@ public class BookController {
 		}
 		
 		// 좌석 정보 조회
-		List<SeatVO> seatList = service.getSeat();
+		List<SeatVO> seatList = bookService.getSeat();
 		int rowCount = 0;
 		int colCount = 0;
 		
@@ -141,17 +155,17 @@ public class BookController {
 		model.addAttribute("colCount", colCount);
 		System.out.println(seatList);
 		
-		List<TicketVO> ticketType = service.getTicketType();
+		List<TicketVO> ticketType = bookService.getTicketType();
 		model.addAttribute("ticketType", ticketType);
 		System.out.println(ticketType);
 		
 		
-		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
+		Map<String, Object> schedule = bookService.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		System.out.println(schedule);
 		
 		// 예매 완료된 좌석
-		List<Map<String, Object>> disabledSeatList = service.getDisabledSeat(schedule_code);
+		List<Map<String, Object>> disabledSeatList = bookService.getDisabledSeat(schedule_code);
 		System.out.println("좌석코드 : " + disabledSeatList);
 		model.addAttribute("disabledSeatList", disabledSeatList);
 		
@@ -162,7 +176,7 @@ public class BookController {
 	@ResponseBody
 	@PostMapping("BookSeatPayInfo")
 	public List<TicketVO> bookSeatPayInfo() {
-		List<TicketVO> ticketList = service.getTicketType();
+		List<TicketVO> ticketList = bookService.getTicketType();
 		return ticketList;
 	}
 	
@@ -208,14 +222,14 @@ public class BookController {
 		
 		// 회원 정보(이름, 메일, 전화번호) 세션에 저장
 		// 결제 정보에 필요
-		MemberVO member = service.getMemberWhoPayTicket(id);
+		MemberVO member = bookService.getMemberWhoPayTicket(id);
 		session.setAttribute("sName", member.getMember_name());
 		session.setAttribute("sEmail", member.getEmail());
 		session.setAttribute("sPhone", member.getPhone());
 
 		
 		// 선택한 영화 스케줄 정보 조회
-		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
+		Map<String, Object> schedule = bookService.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
 		String totalSeat = map.get("totalSeat").replace(" ,", ", ").trim();
@@ -229,19 +243,19 @@ public class BookController {
 		map.put("payment_code", payment_code);
 		model.addAttribute("payment_code", payment_code);
 		
-		int insertCount = service.registBookingTicket(map);
+		int insertCount = bookService.registBookingTicket(map);
 		model.addAttribute("totalSeat", totalSeat);
 		System.out.println("좌석수 : " + insertCount);
 		
-		PaymentVO paymentInfo = service.getPaymentInfo(payment_code);
+		PaymentVO paymentInfo = bookService.getPaymentInfo(payment_code);
 		model.addAttribute("paymentInfo", paymentInfo);
 		System.out.println(paymentInfo);
 		
 		// ================== [ 포인트, 쿠폰 ] =====================
-		int myPoint = service.getMyPoint(id);
+		int myPoint = bookService.getMyPoint(id);
 		model.addAttribute("myPoint", myPoint);
 		
-		List<Map<String, Object>> myCouponList = service.getMyCouponList(id);
+		List<Map<String, Object>> myCouponList = bookService.getMyCouponList(id);
 		for(Map<String, Object> myCoupon : myCouponList) {
 			String discount_amount = !myCoupon.get("discount_amount").toString().equals("0") ?  myCoupon.get("discount_amount") + "원 할인권" : "";
 			String discount_rate = !myCoupon.get("discount_rate").toString().equals("0") ?  myCoupon.get("discount_rate") + "% 할인권" : "";
@@ -257,7 +271,7 @@ public class BookController {
 	@ResponseBody
 	@GetMapping("GetMyCouponDetailInfo")
 	public CouponVO getMyCouponDetailInfo(String coupon_code) {
-		CouponVO coupon = service.getMyCoupon(coupon_code);
+		CouponVO coupon = bookService.getMyCoupon(coupon_code);
 		return coupon;
 	}
 	
@@ -293,11 +307,11 @@ public class BookController {
 		}
 		
 		
-		Map<String, Object> schedule = service.getScheduleInfoByScheduleCode(schedule_code);
+		Map<String, Object> schedule = bookService.getScheduleInfoByScheduleCode(schedule_code);
 		model.addAttribute("schedule", schedule);
 		
 		// 결제 완료 시 payment 테이블에 정보 업데이트
-		int updateCount = service.addBookingTicket(map, id);
+		int updateCount = bookService.addBookingTicket(map, id);
 		System.out.println(map);
 		
 		if(updateCount == 0) {
@@ -314,8 +328,15 @@ public class BookController {
 
 	
 	
-	
-	
+	@ResponseBody
+	@PostMapping("ReservationCancel")
+	public String reservationCancel(@RequestParam Map<String, Object> map) {
+		int insertCount = bookService.registRefundInfo(map);
+		System.out.println("map : " + map);
+		System.out.println("insertCount : " + insertCount);
+		
+		return "";
+	}
 	
 	
 	

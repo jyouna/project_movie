@@ -195,20 +195,59 @@
 	</update>
 	
 	<select id="selectDisabledSeat" resultType="map">
-		SELECT DISTINCT SUBSTR(seat_code, 4) as "seat_code"
+		SELECT DISTINCT SUBSTR(b.seat_code, 4) as "seat_code", s.seat_avail
 		FROM booking b
-		JOIN payment p
-		ON b.payment_code = p.payment_code
+		JOIN payment p ON b.payment_code = p.payment_code
+		JOIN seat s ON b.seat_code = s.seat_code
 		WHERE b.schedule_code = #{schedule_code}
 		AND (payment_status = 1
 		OR DATE_ADD(seat_selection_time, INTERVAL 10 MINUTE) > now())
+		OR s.seat_avail = 0
 	</select>
 
-<!-- 	<select id="selectSeatAvail" resultType="map"> -->
-<!-- 		SELECT * -->
-<!-- 		FROM seat -->
-<!-- 		WHERE seat_avail = 0; -->
-<!-- 	</select> -->
+	<insert id="insertRefundInfo">
+		<selectKey keyProperty="refund_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(refund_code), 0) + 1
+			FROM refund
+		</selectKey>
+		INSERT 
+		INTO refund
+		VALUES (
+			#{refund_code}
+			, #{payment_code}
+			, #{total_payment}
+			, NOW()
+			, NOW()
+			, #{total_payment}
+			, 1
+		)
+	</insert>
+
+<!-- 	<update id="updateRefundPayment"> -->
+<!-- 		UPDATE payment -->
+<!-- 		SET payment_status = 2 -->
+<!-- 		WHERE payment_code = #{payment_code} -->
+<!-- 	</update> -->
+	
+<!-- 	<insert id="insertRefundPoint"> -->
+<!-- 		INSERT -->
+<!-- 		INTO point -->
+<!-- 		VALUES( -->
+<!-- 			null -->
+<!-- 			, #{total_discount} -->
+<!-- 			, null -->
+<!-- 			, #{id} -->
+<!-- 			, NOW() -->
+<!-- 			, #{refund_code} -->
+<!-- 			, #{payment_code} -->
+<!-- 		) -->
+<!-- 		INSERT INTO point -->
+<!-- 		SELECT null, pa.total_discount, null, null, 'orange111', NOW(), r.refund_code, pa.payment_code -->
+<!-- 		FROM payment pa -->
+<!-- 		JOIN point po ON pa.payment_code = po.payment_code -->
+<!-- 		JOIN refund r ON r.refund_code = po.refund_code -->
+<!-- 		WHERE pa.payment_code = 'T1292394137'; -->
+<!-- 	</insert> -->
 	
 	
 	

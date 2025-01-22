@@ -112,7 +112,7 @@
 									<button type="button" class="point_btn">포인트</button>
 								</div>
 								<div class="coupon_container">
-									<p>사용할 쿠폰을 선택해주세요</p>
+									<p>사용할 쿠폰을 선택해주세요 (예매취소시 포인트로 지급됩니다)</p>
 									<div class="coupon_table">
 										<table border="1">
 											<tr>
@@ -133,7 +133,7 @@
 									</div>
 								</div>
 								<div class="point_container">
-									<p>사용할 포인트를 입력해주세요 (최대 2000p 까지)</p>
+									<p>사용할 포인트를 입력해주세요 (최대 5000p 까지)</p>
 									<div class="my_point">
 										<div class="point01">보유 포인트</div>
 										<div class="point02">${myPoint} p</div>

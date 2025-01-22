@@ -104,7 +104,6 @@ $(function() {
 					movie_code : selectedMovie
 				}
 			}).done(function(scheduleList) {
-				console.log(scheduleList.length);
 				if(scheduleList.length != 0) {
 					
 					for(let schedule of scheduleList) {
@@ -124,12 +123,13 @@ $(function() {
 						        <input type="hidden" class="isBookingAvail" value="${schedule.booking_avail}">
 						        <span class="mv_time">${schedule.str_start_time}</span>
 						        <span class="details">
-						            <span class="seat">70/${schedule.avail_seat}</span>
+						            
 						            <span class="hall">${hallName}</span>
 						        </span>
 						    </a>
 						`);
 						
+						// 예매 불가능한 스케줄 버튼 어둡게
 						if(schedule.booking_avail == 0) {
 							$("#" + schedule.schedule_code).css({
 							    "background": "#ddd",
@@ -139,8 +139,18 @@ $(function() {
 								"box-shadow": "inset 0px 0px 5px rgba(0, 0, 0, 0.2)"
 							});
 
-
 						}
+						
+						// 시간 버튼에 남은 좌석 출력
+						$.ajax({
+							type : "GET",
+							url : "GetAvailSeatFromSchedule",
+							data : {
+								schedule_code : schedule.schedule_code
+							}
+						}).done(function(disabledSeatList) {
+							$("#" + schedule.schedule_code).find(".details").prepend(`<span class="seat">${schedule.avail_seat - disabledSeatList.length}/${schedule.avail_seat}</span>`);
+						});
 					}
 					
 				} else if(true) {
@@ -152,6 +162,7 @@ $(function() {
 				
 				$(".movie_schedule_info").css("display", "block");
 				
+				// 시간 버튼 클릭 시 스케줄 코드 가지고 좌석 선택 페이지로 이동
 				$(".time_seat_btn").click(function() {
 					if($(this).find(".isBookingAvail").val() == 1) {
 						schCode = $(this).find("input[type='hidden']").val();

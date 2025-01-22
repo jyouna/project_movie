@@ -38,8 +38,8 @@ $(function() {
 	$(".point_form").keyup(function() {
 		let myPoint = parseInt($(".point02").text().replace(" p", ""));
 		
-		if($(this).val() > 2000) { // 입력값이 2000보다 클 때
-			alert("최대 2000p 사용 가능합니다.")
+		if($(this).val() > 5000) { // 입력값이 5000보다 클 때
+			alert("최대 5000p 사용 가능합니다.")
 			$(".div02 .price").text(0);
 			$(".div03 .price").text($(".div01 .price").text());
 			$(this).val("");

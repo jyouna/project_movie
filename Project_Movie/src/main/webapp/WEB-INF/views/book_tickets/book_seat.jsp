@@ -62,7 +62,6 @@
 				            	<c:forEach var="i" begin="0" end="${colCount-1}">
 					                <button type="button" class="seat"
 					                	<c:forEach var="disabledSeat" items="${disabledSeatList}">
-					                		<!-- 예매된 좌석 disabled 처리 -->
 					                		<c:if test="${seatList[i + j*10].seat_code eq disabledSeat.seat_code}">
 					                			disabled 
 					                		</c:if>

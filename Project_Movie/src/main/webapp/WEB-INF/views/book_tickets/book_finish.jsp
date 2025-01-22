@@ -102,7 +102,7 @@
 						
 				
 				<div class="fin_btn">
-					<button class="ticket_info_btn" name="ticket_info_btn" onclick="">예매내역</button>
+					<button class="ticket_info_btn" name="ticket_info_btn" onclick="window.open('ReservationDetail', '_blank', 'width=1300, height=800, top=150, left=300, resizable=no')">예매내역</button>
 					<button class="home_btn" name="home_btn" onclick="location.href='./'">홈</button>
 				</div>
 			</div>

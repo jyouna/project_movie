@@ -105,9 +105,8 @@ $(function () {
 		$("#totalSeat").val(selectedSeats);
 	});
 	
-	
+	// 결제 버튼
 	$(".pay_btn").click(function() {
-//		event.preventDefault(); // 기본 동작 방지
 		
 		let totalCount = 0;
 		$(".count").each(function() {
