@@ -176,29 +176,17 @@ public class AdminEventManageController {
 	@GetMapping("ChooseEventWinner") 
 	public String chooseEventWinner(int event_code, Model model) {
 		System.out.println("이벤트 당첨 컨트롤러 이동");
-		EventBoardVO eventVo = adminService.selectWinner(event_code); // 라디오 버튼으로 선택한 이벤트 정보 
+		 // 라디오 버튼으로 선택한 이벤트 정보 저장
+		EventBoardVO eventVo = adminService.selectWinner(event_code);
 		// 이벤트 당첨자 목록 조회 (이벤트 시작일 ~ 종료일 사이 예매한 대상 조회)
-		
-		// 이벤트 시간 java.sql Date -> Timestamp로 변경하기 위한 작업
-//		Date startDate = eventVo.getEvent_start_date();
-//		Date endDate = eventVo.getEvent_end_date();
-//		LocalDate local_start_date = startDate.toLocalDate();
-//		LocalDate local_end_date = endDate.toLocalDate();
-//		LocalDateTime startDateTime = local_start_date.atStartOfDay();
-//		LocalDateTime endDateTime = local_end_date.atStartOfDay().plusDays(1);
-//		
-//		Timestamp event_start_date = Timestamp.valueOf(startDateTime);
-//		Timestamp evet_end_date = Timestamp.valueOf(endDateTime);
 		List<String> winnerIdList = adminService.getBookingEventWinnerList(eventVo.getEvent_start_date(), eventVo.getEvent_end_date());
-		System.out.println("이벤트 당첨자 list<String> : " + winnerIdList);
-//		List<MemberVO> member = adminService.getMemberList(); // 전체 멤버 리스트
-		
 		// 해당 기간 내 예매자 중 50명을 선별하여 저장하기 위한 객체
 		List<String> winnerList = new ArrayList<>(); 
 		Random r = new Random(); 
+		// 경품 추첨 대상자 수
 		int winnerCount = winnerIdList.size();
 		
-		for(int i = 0; i < 50; i++) {
+		while(winnerList.size() != 50) {
 			String id = winnerIdList.get(r.nextInt(winnerCount));
 			 // 해당 기간에 예매한 인원 중 랜덤으로 50명 추첨 
 			 // 만약 동일한 아이디가 나올 시 재추첨
@@ -210,7 +198,7 @@ public class AdminEventManageController {
 		System.out.println("리스트 객체에 저장된 값 개수 : " + winnerList.size());
 
 		model.addAttribute("eventVo", eventVo);
-		model.addAttribute("memberVo", winnerList); // 기존에 memberVo로 이름을 설정하여 그대로 유지 
+		model.addAttribute("winnerList", winnerList); // 기존에 memberVo로 이름을 설정하여 그대로 유지 
 		
 		return "adminpage/event_manage/choose_event_winner";
 	}

@@ -24,6 +24,7 @@
 	<h3>쿠폰 내역</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
+			<input type="button" id="createCoupon" value="쿠폰생성">
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<form action="CouponBoardManage" method="get">
@@ -136,6 +137,11 @@ $(function(){
 			$("#writeContent").attr("placeholder", "아이디를입력하세요");
 		}
 	})
+	// 쿠폰 생성 창 띄우기
+	$("#createCoupon").on("click", function(){
+		window.open("CreateCoupon", "쿠폰발급", "width=600, height=400, top=340, left=660");
+	})
+	
 })
 </script>
 </body>

@@ -40,8 +40,8 @@ input[type="checkbox"] {
 			<input type="button" onclick="location.href='createNewmember'" value="회원생성">
 			<input type="button" value="매출생성" onclick="location.href='CreateSalesRecord'">
 			<input type="button" value="권한설정" id="setAuth">
-			<input type="button" value="계정생성" id="createId">
-			<input type="button" value="계정삭제" id="deleteId">
+			<input type="button" value="관리자등록" id="createId">
+			<input type="button" value="관리자삭제" id="deleteId">
 		</div>	
 		<div id="divTopRight">
 		</div>	
@@ -129,7 +129,7 @@ input[type="checkbox"] {
 		
 		// 계정 등록 폼 이동
 		$("#createId").on("click", function(){
-			location.href="AdminAccountRegis";
+			window.open("AdminAccountRegis", "관리자계정생성", "width=600, height=600, top=240, left=660, resizable=no, scrollbars=yes");
 		});
 		
 		// 선택한 계정 삭제

@@ -21,32 +21,33 @@
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<h3>포인트 변동 내역</h3>
-	<div id="divTop" class="view">
-		<div id="divTopLeft">
-		</div>	
-		<div id="divTopRight"> <!--  우측 상단 검색란 -->
-			<form action="PointBoardManage" method="get">
-				<input type="hidden" name="pageNum" value="${param.pageNum}">
-				<select name="searchKeyword">
-					<option value="pointHolder" <c:if test="${param.searchKeyword eq 'pointHolder'}">selected</c:if>>아이디</option>
-					<option value="eventCode" <c:if test="${param.searchKeyword eq 'eventCode'}">selected</c:if>>이벤트번호</option>
-				</select>
-				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
-				<input type="submit" value="검색">
-			</form>
-		</div>	
-	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
+		<div id="divTop" class="view">
+			<div id="divTopLeft">
+				<input type="button" id="creditPoint" value="포인트지급">
+			</div>	
+			<div id="divTopRight"> <!--  우측 상단 검색란 -->
+				<form action="PointBoardManage" method="get">
+					<input type="hidden" name="pageNum" value="${param.pageNum}">
+					<select name="searchKeyword">
+						<option value="pointHolder" <c:if test="${param.searchKeyword eq 'pointHolder'}">selected</c:if>>아이디</option>
+						<option value="eventCode" <c:if test="${param.searchKeyword eq 'eventCode'}">selected</c:if>>이벤트번호</option>
+					</select>
+					<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
+					<input type="submit" value="검색">
+				</form>
+			</div>	
+		</div>
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="100">코드</th>
-				<th width="350">ID</th>
-				<th width="350">포인트적립</th>
-				<th width="350">포인트차감</th>
-				<th width="350">이벤트코드</th>
-				<th width="350">취소코드</th>
-				<th width="350">예매코드</th>
-				<th width="350">변동일시</th>
+				<th>코드</th>
+				<th>ID</th>
+				<th>포인트적립</th>
+				<th>포인트차감</th>
+				<th>이벤트코드</th>
+				<th>취소코드</th>
+				<th>예매코드</th>
+				<th>변동일시</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty pointVo}">
@@ -134,6 +135,12 @@
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-
+	<script type="text/javascript">
+	$(function(){
+		$("#creditPoint").on("click", function(){
+			window.open("CreditPoint", "포인트지급", "width=600, height=400, top=340, left=660");
+		});
+	})
+	</script>
 </body>
 </html>

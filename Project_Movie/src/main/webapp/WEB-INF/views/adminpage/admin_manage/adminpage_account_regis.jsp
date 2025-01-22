@@ -8,30 +8,33 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>관리자페이지</title>
-	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+	<title>관리자등록</title>
+<!-- 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" /> -->
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <style type="text/css">
 
 #mainArticle {
-/* 	border: 1px solid; */
 	text-align: center;
 }
 
 h3 {
+	width:100%;
 	margin-top: 1em;
 }
 
 #mainTable {
-    width: 600px;
+    width: 500px;
     max-width: 100%;
-    table-layout: fixed;
-    transform: translate(530px, 20px);
-    height: 700px;
-   	position: absolute;
-    }
+    height: 100%;
+/*     transform: translateX(45%); /* 중앙으로 이동 */ */
+}
+form {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
 
 #mainTable th, 
 #mainTable td {
@@ -59,11 +62,11 @@ input[type="checkbox"] {
 }
 </style>
 <body>
-	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
+<%-- 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include> --%>
 	
 	<article id="mainArticle">
-	<h3>관리자 계정 생성</h3>
-		<form action="AdminAccountRegis" name="joinForm" ID="accountRegisForm" method="post">
+		<h3>관리자등록</h3>
+		<form id="accountRegisForm">
 			<table id="mainTable">
 				<tr id="tr01">
 					<th>ID</th>
@@ -75,7 +78,7 @@ input[type="checkbox"] {
 				</tr>
 				<tr>
 					<th>이름</th>
-					<td width="300">
+					<td>
 						<input type="text" name="user_name" id="name" maxlength="6" required>
 						<div id="checkNameResult"></div>
 					</td>
@@ -96,27 +99,27 @@ input[type="checkbox"] {
 				</tr>
 				<tr>
 					<th>회원목록관리</th>
-					<td><input type="checkbox" name="member_manage"></td>
+					<td><input type="checkbox" name="member_manage" id="member_manage"></td>
 				</tr>
 				<tr>
 					<th>결제관리</th>
-					<td><input type="checkbox" name="payment_manage"></td>
+					<td><input type="checkbox" name="payment_manage" id="payment_manage"></td>
 				</tr>
 				<tr>
 					<th>게시판관리</th>
-					<td><input type="checkbox" name="notice_board_manage"></td>
+					<td><input type="checkbox" name="notice_board_manage" id="notice_board_manage"></td>
 				</tr>
 				<tr>
 					<th>영화관리</th>
-					<td><input type="checkbox" name="movie_manage"></td>
+					<td><input type="checkbox" name="movie_manage" id="movie_manage"></td>
 				</tr>
 				<tr>
 					<th>상영관관리</th>
-					<td><input type="checkbox" name="theater_manage"></td>
+					<td><input type="checkbox" name="theater_manage" id="theater_manage"></td>
 				</tr>
 				<tr>
 					<th>투표관리</th>
-					<td><input type="checkbox" name="vote_manage" ></td>
+					<td><input type="checkbox" name="vote_manage" id="vote_manage"></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
@@ -128,100 +131,122 @@ input[type="checkbox"] {
 			</table>
 		</form>
 	</article>
-		<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
+<%-- 		<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include> --%>
 	
 	<!-- 중복 아이디 체크 --> 
-	<script type="text/javascript">
-		$(function(){
-			let check_id1 = false;
-			let check_id2 = false;
-			let check_name = false;
-			let check_passwd = false;
-			let check_passwd2 = false;
-			
-			$("#id").on("blur", function(){
-				let regexId = /^admin\d{0,5}$/;
-				let ids = $("#id").val();
+<script type="text/javascript">
+$(function(){
+	let check_id1 = false;
+	let check_id2 = false;
+	let check_name = false;
+	let check_passwd = false;
+	let check_passwd2 = false;
 	
-				if(regexId.exec(ids)) {
-					check_id1 = true;
-					$("#checkIdResult2").text("아이디 양식 일치").css("color", "blue");
+	$("#id").on("blur", function(){
+		let regexId = /^admin\d{0,5}$/;
+		let ids = $("#id").val();
+
+		if(regexId.exec(ids)) {
+			check_id1 = true;
+			$("#checkIdResult2").text("아이디 양식 일치").css("color", "blue");
+		} else {
+			check_id1 = false;
+			$("#checkIdResult2").text("ID 양식 : admin + 0~99999").css("color", "red");
+		}
+		
+		$.ajax({
+			type:"GET",
+			url:"AdminIdCheck",
+			data : {
+				id : $("#id").val()
+			},
+			dataType : "json",
+			success : function(response){
+				if(response.checkIdResult=="사용 가능한 아이디") {
+					check_id2 = true;
 				} else {
-					check_id1 = false;
-					$("#checkIdResult2").text("ID 양식 : admin + 0~99999").css("color", "red");
+					check_id2 = false;
 				}
-				
-				$.ajax({
-					type:"GET",
-					url:"AdminIdCheck",
-					data : {
-						id : $("#id").val()
-					},
-					dataType : "json",
-					success : function(response){
-						if(response.checkIdResult=="사용 가능한 아이디") {
-							check_id2 = true;
-						} else {
-							check_id2 = false;
-						}
-						$("#checkIdResult").text(response.checkIdResult);
-					}
-				});
-			});
-			
-			$("#passwd").on("blur", function(){
-				let regexPasswd = /^[a-z0-9]{8,10}$/;
-				let passwds = $("#passwd").val();
-				
-				if(regexPasswd.exec(passwds)) {
-					check_passwd = true;
-					$("#checkPasswdResult").text("비밀번호 양식 일치").css("color", "blue");
-				} else {
-					check_passwd = false;
-					$("#checkPasswdResult").text("p/w: 소문자와 숫자만 사용 8~10자리").css("color", "red");
-				}
-				$("#passwd2").trigger("blur");
-			});
-			
-			$("#passwd2").on("blur", function(){
-				let passwd = $("#passwd").val();
-				let passwd2 = $("#passwd2").val();
-				
-				if(passwd==passwd2) {
-					check_passwd2 = true;
-					$("#checkPasswd2Result").text("비밀번호가 일치합니다.").css("color","green");
-				} else {
-					check_passwd2 = false;
-					$("#checkPasswd2Result").text("비밀번호가 일치하지 않습니다.").css("color","red");
-				}
-			});
-			
-			$("#name").on("blur", function(){
-				let name = $("#name").val();
-				let regexName = /^관리자\d{1,3}$/;
-				
-				if(regexName.exec(name)) {
-					check_name = true;
-					$("#checkNameResult").text("사용 가능").css("color", "blue");
-				} else {
-					check_name = false;
-					$("#checkNameResult").text("이름 : 관리자 + 1~999 형태").css("color", "red");
-				}
-			});
-			
-			
-			$("#accountRegisForm").on("submit", function(event){
-				event.preventDefault();
-				
-				 if (check_id1 && check_id2 && check_name && check_passwd && check_passwd2) {
-				        this.submit();
-			    } else {
-			        // 조건이 충족되지 않으면 경고창 표시
-			        alert("제출된 양식을 다시 확인하세요.");
-			    }
-			});
+				$("#checkIdResult").text(response.checkIdResult);
+			}
 		});
-	</script>
+	});
+	
+	$("#passwd").on("blur", function(){
+		let regexPasswd = /^[a-z0-9]{8,10}$/;
+		let passwds = $("#passwd").val();
+		
+		if(regexPasswd.exec(passwds)) {
+			check_passwd = true;
+			$("#checkPasswdResult").text("비밀번호 양식 일치").css("color", "blue");
+		} else {
+			check_passwd = false;
+			$("#checkPasswdResult").text("p/w: 소문자와 숫자만 사용 8~10자리").css("color", "red");
+		}
+		$("#passwd2").trigger("blur");
+	});
+	
+	$("#passwd2").on("blur", function(){
+		let passwd = $("#passwd").val();
+		let passwd2 = $("#passwd2").val();
+		
+		if(passwd==passwd2) {
+			check_passwd2 = true;
+			$("#checkPasswd2Result").text("비밀번호가 일치합니다.").css("color","green");
+		} else {
+			check_passwd2 = false;
+			$("#checkPasswd2Result").text("비밀번호가 일치하지 않습니다.").css("color","red");
+		}
+	});
+	
+	$("#name").on("blur", function(){
+		let name = $("#name").val();
+		let regexName = /^관리자\d{1,3}$/;
+		
+		if(regexName.exec(name)) {
+			check_name = true;
+			$("#checkNameResult").text("사용 가능").css("color", "blue");
+		} else {
+			check_name = false;
+			$("#checkNameResult").text("이름 : 관리자 + 1~999 형태").css("color", "red");
+		}
+	});
+	
+	// 회원가입 폼 전송 AJAX
+	$("#accountRegisForm").on("submit",function(event){
+		 if (check_id1 && check_id2 && check_name && check_passwd && check_passwd2) {
+			event.preventDefault();
+			$.ajax({
+				url : "AdminAccountRegis",
+				type : "post",
+				data : {
+					admin_id : $("#id").val(),
+					user_name : $("#name").val(),
+					admin_passwd : $("#passwd").val(),
+					member_manage : $("#member_manage").val(),
+					payment_manage : $("#payment_manage").val(),
+					notice_board_manage : $("#notice_board_manage").val(),
+					movie_manage : $("#movie_manage").val(),
+					theater_manage : $("#theater_manage").val(),
+					vote_manage : $("#vote_manage").val()
+				},
+			}).done(function(response){
+				if(response){
+					alert("관리자 등록 성공!");
+					window.close();
+					return;
+				} else {
+					alert("관리자 등록 실패!");
+				}
+			}).fail(function(){
+				alert("관리자 등록 실패");
+			});
+		 } else {
+			 alert("제출된 양식을 다시 확인하세요.");
+		 }
+	})		
+});
+</script>
 </body>
 </html>
 

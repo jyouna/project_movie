@@ -10,13 +10,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	
 	<title>이벤트 당첨자</title>
-	
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
-
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/event.js"></script>
@@ -27,28 +24,21 @@
 	<h3>이벤트 당첨자 - 임시로 회원 전체 목록 출력</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-<!-- 			<input type="button" value="전체선택" id="selectAll"> -->
 			<input type="button" id="giveCoupon" value="쿠폰증정">
 			<input type="button" id="givePoint" value="포인트증정">
 		</div>	
 		<div id="divTopRight">
-			<select>
-				<option>제목+내용</option>
-				<option>제목</option>
-				<option>내용</option>
-			</select>
-			<input type="text" placeholder="검색어를입력하세요"> <input type="button" value="검색" id="searchBtn">
 		</div>	
 	</div>
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="50"><input type="checkbox" class="eventSetCheckbox" id="selectAll"></th>
-				<th width="50">코드</th>
-				<th width="100">대상자</th>
-				<th width="150">이벤트제목</th>
-				<th width="100">시작일자</th>
-				<th width="100">종료일자</th>
+				<th><input type="checkbox" class="eventSetCheckbox" id="selectAll"></th>
+				<th>코드</th>
+				<th>대상자</th>
+				<th>이벤트제목</th>
+				<th>시작일</th>
+				<th>종료일</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty eventVo}">
@@ -57,15 +47,13 @@
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach var="member" items="${memberVo}" varStatus="status">
+					<c:forEach var="member_id" items="${winnerList}" varStatus="status">
 						<tr>
-							<td><input type="checkbox" class="eventSetCheckbox" value="${member.member_id}"></td>
+							<td><input type="checkbox" class="eventSetCheckbox" value="${member_id}"></td>
 							<td>${eventVo.event_code}</td>
 							<td>
-								${member.member_id}	
-<%-- 							<input type="hidden" id="event_code" value="${eventVo.event_code}">	 --%>
-								<!--  파라미터에서도 아래 방식으로 바로 가져올 수 있음!! -->
-								<input type="hidden" id="event_code" value="${param.event_code}">	
+								${member_id}
+								<input type="hidden" id="event_code" value="${param.event_code}">
 							</td>
 							<td>${eventVo.event_subject}</td>	
 							<td>${eventVo.event_start_date}</td>	

@@ -71,7 +71,7 @@ public class AdminManageController {
 			return "result/process";
 		} else {
 			session.setAttribute("admin_sId", adminInfo.getAdmin_id());
-			session.setMaxInactiveInterval(600);
+			session.setMaxInactiveInterval(1800);
 			return "redirect:/AdminpageMain";
 		}
 	}
@@ -117,17 +117,14 @@ public class AdminManageController {
 	}
 	
 	@PostMapping("AdminAccountRegis") // 관리자 계정 생성 처리
-	public String adminAccountCreate(AdminRegisVO adminVo, Model model) {
+	@ResponseBody
+	public Boolean adminAccountCreate(AdminRegisVO adminVo, Model model) {
 		int insertCount = adminService.createAccount(adminVo);
-		
 		System.out.println("관리자 계정 등록 완료 : " + insertCount);
-		
 		if(insertCount > 0) {
-			return "redirect:/AdminAccountManage";
+			return true;
 		} else {
-			model.addAttribute("msg", "계정 생성 실패");
-			model.addAttribute("targetURL", "AdminpageMain");
-			return "result/process";
+			return false;
 		}
 	}
 	
