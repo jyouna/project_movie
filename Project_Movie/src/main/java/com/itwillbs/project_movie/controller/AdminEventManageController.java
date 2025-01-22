@@ -1,6 +1,9 @@
 package com.itwillbs.project_movie.controller;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +76,6 @@ public class AdminEventManageController {
 	@GetMapping("EventBoardRegisSubmit") // 이벤트 게시글 등록폼 제출
 	public String eventBoardRegistration(EventBoardVO eventVo, HttpSession session) {
 		String admin_sId = (String) session.getAttribute("admin_sId");
-//		String sId = "admin";
 		eventVo.setEvent_writer(admin_sId);
 		System.out.println(eventVo);
 		adminService.regisEventBoard(eventVo);
@@ -123,7 +125,6 @@ public class AdminEventManageController {
 			model.addAttribute("targetURL", "EventBoardManage");
 			return "result/process";			
 		}
-		
 	}
 	
 	@PostMapping("checkEventStatus") // 이벤트 종료 여부 ajax 응답
@@ -170,33 +171,46 @@ public class AdminEventManageController {
 		}
 	}
 	
-	@GetMapping("ChooseEventWinner") // 이벤트 당첨자 추첨 폼 이동
+	// 이벤트 당첨자 추첨
+	// 결제일이 이벤트 시작일과 이벤트 종료일 사이에 있는 회원들 중 50명을 랜덤으로 추첨
+	@GetMapping("ChooseEventWinner") 
 	public String chooseEventWinner(int event_code, Model model) {
-		// 라디오 버튼으로 특정 이벤트 1건 선택하여 해당 이벤트 종료 및 당첨자 추첨 로직
-		
 		System.out.println("이벤트 당첨 컨트롤러 이동");
 		EventBoardVO eventVo = adminService.selectWinner(event_code); // 라디오 버튼으로 선택한 이벤트 정보 
-		List<MemberVO> member = adminService.getMemberList(); // 전체 멤버 리스트
-		List<MemberVO> memberVo = new ArrayList<>(); // 전체 멤버 리스트 중 50개만 저장하기 위한 list 객체. 한번에 2000개 전달시 오류 발생
+		// 이벤트 당첨자 목록 조회 (이벤트 시작일 ~ 종료일 사이 예매한 대상 조회)
+		
+		// 이벤트 시간 java.sql Date -> Timestamp로 변경하기 위한 작업
+//		Date startDate = eventVo.getEvent_start_date();
+//		Date endDate = eventVo.getEvent_end_date();
+//		LocalDate local_start_date = startDate.toLocalDate();
+//		LocalDate local_end_date = endDate.toLocalDate();
+//		LocalDateTime startDateTime = local_start_date.atStartOfDay();
+//		LocalDateTime endDateTime = local_end_date.atStartOfDay().plusDays(1);
+//		
+//		Timestamp event_start_date = Timestamp.valueOf(startDateTime);
+//		Timestamp evet_end_date = Timestamp.valueOf(endDateTime);
+		List<String> winnerIdList = adminService.getBookingEventWinnerList(eventVo.getEvent_start_date(), eventVo.getEvent_end_date());
+		System.out.println("이벤트 당첨자 list<String> : " + winnerIdList);
+//		List<MemberVO> member = adminService.getMemberList(); // 전체 멤버 리스트
+		
+		// 해당 기간 내 예매자 중 50명을 선별하여 저장하기 위한 객체
+		List<String> winnerList = new ArrayList<>(); 
 		Random r = new Random(); 
+		int winnerCount = winnerIdList.size();
 		
 		for(int i = 0; i < 50; i++) {
-			memberVo.add(member.get(r.nextInt(2000)+1)); // 1~2000 중 랜덤으로 50명 추첨
+			String id = winnerIdList.get(r.nextInt(winnerCount));
+			 // 해당 기간에 예매한 인원 중 랜덤으로 50명 추첨 
+			 // 만약 동일한 아이디가 나올 시 재추첨
+			if(!winnerList.contains(id)) {
+				winnerList.add(id);
+			} 
 		}
 		
-		System.out.println("리스트 객체에 저장된 값 개수 : " + memberVo.size());
-		
-		/*  
-		 * 	이벤트 내용
-		 *  
-		 *  1. 특정 월 예매자 중 선택 
-		 *  2. 투표 참여자 중 선택
-		 *  3. 
-		 *  
-		 */ 
+		System.out.println("리스트 객체에 저장된 값 개수 : " + winnerList.size());
 
 		model.addAttribute("eventVo", eventVo);
-		model.addAttribute("memberVo", memberVo);
+		model.addAttribute("memberVo", winnerList); // 기존에 memberVo로 이름을 설정하여 그대로 유지 
 		
 		return "adminpage/event_manage/choose_event_winner";
 	}
@@ -311,6 +325,7 @@ public class AdminEventManageController {
 		
 		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "couponList", searchKeyword, searchContent);
 		System.out.println("pageInfo 값 : " + pageInfo);
+		
 		List<CouponVO> couponVo = adminService.getCouponList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		model.addAttribute("couponVo", couponVo);
 		model.addAttribute("pageInfo", pageInfo);

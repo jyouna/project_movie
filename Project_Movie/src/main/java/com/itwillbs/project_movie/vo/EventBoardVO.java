@@ -12,13 +12,13 @@ public class EventBoardVO {
 	private int event_code;
 	private String event_subject;
 	private String event_content;
-	private String event_file1;
+	private String event_file1;    
 	private String event_file2;
 	private String event_file3;
 	private String event_writer;
 	private Timestamp regis_date;
 	private int view_count;
-	private int event_status; // 0-대기  1-진행   2-종료
+	private int event_status; 	// 0-대기  1-진행   2-종료
 	private Date event_start_date;
 	private Date event_end_date;
 	private Boolean set_winner_status = false;

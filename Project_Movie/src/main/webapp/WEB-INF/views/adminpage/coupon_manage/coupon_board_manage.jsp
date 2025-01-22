@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>쿠폰 관리</title>
+	<title>쿠폰 내역</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
@@ -40,15 +40,15 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="100">쿠폰번호</th>
-				<th width="200">쿠폰타입</th>
-				<th width="150">쿠폰상세</th>
+				<th>쿠폰번호</th>
+				<th>쿠폰타입</th>
+				<th>쿠폰상세</th>
 <!-- 				<th width="150">할인율</th> -->
-				<th width="200">등록일자</th>
-				<th width="200">만료일자</th>
-				<th width="200">쿠폰상태</th>
-				<th width="150">보유계정</th>
-				<th width="150">이벤트코드</th>
+				<th>등록일자</th>
+				<th>만료일자</th>
+				<th>쿠폰상태</th>
+				<th>보유계정</th>
+				<th>이벤트코드</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty couponVo}">
@@ -85,10 +85,11 @@
 							<td>
 								<c:choose>
 									<c:when test="${coupon.coupon_status eq false}">
-										미사용
+									<!--  기한 만료 혹은 사용 완료 -->
+										사용가능
 									</c:when>
 									<c:otherwise>
-										사용완료
+										사용불가
 									</c:otherwise>
 								</c:choose>
 							</td>	

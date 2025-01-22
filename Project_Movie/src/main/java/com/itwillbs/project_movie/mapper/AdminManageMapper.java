@@ -1,5 +1,7 @@
 package com.itwillbs.project_movie.mapper;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +122,8 @@ public interface AdminManageMapper {
 											@Param("listLimit") int listLimit, 
 											@Param("searchKeyword") String searchKeyword, 
 											@Param("searchContent") String searchContent);
-
+	
+	// 2, 3번 차트 월 가입자 수 조회
 	int getMonthlyTotalNewMember(@Param("year")int year,
 								@Param("month")int month);
 
@@ -138,8 +141,9 @@ public interface AdminManageMapper {
 	int getMemberCount(@Param("searchKeyword") String searchKeyword, @Param("searchContent") String searchContent);
 
 	String getTotalPeriodMemberJoin(@Param("year") String year);
-
-	void createMembers(MemberVO member); // 회원 계정 생성 메크로
+	
+	// 회원 계정 대량 생성 매크로
+	void createMembers(MemberVO member); 
 
 	int getAllEventWinnerCount(@Param("searchKeyword") String searchKeyword, 
 							  @Param("searchContent") String searchContent);
@@ -157,15 +161,30 @@ public interface AdminManageMapper {
 	String getDbPasswd(@Param("member_id") String member_id);
 
 	int updateMyInfo(MemberVO member);
-
+	
+	// 매출 데이터 대량 생성 매크로
 	void createSalesRecord(PaymentVO payment); // 매출 생성 메크로
 	
-	// 월 총매출액 조회
+	// 월 매출액 조회
 	int getMonthlySales(@Param("year") int year, @Param("month") int month);
 	
 	// 월 총환불액 조회
 	int getMonthlyRefund(@Param("year") int year, @Param("month") int month);
-
+	
+	// 전체 기간(연 단위) 매출액 출력을 위한 연 단위 매출액 조회
+	int getAnnualSales(@Param("year") int year);
+	
+	// 연 단위 환불액 조회
+	int getAnnualRefund(@Param("year") int year);
+	
+	// 스케줄러로 매일 09시 20분에 쿠폰 기한 만료 시 '사용불가' 처리
+	void handlingExpiredCoupon(@Param("date") LocalDate date);
+	
+	// 이벤트 당첨자 목록 조회
+	List<String> getBookingEventWinnerList(@Param("event_start_date") Date event_start_date, @Param("event_end_date") Date event_end_date);
+	
+	// 매출 데이터 생성에 필요한 멤버 아이디 조회 
+	List<String> getMemberIdList();
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

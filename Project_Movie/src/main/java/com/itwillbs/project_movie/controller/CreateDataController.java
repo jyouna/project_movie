@@ -54,14 +54,14 @@ public class CreateDataController {
 		
 		int year = 2020;
 		int month = 0;
-		int day = 10;
+//		int day = 10;
 		
 		for(int i = 1; i < 4; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
 				int repetitionCount = (int) ((Math.random()*200)+100);
-				for(int k = 0; k < repetitionCount; k++) { // k 반복횟수만큼 계정 생성
-					LocalDateTime time = LocalDateTime.of(year, month, day, 11, 11, 11, 11);
+				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 생성 계정 수
+					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(28)+1, 11, 11, 11, 11);
 					Timestamp regis_date = Timestamp.valueOf(time);
 					member.setMember_id(r.nextInt(999) + "tes" + r.nextInt(999) + r.nextInt(999) + r.nextInt(999));
 					member.setMember_passwd("abcdedfg");
@@ -79,37 +79,44 @@ public class CreateDataController {
 					adminService.createMembers(member);
 				}
 			}
-			year += i; // 반복 끝날 때마다 1년씩 증가
+			year ++; // 반복 끝날 때마다 1년씩 증가
 		}
 	}
 	
 	// 매출 자동 생성 매크로 -> admin account manage 페이지에 생성 버튼 있음 
 	@GetMapping("CreateSalesRecord")
 	public String createSalesRecord() {
-		System.out.println("매출조작 버튼 컨트롤러 호출됨");
+		System.out.println("매출생성 버튼 컨트롤러 호출됨");
 		Random r = new Random();
 		MemberVO member = new MemberVO();
 		LocalDate localDate = LocalDate.of(2002, 2, 2);
 		Date date = Date.valueOf(localDate);
-		int year = 2020;
+		int year = 2023;
 		int month = 0;
 //		int day = 10;
 		PaymentVO payment = new PaymentVO();
 		
-		for(int i = 1; i < 4; i++) { // 4년
+		// 매출 데이터 생성에 필요한 멤버 아이디 조회 
+		List<String> memberList = adminService.getMemberIdList();
+		
+		
+		for(int i = 1; i < 3; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
-				int repetitionCount = (int) ((Math.random()*200)+100);
-				for(int k = 0; k < repetitionCount; k++) { // k 반복횟수만큼 계정 생성
+				int repetitionCount = (int) ((Math.random()*900)+100);
+				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 매출 발생 수
+					// 전체 회원 목록 중 랜덤으로 아이디 1개 선택
+					String id = memberList.get(r.nextInt(memberList.size()));
+					// 날짜 설정
 					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(28)+1, 11, 11, 11, 11);
 					Timestamp regis_date = Timestamp.valueOf(time);
 					System.out.println(regis_date);
 					int count = r.nextInt(9)+1;
 					int amount = 10000*count;
 					
-					payment.setPayment_code(r.nextInt(999) + r.nextInt(999) + "tes" + r.nextInt(999) + "a" + r.nextInt(999) + r.nextInt(999));
+					payment.setPayment_code(r.nextInt(99) + r.nextInt(99) + r.nextInt(99) + "tes" + r.nextInt(99) + r.nextInt(99) + r.nextInt(99) + "a" + r.nextInt(99) + r.nextInt(99));
 					payment.setPayment_date(regis_date);
-					payment.setMember_id("hoon123");
+					payment.setMember_id(id);
 					payment.setSchedule_code("T120136803202501130910");
 					payment.setTicket_count(count);
 					payment.setTotal_amount(amount);
@@ -125,7 +132,7 @@ public class CreateDataController {
 					adminService.createSalesRecord(payment);
 				}
 			}
-			year += i; // 반복 끝날 때마다 1년씩 증가
+			year ++; // 반복 끝날 때마다 1년씩 증가
 		}
 		
 		return "redirect:/AdminAccountManage";

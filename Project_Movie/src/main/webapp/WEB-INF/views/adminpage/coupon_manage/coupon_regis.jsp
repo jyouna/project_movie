@@ -112,11 +112,12 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 <script type="text/javascript">
 $(function(){
-	let time = new Date()
+	let time = new Date();
 	time.setHours(time.getHours() + 9); // UTC+9 적용
 	let today = time.toISOString().split('T')[0];
-
-	console.log(today);
+// 	let today2 = time.toLocaleString();
+	console.log("today : " + today);
+// 	console.log("today2 : " + today2);
 	$("#expired_date").attr("min", today);
 })
 </script>

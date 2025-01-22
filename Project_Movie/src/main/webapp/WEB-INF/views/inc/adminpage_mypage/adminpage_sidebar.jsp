@@ -146,7 +146,7 @@
 <!-- 					            포인트당첨목록 -->
 <!-- 					        </a> -->
 					        <a class="nav-link" href="CouponBoardManage">
-					            쿠폰변동내역
+					            쿠폰상태목록
 					        </a>
 					        <a class="nav-link" href="PointBoardManage">
 					            포인트변동내역

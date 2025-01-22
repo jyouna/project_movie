@@ -144,7 +144,7 @@ $(function(){
 			return;
 		} 
 		
-		if(confirm("선택한 대상자들에게 쿠폰을 발급하시겠습니까?")) {
+		if(confirm("당첨자 추첨을 진행하시겠습니까?")) {
 			$.ajax({
 				url : "checkEventStatus",
 				type : "post",

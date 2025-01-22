@@ -19,8 +19,10 @@
 
 <style type="text/css">
 th, td {
-	text-align: left !important;}
-	
+	text-align: center !important;}
+.alignLeft {
+	text-align: left !important;
+}	
 /* .tdForNumber { */
 /* 	text-align: right !important;}	 */
 </style>
@@ -54,7 +56,7 @@ th, td {
 			<tr align="center" id="tr01">
 				<th>가입일</th>
 				<th>아이디</th>
-				<th>이름</th>
+				<th class="alignLeft">이름</th>
 				<th>생년월일</th>
 				<th>이메일</th>
 				<th>연락처</th>
@@ -66,9 +68,9 @@ th, td {
 				<th>메일<br>인증</th>
 				<th>번호<br>인증</th>
 				<th>회원<br>유형</th>
-				<th>포인트</th>
-				<th>쿠폰</th>
-				<th>상태</th>
+				<th>보유<br>포인트</th>
+				<th>보유<br>쿠폰</th>
+				<th>계정<br>상태</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty voList}">
@@ -80,12 +82,12 @@ th, td {
 				<c:forEach var="member" items="${voList}" varStatus="status">
 					<tr>
 						<td><fmt:formatDate value="${member.regis_date}" pattern="yyyy-MM-dd"/></td>
-						<td>${member.member_id}</td>
+						<td class="alignLeft">${member.member_id}</td>
 <%-- 						<th>${member.member_passwd}</th> --%>
-						<td>${member.member_name}</td>
+						<td class="alignLeft">${member.member_name}</td>
 						<td><fmt:formatDate value="${member.birth_date}" pattern="yyMMdd"/></td>
-						<td>${member.email}</td>
-						<td>${member.phone}</td>
+						<td class="alignLeft">${member.email}</td>
+						<td class="alignLeft">${member.phone}</td>
 						<td>
 							<c:if test="${member.gender eq 'M'}">남</c:if>
 							<c:if test="${member.gender eq 'F'}">여</c:if>

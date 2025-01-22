@@ -23,6 +23,4 @@ public class InquiryVO {
 	private int inquiry_re_ref;
 	private int inquiry_re_lev;
 	private int inquiry_re_seq;
-	
-	
 }

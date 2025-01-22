@@ -787,6 +787,55 @@
 			AND
 				MONTH(refund_completed_date) = #{month}	
 	</select>
+
+	<select id="getAnnualSales" resultType="int">
+		SELECT 
+			IFNULL(SUM(total_payment),0)
+		FROM 
+			payment
+		WHERE 
+			payment_status = 1
+			AND	
+				YEAR(payment_date) = #{year}
+	</select>
+	
+	<select id="getAnnualRefund" resultType="int">
+		SELECT 
+			IFNULL(SUM(refund_amount),0)
+		FROM 
+			refund
+		WHERE 
+			refund_status = 1
+			AND	
+				YEAR(refund_completed_date) = #{year}
+	</select>
+	
+	<update id="handlingExpiredCoupon">
+		UPDATE
+			coupon
+		set 
+			coupon_status = 1
+		WHERE
+			expired_date &lt; #{date}
+	</update>
+	
+	<select id="getBookingEventWinnerList" resultType="String">
+		SELECT 
+			member_id
+		FROM 
+			payment
+		WHERE
+			((payment_date &lt;= #{event_end_date}
+			AND payment_date &gt;= #{event_start_date})
+			AND payment_status = 1)
+	</select>
+	
+	<select id="getMemberIdList" resultType="String">
+	SELECT 
+		member_id
+	FROM
+		member
+	</select>
  </mapper>
  
  

@@ -42,10 +42,8 @@ import lombok.Builder.Default;
 public class AdminManageController {
 	@Autowired
 	private AdminManageService adminService;
-	
 	@Autowired
 	private PagingHandler pagingHandler;
-	
 	@Autowired
 	private MemberService memberService;
 	
@@ -105,12 +103,7 @@ public class AdminManageController {
 		}
 		
 		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "adminList");		
-		
 		List<AdminRegisVO> voList = adminService.queryAdminList(pageInfo.getStartRow(), pageInfo.getListLimit());
-		
-//		Map<String, Object> pagingMap = pagingHandler.pagingProcess(pageNum, "adminList");
-//		PageInfo pageInfo = (PageInfo)pagingMap.get("pageInfo");
-//		List<AdminRegisVO> voList = (List<AdminRegisVO>)pagingMap.get("voList");
 		
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("voList", voList);
@@ -124,10 +117,18 @@ public class AdminManageController {
 	}
 	
 	@PostMapping("AdminAccountRegis") // 관리자 계정 생성 처리
-	public String adminAccountCreate(AdminRegisVO adminVo) {
+	public String adminAccountCreate(AdminRegisVO adminVo, Model model) {
 		int insertCount = adminService.createAccount(adminVo);
+		
 		System.out.println("관리자 계정 등록 완료 : " + insertCount);
-		return "redirect:/AdminAccountManage";
+		
+		if(insertCount > 0) {
+			return "redirect:/AdminAccountManage";
+		} else {
+			model.addAttribute("msg", "계정 생성 실패");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 	}
 	
 	@GetMapping("AdminIdCheck") // 아이디 중복체크 ajax 응답
@@ -148,7 +149,7 @@ public class AdminManageController {
 			deleteCount++;
 		}
 		
-		if(deleteCount > 0) {		
+		if(deleteCount == admin_id.length) {		
 			return "redirect:/AdminAccountManage";
 		} else {
 			return "";

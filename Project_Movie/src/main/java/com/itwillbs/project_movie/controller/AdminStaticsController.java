@@ -36,6 +36,8 @@ import com.itwillbs.project_movie.vo.PointVO;
 import kotlinx.serialization.json.JsonObject;
 import retrofit2.http.GET;
 
+
+// 관리자 페이지 기간별 통계 메뉴에 사용되는 컨트롤러
 @Controller
 public class AdminStaticsController {
 	@Autowired
@@ -94,7 +96,8 @@ public class AdminStaticsController {
 		return "adminpage/statics_manage/statics_voteResult";
 	}
 	
-	@GetMapping("StaticsNewMember") // 신규 가입자 통계
+	// 신규 가입자 통계 메인페이지 이동
+	@GetMapping("StaticsNewMember") 
 	public String staticsNewMembers(HttpSession session, Model model) {
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -118,7 +121,7 @@ public class AdminStaticsController {
 	}
 	
 	
-	//월 가입자 통계 리턴
+	// 통계 2, 3번 차트 월 가입자 수 조회
 	@GetMapping("GetMonthlyMemberJoinStaticsInfo")
 	@ResponseBody
 	public int monthlyMemberJoinStaticsInfo(@RequestParam("year") int year, @RequestParam("month") int month) {
@@ -127,25 +130,18 @@ public class AdminStaticsController {
 		// 2024. 2월 : xx명
 		// 2024. 3월 : xx명
 		
-		System.out.println("가입자 통계 컨트롤러 호출");
-		System.out.println(year);
-		System.out.println(month);
-		
 		int totalNewMember = adminService.monthlyTotalNewMemberStatics(year, month);
-		
-		System.out.printf("%d년 %d월 가입자 수 : %d\n", year, month, totalNewMember);
 		
 		return totalNewMember;
 	}
 	
 	
-	// 월별 가입자 통계 출력!
+	// 통계 연 단위 가입자 수 조회
 	@GetMapping("GetYearTotalMemberJoinStaticsInfo")
 	@ResponseBody
 	public Map<String, Object> yearTotalNewMemeber(int year) {
-		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("연간 가입자 통계 컨트롤러 호출됨 : " + year);
-		map = adminService.getMonthlyNewMember(year);
+		Map<String, Object> map = adminService.getMonthlyNewMember(year);
 		System.out.println("컨트롤러 map에 저장된 값 : " + map);
 		
 		return map;
@@ -156,35 +152,50 @@ public class AdminStaticsController {
 	public Map<String, Object> adminMainForYearTotalNewMemeber(int year) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("관리자 메인페이지 가입자 통계 컨트롤러 호출됨 : " + year);
-		
 		map = adminService.getMonthlyNewMember(year);
-		
 		System.out.println("컨트롤러 map에 저장된 값 : " + map);
 		
 		return map;
 	}	
 	
+	
+	// 전체 기간(2020~2025) 연간 가입자 조회
 	@PostMapping("getTotalPeriodMemberJoinStatics")
 	@ResponseBody
 	public Map<String, String> totalPeriodMemberJoinStatics(@RequestBody Map<String, List<String>> period) {
 		System.out.println("컨트롤러에서 전달받은 period : " + period);
-		Map<String, String> map = new HashMap<String, String>();
-		map = adminService.getTotalMemberJoinStatics(period);
+		Map<String, String> map = adminService.getTotalMemberJoinStatics(period);
 		System.out.println("컨트롤러 map에 저장된 값 : " + map);
 		
 		return map;
 	}
 	
-	// 전년도 월간 매출 조회 
+	// 전년도(2024년) 월별 매출액 조회 
 	@GetMapping("GetYearSales")
 	@ResponseBody
 	public Map<String, Object> getYearSales(int year) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = adminService.getYearSales(year);
 		
-		map = adminService.getYearSales(year);
-	
 		return map;
 	}
+	
+	// 2, 3번 차트 연 - 월 선택 시 해당 월 매출액 조회
+	@GetMapping("GetMonthSales")
+	@ResponseBody
+	public int getMonthSales(int year, int month) {
+		int monthSales = adminService.getMonthSales(year, month);
+		return monthSales;
+	}
+	
+	// 4번 차트 전체 기간(2020~2025) 연간 매출액 조회
+	// 파라미터는 ["period" : {2020, 2021, 2022, 2023, 2024, 2025}] 형태로 전달 받기에 Map<List<>> 사용
+	@PostMapping("GetAnnualSales")
+	@ResponseBody
+	public Map<Integer, Integer> annualSales(@RequestBody Map<String, List<Integer>> period) {
+		Map<Integer, Integer> map = adminService.getAnnualSales(period);
+		// [{2020 : 14,123,412}, {2021: 14,235,534}] 형태의 데이터로 ajax 응답
+		return map;
+	}	
 	
 }
 

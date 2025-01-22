@@ -21,7 +21,7 @@
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	<h3>관리자 메인페이지</h3>
+	<h3>주요 현황</h3>
 	<article id="testArticle">
 		<div id="time"></div>
 		<section id="sec01" class="secMain">
@@ -256,10 +256,10 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 10000000,
+							max : 25000000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 1000000
+								stepSize: 2500000
 							}
 						}
 					}

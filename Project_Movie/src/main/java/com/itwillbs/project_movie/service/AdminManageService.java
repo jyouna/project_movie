@@ -1,5 +1,7 @@
 package com.itwillbs.project_movie.service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,12 +147,14 @@ public class AdminManageService {
 		return manageMapper.checkEventStatus(event_code);
 	}
 	
+	
+	// 이벤트 당첨자 포인트 발급
+	// 1. 회원에게 포인트 + 시키고
+	// 2. 포인트 테이블에 정보 저장
+	// 3. 이벤트 당첨자 추첨 상태 true
 	@Transactional
 	public void GivePointToWinner(List<String> member_id, int event_code, int point_amount) {
 		// TODO Auto-generated method stub
-		// 1. 회원에게 포인트 + 시키고
-		// 2. 포인트 테이블에 정보 저장
-		// 3. 이벤트 당첨자 추첨 상태 true
 		
 		for(String id : member_id) {
 			manageMapper.insertPointInfo(id, event_code, point_amount); // 포인트 변동 정보 저장
@@ -170,7 +174,9 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getMemberAllInfo();
 	}
-
+	
+	
+	// 페이징 처리 시 해당 게시판 별 행 개수 조회
 	public int getBoardListForPaging(String boardName, String searchKeyword, String searchContent) {
 		
 		System.out.println("서비스까지 호출됨!!");
@@ -258,7 +264,8 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getPointRecord(startRow, listLimit, searchKeyword, searchContent);
 	}
-
+	
+	// 2, 3번 차트 월 가입자 수 조회
 	public int monthlyTotalNewMemberStatics(int year, int month) {
 		// TODO Auto-generated method stub
 		return manageMapper.getMonthlyTotalNewMember(year, month);
@@ -307,15 +314,17 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getMemberCount(searchKeyword, searchContent);
 	}
-
+	
+	// 4번 차트 전체 기간 (2020~2025) 가입자 출력
+	// 파라미터로 [period : 2025,2024,2023,2022,2021,2020] 전달 받기에 Map<List<>> 형태로 전달 받음 
 	public Map<String, String> getTotalMemberJoinStatics(Map<String, List<String>> period) {
 		// TODO Auto-generated method stub
-		List<String> list = period.get("period");
-		Map<String, String> map = new HashMap<String, String>();
+		List<String> list = period.get("period"); // {2025,2024,2023,2022,2021,2020} 값만 별도로 저장
+		Map<String, String> map = new HashMap<String, String>(); // {연도 : 매출액} 형태로 저장해서 전달하기 위한 Map 객체
 
 		System.out.println("서비스 리스트 객체 저장한 값 : " + list);
 		
-		for(String year : list) {
+		for(String year : list) { // {2020 : 14,543}, {2021 : 15,123} 이런 형태로 저장
 			map.put(year, manageMapper.getTotalPeriodMemberJoin(year));
 		}
 		System.out.println("서비스 map에 저장받은 값 : " + map);
@@ -391,7 +400,6 @@ public class AdminManageService {
 	// 전년도 월간 매출 조회
 	public Map<String, Object> getYearSales(int year) {
 		// TODO Auto-generated method stub
-
 		// 월별 매출액 조회
 		// 월별 환불액 조회 
 		// 월별 최종 매출액 = 월별 매출액(결제상태1) - 월별 환불액(환불상태1, 환불일자 기준) 
@@ -400,10 +408,8 @@ public class AdminManageService {
 		String[] arr = {"", "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"};
 		
 		for(int i = 1; i <= 12; i++) {
-			
 			// 월별 매출액
 			int monthlySales = manageMapper.getMonthlySales(year, i);
-			
 			// 월별 환불금액
 			int monthlyRefund = manageMapper.getMonthlyRefund(year, i);
 			System.out.println(arr[i] + "월 매출액 : " + monthlySales);
@@ -411,10 +417,56 @@ public class AdminManageService {
 			map.put(arr[i], (monthlySales-monthlyRefund));
 			System.out.println(arr[i] + "월 순매출액 : " + (monthlySales-monthlyRefund));
 		}
-		
 		System.out.println("map에 저장된 값 : " + map);
 		
 		return map;
 		
 	}
+	
+	// 2, 3번 차트 해당 월 매출액 리턴
+	public int getMonthSales(int year, int month) {
+		// 월 매출액
+		int monthSales = manageMapper.getMonthlySales(year, month);
+		// 월 환불액
+		int monthRefund = manageMapper.getMonthlyRefund(year, month);
+		// TODO Auto-generated method stub
+		return (monthSales-monthRefund); 
+	}
+
+	// 4번 차트 전체 기간 (2020 ~ 2025) 연 단위 매출액 조회
+	public Map<Integer, Integer> getAnnualSales(Map<String, List<Integer>> period) {
+		// TODO Auto-generated method stub
+		
+		List<Integer> list = period.get("period"); // {2025,2024,2023,2022,2021,2020} 값만 별도로 저장
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>(); // {연도 : 매출액} 형태로 저장해서 전달하기 위한 Map 객체
+		
+		for(int year : list) { // {2020 : 14,543}, {2021 : 15,123} 이런 형태로 저장
+			// 연 매출액
+			int annualSales = manageMapper.getAnnualSales(year);
+			// 연 환불액
+			int annualRefund = manageMapper.getAnnualRefund(year);
+			map.put(year, (annualSales-annualRefund));
+		}
+		return map;
+	}
+
+	// 스케줄러로 매일 09시 20분에 쿠폰 기한 만료 시 '사용불가' 처리
+	public void handlingExpiredCoupon(LocalDate date) {
+		// TODO Auto-generated method stub
+		manageMapper.handlingExpiredCoupon(date);
+		
+	}
+	
+	// 이벤트 당첨자 목록 조회
+	public List<String> getBookingEventWinnerList(Date event_start_date, Date event_end_date) {
+		// TODO Auto-generated method stub
+		return manageMapper.getBookingEventWinnerList(event_start_date, event_end_date);
+	}
+	
+	// 매출 데이터 생성에 필요한 멤버 아이디 조회 
+	public List<String> getMemberIdList() {
+		// TODO Auto-generated method stub
+		return manageMapper.getMemberIdList();
+	}
+
 }

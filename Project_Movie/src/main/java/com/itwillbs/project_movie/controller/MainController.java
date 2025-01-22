@@ -35,7 +35,7 @@ public class MainController {
 		return "main";
 	}
 	
-	// 관리자 메인페이지
+	// 관리자 메인페이지 공지사항, 1:1문의 미답변 내역 조회
 	@GetMapping("AdminpageMain")
 	public String AdminpageMain(HttpSession session, Model model) {
 		// 관리자 계정 로그인 판별
@@ -45,11 +45,8 @@ public class MainController {
 		
 		List<NoticeBoardVO> noticeVo = adminService.getNoticeBoardList();
 		List<InquiryVO> inquiryVo = adminService.getInquiryBoardList();
-		
-			
 		model.addAttribute("noticeVo", noticeVo);
 		model.addAttribute("inquiryVo", inquiryVo);
-		
 
 		return "adminpage/adminpage_main";
 	}
