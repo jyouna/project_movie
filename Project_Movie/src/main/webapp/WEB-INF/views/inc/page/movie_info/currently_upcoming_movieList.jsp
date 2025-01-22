@@ -28,7 +28,7 @@
 					            <li>장르: ${movieList[i].movie_genre}</li>
 					            <li>개봉일: ${movieList[i].release_date}</li>
 					            <li>러닝 타임: ${movieList[i].running_time}</li>
-					            <li>예매가: 10,000원</li>
+					            <li>예매가: ${generalPrice}원</li>
 				            </ul>
 				        </div>
 					</div>
@@ -54,7 +54,7 @@
 			            <li>장르: ${movieList[i].movie_genre}</li>
 			            <li>개봉일: ${movieList[i].release_date}</li>
 			            <li> 러닝 타임: ${movieList[i].running_time}</li>
-			            <li>예매가: 10,000원</li>
+			            <li>예매가: ${generalPrice}원</li>
 		            </ul>
 		        </div>
 			</div>

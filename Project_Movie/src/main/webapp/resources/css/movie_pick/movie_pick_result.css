@@ -33,25 +33,22 @@
 	margin-bottom: 10px;
 }
 
-#row01 {
-	height: 670px;
-	border-bottom: 1px solid;
-	margin-bottom: 20px;
+#movie2 {
+	float: left;
+	margin-top: 70px;
 }
 
-#second {
-	top: 70px;	
+#movie3 {
+	margin-top: 130px;
 }
 
-#third {
-	top: 130px;	
-}
 
 .movie {
 	width: 300px;
 	position: relative;
 	display: inline-block;
 	margin: 0 15px;
+	vertical-align: top;
 }
 
 .movie label {

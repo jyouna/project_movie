@@ -26,6 +26,11 @@ public class MoviePickService {
 		return moviePickMapper.selectVoteInfo();
 	}
 	
+	// 투표가 종료된 가장 최근의 투표 정보 조회
+	public Map<String, Object> getRecentVoteInfo() {
+		return moviePickMapper.selectRecentVoteInfo();
+	}
+	
 	// 투표 활성화
 	public int startMvoiePick(String vote_code) {
 		int vote_status = 1;
@@ -39,9 +44,20 @@ public class MoviePickService {
 	}
 	
 	// 투표 현황 조회
-	public List<Map<String, Object>> getVoteCurrentInfo(Object vote_code) {
+	public List<Map<String, Object>> getVoteCurrentInfo(String vote_code) {
 		return moviePickMapper.selectVoteCurrent(vote_code);
 	}
+	
+	// 회원의 투표내역 정보 등록
+	public int registMemberVoteInfo(Map<String, String> map) {
+		return moviePickMapper.insertMemberVoteInfo(map);
+	}
+	
+	// 회원의 투표내역 조회(중복 투표 방지)
+	public int getJoinCountThisVote(Map<String, String> map) {
+		return moviePickMapper.selectMemberVoteCount(map);
+	}
+	
 
 		
 }

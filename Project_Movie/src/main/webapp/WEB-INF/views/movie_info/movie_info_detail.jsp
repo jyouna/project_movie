@@ -29,7 +29,9 @@
 			<div>
 				<div id="movie_poster">
 					<img src="${movie.movie_img1}"><br>
-					<input type="button" value="예매하기">
+					<c:if test="${movie.movie_status eq '현재상영작'}">
+						<input type="button" value="예매하기" onclick="location.href='BookTickets'">
+					</c:if>
 				</div>
 				<div id="movie_info">
 					<b>${movie.movie_name}</b>
@@ -40,7 +42,10 @@
 					<p id="p02">
 					    감독 : ${movie.movie_director}<br>
 						출연 : ${movie.movie_actor}<br>
-						장르 : ${movie.movie_genre}
+						장르 : ${movie.movie_genre}<br>
+						<c:if test="${!movie.movie_status.equals('지난상영작')}">
+							예매가격 : ${generalPrice}원
+						</c:if>
 					</p>
 					줄거리
 					<div id="movie_summary">

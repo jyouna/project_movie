@@ -44,5 +44,7 @@ public interface MovieMapper {
 	// 영화상태 대기로 변경
 	int updateMovieStatusToStandby(@Param("movie_status") String movie_status, @Param("movieCodeArr") String[] movieCodeArr);
 	
+	// 영화가격 조회
+	int selectTicketPrice();
 	
 }

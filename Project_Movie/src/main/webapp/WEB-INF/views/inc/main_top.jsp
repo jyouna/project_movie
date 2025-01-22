@@ -7,7 +7,6 @@
 		<div class="navbar"> 
 			<div class="navbar-right"> 
 				<a href="${pageContext.request.contextPath}">홈</a> 
-				<a href="#" onclick="openAdminpage()">관리자(임시)</a>
 				<c:choose>
 					<c:when test="${empty sessionScope.sMemberId}">
 						<a href="MemberLogin">로그인</a> 
@@ -96,9 +95,5 @@
 <script>
     function openMypage() {
         window.open("MypageMain", "myPage", "width=1300,height=800, top=150, left=300, resizable=no");
-    }
-    
-    function openAdminpage() {
-        window.open("AdminLogin", "AdminLoginpage", "width=1300,height=800, top=150, left=300, resizable=no");
     }
 </script>

@@ -24,6 +24,8 @@
 	<jsp:include page="/WEB-INF/views/inc/page/movie_pick_sidebar.jsp"></jsp:include>
 	
 	<article class="box post">
+		<input type="hidden" id="loginId" value="${sessionScope.sMemberId}">
+		<input type="hidden" id="voteCode" value="${voteInfo.vote_code}">
 		<div id="movie_pick">
 			<div id="page_top">
 				영화투표하기
@@ -35,52 +37,29 @@
 				<div id="pick_list_title">
 					2025 SPRING SEASON 영화 투표
 				</div>
-				<div id="row01">
-					<c:forEach var="i" begin="0" end="2">
-						<div class="movie">
-							<label>${movieList[i].movie_name}(${movieList[i].movie_rating})</label><br>
-							<a href=""><img src="${movieList[i].movie_img1}"></a><br>
-							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
-							<input type="button" value="투표하기">
-							<div class="movie_info">
-					            &lt;${movieList[i].movie_name}&gt;
-					            <ul>
-						            <li>감독: ${movieList[i].movie_director}</li>
-						            <li>출연:<br> ${movieList[i].movie_actor}</li>
-						            <li>등급: ${movieList[i].age_limit}</li>
-						            <li>장르: ${movieList[i].movie_genre}</li>
-						            <li>개봉일: ${movieList[i].release_date}</li>
-						            <li>러닝 타임: ${movieList[i].running_time}</li>
-						            <li>예매가: 10,000원</li>
-					            </ul>
-					        </div>
-						</div>
-					</c:forEach>
-				</div>
-				<div id="row02">
-					<c:forEach var="i" begin="3" end="4">
-						<div class="movie">
-							<label>${movieList[i].movie_name}(${movieList[i].movie_rating})</label><br>
-							<a href=""><img src="${movieList[i].movie_img1}"></a><br>
-							<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
-							<input type="button" value="투표하기">
-							<div class="movie_info">
-					            <ul>
-			            			<li>영화 제목: ${movieList[i].movie_name}</li>
-						            <li>감독: ${movieList[i].movie_director}</li>
-						            <li>출연: ${movieList[i].movie_actor}</li>
-						            <li>등급: ${movieList[i].age_limit}</li>
-						            <li>장르: ${movieList[i].movie_genre}</li>
-						            <li>개봉일: ${movieList[i].release_date}</li>
-						            <li>러닝 타임: ${movieList[i].running_time}</li>
-						            <li>예매가: 13,000원</li>
-					            </ul>
-					        </div>
-						</div>
-					</c:forEach>
+				<c:forEach var="movie" items="${voteCurrentInfoList}">
 					<div class="movie">
-						<canvas id="voteCurrentChart" width="450px"></canvas>
+						<input type="hidden" value="${movie.movie_code}">
+						<label>${movie.movie_name}</label>(${movie.movie_rating})<br>
+						<img src="${movie.movie_img1}"><br>
+						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movie.movie_code}'">
+						<input type="button" class="joinVoteBtn" value="투표하기">
+						<div class="movie_info">
+				            &lt;${movie.movie_name}&gt;
+				            <ul>
+					            <li>감독: ${movie.movie_director}</li>
+					            <li>출연:<br> ${movie.movie_actor}</li>
+					            <li>등급: ${movie.age_limit}</li>
+					            <li>장르: ${movie.movie_genre}</li>
+					            <li>개봉일: ${movie.release_date}</li>
+					            <li>러닝 타임: ${movie.running_time}</li>
+					            <li>예매가: ${generalPrice}원</li>
+				            </ul>
+				        </div>
 					</div>
+				</c:forEach>
+				<div class="movie">
+					<canvas id="voteCurrentChart" width="450px"></canvas>
 				</div>
 			</div>
 			<div id="pick_notice">
@@ -92,8 +71,6 @@
 			</div>
 		</div>
 	</article>
-
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-	
 </body>
 </html>

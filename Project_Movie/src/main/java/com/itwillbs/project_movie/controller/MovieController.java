@@ -41,9 +41,13 @@ public class MovieController {
 		int seasonMovieCount = movieService.getCountSeasonCurrentlyMovie();
 		int generalMovieCount = movieService.getCountGeneralCurrentlyMovie();
 		
+		// 영화 가격 조회
+		int generalPrice = movieService.getTicketPrice();
+		
 		model.addAttribute("movieList", currentlyMovieList);
 		model.addAttribute("seasonMovieCount", seasonMovieCount);
 		model.addAttribute("generalMovieCount", generalMovieCount);
+		model.addAttribute("generalPrice", generalPrice);
 		return "movie_info/currently_movie_info";
 	}
 	
@@ -58,10 +62,14 @@ public class MovieController {
 		int seasonMovieCount = movieService.getCountSeasonUpcomingMovie();
 		// 상영예정작 리스트 조회
 		List<MovieVO> upcomingMovieList = movieService.getUpcomingMovieList();
+		// 영화 가격 조회
+		int generalPrice = movieService.getTicketPrice();
+		
 		model.addAttribute("movieList", upcomingMovieList);
 		model.addAttribute("seasonMovieCount", seasonMovieCount);
 		model.addAttribute("generalMovieCount", generalMovieCount);
 		model.addAttribute("totalCount", upcomingTotalMovieCount);
+		model.addAttribute("generalPrice", generalPrice);
 		return "movie_info/upcoming_movie_info";
 	}
 	
@@ -86,7 +94,12 @@ public class MovieController {
 	public String movieInfoDetail(Model model, String movie_code) {
 		// 영화코드로 영화정보 조회
 		MovieVO movie = movieService.searchMovieInfo(movie_code);
+		
+		// 영화 가격 조회
+		int generalPrice = movieService.getTicketPrice();
+				
 		model.addAttribute("movie", movie);
+		model.addAttribute("generalPrice", generalPrice);
 		return "movie_info/movie_info_detail";
 	}
 	

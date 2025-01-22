@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <!--
 	Escape Velocity by HTML5 UP
@@ -27,46 +28,24 @@
 			</div>
 			<div id="pick_movie_list">
 				<div id="pick_list_title">
-					2024 WINTER SEASON 영화 투표 결과
+					${voteInfo.vote_name} 결과
 				</div>
-				<div id="row01">
-					<div class="movie" id="second">
-						<label>바람(30%)</label><br>
-						<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-						<div class="pick_grade">
-							<img src="${pageContext.request.contextPath}/resources/images/silvermedal.png">
-				        </div>
+				<c:forEach var="movie" items="${voteCurrentInfoList}" varStatus="status">
+					<div class="movie" id="movie${status.count}">
+						<label>
+							${movie.movie_name}(
+								<fmt:formatNumber value="${movie.count / totalCount * 100}" pattern="#0.0"></fmt:formatNumber>
+							)
+						</label><br>
+						<a href=""><img src="${movie.movie_img1}"></a><br>
+						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movie.movie_code}'">
+						<c:if test="${status.count < 4 }">
+							<div class="pick_grade">
+								<img src="${pageContext.request.contextPath}/resources/images/${status.count}grade.png">
+					        </div>
+						</c:if>
 					</div>
-					<div class="movie" id="first">
-						<label>바람(40%)</label><br>
-						<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-						<div class="pick_grade">
-							<img src="${pageContext.request.contextPath}/resources/images/goldmedal.png">
-				        </div>
-					</div>
-					<div class="movie" id="third">
-						<label>바람(20%)</label><br>
-						<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-						<div class="pick_grade">
-							<img src="${pageContext.request.contextPath}/resources/images/bronzemedal.png">
-				        </div>
-					</div>
-				</div>
-				<div id="row02">
-					<div class="movie">
-						<label>바람(7%)</label><br>
-						<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-					</div>
-					<div class="movie">
-						<label>바람(3%)</label><br>
-						<a href=""><img src="${pageContext.request.contextPath}/resources/images/poster1.webp"></a><br>
-						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail'">
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div id="pick_notice">
 				<div>안내사항</div>

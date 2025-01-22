@@ -160,4 +160,11 @@
 		WHERE movie_code = #{movie_code}
 	</delete>
 	
+	<!-- 일반티켓 가격 조회 -->
+	<select id="selectTicketPrice" resultType="int">
+		SELECT ticket_amount
+		FROM ticket
+		WHERE ticket_code = 0
+	</select>
+	
 </mapper>

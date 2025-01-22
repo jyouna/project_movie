@@ -52,6 +52,7 @@
 			$("#bookingBtn").prop("disabled", true);
 			
 			setTimeout(function() {
+				// 시즌 상영예정작이 선정이 완료되지 않을때 투표페이지롱 이동
 				if(${seasonMovieCount < 3}) {
 					if(confirm("시즌 상영예정작 투표중입니다\n투표하러 가시겠습니까?")) {
 						location.href = "MoivePick";

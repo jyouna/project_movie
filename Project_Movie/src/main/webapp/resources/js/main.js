@@ -57,4 +57,26 @@ $(function() {
 		}
 	});
 	
+	
+	// 메인페이지에서 1234 + 엔터키 입력시 관리자페이지이동
+    let inputSequence = "";
+
+    $(document).keypress(function(event) {
+		// 0 ~ 9입력시 변수에 저장
+        if (event.key >= "0" && event.key <= "9") {
+            inputSequence += event.key;
+		// 엔터키 입력시 변수값 판별
+        } else if (event.key == "Enter") {
+            if (inputSequence == "1234") {
+                window.open("AdminLogin", "AdminLoginpage", "width=1300,height=800, top=150, left=300, resizable=no");
+            }
+			//조건을 불만족하면 변수 초기화
+            inputSequence = ''; 
+        } else {
+			//조건을 불만족하면 변수 초기화
+            inputSequence = ''; 
+		}	
+    });
+
+	
 });

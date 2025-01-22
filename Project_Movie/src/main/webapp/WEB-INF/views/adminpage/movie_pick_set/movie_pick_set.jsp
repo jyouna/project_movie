@@ -69,7 +69,7 @@
 						</th>
 					</tr>
 					<tr>
-						<c:forEach var="movie" items="${movieList}" varStatus="status">
+						<c:forEach var="movie" items="${voteCurrentInfoList}" varStatus="status">
 							<td colspan="2">
 								<label>
 									<input type="checkbox" value="${movie.movie_code}" class="check">

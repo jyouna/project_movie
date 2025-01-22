@@ -21,12 +21,38 @@
 		)
 	</insert>
 	
+	<insert id="insertMemberVoteInfo">
+		INSERT INTO vote_box
+		VALUES (
+			null
+			, #{vote_code}
+			, #{movie_code}
+			, #{member_id}
+			, now()
+		)
+	</insert>
+	
 	<!-- 현재날짜에 해당하는 시즌투표정보 조회 -->
 	<select id="selectVoteInfo" resultType="map">
 		SELECT *
-		FROM vote_info
+		FROM 
+			vote_info
 		WHERE 
 			now() BETWEEN start_date AND end_date
+	</select>
+	
+	<!-- 완료된 투표중 가장 최신의 투표정보 조회 -->
+	<select id="selectRecentVoteInfo">
+		SELECT *
+		FROM 
+			vote_info
+		WHERE
+			end_date = (SELECT MAX(end_date)
+						FROM
+							vote_info
+						WHERE
+							winner_movie_code IS NOT NULL
+						) 
 	</select>
 	
 	<!-- 투표 상태 업데이트 -->
@@ -39,14 +65,27 @@
 	</update>
 	
 	
-	<!-- 투표 현황 조회 -->
+	<!-- 투표 현황, 영화정보조회 -->
 	<select id="selectVoteCurrent" resultType="map">
-		SELECT v.movie_code, m.movie_name, count(*) AS count
+		SELECT 
+			v.movie_code, m.movie_name, m.movie_director, m.movie_actor, m.age_limit
+			, m.movie_genre, m.release_date, m.running_time, m.movie_img1, m.movie_rating
+			, IFNULL(count(*), 0) AS count
 		FROM vote_box v
-		JOIN movie m
+		LEFT OUTER JOIN movie m
 		ON v.movie_code = m.movie_code
 		WHERE vote_code = #{vote_code}
 		GROUP BY movie_code
-		ORDER BY count(*) DESC; 
+		ORDER BY count(*) DESC
+	</select>
+	
+	<!--  회원의 이번 투표 수 조회(투표여부 판별) -->
+	<select id="selectMemberVoteCount" resultType="int">
+		SELECT count(*)
+		FROM vote_box
+		WHERE 
+			vote_code = #{vote_code}
+		AND
+			member_id = #{member_id}
 	</select>
 </mapper>
