@@ -1,13 +1,4 @@
-/* 
-General body styling */
-/* body { */
-/*     font-family: Arial, sans-serif; */
-/*     background-color: #f4f4f4; */
-/*     color: #333; */
-/*     margin: 0; */
-/*     padding: 0; */
-/* } */
-/* 폼 컨테이너 */
+
 form[name="searchForm"] {
     display: flex;
     justify-content: flex-end;
@@ -109,10 +100,12 @@ article {
     padding: 10px;
     text-align: center;
 }
-
-#listForm table tr:nth-child(even) {
-    background-color: #f9f9f9;
+#listForm #eventForm .event_code, 
+#listForm #eventForm .event_status,
+#listForm #eventForm .event_subject { 
+	color:black;
 }
+
 
 #listForm table tr:hover {
     background-color: #eee;
@@ -126,6 +119,7 @@ article {
 
 p{
 	margin-bottom: 0em;
+	color: black;
 }
 /* Pagination styling */
 #pageList {
@@ -182,4 +176,29 @@ p{
 
 .event_subject {
 	cursor: pointer;
+}
+.winnerList{
+	-moz-transition: all .25s ease-in-out;
+	-webkit-transition: all .25s ease-in-out;
+	-ms-transition: all .25s ease-in-out;
+	transition: all .25s ease-in-out;
+	display: inline-block;
+	background: #d5d5d5;
+	text-align: center;
+	text-transform: uppercase;
+/* 	font-weight: 700; */
+	letter-spacing: 0.12em;
+	text-decoration: none;
+	border-radius: 0.35em;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+	padding: 0 1.25em 0 1.25em;
+	font-size: 0.9em;
+	min-width: 1em;
+	height: 4em;
+	line-height: 4em;
+}
+.winnerList:hover{
+	background-color: #b3b1b1;
 }

@@ -26,9 +26,8 @@
 		<div id="title">
 			<h1>내가 본 영화</h1>
 		</div>
-			* 영화 조회는 최근 5년 내역만 조회가 가능합니다
 			<div id="selectBox">
-				<form action="watchedMovie" method="get">
+				<form action="watchedMovie" method="get" id="watchedForm">
 					<select name="searchYear">
 						<option>2025</option>
 						<option>2024</option>
@@ -37,6 +36,7 @@
 						<option>2021</option>
 					</select>
 					<input type="submit" value="조회">
+						* 영화 조회는 최근 5년 내역만 조회가 가능합니다
 				</form>
 			</div>
 			<div style="text-align: right;">

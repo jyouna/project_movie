@@ -29,10 +29,6 @@
 					<tr>
 						<th width="13.46%">제목</th>
 						<td width="38.46%"><input type="text" name="notice_subject"></td>
-						<th width="17.31%">등록일</th>
-						<td width="30.77%">
-							<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
-						</td>
 					</tr>
 					<tr>
 						<td colspan="4">
@@ -42,7 +38,7 @@
 				</table>
 			</section>
 			<hr>
-			<div>
+			<div style="text-align: center;">
 				<input type="submit" value="등록하기" style="text-align: right;">
 				<input type="reset" value="다시쓰기">
 				<input type="button" value="뒤로가기" onclick="location.href='AdminFaq'">

@@ -34,25 +34,19 @@
 					<tr>
 						<th width="110px">제목 </th>
 						<td><input type="text" name ="inquiry_subject" value="RE: ${inquiry.inquiry_subject}" ></td>
-						<th width="90px">등록일</th>
-						<td width="160px">
-							<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
-						</td>
-					</tr>
-					<tr>
-						<th width="110px">첨부파일</th>
-						<td></td>
 						<th width="90px">작성자</th>
 						<td><input type="text" value="${sessionScope.sMemberId}" readonly="readonly"></td>
 					</tr>
 				</table>
 			</section>
 			<section id="articleContentArea">
-				<textarea rows="15" cols="40" name="inquiry_content"></textarea>
+				<textarea rows="15" cols="70" name="inquiry_content"></textarea>
 			</section>
 			<hr>
 			<div>
 				<input type="submit" value="등록">
+				<input type="reset" value="다시쓰기">
+				<input type="button" value="뒤로가기" onclick="location.href='AdminInquiry'">
 			</div>
 		</form>
 	</article>

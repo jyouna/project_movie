@@ -5,8 +5,8 @@
 			let total_payment = "";
 			$("table").on("click", "tr", function() {
 				$(this).find("input[type='radio']").prop("checked", true);
-				payment_code = $(this).find("td:eq(1)").text();
-			    movie_name = $(this).find("td:eq(2)").text();
+				payment_code = $(this).find("td:eq(1)").text().trim();
+			    movie_name = $(this).find("td:eq(2)").text().trim();
 			    start_time = $(this).find("td:eq(6)").text().trim();
 			    total_payment = parseInt($(this).find("td:eq(7)").text().trim());
 				console.log(total_payment + ", " + typeof(total_payment));

@@ -24,7 +24,7 @@
 	
 	<section>
 <article id="articleForm">
-		<h1>공지사항 - 글</h1>
+		<h4>공지사항 - 글</h4><br>
 		<section id="basicInfoArea">
 			<table>
 				<tr>
@@ -34,10 +34,6 @@
 					<td width="160px">
 						<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
-				</tr>
-				<tr>
-					<th width="110px">첨부파일</th>
-					<td colspan="3" id="notice_file"></td>
 				</tr>
 			</table>
 		</section>
@@ -50,25 +46,14 @@
 		<input type="button" value="삭제하기" onclick="location.href='AdminNoticeDelete?notice_code=${param.notice_code}&pageNum=${param.pageNum }'">
 		<input type="button" value="목록" onclick="location.href='AdminNotice?pageNum=${param.pageNum}'" >
 		</div>
-<!-- 		다음글이 없을 경우 if문 사용해서 해당 글이 존재하지 x 라고 표시 -->
-		<table id="buttonTable">
-			<tr>
-				<td>
-					<input type="button" value="△이전글" id="tableButton" onclick="location.href='AdminNoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
-					<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-				</td>
-<!-- 				이전글 제목 가져오기 -->
-				<td>${param.notice_code-1}</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="button" value="▽다음글" id="tableButton" onclick="location.href='AdminNoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
-					<c:if test="${param.inquiry_code-1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-				</td>
-				<td><a href="onclick=location.href='AdminNoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'">${notice.notice_subject}</a></td>
-			</tr>
-		</table>		
-
+		<br>
+		<div style="text-align:right;">
+			<input type="button" value="◁이전글" onclick="location.href='AdminNoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+	
+			<input type="button" value="▷다음글" onclick="location.href='AdminNoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		</div>
 	</article>
 
 

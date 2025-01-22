@@ -7,8 +7,8 @@ body {
     padding: 0;
 }
 .box {
-	width: 1000px;
-	height: 600px;
+	width: 100%;
+	height: 80%;
 	}
 /* 이벤트 - 글  */
 #articleForm {

@@ -20,11 +20,11 @@
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	<article>
+	<article class="box">
 		<div id="title">
 			<h1>공지사항</h1>
 		</div>
-		<div style="text-align:	left;">
+		<div>
 			<input type="button" value="글 작성" onclick="location.href='AdminNoticeWrite'">
 		</div>
 		<div id="search-bar" style="text-align:	right;">
@@ -58,7 +58,7 @@
 							<tr>
 								<td class="notice_code">${notice_board.notice_code}</td>
 								<td class="notice_subject">${notice_board.notice_subject}</td>
-								<td><fmt:formatDate value="${notice_board.regis_date}" pattern="yy-MM-dd"/></td>
+								<td><fmt:formatDate value="${notice_board.regis_date}" pattern="yyyy-MM-dd"/></td>
 								<td>${notice_board.view_count}</td>
 							</tr>
 						</c:forEach>

@@ -25,16 +25,12 @@
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th width="110px">제목 </th>
-					<td>${notice.notice_subject}</td>
-					<th width="90px">등록일</th>
+					<th width="60px">제목 </th>
+					<td width="255px">${notice.notice_subject}</td>
+					<th width="75px">등록일</th>
 					<td width="160px">
 						<fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
-				</tr>
-				<tr>
-					<th width="110px">첨부파일</th>
-					<td colspan="3" id="notice_file"></td>
 				</tr>
 			</table>
 		</section>
@@ -43,26 +39,15 @@
 		</section>
 		<hr>
 		<div style="text-align: right;" >
-		<input type="button" value="목록" id="listButton" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
+		<input type="button" value="목록" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
 		</div>
-<!-- 		다음글이 없을 경우 if문 사용해서 해당 글이 존재하지 x 라고 표시 -->
-		<table id="buttonTable">
-			<tr>
-				<td>
-					<input type="button" value="△이전글" id="tableButton" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
-					<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-				</td>
-<!-- 				이전글 제목 가져오기 -->
-				<td>${param.notice_code-1}</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="button" value="▽다음글" id="tableButton" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
-					<c:if test="${param.inquiry_code-1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-				</td>
-				<td><a href="onclick=location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'">${notice.notice_subject}</a></td>
-			</tr>
-		</table>		
+
+		<input type="button" value="◁이전글" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
+		<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+
+		<input type="button" value="▷다음글" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
+		<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+
 
 	</article>
 

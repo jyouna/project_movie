@@ -22,7 +22,7 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<article id="articleForm">
-			<h1>1:1문의 - 글 </h1>
+			<h4>1:1문의 - 글 </h4><br>
 			<section id="basicInfoArea">
 				<table>
 					<tr>
@@ -39,29 +39,19 @@
 				${inquiry.inquiry_content}
 		</section>
 		<hr>
-		<div style="text-align: right;" >
-		<input type="button" value="목록" id="listButton" onclick="location.href='AdminInquiry?pageNum=${param.pageNum}'">
-		</div>
-		<section id="commandCell">
+		<section style="text-align: center;">
 			<input type="button" value="답변" onclick="location.href='AdminInquiryReply?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum}'">
-<%-- 			<input type="button" value="수정" onclick="location.href='AdmininquiryModify?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum}'"> --%>
 			<input type="button" value="삭제" onclick="deleteInquiry()">
+			<input type="button" value="목록" onclick="location.href='AdminInquiry?pageNum=${param.pageNum}'">
 		</section>
-		
-		<table>
-			<tr>
-				<td>
-					<input type="button" value="△이전글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code-1}&pageNum=${param.pageNum}'"
-					<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-				</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><input type="button" value="▽다음글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code+1}&pageNum=${param.pageNum}'"
-				<c:if test="${param.inquiry_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>></td>
-				<td></td>
-			</tr>
-		</table>
+		<hr>
+		<div style="text-align:right;">
+			<input type="button" value="◁이전글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code+1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.inquiry_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+	
+			<input type="button" value="▷다음글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code-1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		</div>
 	<script type="text/javascript">
 		
 		function deleteInquiry() { 

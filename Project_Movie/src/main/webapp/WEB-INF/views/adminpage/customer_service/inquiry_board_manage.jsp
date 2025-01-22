@@ -71,9 +71,9 @@
 									</c:if>
 									${inquiry.inquiry_subject}
 								</td>
-								<td>${sessionScope.sAdminId}</td>
+								<td>${inquiry.inquiry_writer}</td>
 								<td>
-									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yy-MM-dd"/>
+									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
 								</td>
 							</tr>
 						</c:forEach>

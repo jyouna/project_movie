@@ -28,7 +28,7 @@
 			<h1>FAQ</h1>
 		</div>
 		<section id="listForm">
-			<table>
+			<table id="faqForm">
 				<tr id="tr_top">
 					<td width="100px">번호</td>
 					<td>제목</td>
@@ -45,8 +45,8 @@
 							<tr>
 								<td class="faq_code">${faq_board.faq_code}</td>
 								<td class="faq_subject">${faq_board.faq_subject}</td>
-								<td><fmt:formatDate value="${faq_board.regis_date}" pattern="yy-MM-dd"/></td>
-								<td>${faq_board.view_count}</td>
+								<td class="faq_date"><fmt:formatDate value="${faq_board.regis_date}" pattern="yy-MM-dd"/></td>
+								<td class="faq_view">${faq_board.view_count}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>					

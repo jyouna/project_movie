@@ -38,14 +38,13 @@
 			</form>
 		</div>
 		<section id="listForm">
-			<table>
+			<table id="noticeForm">
 				<tr id="tr_top">
 					<td width="100px">번호</td>
 					<td>제목</td>
 					<td width="150px">등록일</td>
 					<td width="100px">조회수</td>
 				</tr>
-					
 				<c:choose>
 					<c:when test="${empty noticeList}"> 
 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
@@ -55,8 +54,8 @@
 							<tr>
 								<td class="notice_code">${notice_board.notice_code}</td>
 								<td class="notice_subject">${notice_board.notice_subject}</td>
-								<td><fmt:formatDate value="${notice_board.regis_date}" pattern="yy-MM-dd"/></td>
-								<td>${notice_board.view_count}</td>
+								<td class="notice_date"><fmt:formatDate value="${notice_board.regis_date}" pattern="yy-MM-dd"/></td>
+								<td class="notice_view">${notice_board.view_count}</td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>					

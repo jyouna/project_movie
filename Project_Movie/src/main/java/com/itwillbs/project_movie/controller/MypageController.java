@@ -82,6 +82,7 @@ public class MypageController {
 	@ResponseBody
 	@PostMapping("ReservationDetail")
 	public Map<String, Object> reservationDetail(String payment_code) {
+		System.out.println("페이먼트 코드 : " + payment_code);
 		Map<String, Object> reservationDetail = service.searchdetail(payment_code);
 		System.out.println("controller paymentcode" + reservationDetail);
 //		reservationDetail.setR_dateToString(reservationDetail.getR_date().toString().replace(".0", ""));

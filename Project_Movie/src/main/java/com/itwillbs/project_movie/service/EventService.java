@@ -31,24 +31,7 @@ private EventMapper mapper;
 		}
 		return event;
 	}
-	//이벤트 당첨자 게시글 갯수
-	public int getEventWinnerListCount(String searchType, String searchKeyword) {
-		// TODO Auto-generated method stub
-		return mapper.selectEventWinnerCount(searchType, searchKeyword);
-	}
-	//이벤트 당첨자 게시글 리스트
-	public List<EventWinnerAnnounceBoardVO> getEventWinnerList(int startRow, int listLimit, String searchType, String searchKeyword) {
-		// TODO Auto-generated method stub
-		return mapper.selectEventWinnerList(startRow, listLimit, searchType, searchKeyword);
-	}
-//	//당첨자 게시글 조회수 증가
-	public EventWinnerAnnounceBoardVO getEventWinner(int winner_code, boolean isIncreaseReadcount) {
-		EventWinnerAnnounceBoardVO eventWinner = mapper.selectEventWinner(winner_code);
-		if(eventWinner != null && isIncreaseReadcount) {
-			mapper.updateEventWinnerReadCount(eventWinner);
-		}
-		return eventWinner;
-	}
+
 
 
 }

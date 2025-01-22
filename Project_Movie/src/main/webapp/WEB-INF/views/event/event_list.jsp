@@ -33,9 +33,9 @@
 			<table id="eventForm" border="1">
 				<tr id="tr_top" align="center">
 					<td width="35px">번호</td>
-					<td width="45px">상태</td>
+					<td width="55px">상태</td>
 					<td width="200px" >제목</td>
-					<td width="100px">이벤트 기간</td>
+					<td width="150px">이벤트 기간</td>
 <!-- 					<td width="35px">조회수</td> -->
 					<td width="35px">당첨자</td>
 				</tr>
@@ -54,7 +54,7 @@
 <%-- 								<td class="event_subject"><a href="eventPost?event_code=${event_board.event_code}">${event_board.event_subject}</a></td> --%>
 								<td class="event_subject">${event_board.event_subject}</td>
 								<td>
-									<p>${event_board.event_start_date} - <br> ${event_board.event_end_date}</p>
+									<p>${event_board.event_start_date} - ${event_board.event_end_date}</p>
 								</td>
 <%-- 								<td>${event_board.view_count}</td> --%>
 								<td>

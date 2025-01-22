@@ -30,19 +30,17 @@
 					<tr>
 						<th width="13.46%">제목</th>
 						<td width="34.46%"><input type="text" name="faq_subject"></td>
-						<th width="17.31%">등록일</th>
-						<td width="30.77%">	
-							<fmt:formatDate value="${faq_board.regis_date}" pattern="yyyy-MM-dd"/>
-						</td>
 					</tr>
 				</table>
 			</section>
 			<section id="articleContentArea">
 				<textarea rows="15" cols="70" name="faq_content"></textarea>
 			</section>
-			<input type="submit" value="등록하기" style="text-align: right;">
-			<input type="reset" value="다시쓰기">
-			<input type="button" value="뒤로가기" onclick="location.href='AdminFaq'">
+			<div style="text-align: center;">
+				<input type="submit" value="등록하기" style="text-align: right;">
+				<input type="reset" value="다시쓰기">
+				<input type="button" value="뒤로가기" onclick="location.href='AdminFaq'">
+			</div>
 		</form>
 		<hr>
 	</article>

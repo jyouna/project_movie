@@ -1,12 +1,4 @@
 
-/* body { */
-/*     font-family: Arial, sans-serif; */
-/*     background-color: #f4f4f4; */
-/*     color: #333; */
-/*     margin: 0; */
-/*     padding: 0; */
-/* } */
-
 /* 이벤트 - 글  */
 #articleForm {
     background-color: #fff;
@@ -52,48 +44,12 @@
 #articleContentArea{
 	padding: 27px;
 }
-#listButton{
-	transition: all .25s ease-in-out !important;
-    display: inline-block !important;
-    text-align: center !important;
-    text-transform: uppercase !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.25em !important;
-    text-decoration: none !important;
-    border-radius: 0.35em !important;
-    background-color: #858585;
-    color: white;
-    border: 0 !important;
-    outline: 0 !important;
-    cursor: pointer !important;
-    padding: 0 1.25em 0 1.25em !important;
-    font-size: 0.9em !important;
-    min-width: 1em !important;
-    height: 4em !important;
-    line-height: 4em !important;
+td{
+	color: black;
 }
-
-#tableButton {
-    transition: all .25s ease-in-out !important;
-    display: inline-block !important;
-    text-align: center !important;
-    text-transform: uppercase !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.25em !important;
-    text-decoration: none !important;
-    border-radius: 0.35em !important;
-    border: 0 !important;
-    outline: 0 !important;
-    cursor: pointer !important;
-    padding: 0 1.25em 0 1.25em !important;
-    font-size: 0.9em !important;
-    min-width: 1em !important;
-    height: 4em !important;
-    line-height: 4em !important;
-    background-color: #858585;
-    color: white;
+#articleContentArea{
+	color: black;
 }
-
 
 hr{
 	border: 0;

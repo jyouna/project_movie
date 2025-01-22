@@ -20,38 +20,32 @@
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
 		<article id="articleForm">
-		<h1>이벤트 - 글</h1>
+		<h4>이벤트 - 글</h4><br>
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th width="90px">제목</th>
-					<td width="220px">${event.event_subject}</td>
-					<th width="90px">등록일</th>
+					<th width="60px">제목</th>
+					<td width="255px">${event.event_subject}</td>
+					<th width="75px">등록일</th>
 					<td width="160px">
 						<fmt:formatDate value="${event.event_start_date}" pattern="yyyy-MM-dd"/>
 					</td>
-				</tr>
-					<tr>
-					<th width="90px">첨부파일</th>
-					<td colspan="3">${event.event_file1}</td>
 				</tr>
 			</table>
 		</section>
 		<section id="articleContentArea">
 			${event.event_content}
 		</section>
-		<input type="button" value="목록" id="listButton" style="float: right;" onclick="location.href='EventList?pageNum=${param.pageNum}'">
+		<input type="button" value="목록" style="float: right;" onclick="location.href='EventList?pageNum=${param.pageNum}'">
 		<hr>
-		<table id="postList">
-			<tr>
-				<th><input type="button" value="△이전글" id="tableButton" onclick="location.href='EventPost?event_code=${event.event_code-1}&pageNum=${PageInfo.pageNum }'"></th>
-				<th>이거는 이전 글 </th>
-			</tr>
-			<tr>
-				<th><input type="button" value="▽다음글" id="tableButton" onclick="location.href='EventPost?event_code=${event.event_code+1}&pageNum=${PageInfo.pageNum }'"></th>
-				<th>여기는 다음글</th>
-			</tr>
-		</table>
+		<div style="text-align:right;">
+			<input type="button" value="◁이전글" onclick="location.href='EventPost?event_code=${param.event_code+1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.event_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+	
+			<input type="button" value="▷다음글" onclick="location.href='EventPost?event_code=${param.event_code-1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.event_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		</div>
+		
 
 	</article>
 

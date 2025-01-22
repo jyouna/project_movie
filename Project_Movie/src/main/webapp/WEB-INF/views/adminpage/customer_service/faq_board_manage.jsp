@@ -13,7 +13,7 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_list.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/notice_board_manage.css" rel="stylesheet" />
 	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
@@ -22,24 +22,21 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<section>
-		<article>
+	<article class="box">
 		<div id="title">
 			<h1>FAQ</h1>
 		</div>
 		<div>
 			<input type="button" value="글 작성" onclick="location.href='AdminFaqWrite'">
-
 		</div>
 		<section id="listForm">
 			<table>
 				<tr id="tr_top">
-					<td width="100px">번호</td>
-					<td>제목</td>
-					<td width="150px">등록일</td>
-					<td width="100px">조회수</td>
+					<td width="70px">번호</td>
+					<td width="270px">제목</td>
+					<td width="120px">등록일</td>
+					<td width="70px">조회수</td>
 				</tr>
-					
 				<c:choose>
 					<c:when test="${empty faqList}"> 
 						<tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
@@ -49,7 +46,7 @@
 							<tr>
 								<td class="faq_code">${faq_board.faq_code}</td>
 								<td class="faq_subject">${faq_board.faq_subject}</td>
-								<td><fmt:formatDate value="${faq_board.regis_date}" pattern="yy-MM-dd"/></td>
+								<td><fmt:formatDate value="${faq_board.regis_date}" pattern="yyyy-MM-dd"/></td>
 								<td>${faq_board.view_count}</td>
 							</tr>
 						</c:forEach>

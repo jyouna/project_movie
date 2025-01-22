@@ -69,10 +69,9 @@
             </c:choose>
          </table>
       </section>
-      
+      <br>
 	<div id="underButton" style="text-align: right;">
-<!-- 	상세정보 클릭 시 상세정보 창 띄우기  -->
-      <input type="button" value="상세정보" id="detail">
+<!-- 	상세정보 클릭 시 상세정보 창 띄우기  -->    
 <!--       예매취소 클릭 시 취소하시겠습니까? 알림창 -->
       <input type="button" value="예매취소" id="cancel">
 <!-- 확인 시 예매가 취소되었습니다. -->

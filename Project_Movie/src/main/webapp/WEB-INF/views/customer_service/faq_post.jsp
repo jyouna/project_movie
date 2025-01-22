@@ -21,20 +21,16 @@
 	<jsp:include page="/WEB-INF/views/inc/page/customer_service_sidebar.jsp"></jsp:include>
 	
 	<article id="articleForm">
-		<h1>FAQ - 글</h1>
+		<h4>FAQ - 글</h4><br>
 		<section id="basicInfoArea">
 			<table>
 				<tr>
-					<th width="110px">제목</th>
-					<td width="220px">${faq.faq_subject}</td>
-					<th width="90px">등록일</th>
+					<th width="60px">제목</th>
+					<td width="225px">${faq.faq_subject}</td>
+					<th width="75px">등록일</th>
 					<td width="160px">
 						<fmt:formatDate value="${faq.regis_date}" pattern="yyyy-MM-dd"/>
 					</td>
-				</tr>
-				<tr>
-					<th width="110px">첨부파일</th>
-					<td colspan="3" id="faq_file1"></td>
 				</tr>
 			</table>
 		</section>
@@ -43,16 +39,10 @@
 		</section>
 		<input type="button" value="목록" onclick="location.href='FaqList?pageNum=${param.pageNum}'">
 		<hr>
-		<table id="postList">
-			<tr>
-				<th><input type="button" value="△이전글" id="tableButton" onclick="location.href='FaqPost?event_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"></th>
-				<th>이거는 이전 글 </th>
-			</tr>
-			<tr>
-				<th><input type="button" value="▽다음글" id="tableButton" onclick="location.href='FaqPost?event_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"></th>
-				<th>여기는 다음글</th>
-			</tr>
-		</table>
+		<input type="button" value="◁이전글" onclick="location.href='FaqPost?faq_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"
+		<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		<input type="button" value="▷다음글" onclick="location.href='FaqPost?faq_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"
+		<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
 	</article>
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
