@@ -132,10 +132,10 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 25000000,
+							max : 35000000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 2500000
+								stepSize: 3500000
 							}
 						}
 					}

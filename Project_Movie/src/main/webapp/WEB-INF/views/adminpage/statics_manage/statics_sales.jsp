@@ -123,10 +123,10 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 25000000,
+							max : 35000000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 2500000
+								stepSize: 3500000
 							}
 						}
 					}
@@ -213,10 +213,10 @@ $(function(){
 								},
 								y: {
 									min : 0,
-									max : 1500000,
+									max : 2000000,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
-										stepSize: 100000
+										stepSize: 200000
 									}
 									
 								}
@@ -287,10 +287,10 @@ $(function(){
 								},
 								y: {
 									min : 0,
-									max : 30000000,
+									max : 50000000,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
-										stepSize: 3000000
+										stepSize: 5000000
 									}
 									
 								}
@@ -382,10 +382,10 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 250000000,
+							max : 400000000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 25000000
+								stepSize: 40000000
 							}
 							
 						}

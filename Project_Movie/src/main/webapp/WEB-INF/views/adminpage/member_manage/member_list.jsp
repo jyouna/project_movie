@@ -18,6 +18,11 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <style type="text/css">
+table {
+	white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+	overflow: hidden;    /* 넘치는 텍스트를 숨김 */
+	text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */
+}
 th, td {
 	text-align: center !important;}
 .alignLeft {
@@ -32,24 +37,17 @@ th, td {
 	
 	<h3>회원 정보 조회</h3>
 	<div id="divTop">
-		<div id="divTopLeft">
-<!-- 			<input type="button" value="전체조회" id="listSearch"> -->
-<!-- 			<input type="button" value="ID 조회" id="idSearch"> -->
-			<span id="member_count"></span>
-		</div>
-		<div id="divTopRight"> <!--  우측 상단 검색란 -->
-			<form action="MemberList" method="get">
-				<input type="hidden" name="pageNum" value="${param.pageNum}">	
-				<select name="searchKeyword" id="searchKeyword">
-					<option value="searchId" <c:if test="${param.searchKeyword == 'searchId'}">selected</c:if>>ID</option>
-					<option value="searchEmail" <c:if test="${param.searchKeyword == 'searchEmail'}">selected</c:if>>이메일</option>
-					<option value="searchPhone" <c:if test="${param.searchKeyword == 'searchPhone'}">selected</c:if>>연락처</option>
-				</select>
-				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}" id="searchContent">
-				<input type="submit" value="검색" id="searchBtn">
-<%-- 				<input type="hidden" value="${param.pageNum}" name="pageNum"> --%>
-			</form>	
-		</div>
+		<span id="member_count"></span>
+		<form action="MemberList" method="get">
+			<input type="hidden" name="pageNum" value="${param.pageNum}">	
+			<select name="searchKeyword" id="searchKeyword">
+				<option value="searchId" <c:if test="${param.searchKeyword == 'searchId'}">selected</c:if>>ID</option>
+				<option value="searchEmail" <c:if test="${param.searchKeyword == 'searchEmail'}">selected</c:if>>이메일</option>
+				<option value="searchPhone" <c:if test="${param.searchKeyword == 'searchPhone'}">selected</c:if>>연락처</option>
+			</select>
+			<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}" id="searchContent">
+			<input type="submit" value="검색" id="searchBtn">
+		</form>	
 	</div>
 	<div id="tableDiv">
 		<table id="mainTable" border="1">
