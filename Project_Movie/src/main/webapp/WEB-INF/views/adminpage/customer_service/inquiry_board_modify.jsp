@@ -41,6 +41,7 @@
 				<hr>
 				<div style="text-align: right;" >
 					<input type="submit" value="등록">
+					<input type="button" value ="취소" onclick="location.href='AdminInquiry'" style="text-align: right;">
 				</div>
 			</form>
 		</section>

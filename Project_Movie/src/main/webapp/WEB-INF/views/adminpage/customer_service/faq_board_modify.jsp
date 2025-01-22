@@ -41,10 +41,11 @@
 					</table>
 				</section>
 				<section id="articleContentArea">
-					<textarea rows="15" cols="70" name="notice_content" required="required">${notice.notice_content}</textarea>
+					<textarea rows="15" cols="70" name="faq_content" required="required">${faq.faq_content}</textarea>
 				</section>
 				<hr>
 				<input type="submit" value ="등록" style="text-align: right;">
+				<input type="button" value ="취소" onclick="location.href='AdminFaq'" style="text-align: right;">
 			</form>
 		</article>
 	</section>

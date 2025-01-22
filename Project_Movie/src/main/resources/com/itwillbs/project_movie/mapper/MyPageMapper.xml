@@ -66,21 +66,9 @@
 		FROM movie
 		JOIN schedule ON movie.movie_code = schedule.movie_code
 		JOIN payment ON schedule.schedule_code = payment.schedule_code
-		<if test="!searchKeyword.equals('')">
- 			WHERE
+		WHERE
 			payment.member_id = #{id}
-			AND	schedule.end_time &lt; NOW()
- 			<choose>
- 				<when test="searchYear'subject')">
-		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
- 				</when>
- 				<when test="searchYear'content')">
-		 			inquiry_content LIKE CONCAT('%', #{searchKeyword},'%')
- 				</when>
- 			</choose>
- 		</if>
-		
-		
+		AND	schedule.end_time &lt; NOW()
 	</select>
 <!-- 	내가 본 영화 시작번호 끝번호 -->
 	<select id="selectWatchedMovie" resultType="map">

@@ -714,7 +714,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType,searchKeyword);
+		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType, searchKeyword);
 		model.addAttribute("inquiryList", inquiryList);
 		return "adminpage/customer_service/inquiry_board_manage";
 	}

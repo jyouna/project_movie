@@ -45,6 +45,7 @@
 			</section>
 			<hr>
 			<input type="submit" value="등록" style="text-align: right;">
+			<input type="button" value ="취소" onclick="location.href='AdminNotice'" style="text-align: right;">
 		</form>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

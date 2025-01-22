@@ -37,7 +37,7 @@
 				<td width="11%">관람인원</td>
 				<td width="11%">관람좌석</td>
 				<td width="9%">상영관</td>
-				<td width="15%">예매일</td>
+				<td width="15%">상영일시</td>
 				<td width="10%">금액</td>
             </tr>
                
@@ -60,7 +60,7 @@
                         		<c:when test="${reservationDetail.theater_code eq 'T3'}">3관</c:when>
                         	</c:choose>
                         <td>
-                           <fmt:formatDate value="${reservationDetail.start_time}" pattern="yy-MM-dd"/>
+                           <fmt:formatDate value="${reservationDetail.start_time}" pattern="yyyy-MM-dd HH:mm"/>
                         </td>
                         <td>${reservationDetail.total_amount}</td>
                      </tr>
