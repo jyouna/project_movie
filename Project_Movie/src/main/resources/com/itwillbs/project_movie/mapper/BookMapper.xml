@@ -264,6 +264,7 @@
 		JOIN movie mo ON mo.movie_code = s.movie_code
 		WHERE payment_status = 1
 		ORDER BY payment_date DESC
+		LIMIT 100
 	</select>
 	
 	<select id="selectPaymentListCount">

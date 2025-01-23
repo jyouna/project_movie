@@ -100,7 +100,7 @@
 														value="${schedule.start_time}"
 														pattern="yyyy-MM-dd HH:mm"
 														type="both" />
-										<fmt:formatDate value="${parsedReplyDate}" pattern="yyyy.MM.dd'('E')' HH:mm"/>
+										<fmt:formatDate value="${parsedReplyDate}" pattern="yyyy-MM-dd'('E')' HH:mm"/>
 						            </div>
 						        </div>
 						        <div class="row">

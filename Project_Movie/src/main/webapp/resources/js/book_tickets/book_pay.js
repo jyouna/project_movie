@@ -141,24 +141,6 @@ $(function() {
 	}
 	
 	
-	function handlePaymentResponse(rsp) {
-		if(rsp.success) {
-			alert("결제가 완료되었습니다");
-			
-			$("#paymentMethod").val("쿠폰/포인트");
-			$("#paymentStatus").val("1");
-			$("#totalPayment").val(0);
-			
-			$("#paymentForm").submit();
-		} else {
-			alert("결제가 취소되었습니다");
-			location.reload();
-		}
-	}
-	
-	
-	
-	
 	// 결제 페이지에서 10분 초과 시 첫 페이지로 이동
 	function sessionExpired() {
 	    alert('결제 시간이 만료되었습니다. 처음부터 다시 시도해 주세요.');

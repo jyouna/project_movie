@@ -49,38 +49,37 @@
 		<div id="sec02">
 			<table>
 				<tr>
-					<th style="width:3%"><input type="radio" name="payment_radio" disabled></th>
-	                <th style="width:12%">예매번호</th>
-	                <th style="width: 7%">예매자</th>
-	                <th style="width:15%">영화명</th>
-	                <th style="width:10%">상영일시</th>
-	                <th style="width:7%">관람좌석</th>
-	                <th style="width:7%">할인</th>
-	                <th style="width:7%">결제금액</th>
-	                <th style="width:7%">결제수단</th>
-	                <th style="width:10%">결제일자</th>
+					<th style="width:30px"><input type="radio" name="movie_radio" disabled></th>
+	                <th style="width:80px">영화코드</th>
+	                <th style="width:242px">영화제목</th>
+	                <th style="width:231px">장르</th>
+	                <th style="width:130px">관람등급</th>
+	                <th style="width:98px">영화상태</th>
+	                <th style="width:100px">등록일자</th>
+	                <th style="width:78px">등록계정</th>
 				</tr>
 				<c:choose>
-					<c:when test="${empty paymentList}">
+					<c:when test="${empty movieList}">
 						<tr>
-							<td colspan="10">
-								조회된 예매내역이 없습니다
+							<td colspan="8">
+								검색 결과가 없습니다. 검색어를 확인해주세요<br>
+								(영화상태 - 대기, 투표영화, 상영예정작, 현재상영작, 지난상영작<br>
+								영화장르 - 코미디, 드라마, 액션, SF, 범죄,  스릴러, 공포, 판타지<br>
+								애니메이션, 어드벤처, 미스터리... )
 							</td>
 						<tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="payment" items="${paymentList}">
+						<c:forEach var="movie" items="${movieList}">
 							<tr>
-				                <td><input type="radio" name="payment_radio"></td>
-				                <td>${payment.payment_code}</td>
-				                <td>${payment.member_name}<br>(${payment.member_id})</td>
-				                <td>${payment.movie_name}</td>
-				                <td><fmt:formatDate value="${payment.start_time}" pattern="yyyy-MM-dd HH:mm"/></td>
-				                <td>${payment.total_seat_code}</td>
-				                <td>${payment.total_discount} 원</td>
-				                <td>${payment.total_payment} 원</td>
-				                <td>${payment.payment_method}</td>
-				                <td><fmt:formatDate value="${payment.payment_date}" pattern="yyyy-MM-dd HH:mm"/></td>
+				                <td><input type="radio" name="movie_radio"></td>
+				                <td>${movie.movie_code}</td>
+				                <td>${movie.movie_name}</td>
+				                <td>${movie.movie_genre}</td>
+				                <td>${movie.age_limit}</td>
+				                <td>${movie.movie_status}</td>
+				                <td><fmt:formatDate value="${movie.regist_date}" pattern="yyyy-MM-dd"/></td>
+				                <td>${movie.regist_admin_id}</td>
 				            </tr>
 						</c:forEach>
 					</c:otherwise>
