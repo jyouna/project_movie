@@ -42,14 +42,14 @@ private MyPageMapper mapper;
 		return mapper.selectReservationCancel(startRow, listLimit, id);
 	}
 // 내가 본 영화 글 전체 가져오기
-	public int getWatchedMovieCount(String id) {
+	public int getWatchedMovieCount(String id, String searchYear) {
 		// TODO Auto-generated method stub
-		return mapper.selectWathedMovieCount(id);
+		return mapper.selectWathedMovieCount(id, searchYear);
 	}
 // 내가 본 영화 시작번호, 끝번호 어쩌고
-	public List<Map<String, Object>> getWatchedMovie(int startRow, int listLimit, String id) {
+	public List<Map<String, Object>> getWatchedMovie(int startRow, int listLimit, String id, String searchYear) {
 		// TODO Auto-generated method stub
-		return mapper.selectWatchedMovie(startRow, listLimit, id);
+		return mapper.selectWatchedMovie(startRow, listLimit, id, searchYear);
 	}
 	// 내가 본 영화 시작번호 끝번호 - 2 
 	public Map<String, Object> isRegistReview(String id, String string) {
@@ -220,7 +220,14 @@ private MyPageMapper mapper;
 	//1:1문의 글 삭제
 	@Transactional
 	public int getInquiryDelete(InquiryVO inquiry) {
-		mapper.updateInquiryCode(inquiry);
+		int refCount = mapper.selectRefCount(inquiry);
+		if(refCount == 2) {
+			int updateCount = mapper.updateInquiryCode(inquiry);
+			if(updateCount == 0) {
+				return 0;
+			}
+		}
+		
 		return mapper.deleteInquiryAdmin(inquiry);
 	}
 	//1:1문의 글 답변

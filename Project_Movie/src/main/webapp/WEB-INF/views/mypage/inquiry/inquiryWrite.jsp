@@ -26,7 +26,7 @@
 						<th width="15.46%">제목</th>
 						<td width="40.46%"><input type="text" name="inquiry_subject" required="required"></td>
 						<th width="23.31%">작성자</th>
-						<td width="20.77%"><input type="text" name="inquiry_writer" value="${sessionScope.sMemberId }"></td>
+						<td width="20.77%"><input type="text" name="inquiry_writer" value="${sessionScope.sMemberId }" readonly="readonly"></td>
 <!-- 						<th width="17.31%">등록일</th> -->
 <!-- 						<td width="30.77%"> -->
 <%-- 							<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/> --%>

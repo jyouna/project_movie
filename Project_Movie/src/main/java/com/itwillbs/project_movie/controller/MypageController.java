@@ -46,11 +46,14 @@ public class MypageController {
 	//1.결제내역 - 예매 내역
 	@GetMapping("ReservationDetail")
 	public String reservationDetail(@RequestParam (defaultValue="1") int pageNum, Model model, HttpSession session) {
+		//로그인 여부 확인
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
+		
+		//페이징 처리
 		int listCount = service.getReservationListCount(id);
 		int listLimit = 5; 
 		int startRow = (pageNum - 1) * listLimit; 
@@ -59,6 +62,7 @@ public class MypageController {
 		if (maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
@@ -70,6 +74,7 @@ public class MypageController {
 			model.addAttribute("targetURL", "ReservationDetail?pageNum=1");
 			return "result/process";
 		}
+		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
 		
@@ -89,11 +94,13 @@ public class MypageController {
 	//2. 결제내역 - 예매 취소내역 
 	@GetMapping("ReservationCancel")
 	public String reservationCancel(@RequestParam (defaultValue="1") int pageNum, Model model, HttpSession session) {
+		//로그인 여부
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
+		//페이징 처리
 		int listCount = service.getReservationCancelCount(id);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
@@ -102,16 +109,19 @@ public class MypageController {
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
 			endPage = maxPage; 
 		}
+		
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "ReservationCancel?pageNum=1");
 			return "result/process";
 		}
+		
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
@@ -123,12 +133,14 @@ public class MypageController {
 	@GetMapping("WatchedMovie")
 	public String watchedMovie(@RequestParam(defaultValue="1") int pageNum, Model model, HttpSession session, 
 			@RequestParam(defaultValue="") String searchYear) {
+		//로그인 여부
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		int listCount = service.getWatchedMovieCount(id);
+		//페이징 처리
+		int listCount = service.getWatchedMovieCount(id,searchYear);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
@@ -136,20 +148,24 @@ public class MypageController {
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
 			endPage = maxPage; 
 		}
+		
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "WatchedMovie?pageNum=1");
 			return "result/process";
 		}
-		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
+		
+		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageinfo);
 		
-		List<Map<String, Object>> watchedMovie = service.getWatchedMovie(startRow, listLimit, id);
+		//리뷰 등록 여부 판별 
+		List<Map<String, Object>> watchedMovie = service.getWatchedMovie(startRow, listLimit, id, searchYear);
 		for(Map<String, Object> movie : watchedMovie) {
 			Map<String, Object> review = service.isRegistReview(id, movie.get("movie_code").toString());
 			if(review == null) {
@@ -166,11 +182,13 @@ public class MypageController {
 	@ResponseBody
 	@PostMapping("reviewRegister")
 	public String reviewRegister(@RequestParam Map<String, String> map, Model model, HttpSession session) {
+		//리뷰 등록시 필요한 값 가져오기 ( 아이디 포함 )
 		String movieName = map.get("moviename");
 		String reviewContent = map.get("review_content");
 		int reviewRecommend = Integer.parseInt(map.get("review_recommend"));
 		int movieCode = Integer.parseInt(map.get("movie_code"));
 		String id = (String)session.getAttribute("sMemberId");
+		// 등록 여부 판별 
 		int insertCount = service.getReview(movieName, reviewContent, reviewRecommend, movieCode, id);
 		if(insertCount > 0) {
 			model.addAttribute("msg", "리뷰 등록에 성공하셨습니다.");
@@ -184,11 +202,13 @@ public class MypageController {
 	//4. 무비로그 - 관람평 
 	@GetMapping("Review")
 	public String review(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNum ) {
+		// 로그인 여부 판별 
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
+		// 페이징 처리
 		int listCount = service.getReviewListCount(id);
 		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit;
@@ -197,11 +217,13 @@ public class MypageController {
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum -1) / pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
 			endPage = maxPage; 
 		}
+		
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
 			model.addAttribute("targetURL", "Review?pageNum=1");
@@ -421,21 +443,21 @@ public class MypageController {
 	@GetMapping("InquiryDelete")
 	public String inquiryDelete(HttpSession session ,Model model,@RequestParam(defaultValue="1") int pageNum,
 			InquiryVO inquiry , int inquiry_code) {
+		//접근 권한 판별
 		String id = (String) session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			return "result/process";
 		}
-		//Inquiryvo에서 getInquiry() 호출해서 게시글 상세정보 조회 요청(파라미터 = vo에서 inquiry_code 가져오기)
-		//만약 조회 결과가 없거나 관리자 or 작성자가 아닌 경우 경고메시지 출력 후 fail로 리턴
-		// service에서 removeCount() 호출해서 int deleteCount로 리턴
-		// deleteCount가 양수면 InquriyList의pageNum으로 리다이렉트
-		//아니면 글 삭제 실패 띄운 뒤 fail 페이지 리턴 
+		
+		//게시글 상세정보 조회 요청
 		inquiry = service.getInquiry(inquiry_code);
 		if(inquiry == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			return "result/process";
 		}
+		
+		//삭제 여부 확인
 		int deleteCount = service.removeInquiry(inquiry);
 		if(deleteCount > 0) {
 			return "redirect:/InquiryList";
@@ -765,6 +787,7 @@ public class MypageController {
 	@PostMapping("AdminInquiryReply")
 	public String adminInquiryReply2(InquiryVO inquiry, Model model, HttpServletRequest request, @RequestParam(defaultValue= "1")int pageNum,
 			int inquiry_code) {
+		System.out.println(inquiry);
 		inquiry.setInquiry_writer_ip(getClientIp(request));
 		int insertReply = service.addReply(inquiry);
 		if(insertReply > 0) {

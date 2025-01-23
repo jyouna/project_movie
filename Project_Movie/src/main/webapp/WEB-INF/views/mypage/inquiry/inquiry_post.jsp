@@ -46,11 +46,8 @@
 		<input type="button" value="목록" id="listButton" onclick="location.href='InquiryList?pageNum=${param.pageNum}'">
 		</div>
 		<section id="commandCell">
-<%-- 				<c:if test="${sessionScope.sId eq inquiry.inquiry_writer || sessionScope.sId eq 'admin' }"> --%>
 			<input type="button" value="수정" onclick="location.href='InquiryModify?inquiry_code=${param.inquiry_code}&pageNum=${param.pageNum}'">
 			<input type="button" value="삭제" id="deleteInquiry">
-
-<%-- 				</c:if> --%>
 		</section>
 		
 		<table>

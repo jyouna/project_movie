@@ -140,10 +140,15 @@ article {
 }
 
 #listForm table th,
-#listForm table td {
+#listForm table td:not(.inquiry_subject) {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
+}
+
+.inquiry_subject {
+    border: 1px solid #ccc;
+    padding: 10px;
 }
 
 #listForm table tr:hover {

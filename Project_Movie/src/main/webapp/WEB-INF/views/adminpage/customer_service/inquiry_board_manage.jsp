@@ -46,7 +46,7 @@
 				</tr>
 				<c:choose>
 					<c:when test="${empty inquiryList}"> 
-						<tr><td colspan="4">게시글이 존재하지 않습니다. </td></tr>
+						<tr><td colspan="4">1:1문의가 존재하지 않습니다. </td></tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="inquiry" items="${inquiryList}" varStatus="status">
@@ -66,8 +66,9 @@
 								<td class="inquiry_subject">
 									<c:if test="${inquiry.inquiry_re_lev > 0 }">
 										<c:forEach begin="1" end="${inquiry.inquiry_re_lev}">
-											&nbsp;&nbsp; ↳ &nbsp;
+											&nbsp;&nbsp;
 										</c:forEach>
+										↳ &nbsp;
 									</c:if>
 									${inquiry.inquiry_subject}
 								</td>

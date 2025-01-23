@@ -59,8 +59,10 @@
 		</section>
 		<hr>
 		<section style="text-align: center;">
-			<input type="button" value="답변" onclick="location.href='AdminInquiryReply?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum}'">
-			<input type="button" value="삭제" onclick="deleteInquiry()">
+<%-- 			<c:if test="${sessionScope.admin_sId eq inquiry.inquiry_writer}"> --%>
+				<input type="button" value="답변" onclick="location.href='AdminInquiryReply?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum}'">
+				<input type="button" value="삭제" onclick="deleteInquiry()">
+<%-- 			</c:if> --%>
 			<input type="button" value="목록" onclick="location.href='AdminInquiry?pageNum=${param.pageNum}'">
 		</section>
 		<hr>

@@ -26,9 +26,9 @@ public interface MyPageMapper {
 	List<Map<String, Object>> selectReservationCancel(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id);
 	
 	// 내가 본 영화 글 전체 가져오기
-	int selectWathedMovieCount(String id);
+	int selectWathedMovieCount(String id, @Param("searchYear") String searchYear);
 	//내가 본 영화 시작번호 끝번호
-	List<Map<String, Object>> selectWatchedMovie(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id);
+	List<Map<String, Object>> selectWatchedMovie(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id, @Param("searchYear") String searchYear);
 	// 내가 본 영화 - 리뷰 등록
 	int insertReview(@Param("movieName") String movieName, @Param("reviewContent")String reviewContent, @Param("reviewRecommend")int reviewRecommend, @Param("movieCode")int movieCode,
 			@Param("id") String id);
@@ -115,8 +115,14 @@ public interface MyPageMapper {
 	// 1:1문의 글 답변
 	int insertInquiryReply(InquiryVO inquiry);
 	//1:1문의 답변 상태 업데이트
-	void updateInquiryCode(InquiryVO inquiry);
+	int updateInquiryCode(InquiryVO inquiry);
 	void updateInquiryCode2(InquiryVO inquiry);
+	
+	// 답글삭제시 해당 글의 ref와 같은 ref 수 조회
+	// 답글 삭제하기전 조회 수가 2이면 삭제후 남는건
+	// 부모글만 남으므로 response_status 0으로 변경
+	// (부모글만 존재할 경우)
+	int selectRefCount(InquiryVO inquiry);
 	
 	
 

@@ -1,20 +1,25 @@
 $(function(){
-    let movie_name = ""
+    let movie_name = "";
+	let isRegist = "";
+
     $("table").on("click", "tr", function(){
         $(this).find("input[type=radio]").prop("checked", true);      
         movie_name = $(this).find("td:eq(1)").text();
         start_time = $(this).find("td:eq(2)").text().trim();
+		isRegist = $(this).find("td:eq(4)").text().trim();
     });
+
     $("#reviewRegister").click(function(){
         if(movie_name == ""){
-            alert("리뷰 작성할 영화를 선택해주세요.");
-//        }else if(isRegist == 1){
-//			alert("이미 리뷰를 작성한 영화입니다.");
+            alert("리뷰 작성할 영화를 선택해 주세요.");
+		}else if(isRegist == "리뷰 등록 완료"){
+			alert("이미 리뷰 작성한 영화입니다.");
 		}else{
             $("#watched_movie_review_modal").css("display","block");
             $(".watched_movie_review input[name='movie_name']").val(movie_name);
         }
     });
+
     $(".close_modal").click(function() {
         location.reload();
     });

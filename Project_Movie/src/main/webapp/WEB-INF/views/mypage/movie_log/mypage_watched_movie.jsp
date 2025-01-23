@@ -41,21 +41,21 @@
 				</form>
 			</div>
 			<div style="text-align: right;">
-				<input type="button" value="리뷰 등록" id="reviewRegister" >
+				<c:if test="${not empty watchedMovie}"><input type="button" value="리뷰 등록" id="reviewRegister" ></c:if>
 			</div>
 	      <section id="listForm">
 	         <table id="movieListTable">
 	            <tr id="tr_top">
-	               <td><input type="radio" name ="watchedMovie" disabled="disabled"></td>
-	               <td>영화명</td>
-	               <td>관람일시</td>
-	               <td>관람인원</td>
-	               <td>리뷰 등록</td>
+	               <td width="5%"><input type="radio" name ="watchedMovie" disabled="disabled"></td>
+	               <td width="35%">영화명</td>
+	               <td width="25%">관람 일시</td>
+	               <td width="10%">관람 인원</td>
+	               <td width="25%">리뷰 등록 여부</td>
 	            </tr>
 	           
 	            <c:choose>
 	               <c:when test="${empty watchedMovie}"> 
-	                  <tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
+	                  <tr><td colspan="5">상영한 영화가 존재하지 않습니다</td></tr>
 	               </c:when>
 	               <c:otherwise>
 	                  <c:forEach var="watchedMovie" items="${watchedMovie}" varStatus="status">
@@ -65,11 +65,11 @@
 	                        <td>
 	                        	<fmt:formatDate value="${watchedMovie.start_time}" />
                         	</td>
-	                        <td>${watchedMovie.ticket_count}</td>
+	                        <td>${watchedMovie.ticket_count}명</td>
 	                        <td>
 	                        	<c:choose>
-	                        		<c:when test="${watchedMovie.isRegist == 0}">리뷰등록전</c:when>
-	                        		<c:otherwise>리뷰등록완료</c:otherwise>
+	                        		<c:when test="${watchedMovie.isRegist == 0}">리뷰 등록 전</c:when>
+	                        		<c:otherwise>리뷰 등록 완료</c:otherwise>
 	                        	</c:choose>
 	                        </td>
 	                     </tr>
