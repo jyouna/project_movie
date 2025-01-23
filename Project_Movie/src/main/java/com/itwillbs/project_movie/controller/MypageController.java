@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
 import com.itwillbs.project_movie.service.AdminManageService;
+import com.itwillbs.project_movie.service.MemberService;
 import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.service.MypageService;
 import com.itwillbs.project_movie.vo.EventBoardVO;
 import com.itwillbs.project_movie.vo.FaqBoardVO;
 import com.itwillbs.project_movie.vo.InquiryVO;
+import com.itwillbs.project_movie.vo.MemberVO;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.NoticeBoardVO;
 import com.itwillbs.project_movie.vo.PageInfo;
@@ -38,6 +40,9 @@ import retrofit2.http.POST;
 
 @Controller
 public class MypageController {
+	@Autowired
+	private MemberService memberService;
+	
 	@Autowired
 	private MypageService service;
 	@Autowired
@@ -295,6 +300,9 @@ public class MypageController {
 	@GetMapping("MypointReward")
 	public String mypointReward(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
 		String id = (String)session.getAttribute("sMemberId");
+		MemberVO member = memberService.getMember(id);
+		model.addAttribute("member", member);
+		
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";

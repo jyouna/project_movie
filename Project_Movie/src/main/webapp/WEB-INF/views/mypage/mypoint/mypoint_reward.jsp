@@ -49,7 +49,7 @@
 		    </dl>
 		  </div>
 		</div>
-		<h6>${sessionScope.sMemberId } 님의 사용 가능한 포인트는 xxx 원 입니다.</h6>
+		<h6>${sessionScope.sMemberId } 님의 사용 가능한 포인트는 ${member.point}원 입니다.</h6>
         <p>* 포인트는 소멸되지 않습니다.</p>
 	      <section id="listForm">
 	         <table>
