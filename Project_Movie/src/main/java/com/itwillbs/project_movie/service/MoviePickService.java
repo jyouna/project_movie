@@ -1,14 +1,15 @@
 package com.itwillbs.project_movie.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwillbs.project_movie.mapper.MoviePickMapper;
-import com.itwillbs.project_movie.vo.MemberVO;
 
 @Service
 public class MoviePickService {
@@ -21,15 +22,26 @@ public class MoviePickService {
 		return moviePickMapper.insertVoteInfo(map);
 	}
 	
-	// 현재날짜에 해당하는 투표 정보 조회
-	public Map<String, Object> getVoteInfo() {
-		return moviePickMapper.selectVoteInfo();
+	// 투표정보 삭제
+	public int removeVoteInfo(String vote_code) {
+		return moviePickMapper.deleteVoteInfo(vote_code);
+	}
+	
+	// 모든 투표정보 조회
+	public List<Map<String, Object>> getVoteInfoList() {
+		return moviePickMapper.SelectAllVoteInfo();
+	}
+	
+	// 투표코드에 해당하는 투표 정보 조회
+	public Map<String, Object> getVoteInfo(String vote_code) {
+		return moviePickMapper.selectVoteInfo(vote_code);
 	}
 	
 	// 투표가 종료된 가장 최근의 투표 정보 조회
 	public Map<String, Object> getRecentVoteInfo() {
 		return moviePickMapper.selectRecentVoteInfo();
 	}
+	
 	
 	// 투표 활성화
 	public int startMvoiePick(String vote_code) {
@@ -57,6 +69,43 @@ public class MoviePickService {
 	public int getJoinCountThisVote(Map<String, String> map) {
 		return moviePickMapper.selectMemberVoteCount(map);
 	}
+	
+	// 투표 결과 적용
+	// 1) 투표 결과 1, 2, 3등 영화 시즌 상영예정작으로 등록
+	// 2) 4, 5등 영화 대기영화로 변경
+	// 3) 투표 정보 테이블에 선정영화 컬럼 업데이트
+	// 4) 투표 상태 변경
+	@Transactional
+	public Boolean adjustVoteResult(String vote_code) {
+		// 영화결과정보 조회(득표수 기준 내림차순 정렬)
+		List<Map<String, Object>> voteResultInfoList = moviePickMapper.selectVoteCurrent(vote_code);
+		System.out.println("라라라라라" + voteResultInfoList);
+		// 선정된 영화 코드 리스트
+		List<String> winnerCodeList = new ArrayList<String>();
+		// 비선정된 영화 코드 리스트
+		List<String> loserCodeList = new ArrayList<String>();;
+		
+		for(Map<String, Object> voteResultEach : voteResultInfoList) {
+			if(winnerCodeList.size() < 3) {
+				winnerCodeList.add((String)voteResultEach.get("movie_code"));
+			} else {
+				loserCodeList.add((String)voteResultEach.get("movie_code"));
+			}
+		}
+		
+		for(String a : winnerCodeList) {
+			System.out.println("라라라" + a);
+		}
+		
+		for(String b : loserCodeList) {
+			System.out.println("라라라" + b);
+		}
+		
+		return true;
+	}
+	
+	
+	
 	
 
 		

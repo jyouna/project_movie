@@ -1,18 +1,35 @@
 $(function() {
 	// 투표등록버튼 클릭시 투표등록 모달창 출력
 	$("#registPickBtn").click(function() {
-		if($("#voteCode").val() != null) {
-			alert("이미 등록된 투표가 있습니다\n한시즌에 중복 투표등록 불가");
-			return;
+		if($(".pickMovie").length < 5) {
+			alert("투표등록을 위해선 현재 투표영화가 5개 여야합니다.\n영화목록에서 투표영화를 추가등록해주세요\n(현재 투표영화 : " + $(".pickMovie").length + "개)")
+			location.reload(true);
 		}
-		
 		$(".modal").css("display", "block");
-		
 	});
 	
 	// 모달창의 닫기버튼 클릭시 모달창 닫기
 	$(".close_modal").click(function() {
 		location.reload(true);
+	});
+	
+	// 투표삭제 버튼 클릭시 해당 투표정보 삭제
+	// 단, 투표상태가 비활성화이고 투표한 내역이 없을때만 삭제가능
+	// (= 투표를 잘못등록했을때 삭제, 회원이 투표한 경우 삭제 불가)
+	// jsp에서 위에 조건 불만족시 버튼 비활성화
+	$("#deletePickBtn").click(function() {
+		if($("#voteCode").val() == null) {
+			alert("삭제할 투표 정보가 없습니다");
+		} else {
+			if(confirm("투표 삭제 하시겠습니까?")) {
+				location.href = "DeleteVoteInfo?vote_code=" + $("#voteCode").val();
+			}
+		}
+	});
+	
+	// 상단의 설렉트박스 투표목록선택시 해당 투표 정보 출력
+	$("#btnGroup01 select").change(function() {
+		location.href = "AdminMoviePickSet?vote_code=" + $(this).val();
 	});
 	
 	// 투표영화목록 체크박스 클릭시 모든 체크박스 클릭, 해제
@@ -68,8 +85,11 @@ $(function() {
 		}
 	});
 	
-	// 상영예정작으로 등록 버튼 클릭시 해당영화 상영예정작의 season 무비로 등록
+	// 투표결과적용 버튼 클릭시 해당영화 상영예정작의 season 무비로 등록
 	$("#registUpcomingBtn").click(function() {
+		if(confirm("투표결과를 적용 하시겠습니까?\n1등, 2등, 3등 영화가 시즌 상영예정작으로 등록됩니다")) {
+			location.href = "RegistUpcomingSeasonMovie?vote_code=" + $("#voteCode").val();
+		}
 	});
 	
 	// 투표현황 차트
@@ -169,6 +189,5 @@ $(function() {
 		return checkMovieCodeStr;
 	}
 	
-
 	
 });

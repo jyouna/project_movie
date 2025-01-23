@@ -411,6 +411,7 @@ public class MovieController {
 		return "adminpage/movie_set/past_movie_set";
 	}
 	
+	// 페이징 처리 메서드
 	private Boolean pagingMethod(Model model, int pageNum, int listLimit, String howSearch, String searchKeyword,
 			String howSearch2, String searchKeyword2) {
 		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
@@ -447,5 +448,7 @@ public class MovieController {
 		model.addAttribute("movieList", movieList);
 		return true;
 	}
+	
+	
 	
 }
