@@ -86,12 +86,6 @@
 						<c:otherwise>
 							<c:forEach var="id" items="${member_id}" varStatus="status">
 								<tr>
-<!-- 									<td> -->
-<%-- 											<input type="checkbox" class="eventSetCheckbox" value="${id}"> --%>
-<!-- 									</td> -->
-<!-- 									<td> -->
-<%-- 											<input type="hidden" name="event_code" value="${event_code}"> --%>
-<!-- 									</td> -->
 									<td>
 										${status.count}
 									</td>

@@ -42,7 +42,6 @@ tr:hover {
 	background-color: gainsboro;
 }
 
-
 h5 {
 	background-color: powderblue;
 	padding: 0.3em;
@@ -93,9 +92,10 @@ h5 {
 }
 
 .myChart, .myChart2{
-	transform: scale(0.95); /* 차트 크기 조정 */
+	transform: scale(0.9); /* 차트 크기 조정 */
 	transform-origin: top left; /* 변환 기준점을 상위 요소의 왼쪽 상단으로 설정 */
 	margin: 0; 
+	padding-left: 10px;
 }
 
 #showPeriod, #showPeriod2 {

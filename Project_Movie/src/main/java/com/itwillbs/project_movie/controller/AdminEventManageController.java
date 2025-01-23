@@ -38,10 +38,8 @@ import retrofit2.http.GET;
 public class AdminEventManageController {
 	@Autowired
 	private AdminManageService adminService;
-	
 	@Autowired
 	private PagingHandler pagingHandler;
-		
 	@GetMapping("EventBoardManage") // 이벤트 게시판 관리 + 이벤트 목록 출력
 	public String eventBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 										@RequestParam(defaultValue = "") String searchKeyword,
@@ -228,14 +226,72 @@ public class AdminEventManageController {
 		return "adminpage/point_manage/point_regis";
 	}
 	
+	
+	// 회원 관리 메뉴에서 ID 선택 후 포인트 지급 버튼 클릭 시 팝업 창
+	@GetMapping("CreditPoint")
+	public String creditPointForm(@RequestParam("member_id") List<String> member_id, Model model) {
+		model.addAttribute("member_id", member_id);
+		return "adminpage/point_manage/point_credit_regis";
+	}
+
+	@GetMapping("CreateCoupon")
+	public String createCouponForm(@RequestParam("member_id") List<String> member_id, Model model) {
+		model.addAttribute("member_id", member_id);
+		return "adminpage/coupon_manage/create_coupon_form";
+	}
+	
+	// 관리자가 직접 쿠폰 지급
+	@PostMapping("CreateCoupon")
+	@ResponseBody
+	public Boolean createCoupon(
+	    @RequestParam("expired_date") Date expiredDate,
+	    @RequestParam("coupon_type") String couponType,
+	    @RequestParam(value = "discount_rate", required = false, defaultValue = "0") int discountRate, // 기본값 0
+	    @RequestParam(value = "discount_amount", required = false, defaultValue = "0") int discountAmount, // 기본값 0
+	    @RequestParam(value = "member_id") List<String> memberId,
+	    @RequestParam("coupon_count") int coupon_count) {
+		
+		// 문자열로 입력된 쿠폰타입을 DB 데이터 타입에 맞게 변경
+		if(couponType.equals("할인금액")) {
+			couponType = "0";
+		} else {
+			couponType = "1";
+		}
+		int insertCount = adminService.createCoupon(expiredDate, couponType, discountRate, discountAmount, memberId, coupon_count);
+		System.out.println("쿠폰 등록 횟수 : " + insertCount);
+		if(insertCount < (memberId.size() * coupon_count)) {
+	    	return false;
+	    } else {
+	    	return true;
+	    }
+	}
+	
+	// 포인트 지급 폼 제출
+	@PostMapping("CreditPoint")
+	@ResponseBody
+	public Boolean creditPoint(@RequestParam("member_id") List<String> member_id, @RequestParam("point_amount") int point_amount) {
+		int insertCount = adminService.creditPoint(member_id, point_amount);
+		// 지급 한 회원 수 보다 처리된 경우의 수가 적을 경우
+		if(insertCount < member_id.size()) { 
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	@PostMapping("GivePoint")
-	public String givePointToWinner(@RequestParam("member_id") List<String> member_id, int point_amount, int event_code) {
+	public String givePointToWinner(@RequestParam("member_id") List<String> member_id, int point_amount, int event_code, Model model) {
 		System.out.println("지급 대상자 : " + member_id);
 		System.out.println("이벤트 코드 : " + event_code);
 		System.out.println("지급할 포인트 : " + point_amount);
-		adminService.GivePointToWinner(member_id, event_code, point_amount);
-		
-		return "redirect:/EventAllWinnerList";
+		int updateCount = adminService.GivePointToWinner(member_id, event_code, point_amount);
+		if(updateCount < member_id.size()) {
+			model.addAttribute("msg", "포인트 지급 실패");
+			model.addAttribute("targetURL", "ChooseEventWinner");
+			return "result/process";
+		} else {
+			return "redirect:/EventAllWinnerList";
+		}
 	}
 	
 	@GetMapping("CouponWinnerManage") // 이벤트 당첨자 표시 페이지
@@ -401,7 +457,6 @@ public class AdminEventManageController {
 		
 		return "adminpage/event_manage/event_allWinner_list";
 	}	
-	
 	
 	@GetMapping("GetWinnerCount")
 	@ResponseBody

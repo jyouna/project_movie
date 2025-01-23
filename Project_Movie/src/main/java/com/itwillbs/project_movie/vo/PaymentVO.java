@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class PaymentVO {
-	private String payment_code;			// 예매번호
+	private String payment_code;			// 예매번호""
 	private Timestamp payment_date;			// 결제날짜
 	private String member_id;				// 회원 아이디
 	private String schedule_code;			// 스케줄 코드

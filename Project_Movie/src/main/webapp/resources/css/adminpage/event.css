@@ -2,35 +2,37 @@
 h3 {
 	margin-left: 30px;
 	margin-top: 20px;
-	margin-bottom: 20px;
-}
+	margin-bottom: 20px;}
 
-#divTop>div {
-	display: inline-block;
-	width: 45%;
-}
+#divTop {
+	margin-left: 30px;
+	width: 90%;
+	max-width: 1600px;}
 
 #divTopLeft {
-	margin-left: 30px;
+	/* margin-left: 30px; */
 	margin-bottom: 5px;
 	text-align: left;
-}
+	/* width: 40% !important; */
+    float: left;}
+
+#divTopLeft input {letter-spacing: -0.1em;}
+
+/* .memberTable { */
+/* 	letter-spacing: -0.1em; */
+/* } */
 
 #divTopRight {
 	margin-left: 30px;
 	margin-bottom: 5px;
 	text-align: right;
-}
-.topRight {
-	margin-left: 6px;
-}
+/* 	width: 40% !important; */
+     float: right;}
 
 #tableDiv {
 	border: 2;
 	width: 100%;
-	margin-left: 30px;
-/* 	overflow-x: auto; */
-}
+	margin-left: 30px;}
 
 #tr01 {
 	background-color: lightgrey !important;
@@ -45,66 +47,63 @@ h3 {
     text-align: center !important; 
     padding: 0 !important; 
     vertical-align: middle !important; 
-    height: 100px !important; 
-}
+    height: 100px !important; }
 
 #mainTable tr {
 	background-color: white;
-    border: 1px solid #ddd; /* 격자선 표시 */
-}
+    border: 1px solid #ddd; /* 격자선 표시 */}
 
 .mainTable tr {
 	background-color: white;
-    border: 1px solid #ddd; /* 격자선 표시 */
-}
+    border: 1px solid #ddd; /* 격자선 표시 */}
 
 .tdtr {
-    line-height: 30px;	
-}
+    line-height: 30px;	}
 
 #divBottom {
 	text-align: center;
-}
+	margin-top: 1em;
+	margin-bottom: 1em;}
 
 #divBottom>a {
 	padding: 0.2em;
-	text-decoration: none;
-}
+	text-decoration: none;}
 
 #divBottom>a:hover {
-	background-color: lightgrey;
-}
+	background-color: lightgrey;}
 
 #mainTable th, #mainTable td {
    text-align: center; /* 텍스트 가운데 정렬 */
    vertical-align: middle; /* 수직 가운데 정렬 */
-   padding: 5px; /* 셀 안쪽 여백 */
-}
+   padding: 5px; /* 셀 안쪽 여백 */}
 
 #mainTable {
 	width: 90%; /* 테이블이 화면의 100% 너비에 맞게 조정 */
 	max-width: 1600px; /* 테이블 최대 너비 제한 */
 	border-collapse: collapse; /* 경계선 겹침 제거 */
-}
+	white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+	overflow: hidden;    /* 넘치는 텍스트를 숨김 */
+	text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */}
 
 .mainTable {
 	width: 90%; /* 테이블이 화면의 100% 너비에 맞게 조정 */
 	max-width: 1600px; /* 테이블 최대 너비 제한 */
 	border-collapse: collapse; /* 경계선 겹침 제거 */
-}
+	white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+	overflow: hidden;    /* 넘치는 텍스트를 숨김 */
+	text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */	}
 
 .mainTable th, .mainTable td {
    text-align: center; /* 텍스트 가운데 정렬 */
    vertical-align: middle; /* 수직 가운데 정렬 */
-   padding: 5px; /* 셀 안쪽 여백 */
-}
+   padding: 5px; /* 셀 안쪽 여백 */}
 
 /* 호버 효과 */
 tr:hover {
-    background-color: #f9f9f9 !important;
-}
+    background-color: #f9f9f9 !important;}
 
-input[type="button"], input[type="submit"] {
+input[type="button"], 
+input[type="submit"] {
 	padding:5px;
 	border-radius: 20px;
 	border: 3px;
@@ -148,6 +147,15 @@ a {
     pointer-events: none;
 }
 
+#pointTopDiv {
+	width: 40%;
+	display: flex;
+	float:right;}
+
+#creditPoint {
+	margin-bottom: 3px;}
+
+
 #event_content {
 	padding: 1em;
 }
@@ -158,4 +166,24 @@ a {
 
 #event_subject_link:hover {
 	background-color: grey;
+}
+
+#sub, #add {
+	border: 0;
+	margin: 0.1em;
+	border-radius: 15px;
+	text-align: center;
+}
+
+#coupon_count{
+	text-align: center;
+	width: 50px;
+}
+
+#discount_amount{
+	width: 100px;
+}
+
+#expired_date {
+	width: 100px;
 }

@@ -17,37 +17,38 @@
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/event.js"></script>
+<style type="text/css">
+.number {
+	text-align: right !important;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	<h3>포인트 변동 내역</h3>
-	<div id="tableDiv" class="view" style="overflow-x: auto;">
-		<div id="divTop" class="view">
-			<div id="divTopLeft">
-				<input type="button" id="creditPoint" value="포인트지급">
-			</div>	
-			<div id="divTopRight"> <!--  우측 상단 검색란 -->
-				<form action="PointBoardManage" method="get">
-					<input type="hidden" name="pageNum" value="${param.pageNum}">
-					<select name="searchKeyword">
-						<option value="pointHolder" <c:if test="${param.searchKeyword eq 'pointHolder'}">selected</c:if>>아이디</option>
-						<option value="eventCode" <c:if test="${param.searchKeyword eq 'eventCode'}">selected</c:if>>이벤트번호</option>
-					</select>
-					<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
-					<input type="submit" value="검색">
-				</form>
-			</div>	
+	<h3>포인트 내역</h3>
+	<div id="divTop">
+		<div id="divTopLeft"></div>
+		<div id="divTopRight">
+			<form action="PointBoardManage" method="get" id="pointForm">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">
+				<select name="searchKeyword">
+					<option value="pointHolder" <c:if test="${param.searchKeyword eq 'pointHolder'}">selected</c:if>>아이디</option>
+					<option value="eventCode" <c:if test="${param.searchKeyword eq 'eventCode'}">selected</c:if>>이벤트번호</option>
+				</select>
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
+				<input type="submit" value="검색">
+			</form>
 		</div>
+	</div>
+	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th>코드</th>
-				<th>ID</th>
-				<th>포인트적립</th>
-				<th>포인트차감</th>
-				<th>이벤트코드</th>
-				<th>취소코드</th>
-				<th>예매코드</th>
-				<th>변동일시</th>
+				<th class="alignLeft">코드</th>
+				<th class="alignLeft">ID</th>
+				<th class="number">포인트적립</th>
+				<th class="number">포인트차감</th>
+				<th class="alignLeft">변동사유</th>
+				<th class="alignLeft">변동일시</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty pointVo}">
@@ -58,54 +59,40 @@
 				<c:otherwise>
 					<c:forEach var="point" items="${pointVo}" varStatus="status">
 						<tr>
-							<td>${point.point_code}</td>	
-							<td>${point.point_holder}</td>	
-							<td>
+							<td class="alignLeft">${point.point_code}</td>	
+							<td class="alignLeft">${point.point_holder}</td>	
+							<td class="number">
 								<c:choose>
 									<c:when test="${point.point_credited eq '0'}}">
 									</c:when>
 									<c:otherwise>
-										${point.point_credited}
+										<fmt:formatNumber value="${point.point_credited}" type="number" />
 									</c:otherwise>
 								</c:choose>							
 							</td>	
-							<td>
+							<td class="number">
 								<c:choose>
 									<c:when test="${point.point_debited eq '0'}">
 									</c:when>
 									<c:otherwise>
-										${point.point_debited}
+										<fmt:formatNumber value="${point.point_debited}" type="number" />
 									</c:otherwise>
 								</c:choose>							
 							</td>
-							<td>
+							<td class="alignLeft">
 								<c:choose>
-									<c:when test="${point.event_code eq '0'}">
+									<c:when test="${point.event_code != '0'}">
+										이벤트 당첨(코드 : ${point.event_code})
 									</c:when>
-									<c:otherwise>
-										${point.event_code}
-									</c:otherwise>
+									<c:when test="${point.refund_code != '0'}">
+										취소 환불(코드 : ${point.refund_code})
+									</c:when>									
+									<c:when test="${not empty point.payment_code}">
+										결제 사용(코드 : ${point.payment_code})
+									</c:when>									
 								</c:choose>
 							</td>
-							<td>
-								<c:choose>
-									<c:when test="${point.refund_code eq '0'}">
-									</c:when>
-									<c:otherwise>
-										${point.refund_code}
-									</c:otherwise>
-								</c:choose>
-							</td>
-							<td>
-								<c:choose>
-									<c:when test="${point.booking_code}">
-									</c:when>
-									<c:otherwise>
-										${point.booking_code}
-									</c:otherwise>
-								</c:choose>							
-							</td>	
-							<td><fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd hh:mm"/> </td>	
+							<td class="alignLeft"><fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd hh:mm"/> </td>	
 						</tr>	
 					</c:forEach>
 				</c:otherwise>
@@ -114,6 +101,8 @@
 	</div>
 	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 	<div id="divBottom" class="view">
+		<input type="button" value="처음" 
+			onclick="location.href='PointBoardManage?pageNum=1'"<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 	
 <%-- 이전 페이지 이동	 --%>
 		<input type="button" value="이전" 
 			onclick="location.href='PointBoardManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
@@ -132,15 +121,12 @@
 		</c:forEach>
 <%-- 다음 페이지 이동	 --%>
 		<input type="button" value="다음" onclick="location.href='PointBoardManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
-		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+			<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+		<input type="button" value="마지막" onclick="location.href='PointBoardManage?pageNum=${pageInfo.maxPage}'"
+			<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>		
 	</div>	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	<script type="text/javascript">
-	$(function(){
-		$("#creditPoint").on("click", function(){
-			window.open("CreditPoint", "포인트지급", "width=600, height=400, top=340, left=660");
-		});
-	})
 	</script>
 </body>
 </html>

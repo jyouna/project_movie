@@ -24,7 +24,6 @@
 	<h3>쿠폰 내역</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" id="createCoupon" value="쿠폰생성">
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
 			<form action="CouponBoardManage" method="get">
@@ -44,7 +43,6 @@
 				<th>쿠폰번호</th>
 				<th>쿠폰타입</th>
 				<th>쿠폰상세</th>
-<!-- 				<th width="150">할인율</th> -->
 				<th>등록일자</th>
 				<th>만료일자</th>
 				<th>쿠폰상태</th>
@@ -104,6 +102,9 @@
 	</div>
 	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 	<div id="divBottom" class="view">
+		<input type="button" value="처음" 
+			onclick="location.href='CouponBoardManage?pageNum=1'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
 <%-- 이전 페이지 이동	 --%>
 		<input type="button" value="이전" 
 			onclick="location.href='CouponBoardManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
@@ -123,6 +124,8 @@
 <%-- 다음 페이지 이동	 --%>
 		<input type="button" value="다음" onclick="location.href='CouponBoardManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+		<input type="button" value="마지막" onclick="location.href='CouponBoardManage?pageNum=${pageInfo.maxPage}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 
@@ -137,11 +140,6 @@ $(function(){
 			$("#writeContent").attr("placeholder", "아이디를입력하세요");
 		}
 	})
-	// 쿠폰 생성 창 띄우기
-	$("#createCoupon").on("click", function(){
-		window.open("CreateCoupon", "쿠폰발급", "width=600, height=400, top=340, left=660");
-	})
-	
 })
 </script>
 </body>

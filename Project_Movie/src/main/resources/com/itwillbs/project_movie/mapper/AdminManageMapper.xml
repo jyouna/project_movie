@@ -40,23 +40,23 @@
 	<select id="selectMemberListPaging" resultType="memberAllInfo">
 		SELECT  		
 			m.member_id AS member_id, 
-			count(c.member_id) AS coupon_num, 
-		    m.point AS remain_point,
-		    m.member_name AS member_name,
-		    m.member_passwd AS member_passwd,
-		    m.birth_date AS birth_date,
-		    m.email AS email,
-		    m.gender AS gender,
-		    m.genre AS gerne,
+			COUNT(CASE WHEN c.coupon_status = 0 THEN 1 END) AS coupon_num, 
+			m.point AS remain_point,
+			m.member_name AS member_name,
+			m.member_passwd AS member_passwd,
+			m.birth_date AS birth_date,
+			m.email AS email,
+			m.gender AS gender,
+			m.genre AS gerne,
 			m.phone AS phone,
-		    m.text_receive AS text_receive,
-		    m.email_receive AS email_receive,
-		    m.info_open AS info_open,
-		    m.member_type AS member_type,
-		    m.email_auth_status AS email_auth_status,
-		    m.phone_auth_status AS phone_auth_status,
-		    m.member_status AS member_status,
-		    m.regis_date AS regis_date
+			m.text_receive AS text_receive,
+			m.email_receive AS email_receive,
+			m.info_open AS info_open,
+			m.member_type AS member_type,
+			m.email_auth_status AS email_auth_status,
+			m.phone_auth_status AS phone_auth_status,
+			m.member_status AS member_status,
+			m.regis_date AS regis_date
 		FROM 
 			member m 
 		LEFT JOIN 
@@ -254,6 +254,25 @@
 			#{point_amount},
 			DEFAULT,
 			#{event_code},
+			#{id},
+			now(),
+			DEFAULT,
+			DEFAULT
+		)
+	</insert>
+
+	<insert id="addPointInfo">
+		<selectKey keyProperty="point_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(point_code), 0)
+			FROM point;
+		</selectKey>
+		
+		INSERT INTO point
+		VALUES (
+			#{point_code}+1,
+			#{point_amount},
+			DEFAULT,
+			DEFAULT,
 			#{id},
 			now(),
 			DEFAULT,
@@ -490,7 +509,8 @@
 				</when>
 			</choose>		
 		</if>
-		ORDER BY event_code		
+		ORDER BY 
+			point_code DESC
 		LIMIT
 			#{startRow},
 			#{listLimit}					
@@ -852,6 +872,27 @@
 		ORDER BY
 			DAY(payment_date) ASC
 	</select>
+	
+	<insert id="createCoupon">
+		<selectKey keyProperty="coupon_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(coupon_code), 0)
+			FROM coupon;
+		</selectKey>
+		
+		INSERT INTO coupon
+		VALUES (
+			#{coupon_code}+1,
+			#{couponType},
+			#{discountAmount},
+			#{discountRate},
+			now(),
+			#{expiredDate},
+			0,
+			#{id},
+			0
+		)
+		
+	</insert>
 	
  </mapper>
  

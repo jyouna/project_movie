@@ -13,7 +13,7 @@ public class CouponExpiredHandler {
 	@Autowired
 	AdminManageService adminService;
 	
-	@org.springframework.scheduling.annotation.Scheduled(cron = "0 20 9 * * ?")
+	@org.springframework.scheduling.annotation.Scheduled(cron = "0 47 13 * * ?")
 	public void couponExpired() {
 		System.out.println("쿠폰 기한 만료 처리 스케줄러 작동!");
 		LocalDate date = LocalDate.now();

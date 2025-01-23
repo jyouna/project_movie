@@ -64,10 +64,10 @@ public interface AdminManageMapper {
 
 	EventBoardVO checkEventStatus(@Param("event_code") int event_code);
 
-	void creditPoint(@Param("id") String id, 
+	int creditPoint(@Param("id") String id, 
 					 @Param("point_amount") int point_amount);
 
-	void insertPointInfo(@Param("id") String id, 
+	int insertPointInfo(@Param("id") String id, 
 			 			 @Param("event_code") int event_code, 
 			 			 @Param("point_amount") int point_amount);
 
@@ -188,6 +188,13 @@ public interface AdminManageMapper {
 	
 	// 일일 매출 데이터 조회
 	List<Map<String, Object>> getDailySales(@Param("firstDay") LocalDate firstDay, @Param("lastDay")LocalDate lastDay);
+	
+	// 관리자가 직접 포인트 지급
+	void addPointInfo(@Param("id") String id, @Param("point_amount") int point_amount);
+	
+	// 관리자가 직접 쿠폰 지급
+	int createCoupon(@Param("expiredDate") Date expiredDate, @Param("couponType") String couponType, 
+					@Param("discountRate") int discountRate, @Param("discountAmount")int discountAmount, @Param("id")String id);
 
 //	int getMonthlyNewMember(@Param("year")int year, @Param("month")int month);
 

@@ -30,38 +30,38 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
+	<h2 id="headTitle">신규 가입자 통계</h2>
 	<div id="tableDiv">
-		<h2 id="headTitle">신규 가입자 통계</h2>
-			<input type="button" value="2024년" onclick="location.href='StaticsNewMember'">
-			<input type="button" value="전체 기간" id="totalPeriodSearch">
-			조회기간
-			<span id="showPeriod"></span>
-			<br>
-			<select id="year">
-				<option selected>연도</option>
-				<option value="2025">2025</option>
-				<option value="2024">2024</option>
-				<option value="2023">2023</option>
-				<option value="2022">2022</option>
-				<option value="2021">2021</option>
-				<option value="2020">2020</option>
-			</select>
-			<select id="month">
-				<option value="">월</option>
-				<option value="1">1월</option>
-				<option value="2">2월</option>
-				<option value="3">3월</option>
-				<option value="4">4월</option>
-				<option value="5">5월</option>
-				<option value="6">6월</option>
-				<option value="7">7월</option>
-				<option value="8">8월</option>
-				<option value="9">9월</option>
-				<option value="10">10월</option>
-				<option value="11">11월</option>
-				<option value="12">12월</option>
-				<option value="yearTotal">전체</option>
-			</select>
+		<input type="button" value="2024년" onclick="location.href='StaticsNewMember'">
+		<input type="button" value="전체 기간" id="totalPeriodSearch">
+		조회기간
+		<span id="showPeriod"></span>
+		<br>
+		<select id="year">
+			<option selected>연도</option>
+			<option value="2025">2025</option>
+			<option value="2024">2024</option>
+			<option value="2023">2023</option>
+			<option value="2022">2022</option>
+			<option value="2021">2021</option>
+			<option value="2020">2020</option>
+		</select>
+		<select id="month">
+			<option value="">월</option>
+			<option value="1">1월</option>
+			<option value="2">2월</option>
+			<option value="3">3월</option>
+			<option value="4">4월</option>
+			<option value="5">5월</option>
+			<option value="6">6월</option>
+			<option value="7">7월</option>
+			<option value="8">8월</option>
+			<option value="9">9월</option>
+			<option value="10">10월</option>
+			<option value="11">11월</option>
+			<option value="12">12월</option>
+			<option value="yearTotal">전체</option>
+		</select>
 	</div>
 	<div id="chartArea">
 		<canvas class="myChart"></canvas>

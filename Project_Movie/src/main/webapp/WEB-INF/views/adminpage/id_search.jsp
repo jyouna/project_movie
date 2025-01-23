@@ -11,7 +11,6 @@
 	border-radius: 20px;
 	border: 3px;
 }
-
 </style>
 </head>
 <body>

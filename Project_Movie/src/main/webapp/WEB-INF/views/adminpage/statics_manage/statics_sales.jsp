@@ -189,7 +189,7 @@ $(function(){
 						data: {
 							labels : labels, // 축
 							datasets: [{ // 각 축에 들어갈 값 설정
-								label:  yearAndMonth + "년 매출액", // 값이름
+								label:  yearAndMonth + " 매출액", // 값이름
 								data: totals, // 값
 								backgroundColor: 'rgba(255, 99, 132, 0.2)',
 								borderColor: 'rgba(54, 162, 235, 1)',

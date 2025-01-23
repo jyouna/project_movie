@@ -15,52 +15,11 @@
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/statics.js"></script>
-	
-<style>
-/* h3 { */
-/* 	padding: 10px; */
-/* 	background-color: lightgrey; */
-/* } */
-
-/* #tableDiv { */
-/* 	border: 1px solid red; */
-/* 	width: 800px; */
-/* 	margin: 20px; */
-/* } */
-
-/* #mainTable { */
-/* 	border: 2px solid black; */
-/* 	border-collapse: collapse; */
-/* 	height: 20px; */
-/* 	width: 800px; */
-/* 	text-align: center; */
-/* 	padding: 10px; */
-/* } */
-
-/* #mainTable th, #mainTable td { */
-/* 	width: 50%; */
-/* 	border: 1px solid black; /* 각 셀에 경계선 추가 */ */
-/* 	padding: 8px; /* 셀 내부 여백 */ */
-/* } */
-
-/* #showStatics { */
-/* 	margin: 20px; */
-/* 	border: 1px solid red; */
-/* 	width: 800px; */
-/* 	height: 400px; */
-/* } */
-
-/* input { */
-/* 	margin-bottom: 5px; */
-/* } */
-</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	
-	
+	<h3 id="headTitle">방문자 통계</h3>
 	<div id="tableDiv">
-	<h3>방문자 통계</h3>
 		<input type="button" value="전체 기간" id="totalPeriodSearch">
 		<input type="button" value="월 단위 조회" id="monthlySearch">
 		<input type="button" value="상세 기간 조회" id="specificPeriodSearch">

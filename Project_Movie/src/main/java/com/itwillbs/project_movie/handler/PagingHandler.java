@@ -41,9 +41,6 @@ public class PagingHandler {
 		System.out.println("전달 받은 페이지 번호 : " + pageNum);
 		System.out.println("전달 받은 호출코드 : " + boardName);
 		
-//		Map<String, Object> pageMap = new HashMap<String, Object>(); // 리턴할 리스트 객체 2개를 저장할 변수
-//		List<?> voList = new ArrayList<>(); // 게시물 목록을 저장할 List객체
-		
 		int listLimit = 20;
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListForPaging(boardName, searchKeyword, searchContent); // 서비스에서 boardName값 판별하여 다르게 작동!
@@ -65,7 +62,6 @@ public class PagingHandler {
 		System.out.println("pageNum 2번 : " + pageNum);
 		}
 		
-		// 2번 페이지로 와서 검색하는 경우 maxPage보다 pageNum이 큰 경우가 발생하게 되므로 1페이지로 변경시킴.
 		if(pageNum > maxPage) {
 			pageNum = 1;
 		}

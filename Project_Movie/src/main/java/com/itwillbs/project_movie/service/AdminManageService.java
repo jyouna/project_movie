@@ -23,6 +23,8 @@ import com.itwillbs.project_movie.vo.NoticeBoardVO;
 import com.itwillbs.project_movie.vo.PaymentVO;
 import com.itwillbs.project_movie.vo.PointVO;
 
+import net.nurigo.sdk.message.model.Count;
+
 @Service
 public class AdminManageService {
 	@Autowired
@@ -153,16 +155,23 @@ public class AdminManageService {
 	// 2. 포인트 테이블에 정보 저장
 	// 3. 이벤트 당첨자 추첨 상태 true
 	@Transactional
-	public void GivePointToWinner(List<String> member_id, int event_code, int point_amount) {
+	public int GivePointToWinner(List<String> member_id, int event_code, int point_amount) {
 		// TODO Auto-generated method stub
 		
+		int updateCount1 = 0;
+		int updateCount2 = 0;
+		
 		for(String id : member_id) {
-			manageMapper.insertPointInfo(id, event_code, point_amount); // 포인트 변동 정보 저장
-			manageMapper.creditPoint(id, point_amount); // 회원에게 포인트 + 시킴
+			updateCount1 = manageMapper.insertPointInfo(id, event_code, point_amount); // 포인트 변동 정보 저장
+			updateCount2 = manageMapper.creditPoint(id, point_amount); // 회원에게 포인트 + 시킴
 		}
 		
-		manageMapper.updateEventWinnerSetStatus(event_code); // 당첨 완료 시 해당 이벤트 추첨 상태 true
-
+		if(updateCount1 == updateCount2) {
+			manageMapper.updateEventWinnerSetStatus(event_code); // 당첨 완료 시 해당 이벤트 추첨 상태 true
+			return updateCount1;
+		} else {
+			return 0;
+		}
 	}
 
 	public List<Map<String, String>> getCouponInfo() {
@@ -473,6 +482,43 @@ public class AdminManageService {
 	public List<Map<String, Object>> getDailySales(LocalDate firstDay, LocalDate lastDay) {
 		// TODO Auto-generated method stub
 		return manageMapper.getDailySales(firstDay, lastDay);
+	}
+	
+	// 관리자가 직접 포인트 지급
+	@Transactional
+	public int creditPoint(List<String> member_id, int point_amount) {
+		// TODO Auto-generated method stub
+		int insertCount = 0;
+		
+		for(String id : member_id) {
+			manageMapper.creditPoint(id, point_amount);
+			manageMapper.addPointInfo(id, point_amount);
+			insertCount++;
+		}
+		
+		return insertCount;
+	}
+
+	// 관리자가 직접 쿠폰 지급
+	public int createCoupon(Date expiredDate, String couponType, int discountRate, int discountAmount, List<String> memberId, int coupon_count) {
+		// TODO Auto-generated method stub
+		int insertCount = 0;
+		
+		for(String id : memberId) {
+			if(coupon_count > 0 ) {
+				for(int i = 0; i < coupon_count; i++) {
+					insertCount += manageMapper.createCoupon(expiredDate, couponType, discountRate, discountAmount, id);
+				}
+			} else {
+				insertCount += manageMapper.createCoupon(expiredDate, couponType, discountRate, discountAmount, id);
+			}
+		}
+		System.out.println("쿠폰 생성 count : " + insertCount);
+		if(insertCount < (memberId.size() * coupon_count)) {
+			return 0;
+		} else {
+			return insertCount;
+		}
 	}
 
 }

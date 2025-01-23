@@ -17,25 +17,24 @@
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/event.js"></script>
-
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp" />
 	<h3>이벤트 관리</h3>
-	
 		<div id="divTop" class="view">
 			<div id="divTopLeft">
-<!-- 				<input type="button" onclick="location.href='EventAllWinnerList'" value="이벤트 당첨자 리스트"> -->
-				<input type="button" value="등록하기" id="board_regis">
+				<input type="button" value="이벤트 등록" id="board_regis">
 				<input type="button" id="eventStart" value="이벤트 시작">
 				<input type="button" id="eventEnd" value="이벤트 종료">
-				<input type="button" id="chooseEventWinner" value="이벤트 당첨자 추첨">
+				<input type="button" id="chooseEventWinner" value="당첨자 추첨">
 				<input type="button" id="deleteEvent" value="이벤트 삭제">
 			</div>	
 			
 			<div id="divTopRight">
-				<form action="EventBoardManage" method="get">
+				<form action="EventBoardManage" method="get" id="searchForm">
 					<input type="hidden" name="pageNum" value="${param.pageNum}">
+					<input type="hidden" name="eventStatus" id="eventStatusHidden" value="">
+					<input type="hidden" name="eventWinnerStatus" id="eventWinnerStatusHidden" value="">
 					<select name="searchKeyword">
 						<option value="eventSubject" <c:if test="${param.searchKeyword eq 'eventSubject'}">selected</c:if>>제목</option>
 						<option value="eventContent" <c:if test="${param.searchKeyword eq 'eventContent'}">selected</c:if>>내용</option>
@@ -51,55 +50,26 @@
 			<div id="tableDiv" class="view" style="overflow-x: auto;">
 				<table id="mainTable">
 					<tr align="center" id="tr01">
-						<th width="100">
-							<select class="selectNoOption">
-								<option>선택</option>
-							</select>
-						</th>
-						<th width="100">
-							<select class="selectNoOption">
-								<option>이벤트코드</option>
-							</select>
-						</th>
-						<th width="350">
-							<select class="selectNoOption">
-								<option>제목</option>
-							</select>
-						</th>
-						<th width="150">
-							<select class="selectNoOption">
-								<option>등록일자</option>
-							</select>
-						</th>
-						<th width="150">
-							<select class="selectNoOption">
-								<option>시작일자</option>
-							</select>
-						</th>
-						<th width="150">
-							<select class="selectNoOption">
-								<option>종료일자</option>
-							</select>
-						</th>
-						<th width="150">
-							<select class="selectNoOption">
-								<option>작성자</option>
-							</select>
-						</th>
+						<th width="100">선택</th>
+						<th width="100">이벤트코드</th>
+						<th width="350">제목</th>
+						<th width="150">등록일자</th>
+						<th width="150">시작일자</th>
+						<th width="150">종료일자</th>
+						<th width="150">작성자</th>
 						<th width="150">
 							<select class="selectOption" id="eventStatus"> 
-							<%-- AJAX로 구현 --%>
-							<option selected>진행상태</option>
-							<option>대기</option>
-							<option>진행중</option>
-							<option>종료</option>
-						</select>
+								<option value="" selected>진행상태</option>
+								<option value="0">대기</option>
+								<option value="1">진행중</option>
+								<option value="2">종료</option>
+							</select>
 						</th>
 						<th width="150">
 							<select class="selectOption" id="eventSetWinnerStatus">
-								<option selected>당첨진행</option>
-								<option>대기</option>
-								<option>완료</option>
+								<option value="" selected>당첨진행</option>
+								<option value="0">대기</option>
+								<option value="1">완료</option>
 							</select>
 						</th>
 					</tr>
@@ -133,7 +103,6 @@
 					</c:choose> 
 				</table>
 			</div> <!--  테이블 div  -->
-			<br>
 			<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 			
 			<div id="divBottom" class="view"> <!-- 바텀디브 -->
@@ -151,18 +120,31 @@
 				</c:forEach>
 				<input type="button" value="다음" onclick="location.href='EventBoardManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
 				<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
-			</div> <!--  바텀 디브 --> 
+			</div>
 		<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp" />
-	
-	<%--==================================================================== 페이지 구분선 ===================================================================== --%>
 	<%--==================================================================== 페이지 구분선 ===================================================================== --%>
 
-	<script type="text/javascript">
-		$(function(){
-			$("#eventStatus").on("change", function(){
-				window.open("${pageContext.request.contextPath}/resources/img/adminManage/test.png", "구현 필요", "800, 800");
-			});
-		})
-	</script>
+<script type="text/javascript">
+$(function(){
+	$("#eventStatus, #eventSetWinnerStatus").on("change", function(){
+		alert("값 변경");
+		console.log("현재 값 : " + $(this).val());
+// 	  console.log("eventStatus 변경됨");
+		if($(this).val() !== "") {
+			$("#eventStatusHidden").val($("#eventStatus").val());
+			console.log($("#eventStatus").val());
+			console.log("eventStatusHidden 값 : " + $("#eventStatusHidden").val());
+		}
+		
+		if($("#eventSetWinnerStatus").val() !== "") {
+			$("#eventWinnerStatusHidden").val($("#eventSetWinnerStatus").val());
+			console.log($("#eventSetWinnerStatus").val());
+			console.log("eventSetWinnerStatus 값 : " + $("#eventWinnerStatusHidden").val());
+		}
+		
+// 		$("#searchForm").submit();
+	});
+})
+</script>
 </body>
 </html>

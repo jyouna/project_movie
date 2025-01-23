@@ -21,15 +21,13 @@
 table {
 	white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
 	overflow: hidden;    /* 넘치는 텍스트를 숨김 */
-	text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */
-}
+	text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */}
 th, td {
 	text-align: center !important;}
 .alignLeft {
-	text-align: left !important;
-}	
-/* .tdForNumber { */
-/* 	text-align: right !important;}	 */
+	text-align: left !important;}
+#formTag {
+	float: right;}
 </style>
 </head>
 <body>
@@ -37,29 +35,36 @@ th, td {
 	
 	<h3>회원 정보 조회</h3>
 	<div id="divTop">
-		<span id="member_count"></span>
-		<form action="MemberList" method="get">
-			<input type="hidden" name="pageNum" value="${param.pageNum}">	
-			<select name="searchKeyword" id="searchKeyword">
-				<option value="searchId" <c:if test="${param.searchKeyword == 'searchId'}">selected</c:if>>ID</option>
-				<option value="searchEmail" <c:if test="${param.searchKeyword == 'searchEmail'}">selected</c:if>>이메일</option>
-				<option value="searchPhone" <c:if test="${param.searchKeyword == 'searchPhone'}">selected</c:if>>연락처</option>
-			</select>
-			<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}" id="searchContent">
-			<input type="submit" value="검색" id="searchBtn">
-		</form>	
+		<div id="divTopLeft">
+			<input type="button" id="creditPoint" value="포인트지급">
+			<input type="button" id="createCoupon" value="쿠폰생성">
+			<span id="member_count"></span>
+		</div>
+		<div id="divTopRight">
+			<form action="MemberList" method="get" id="formTag">
+				<input type="hidden" name="pageNum" value="${param.pageNum}">	
+				<select name="searchKeyword" id="searchKeyword">
+					<option value="searchId" <c:if test="${param.searchKeyword == 'searchId'}">selected</c:if>>ID</option>
+					<option value="searchEmail" <c:if test="${param.searchKeyword == 'searchEmail'}">selected</c:if>>이메일</option>
+					<option value="searchPhone" <c:if test="${param.searchKeyword == 'searchPhone'}">selected</c:if>>연락처</option>
+				</select>
+				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}" id="searchContent">
+				<input type="submit" value="검색" id="searchBtn">
+			</form>
+		</div>	
 	</div>
 	<div id="tableDiv">
-		<table id="mainTable" border="1">
+		<table id="mainTable" class="memberTable" border="1">
 			<tr align="center" id="tr01">
+				<th><input type="checkbox" id="selectAll" class="selectedId"></th>
 				<th>가입일</th>
-				<th>아이디</th>
-				<th class="alignLeft">이름</th>
-				<th>생년월일</th>
-				<th>이메일</th>
+				<th>ID</th>
+				<th>이름</th>
+				<th>메일</th>
 				<th>연락처</th>
 				<th>성별</th>
-				<th>관심장르</th>
+				<th>생년<br>월일</th>
+				<th>관심<br>장르</th>
 				<th>문자<br>수신</th>
 				<th>메일<br>수신</th>
 				<th>정보<br>공개</th>
@@ -67,29 +72,29 @@ th, td {
 				<th>번호<br>인증</th>
 				<th>회원<br>유형</th>
 				<th>보유<br>포인트</th>
-				<th>보유<br>쿠폰</th>
+				<th>유효<br>쿠폰</th>
 				<th>계정<br>상태</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty voList}">
 					<tr>
-						<th colspan="17">등록된 회원이 없습니다</th>
+						<th colspan="18">등록된 회원이 없습니다</th>
 					</tr>
 				</c:when>
 			<c:otherwise>
 				<c:forEach var="member" items="${voList}" varStatus="status">
 					<tr>
-						<td><fmt:formatDate value="${member.regis_date}" pattern="yyyy-MM-dd"/></td>
+						<td><input type="checkbox" value="${member.member_id}" class="selectedId"></td>
+						<td><fmt:formatDate value="${member.regis_date}" pattern="yyMMdd"/></td>
 						<td class="alignLeft">${member.member_id}</td>
-<%-- 						<th>${member.member_passwd}</th> --%>
 						<td class="alignLeft">${member.member_name}</td>
-						<td><fmt:formatDate value="${member.birth_date}" pattern="yyMMdd"/></td>
 						<td class="alignLeft">${member.email}</td>
 						<td class="alignLeft">${member.phone}</td>
 						<td>
 							<c:if test="${member.gender eq 'M'}">남</c:if>
 							<c:if test="${member.gender eq 'F'}">여</c:if>
 						</td>
+						<td><fmt:formatDate value="${member.birth_date}" pattern="yyMMdd"/></td>
 						<td>${member.gerne}</td>
 						<td>
 							<c:if test="${member.text_receive eq false}">거부</c:if>
@@ -128,9 +133,10 @@ th, td {
 			</c:choose>
 		</table>
 	</div>
-	<br>
 	<div id="divBottom" class="view">
-		<input type="button" value="처음" onclick="location.href='MemberList?pageNum=1'" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
+		<input type="button" value="처음" 
+			onclick="location.href='MemberList?pageNum=1'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
 		<input type="button" value="이전" 
 			onclick="location.href='MemberList?pageNum=${pageInfo.pageNum - 1}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
@@ -149,18 +155,14 @@ th, td {
 		<input type="button" value="마지막" onclick="location.href='MemberList?pageNum=${pageInfo.maxPage}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>
-	<hr>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
 	<script type="text/javascript">
 	$(function(){
+		$("#sidebarToggle").trigger("click");
 		const urlParams = new URLSearchParams(window.location.search);
-		
 		const searchKeyword = urlParams.get("searchKeyword");
 		const searchContent = urlParams.get("searchContent");
-		
-		console.log(searchKeyword);
-		console.log(searchContent);
 		
 		$.ajax({
 			url: "countMember",
@@ -173,7 +175,7 @@ th, td {
 			$("#member_count").text("조회 수 : " + response.toLocaleString('ko-KR') + "명").css("color", "red");	
 		}).fail(function(){
 			
-		})
+		});
 		
 		$("#listSearch").on("click", function(){
 			alert("전체 목록을 출력했습니다.");
@@ -185,7 +187,57 @@ th, td {
 	            'ID 조회',    // 팝업 창 이름
 	            'width=300,height=150,scrollbars=no,resizable=no');
 		});	
+		
+	
+	// 쿠폰 발급하기
+	$("#createCoupon").on("click", function(){
+	  const selectedIds = $(".selectedId:checked").map(function () {
+	  	  	return $(this).val(); // 체크박스의 value 속성 값 가져오기
+	  }).get();
+	  
+      // 전체선택 버튼 클릭 시 들어오는 값 삭제
+	  if(selectedIds[0] === "on") {
+	  	  selectedIds.shift();
+	  }
+	  
+      // 선택된 ID가 없을 경우 처리
+	  if (selectedIds.length === 0) {
+	      alert("쿠폰 발급 대상자를 선택해 주세요");
+	      return;
+	  }	
+      
+	  window.open("CreateCoupon?member_id=" + selectedIds, "포인트지급", "width=600, height=400, top=340, left=720");
+	})	
+		
+	// 포인트 지급하기
+	$("#creditPoint").on("click", function(){
+	  const selectedIds = $(".selectedId:checked").map(function () {
+	  	  	return $(this).val(); // 체크박스의 value 속성 값 가져오기
+	  }).get();
+	  
+      // 전체선택 버튼 클릭 시 들어오는 값 삭제
+	  if(selectedIds[0] === "on") {
+	  	  selectedIds.shift();
+	  }
+	  
+      // 선택된 ID가 없을 경우 처리
+	  if (selectedIds.length === 0) {
+	      alert("포인트 지급 대상자를 선택해 주세요");
+	      return;
+	  }
+      
+  	  // 문자열 파라미터로 전달
+	  const selectedIdList = selectedIds.join(',');
+	  	window.open("CreditPoint?member_id=" + selectedIds, "포인트지급", "width=600, height=400, top=340, left=720");
 	});
+	
+	$("#selectAll").on("click", function(){
+	    let selectedId = $(".selectedId"); // 체크박스 전체 선택자
+	    let isChecked = $(this).data("checked") || false; // 현재 체크 상태값 저장. 없는 경우 false 값으로 설정
+	    $(this).data("checked", !isChecked);
+	    selectedId.prop("checked", !isChecked);
+	});	
+});
 	</script>
 </body>
 </html>
