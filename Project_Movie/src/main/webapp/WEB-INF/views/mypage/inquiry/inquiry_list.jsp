@@ -42,7 +42,7 @@
 				<tr id="tr_top" align="center">
 					<td width="25px">번호</td>
 					<td width="45px">상태</td>
-					<td width="300px">제목</td>
+					<td width="280px">제목</td>
 					<td width="80px">등록일</td>
 				</tr>
 					
@@ -67,14 +67,14 @@
 								</td>
 								<td class="inquiry_subject">
 									<c:if test="${inquiry.inquiry_re_lev > 0}">
-										<c:forEach begin="1" end="${inquiry.inquiry_re_lev }">
+										<c:forEach begin="1" end="${inquiry.inquiry_re_lev}">
 											&nbsp;&nbsp; ↳ &nbsp;
 										</c:forEach>
 									</c:if>
 									${inquiry.inquiry_subject}
 								</td>
 								<td>
-									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yy-MM-dd"/>
+									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
 
 								</td>
 							</tr>

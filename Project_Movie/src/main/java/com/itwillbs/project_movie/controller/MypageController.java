@@ -82,16 +82,10 @@ public class MypageController {
 	@ResponseBody
 	@PostMapping("ReservationDetail")
 	public Map<String, Object> reservationDetail(String payment_code) {
-		System.out.println("페이먼트 코드 : " + payment_code);
 		Map<String, Object> reservationDetail = service.searchdetail(payment_code);
-		System.out.println("controller paymentcode" + reservationDetail);
-//		reservationDetail.setR_dateToString(reservationDetail.getR_date().toString().replace(".0", ""));
-//		System.out.println(reservationDetail.getR_dateToString());
 		return reservationDetail;
 	}
 
-	//1.2 결제내역 - 예매 취소창
-	
 	//2. 결제내역 - 예매 취소내역 
 	@GetMapping("ReservationCancel")
 	public String reservationCancel(@RequestParam (defaultValue="1") int pageNum, Model model, HttpSession session) {
@@ -370,13 +364,12 @@ public class MypageController {
 	//7-3. 1:1문의 - 글 작성 post폼 
 	@PostMapping("InquiryWrite")
 	public String inquiryWrite(InquiryVO inquiry, HttpServletRequest request, HttpSession session, Model model) {
-		System.out.println(inquiry);
 		//게시물 작성자의 ip 주소정보를 가져와 vo객체에 저장
 		inquiry.setInquiry_writer_ip(getClientIp(request));
 		int insertCount = service.registInquiry(inquiry);
 		if(insertCount > 0) {
 			model.addAttribute("msg", "1:1문의 등록 완료되었습니다");
-			return "result/success";
+			return "redirect:/InquiryList";
 		}else {
 			model.addAttribute("msg", "문의 글 작성을 실패하셨습니다.");
 			return "result/process";
@@ -719,7 +712,7 @@ public class MypageController {
 		model.addAttribute("inquiryList", inquiryList);
 		return "adminpage/customer_service/inquiry_board_manage";
 	}
-	//1:1문의 - 글보기 
+	//1:1문의 - 글 보기 
 	@GetMapping("AdminInquiryPost")
 	public String adminInquiryPost(Model model, @RequestParam(defaultValue= "1") int pageNum, InquiryVO inquiry, int inquiry_code) {
 		inquiry = service.getInquiry(inquiry_code);
@@ -775,7 +768,7 @@ public class MypageController {
 		inquiry.setInquiry_writer_ip(getClientIp(request));
 		int insertReply = service.addReply(inquiry);
 		if(insertReply > 0) {
-			return "redirect:/AdminInquiryPost?inquiry_code=" + inquiry_code  + "&pageNum=" + pageNum;
+			return "redirect:/AdminInquiry";
 		}else {
 			model.addAttribute("msg", "답변 등록에 실패하셨습니다.");
 			return "result/process";

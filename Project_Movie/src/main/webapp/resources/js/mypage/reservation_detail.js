@@ -50,36 +50,40 @@
 						break;
 					}
 				}
-				
 				if(!selectedRadio){
 					alert("영화를 선택해주세요.");
-				
-				} else {
-					if(confirm("예매를 취소하시겠습니까?")) {
-						$.ajax({
-							type : "POST",
-							url : "ReservationCancel",
-							data : {
-								payment_code : payment_code,
-								start_time : start_time,
-								total_payment : total_payment
-							},
-							dataType : "JSON"
-						}).done(function(response) {
-							if(response.status == "success") {
-								alert(response.msg);
-							} else if(response.status == "timeOut"){
-								alert(response.msg);
-							}
-							location.reload();
-								
+				}else{
+					if(confirm("예매 취소하시겠습니까?")) {
+//						const paymentEndTimeValue = document.getElementsByName("start_time").value; 
+//						const reservationStartTime = new Date(paymentEndTimeValue); // datetime-local 값을 Date 객체로 변환
+//						const currentTime = new Date();
+//						const timeDifference = (reservationStartTime - currentTime) / (1000 * 60);
+//						console.log(reservationStartTime,currentTime, timeDifference );
+							$.ajax({
+								type : "POST"
+								, url : "ReservationCancel"
+								, data : {
+									payment_code : payment_code,
+									start_time : start_time,
+									total_payment : total_payment
+								}
+								, dataType : "JSON"
+							}).done(function(result) {
+								alert("예매 취소에 실패하였습니다.\n다시 시도해주세요");
+								location.reload();
+//								$("input[name='movie_name']").val(result.movie_name);
+//								$("input[name='start_time']").val(result.start_time);
+//								$("input[name='r_people']").val(result.r_people);
+//								$("input[name='r_price']").val(result.r_price);
 						}).fail(function(){
-							alert("예매가 취소되지 않았습니다.\n다시 시도해주시기 바랍니다");
+							alert("예매가 취소되었습니다.");
 							location.reload();
 						});
 					
+					}else{
+						location.reload();
 					}
-				}
+				}//else
 				
 			});
 			

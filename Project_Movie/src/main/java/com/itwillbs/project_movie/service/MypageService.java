@@ -73,6 +73,11 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectReviewList(startRow, listLimit, id);
 	}
+	//관람한 영화 리뷰 등록 
+	public int getReview(String movieName, String reviewContent, int reviewRecommend, int movieCode, String id) {
+		// TODO Auto-generated method stub
+		return mapper.insertReview(movieName, reviewContent, reviewRecommend, movieCode, id);
+	}
 	//관람한 영화 리뷰 수정 
 	public int getReviewModify(Map<String, String> map) {
 		// TODO Auto-generated method stub
@@ -197,35 +202,35 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.deleteFaq(faq);
 	}
+	//1:1문의 글 개수
+	public int getInquiryListCount(String searchType, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return mapper.selectAdminInquiryListCount(searchType, searchKeyword);
+	}
+	//1:1문의 글 시작번호 끝번호 
+	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return mapper.selectAdminInquiryList(startRow, listLimit, searchType, searchKeyword);
+	}
 	//1:1문의 글 수정 
 	public int getInquiryModify(int inquiry_code) {
 		// TODO Auto-generated method stub
 		return mapper.updateInquiryModify(inquiry_code);
 	}
 	//1:1문의 글 삭제
+	@Transactional
 	public int getInquiryDelete(InquiryVO inquiry) {
-		// TODO Auto-generated method stub
+		mapper.updateInquiryCode(inquiry);
 		return mapper.deleteInquiryAdmin(inquiry);
 	}
 	//1:1문의 글 답변
 	@Transactional
 	public int addReply(InquiryVO inquiry) {
 		mapper.updateInquiryReSeq(inquiry);
+		mapper.updateInquiryCode2(inquiry);
 		return mapper.insertInquiryReply(inquiry);
 	}
-	//관람한 영화 리뷰 등록 
-	public int getReview(String movieName, String reviewContent, int reviewRecommend, int movieCode, String id) {
-		// TODO Auto-generated method stub
-		return mapper.insertReview(movieName, reviewContent, reviewRecommend, movieCode, id);
-	}
-	public int getInquiryListCount(String searchType, String searchKeyword) {
-		// TODO Auto-generated method stub
-		return mapper.selectAdminInquiryListCount(searchType, searchKeyword);
-	}
-	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType, String searchKeyword) {
-		// TODO Auto-generated method stub
-		return mapper.selectAdminInquiryList(startRow, listLimit, searchType, searchKeyword);
-	}
+
 
 
 	

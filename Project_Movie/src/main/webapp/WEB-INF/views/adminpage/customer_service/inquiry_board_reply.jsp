@@ -35,7 +35,7 @@
 						<th width="110px">제목 </th>
 						<td><input type="text" name ="inquiry_subject" value="RE: ${inquiry.inquiry_subject}" ></td>
 						<th width="90px">작성자</th>
-						<td><input type="text" value="${sessionScope.sMemberId}" readonly="readonly"></td>
+						<td><input type="text" value="${sessionScope.admin_sId}" readonly="readonly"></td>
 					</tr>
 				</table>
 			</section>
@@ -44,7 +44,7 @@
 			</section>
 			<hr>
 			<div>
-				<input type="submit" value="등록">
+				<input type="submit" value="등록" >
 				<input type="reset" value="다시쓰기">
 				<input type="button" value="뒤로가기" onclick="location.href='AdminInquiry'">
 			</div>

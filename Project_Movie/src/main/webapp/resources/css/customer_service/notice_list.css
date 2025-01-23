@@ -2,13 +2,13 @@ form[name="searchForm"] {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px; /* 요소 간 간격 */
-    background-color: #f9f9f9; /* 폼 배경색 */
+    gap: 10px; 
+    background-color: #f9f9f9;
     padding: 15px;
-    border-radius: 8px; /* 둥근 모서리 */
+    border-radius: 8px; 
     margin: 10px 0px 10px 378px;
-    width: 50%; /* 폼 전체 너비 */
-    max-width: 524px; /* 최대 너비 */
+    width: 50%;
+    max-width: 524px; 
 }
 
 /* 드롭다운 메뉴 */
@@ -96,10 +96,6 @@ article {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
-}
-
-#listForm table tr:nth-child(even) {
-    background-color: #f9f9f9;
 }
 
 #listForm table tr:hover {

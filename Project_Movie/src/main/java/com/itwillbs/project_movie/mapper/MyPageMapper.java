@@ -114,6 +114,9 @@ public interface MyPageMapper {
 	void updateInquiryReSeq(InquiryVO inquiry);
 	// 1:1문의 글 답변
 	int insertInquiryReply(InquiryVO inquiry);
+	//1:1문의 답변 상태 업데이트
+	void updateInquiryCode(InquiryVO inquiry);
+	void updateInquiryCode2(InquiryVO inquiry);
 	
 	
 

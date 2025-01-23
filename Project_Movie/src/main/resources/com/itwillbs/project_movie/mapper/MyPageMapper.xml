@@ -18,7 +18,7 @@
 	</select>
 <!-- 	예매내역 글 시작번호 끝번호 -->
 	<select id="selectReservationList" resultType="map">
-		SELECT payment.payment_code, payment.ticket_count, payment.total_amount, payment.total_seat_code, movie.movie_name, schedule.theater_code, schedule.start_time
+		SELECT payment.payment_code, payment.ticket_count, payment.total_payment, payment.total_seat_code, movie.movie_name, schedule.theater_code, schedule.start_time
 		FROM payment JOIN schedule 
 		ON payment.schedule_code = schedule.schedule_code
 		JOIN movie 
@@ -44,7 +44,7 @@
 	
 <!-- 	예매취소 글 개수 -->
 	<select id="selectReservationCancelCount" resultType="int">  
-		SELECT refund.refund_status, refund.refund_completed_date, refund.refund_amount, payment.ticket_count, schedule.start_time, movie.movie_name
+		SELECT COUNT(*)
 		FROM refund JOIN payment
 		ON refund.payment_code = payment.payment_code
 		JOIN schedule
@@ -77,9 +77,20 @@
 		FROM movie
 		JOIN schedule ON movie.movie_code = schedule.movie_code
 		JOIN payment ON schedule.schedule_code = payment.schedule_code
-		WHERE
-			payment.member_id = #{id}
-		AND	schedule.end_time &lt; NOW()
+		<if test="!searchKeyword.equals('')">
+	 		WHERE
+				payment.member_id = #{id}
+			AND	schedule.end_time &lt; NOW()
+ 			<choose>
+ 				<when test="searchYear.equals('subject')">
+		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
+ 				</when>
+ 				<when test="searchYear.equals('content')">
+		 			inquiry_content LIKE CONCAT('%', #{searchKeyword},'%')
+ 				</when>
+ 			</choose>
+ 		</if>
+	
 	</select>
 <!-- 	내가 본 영화 시작번호 끝번호 -->
 	<select id="selectWatchedMovie" resultType="map">
@@ -95,15 +106,6 @@
 			, #{listLimit}
 	</select>
 
-<!-- 	이건뭐지 -->
-<!-- 	<select id="selectWatchedmovieReview" resultType="map"> -->
-<!-- 		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count -->
-<!-- 		FROM movie -->
-<!-- 		JOIN schedule ON movie.movie_code = schedule.movie_code -->
-<!-- 		JOIN payment ON schedule.schedule_code = payment.schedule_code -->
-<!-- 		WHERE -->
-<!-- 			member_id = 'benddlx' -->
-<!-- 	</select> -->
 <!-- 	리뷰 총 개수 출력 -->
 	<select id="selectReviewListCount" resultType="int">
 		SELECT COUNT(*)
@@ -126,7 +128,7 @@
 		WHERE movie_code = #{movie_code}
 		AND review_writer = #{id}
 	</select>
-	<!-- 	관람한 리뷰 작성 -->
+	<!-- 관람한 리뷰 작성 -->
 	<insert id="insertReview">
 		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
 			SELECT IFNULL(MAX(review_code),0)
@@ -201,6 +203,7 @@
  				</when>
  			</choose>
  		</if>
+ 		ORDER BY inquiry_code DESC
 	</select>
 <!-- 	1:1문의 글 시작번호,끝번호 -->
  	<select id="selectInquiryList" resultType="inquiry">
@@ -218,6 +221,7 @@
  				</when>
  			</choose>
  		</if>
+ 		ORDER BY inquiry_code DESC
  		LIMIT 
  			#{startRow}
  			,#{listLimit}
@@ -231,7 +235,7 @@
 <!-- 	1:1문의 글 작성-->
 	<insert id="insertInquiry">
 	    INSERT INTO Inquiry(
-	        inquiry_subject, 
+	        inquiry_subject,
 	        inquiry_writer,
 	        inquiry_content,
 	        inquriy_date,
@@ -242,16 +246,15 @@
 	    )
 	    VALUES(
 	        #{inquiry_subject},
-	        #{sessionScope.sMemberId},
+   	        #{inquiry_writer},
 	        #{inquiry_content},
 	        NOW(),
 	        #{inquiry_writer_ip},
-	        0,
+	        #{inquiry_code} + 1,
 	        0,
 	     	0
 	    )
 	</insert>
-
 <!--  	1:1문의 글 수정  -->
  	<update id="updateInquiry">
  		UPDATE Inquiry
@@ -369,9 +372,8 @@
  				</when>
  			</choose>
  		</if>
- 		ORDER BY inquiry_code DESC
 	</select>
-<!-- 	1:1문의 시작번호 끝번호 -->
+<!-- 	1:1문의 시작번호 끝번호 = 목록 조회 -->
 	<select id="selectAdminInquiryList" resultType="inquiry">
  		SELECT *
  		FROM Inquiry
@@ -387,11 +389,11 @@
  			</choose>
  		</if>
  		ORDER BY inquiry_code DESC
+ 				, inquiry_re_seq ASC
  		LIMIT 
  			#{startRow}
  			,#{listLimit}
  	</select>
-
 <!-- 	1:1문의 수정 -->
 	<update id="updateInquiryModify">
  		UPDATE Inquiry
@@ -404,7 +406,6 @@
 		DELETE FROM Inquiry
 		WHERE inquiry_code = #{inquiry_code}
 	</delete>
-	
 <!-- 	1:1문의 답변 순서조정  -->
 <!-- 참조글 번호가 원본 게시물의 참조글번호와 같고, -->
 <!-- 순서번호가 대상 게시물의 순서번호보다 더 큰 레코드들의 순서번호를 1씩 증가 -->
@@ -444,4 +445,16 @@
 			,#{inquiry_re_seq} + 1
 		)
 	</insert>
+<!-- 1:1문의 답변 삭제시 다시 답변 전으로 업데이트 -->
+	<update id="updateInquiryCode">
+		UPDATE Inquiry
+		SET response_status = 0
+		WHERE inquiry_code = #{inquiry_code}
+	</update>
+<!-- 	1:1문의 등록 시 답변 완료로 업데이트 -->
+	<update id="updateInquiryCode2">
+		UPDATE Inquiry
+		SET response_status = 1
+		WHERE inquiry_code = #{inquiry_code}
+	</update>
  </mapper>

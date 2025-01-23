@@ -22,7 +22,7 @@
 				<td>한줄평 </td>
 			</tr>
 			<tr>
-				<td><input type="text" style="text-align: left;"></td>
+				<td><input type="text" ></td>
 			</tr>
 		</table>
 		<div id="button_div">

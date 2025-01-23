@@ -28,8 +28,7 @@
 	<div class="dateSearch_sec all_point">
 	  <div class="in_sec">
 	    <dl class="search_list">
-	      <dt class="tit">기간선택</dt>
-	      	<dd class="select_btn">
+      		<dd class="select_btn">
 	        	<ul class="period_tab" data-control="dateDiff" data-handler="[data-control='datepicker']" data-selected-text="선택됨">
 		          <li class="on"><button type="button" data-val="7d" title="선택됨">1주일</button></li>
 		          <li><button type="button" data-val="1m">1개월</button></li>
@@ -66,12 +65,21 @@
             <tr>
 	            <c:choose>
 	               <c:when test="${empty couponList}"> 
-            			<tr><td colspan="4">게시물이 존재하지 않습니다</td></tr>
+            			<tr><td colspan="4">쿠폰이 존재하지 않습니다</td></tr>
 	               </c:when>
 	               <c:otherwise>
 					    <c:forEach var="coupon" items="${couponList}" varStatus="status">
 					        <tr>
-					            <td>${coupon.coupon_status}</td>
+					            <td>
+					            	<c:choose>
+					            		<c:when test="${coupon.coupon_status == 'true'}">
+					            			사용완료
+					            		</c:when>
+					            		<c:otherwise>
+					            			사용전
+					            		</c:otherwise>
+					            	</c:choose>
+					            </td>
 					            <td>
 					            	<c:choose>
 					            		<c:when test=" ${coupon.coupon_type == '0'}">금액</c:when>

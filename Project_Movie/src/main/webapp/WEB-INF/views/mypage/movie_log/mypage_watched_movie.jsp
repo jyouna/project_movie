@@ -28,15 +28,16 @@
 		</div>
 			<div id="selectBox">
 				<form action="watchedMovie" method="get" id="watchedForm">
-					<select name="searchYear">
-						<option>2025</option>
-						<option>2024</option>
-						<option>2023</option>
-						<option>2022</option>
-						<option>2021</option>
+					<c:if test="${param.searchYear eq '2025'}">selected</c:if>
+					<select id="searchYear">
+						<option value="2025" <c:if test="${param.searchYear eq '2025'}">selected</c:if>>2025</option>
+						<option value="2024" <c:if test="${param.searchYear eq '2024'}">selected</c:if>>2024</option>
+						<option value="2023" <c:if test="${param.searchYear eq '2023'}">selected</c:if>>2023</option>
+						<option value="2022" <c:if test="${param.searchYear eq '2022'}">selected</c:if>>2022</option>
+						<option value="2021" <c:if test="${param.searchYear eq '2021'}">selected</c:if>>2021</option>
 					</select>
 					<input type="submit" value="조회">
-						* 영화 조회는 최근 5년 내역만 조회가 가능합니다
+						* 영화 조회는 <b>최근 5년 내역만</b> 조회가 가능합니다
 				</form>
 			</div>
 			<div style="text-align: right;">

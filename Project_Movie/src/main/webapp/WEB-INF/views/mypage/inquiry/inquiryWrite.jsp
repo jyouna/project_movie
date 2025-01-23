@@ -23,16 +23,18 @@
 			<section id="basicInfoArea">
 				<table id="writeForm">
 					<tr>
-						<th width="13.46%">제목</th>
-						<td width="38.46%"><input type="text" name="inquiry_subject"></td>
-						<th width="17.31%">등록일</th>
-						<td width="30.77%">
-							<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/>
-						</td>
+						<th width="15.46%">제목</th>
+						<td width="40.46%"><input type="text" name="inquiry_subject" required="required"></td>
+						<th width="23.31%">작성자</th>
+						<td width="20.77%"><input type="text" name="inquiry_writer" value="${sessionScope.sMemberId }"></td>
+<!-- 						<th width="17.31%">등록일</th> -->
+<!-- 						<td width="30.77%"> -->
+<%-- 							<fmt:formatDate value="${inquiry.inquiry_date}" pattern="yyyy-MM-dd"/> --%>
+<!-- 						</td> -->
 					</tr>
 					<tr>
 						<td colspan="4">
-							<textarea rows="15" cols="70" name="inquiry_content"></textarea>
+							<textarea rows="15" cols="70" name="inquiry_content" required="required"></textarea>
 						</td>
 					</tr>
 				</table>

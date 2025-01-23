@@ -43,7 +43,7 @@
                
             <c:choose>
                <c:when test="${empty reservationList}"> 
-                  <tr><td colspan="9">게시물이 존재하지 않습니다</td></tr>
+                  <tr><td colspan="9">예매내역이 존재하지 않습니다</td></tr>
                </c:when>
                <c:otherwise>
                   <c:forEach var="reservationDetail" items="${reservationList}" varStatus="status">
@@ -71,10 +71,8 @@
       </section>
       <br>
 	<div id="underButton" style="text-align: right;">
-<!-- 	상세정보 클릭 시 상세정보 창 띄우기  -->    
-<!--       예매취소 클릭 시 취소하시겠습니까? 알림창 -->
+      <input type="button" value="상세보기" id="detail">
       <input type="button" value="예매취소" id="cancel">
-<!-- 확인 시 예매가 취소되었습니다. -->
 	</div>
          <section id="pageList">
          <input type="button" value="&lt" 

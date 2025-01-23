@@ -26,11 +26,30 @@
 			<section id="basicInfoArea">
 				<table>
 					<tr>
-						<th width="100">제목</th>
-						<td colspan="3">${inquiry.inquiry_subject}</td>
+						<th width="10%">제목</th>
+						<td width="60%">${inquiry.inquiry_subject}</td>
+						<th width="10%">작성자</th>
+						<td width="20%">${inquiry.inquiry_writer}</td>
+					</tr>
+					<tr>
 						<th width="120">등록일</th>
 						<td width="180">
 							<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
+						</td>
+						<th width="100">답변여부</th>
+						<td width="180">
+							<c:choose>
+								<c:when test="${inquiry.response_status eq 0}">
+									답변 전 
+								</c:when>
+								<c:when test="${inquiry.response_status eq 1}">
+									답변 완료 
+								</c:when>
+								<c:otherwise>
+									답변
+								</c:otherwise>
+							</c:choose>
+						
 						</td>
 					</tr>
 				</table>
@@ -45,15 +64,7 @@
 			<input type="button" value="목록" onclick="location.href='AdminInquiry?pageNum=${param.pageNum}'">
 		</section>
 		<hr>
-		<div style="text-align:right;">
-			<input type="button" value="◁이전글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code+1}&pageNum=${param.pageNum}'"
-			<c:if test="${param.inquiry_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-	
-			<input type="button" value="▷다음글" onclick="location.href='AdminInquiryPost?inquiry_code=${param.inquiry_code-1}&pageNum=${param.pageNum}'"
-			<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-		</div>
 	<script type="text/javascript">
-		
 		function deleteInquiry() { 
 			if (confirm("삭제 하시겠습니까?")) { 
 				location.href = "AdminInquiryDelete?inquiry_code=${inquiry.inquiry_code}&pageNum=${param.pageNum}"; 

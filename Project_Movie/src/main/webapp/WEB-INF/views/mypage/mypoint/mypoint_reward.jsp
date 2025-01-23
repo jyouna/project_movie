@@ -25,7 +25,6 @@
 		<div class="dateSearch_sec all_point">
 		  <div class="in_sec">
 		    <dl class="search_list">
-		      <dt class="tit">기간선택</dt>
 		      <dd class="select_btn">
 		        <ul class="period_tab" data-control="dateDiff" data-handler="[data-control='datepicker']" data-selected-text="선택됨">
 		          <li class="on"><button type="button" data-val="7d" title="선택됨">1주일</button></li>
@@ -64,7 +63,7 @@
 	               
 	            <c:choose>
 	               <c:when test="${empty pointList}"> 
-	                  <tr><td colspan="5">게시물이 존재하지 않습니다</td></tr>
+	                  <tr><td colspan="5">포인트 내역이 존재하지 않습니다</td></tr>
 	               </c:when>
 	               <c:otherwise>
 	                  <c:forEach var="point" items="${pointList}" varStatus="status">

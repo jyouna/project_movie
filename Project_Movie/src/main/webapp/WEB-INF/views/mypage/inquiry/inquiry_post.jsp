@@ -28,6 +28,7 @@
 			<section id="basicInfoArea">
 				<table>
 					<tr>
+						<input type="hidden" value="${inquiry.response_status }">
 						<th width="100">제목</th>
 						<td colspan="3">${inquiry.inquiry_subject}</td>
 						<th width="120">등록일</th>

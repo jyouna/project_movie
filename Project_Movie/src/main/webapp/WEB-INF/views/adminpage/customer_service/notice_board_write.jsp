@@ -27,8 +27,8 @@
 			<section id="basicInfoArea">
 				<table>
 					<tr>
-						<th width="13.46%">제목</th>
-						<td width="38.46%"><input type="text" name="notice_subject"></td>
+						<th width="13.46%" style="text-align: center;">제목</th>
+						<td width="38.46%"><input type="text" name="notice_subject" id="notice_subject"></td>
 					</tr>
 					<tr>
 						<td colspan="4">

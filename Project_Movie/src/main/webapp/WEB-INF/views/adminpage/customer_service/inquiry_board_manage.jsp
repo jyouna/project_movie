@@ -13,7 +13,7 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_list.css" rel="stylesheet"/>
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/notice_board_manage.css" rel="stylesheet" />
 		<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
@@ -28,21 +28,21 @@
 	    <div class="search-bar" style="text-align: right;">
 	    	<form action="AdminInquiry" method="get">
 		      <select name="searchType">
-		        <option value="subject" <c:if test="${param.searchType eq subject}">selected</c:if>>제목</option>
-		        <option value="content" <c:if test="${param.searchType eq content}">selected</c:if>>내용</option>
+		        <option value="before" <c:if test="${param.searchType eq before}">selected</c:if>>답변 전</option>
+		        <option value="after" <c:if test="${param.searchType eq after}">selected</c:if>>답변</option>
+		        <option value="finish" <c:if test="${param.searchType eq finish}">selected</c:if>>답변 완료</option>
 		      </select>
-		      <input type="text" name="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요.">
-	   		  <input type="submit" value="검색" id="searchButton">
+	   		  <input type="submit" value="찾기" id="searchButton">
    		  	</form>
 	    </div>
 		<section id="listForm">
 			<table id="inquiryForm" border="1">
 				<tr id="tr_top" align="center">
 					<td width="25px">번호</td>
-					<td width="45px">상태</td>
-					<td width="280px">제목</td>
-					<td width="80px">작성자</td>
+					<td width="65px">상태</td>
+					<td width="260px">제목</td>
 					<td width="100px">등록일</td>
+					<td width="80px">작성자</td>
 				</tr>
 				<c:choose>
 					<c:when test="${empty inquiryList}"> 
@@ -71,9 +71,18 @@
 									</c:if>
 									${inquiry.inquiry_subject}
 								</td>
-								<td>${inquiry.inquiry_writer}</td>
 								<td>
 									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
+								</td>
+								<td>
+									<c:choose>
+										<c:when test="${inquiry.inquiry_writer != null}">
+											${inquiry.inquiry_writer}
+										</c:when>
+										<c:otherwise>
+											${sessionScope.admin_sId}
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 						</c:forEach>

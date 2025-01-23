@@ -146,10 +146,6 @@ article {
     text-align: center;
 }
 
-#listForm table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
 #listForm table tr:hover {
     background-color: #eee;
 }
