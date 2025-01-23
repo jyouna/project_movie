@@ -52,7 +52,7 @@
 				
                         </td>
                         <td>
-                           <fmt:formatDate value="${reservationCancel.refund_completed_date}" pattern="yy-MM-dd"/>
+                           <fmt:formatDate value="${reservationCancel.refund_completed_date}" pattern="yyyy-MM-dd"/>
                         </td>
                         <td>${reservationCancel.refund_amount}</td>
                      </tr>

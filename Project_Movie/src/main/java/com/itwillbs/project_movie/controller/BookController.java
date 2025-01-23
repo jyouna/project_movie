@@ -2,6 +2,10 @@ package com.itwillbs.project_movie.controller;
 
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -276,10 +281,6 @@ public class BookController {
 	}
 	
 	// ================= [ 결제 완료 페이지 ] ==================
-//	@GetMapping("BookFinish")
-//	public String bookFinishPage() {
-//		return "book_tickets/book_finish";
-//	}
 	
 	@PostMapping("BookFinish")
 	public String bookFinish(@RequestParam Map<String, String> map, HttpSession session, Model model, String schedule_code) {
@@ -330,16 +331,38 @@ public class BookController {
 	
 	@ResponseBody
 	@PostMapping("ReservationCancel")
-	public String reservationCancel(@RequestParam Map<String, Object> map, HttpSession session) {
+	public ResponseEntity<Map<String, Object>> reservationCancel(@RequestParam Map<String, Object> map, HttpSession session, Model model) {
 
 		int totalDiscount =  bookService.getTotalDiscount(map);
 		map.put("total_discount", totalDiscount);
 		
-		int updateCount = bookService.modifyRefundPayment(map);
-		System.out.println("map : " + map);
-		System.out.println("updateCount : " + updateCount);
 		
-		return "";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		
+		String startTimeStr = (String)map.get("start_time");
+		LocalDateTime start_time = LocalDateTime.parse(startTimeStr, formatter);
+		
+		LocalDateTime now = LocalDateTime.now();
+		
+		// 상영시간과 현재시간 비교해서 20분차 이하일 때만 예매 취소 가능
+		long minutesUntilStart = ChronoUnit.MINUTES.between(now, start_time);
+		
+		Map<String, Object> response = new HashMap<>();
+		if(minutesUntilStart > 20) {
+			int updateCount = bookService.modifyRefundPayment(map);
+			
+			if(updateCount > 0) {
+				response.put("status", "success");
+				response.put("msg", "예매가 취소되었습니다");
+			} 
+			
+		} else {
+			response.put("status", "timeOut");
+			response.put("msg", "상영시간 20분 전까지만 취소 가능합니다.");
+		}
+		
+		
+		return ResponseEntity.ok(response);
 	}
 	
 	
