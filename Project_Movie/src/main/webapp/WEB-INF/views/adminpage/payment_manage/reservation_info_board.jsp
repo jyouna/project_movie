@@ -22,16 +22,15 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<section id="movieListBody">
 		<div id="sec01">
-			<div id="title">영화목록</div>
+			<div id="title">회원 예매내역</div>
 			<div id="search01">
-				<input type="button" value="전체 영화 조회" onclick="location.href='AdminMovieSetList'">
+				<input type="button" value="전체 목록 조회" onclick="location.href='AdminPaymentList'">
 			</div>
 			<div id="search02">
-				<form action="AdminMovieSetList">
+				<form action="AdminPaymentList">
 					<select class="search_box" name="howSearch">
-						<option value="movie_name" <c:if test ="${param.howSearch eq 'movie_name'}">selected</c:if>>영화제목</option>
-						<option value="movie_genre" <c:if test ="${param.howSearch eq 'movie_genre'}">selected</c:if>>장르</option>
-						<option value="movie_status" <c:if test ="${param.howSearch eq 'movie_status'}">selected</c:if>>영화상태</option>
+						<option value="member_id" <c:if test ="${param.howSearch eq 'member_id'}">selected</c:if>>아이디</option>
+						<option value="payment_code" <c:if test ="${param.howSearch eq 'payment_code'}">selected</c:if>>예매번호</option>
 					</select>
 					<c:choose>
 						<c:when test="${not empty param.searchKeyword}">
@@ -61,7 +60,7 @@
 	                <th style="width:10%">결제일자</th>
 				</tr>
 				<c:choose>
-					<c:when test="${empty paymentList}">
+					<c:when test="${empty allPaymentList}">
 						<tr>
 							<td colspan="10">
 								조회된 예매내역이 없습니다
@@ -69,7 +68,7 @@
 						<tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="payment" items="${paymentList}">
+						<c:forEach var="payment" items="${allPaymentList}">
 							<tr>
 				                <td><input type="radio" name="payment_radio"></td>
 				                <td>${payment.payment_code}</td>
@@ -116,7 +115,7 @@
 			</div>
 			<div>
 				<input type="button" value="투표영화로 등록" id="regist_pick">
-				<input type="button" value="상영예정작으로 등록" id="regist_upcoming">
+				<input type="button" value="예매취소" id="regist_upcoming">
 			</div>
 		</div>
 	

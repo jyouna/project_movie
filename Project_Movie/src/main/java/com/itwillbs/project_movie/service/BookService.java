@@ -134,12 +134,17 @@ public class BookService {
 		return mapper.updateRefundPayment(map);
 	}
 
-	public List<Map<String, Object>> getPaymentList() {
-		return mapper.selectPaymentList();
+	public List<Map<String, Object>> getAllPaymentList() {
+		return mapper.selectAllPaymentList();
 	}
 
 	public int getpaymentListCount(String howSearch, String searchKeyword, String howSearch2, String searchKeyword2) {
 		return mapper.selectPaymentListCount(howSearch, searchKeyword, howSearch2, searchKeyword2);
+	}
+
+	public List<Map<String, Object>> getpaymentList(int startRow, int listLimit, String howSearch, String searchKeyword,
+			String howSearch2, String searchKeyword2) {
+		return mapper.selectPaymentList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
 	}
 
 
