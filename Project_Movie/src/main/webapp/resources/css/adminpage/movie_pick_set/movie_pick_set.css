@@ -23,7 +23,7 @@ section {
 	float:left;
 }
 
-#btnGroup01 input {
+#btnGroup01 input, #btnGroup01 select {
 	padding: 10px 15px;
 	font-size: 14px;
 	border: 1px solid #ccc;
@@ -34,6 +34,10 @@ section {
 
 #btnGroup01 input:hover {
 	background-color: #e2e2e2;
+}
+
+#btnGroup01 select {
+	width: 180px;
 }
 
 #pick_movie_list table {
@@ -118,7 +122,7 @@ table input[type="checkbox"] {
     padding: 20px;
     border: 1px solid #888;
     width: 360px; 
-    height: 440px; 
+    height: 480px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

@@ -34,10 +34,11 @@
 				<img src="${pageContext.request.contextPath}/resources/images/familyMonth.webp">
 			</div>
 			<div id="pick_movie_list">
+				<input type="hidden" id="voteStatus" value="${voteInfo.vote_status}">
 				<div id="pick_list_title">
-					2025 SPRING SEASON 영화 투표
+					${voteInfo.vote_name} 투표
 				</div>
-				<c:forEach var="movie" items="${voteCurrentInfoList}">
+				<c:forEach var="movie" items="${pickMovieList}">
 					<div class="movie">
 						<input type="hidden" value="${movie.movie_code}">
 						<label>${movie.movie_name}</label>(${movie.movie_rating})<br>

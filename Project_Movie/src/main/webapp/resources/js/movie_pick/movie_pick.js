@@ -122,6 +122,8 @@ $(function() {
 			if(confirm("로그인 후 투표 가능합니다\n로그인창으로 이동하시겠습니까?")) {
 				location.href = "MemberLogin";
 			}
+		} else if($("#voteStatus").val() == 0) {
+			alert("현재 투표 비활성화 됬습니다. 잠시 후 다시 시도해주세요");
 		} else {
 			let movie_name = $(this).siblings("label").text();
 			let movie_code = $(this).siblings("input[type='hidden']").val();

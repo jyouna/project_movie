@@ -13,8 +13,14 @@ public interface MoviePickMapper {
 	// 투표 정보 등록
 	int insertVoteInfo(Map<String, String> map);
 	
+	// 투표 정보 삭제
+	int deleteVoteInfo(String vote_code);
+	
+	// 모든 투표 정보 조회
+	List<Map<String, Object>> SelectAllVoteInfo();
+	
 	// 투표 정보 조회
-	Map<String, Object> selectVoteInfo();
+	Map<String, Object> selectVoteInfo(String vote_code);
 	
 	// 투표완료된 가장 최신 투표 정보 조회
 	Map<String, Object> selectRecentVoteInfo();
@@ -30,6 +36,9 @@ public interface MoviePickMapper {
 
 	// 회원의 이번 투표수 조회
 	int selectMemberVoteCount(Map<String, String> map);
+
+	
+	
 	
 
 

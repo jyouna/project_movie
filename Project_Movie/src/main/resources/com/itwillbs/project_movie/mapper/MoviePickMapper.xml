@@ -18,9 +18,11 @@
 			, #{vote_movie4}
 			, #{vote_movie5}
 			, default
+			, null
 		)
 	</insert>
 	
+	<!-- 회원 투표 정보 입력 -->
 	<insert id="insertMemberVoteInfo">
 		INSERT INTO vote_box
 		VALUES (
@@ -32,13 +34,37 @@
 		)
 	</insert>
 	
-	<!-- 현재날짜에 해당하는 시즌투표정보 조회 -->
+	<!-- 투표정보 삭제 -->
+	<delete id="deleteVoteInfo">
+		DELETE FROM vote_info
+		WHERE
+			vote_code = #{vote_code}
+	</delete>
+	
+	<!-- 모든 투표정보 조회 -->
+	<select id="SelectAllVoteInfo" resultType="map">
+		SELECT *
+		FROM vote_info
+		ORDER BY start_date DESC
+	</select>
+	
+	<!-- 시즌투표정보 조회 -->
+	<!-- 전달받은 투표코드가 없을때 현재날짜에 해당하는 투표정보 조회 -->
 	<select id="selectVoteInfo" resultType="map">
 		SELECT *
 		FROM 
 			vote_info
-		WHERE 
-			now() BETWEEN start_date AND end_date
+		<choose>
+			<when test="vote_code == null">
+				WHERE 
+					now() BETWEEN start_date AND end_date
+					AND winner_movie_code IS NULL
+			</when>
+			<otherwise>
+				WHERE
+					vote_code = #{vote_code}
+			</otherwise>
+		</choose>
 	</select>
 	
 	<!-- 완료된 투표중 가장 최신의 투표정보 조회 -->
@@ -68,7 +94,7 @@
 	<!-- 투표 현황, 영화정보조회 -->
 	<select id="selectVoteCurrent" resultType="map">
 		SELECT 
-			v.movie_code, m.movie_name, m.movie_director, m.movie_actor, m.age_limit
+			v.vote_code, v.movie_code, m.movie_name, m.movie_director, m.movie_actor, m.age_limit
 			, m.movie_genre, m.release_date, m.running_time, m.movie_img1, m.movie_rating
 			, IFNULL(count(*), 0) AS count
 		FROM vote_box v
