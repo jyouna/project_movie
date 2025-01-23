@@ -41,10 +41,14 @@ public interface MovieMapper {
 	// 상영시작일, 상영종료일 업데이트
 	int updateScreeningPeriod(MovieVO movieVO);
 	
-	// 영화상태 대기로 변경
-	int updateMovieStatusToStandby(@Param("movie_status") String movie_status, @Param("movieCodeArr") String[] movieCodeArr);
+	// 영화상태 대기 변경(복수)
+	int updateMovieStatusToStandBy(@Param("movie_status") String movie_status, @Param("movieCodeArr") String[] movieCodeArr);
 	
 	// 영화가격 조회
 	int selectTicketPrice();
+	
+	// 영화상태 상영예정작, 영화타입 시즌 으로 변경(복수)
+	void updateMovieStatusToSeasonUpcoming(@Param("movie_status") String movie_status, @Param("movie_type") String movie_type,
+			@Param("winnerCodeList") List<String> winnerCodeList);
 	
 }

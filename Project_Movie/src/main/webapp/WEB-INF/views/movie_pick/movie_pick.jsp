@@ -36,7 +36,7 @@
 			<div id="pick_movie_list">
 				<input type="hidden" id="voteStatus" value="${voteInfo.vote_status}">
 				<div id="pick_list_title">
-					${voteInfo.vote_name} 투표
+					&lt;&nbsp;${voteInfo.vote_name}&nbsp;&gt;
 				</div>
 				<c:forEach var="movie" items="${pickMovieList}">
 					<div class="movie">

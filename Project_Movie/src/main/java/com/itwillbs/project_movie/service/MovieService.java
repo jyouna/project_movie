@@ -163,7 +163,7 @@ public class MovieService {
 	// 영화상태 대기로 업데이트
 	public int changeMovieStatusToStandby(String[] movieCodeArr) {
 		String movie_status = "대기";
-		return movieMapper.updateMovieStatusToStandby(movie_status, movieCodeArr);
+		return movieMapper.updateMovieStatusToStandBy(movie_status, movieCodeArr);
 	}
 	
 	// 영화가격 조회

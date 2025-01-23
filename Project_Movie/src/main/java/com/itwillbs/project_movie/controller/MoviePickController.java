@@ -212,7 +212,16 @@ public class MoviePickController {
 	// 투표설정페이지에서 선정된 영화 시즌 상영예정작으로 등록
 	@GetMapping("RegistUpcomingSeasonMovie")
 	public String registUpcomingSeasonMovie(String vote_code, Model model) {
-		Boolean isRegistSuccess = moviePickService.adjustVoteResult(vote_code);
+		Boolean isRegistSuccess;
+		
+		// 투표결과 적용
+		try {
+			moviePickService.adjustVoteResult(vote_code);
+			isRegistSuccess = true;
+		} catch (Exception e) {
+			e.getMessage();
+			isRegistSuccess = false;
+		}
 		
 		if(isRegistSuccess) {
 			return "redirect:/RegistUpcomingSeasonMovieSuccess";
@@ -224,7 +233,8 @@ public class MoviePickController {
 	
 	@GetMapping("RegistUpcomingSeasonMovieSuccess")
 	public String RegistUpcomingSeasonMovieSuccess(Model model) {
-		model.addAttribute("msg", "시즌 상영예정작 등록 완료하였습니다.");
+		model.addAttribute("msg", "시즌 상영예정작 등록 완료하였습니다.\\n선정에 실패한 영화는 대기상태로 돌아갑니다.\\n"
+				+ "이번 시즌 투표가 종료되어 픽결과페이지에 표시됩니다.");
 		model.addAttribute("targetURL", "AdminMoviePickSet");
 		return "result/process";
 	}

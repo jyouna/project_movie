@@ -36,6 +36,9 @@ public interface MoviePickMapper {
 
 	// 회원의 이번 투표수 조회
 	int selectMemberVoteCount(Map<String, String> map);
+	
+	// 선정된 영화 코드를 영화정보 테이블에 업데이트
+	void updateVoteInfoAddWinner(@Param("vote_code") String vote_code, @Param("winner_movie_code") String winner_movie_code);
 
 	
 	

@@ -37,13 +37,25 @@
 								<fmt:formatNumber value="${movie.count / totalCount * 100}" pattern="#0.0"></fmt:formatNumber>
 							)
 						</label><br>
-						<a href=""><img src="${movie.movie_img1}"></a><br>
+						<img src="${movie.movie_img1}" class="movieImg"><br>
 						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movie.movie_code}'">
 						<c:if test="${status.count < 4 }">
 							<div class="pick_grade">
 								<img src="${pageContext.request.contextPath}/resources/images/${status.count}grade.png">
 					        </div>
 						</c:if>
+						<div class="movie_info">
+				            &lt;${movie.movie_name}&gt;
+				            <ul>
+					            <li>감독: ${movie.movie_director}</li>
+					            <li>출연:<br> ${movie.movie_actor}</li>
+					            <li>등급: ${movie.age_limit}</li>
+					            <li>장르: ${movie.movie_genre}</li>
+					            <li>개봉일: ${movie.release_date}</li>
+					            <li>러닝 타임: ${movie.running_time}</li>
+					            <li>예매가: ${generalPrice}원</li>
+				            </ul>
+				        </div>
 					</div>
 				</c:forEach>
 			</div>

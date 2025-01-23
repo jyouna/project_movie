@@ -39,7 +39,7 @@
 				<input type="button" id="registPickBtn" value="투표등록" <c:if test="${not empty voteInfo}">disabled</c:if>>
 				<input type="button" id="deletePickBtn" value="투표삭제" <c:if test="${not empty voteCurrentInfoList or voteInfo.vote_status eq 1}">disabled</c:if>>
 				<input type="button" id="registUpcomingBtn" value="투표결과적용" <c:if test="${not empty voteInfo.winner_movie_code}">disabled</c:if>>
-				<input type="button" id="removeFromPickBtn" value="투표영화에서 삭제하기" <c:if test="${not empty voteInfo.winner_movie_code}">disabled</c:if>>
+				<input type="button" id="removeFromPickBtn" value="투표영화에서 삭제하기" <c:if test="${not empty voteCurrentInfoList}">disabled</c:if>>
 				<input type="button" id="startVoteBtn" value="투표시작" <c:if test="${not empty voteInfo.winner_movie_code}">disabled</c:if>>
 				<input type="button" id="endVoteBtn" value="투표종료" <c:if test="${not empty voteInfo.winner_movie_code}">disabled</c:if>>
 			</div>

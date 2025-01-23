@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.itwillbs.project_movie.mapper.MovieMapper;
 import com.itwillbs.project_movie.mapper.MoviePickMapper;
 
 @Service
@@ -16,6 +17,9 @@ public class MoviePickService {
 	
 	@Autowired
 	MoviePickMapper moviePickMapper;
+	
+	@Autowired
+	MovieMapper movieMapper;
 	
 	// 투표정보 등록 메서드
 	public int registMoviePickInfo(Map<String, String> map) {
@@ -74,12 +78,10 @@ public class MoviePickService {
 	// 1) 투표 결과 1, 2, 3등 영화 시즌 상영예정작으로 등록
 	// 2) 4, 5등 영화 대기영화로 변경
 	// 3) 투표 정보 테이블에 선정영화 컬럼 업데이트
-	// 4) 투표 상태 변경
 	@Transactional
-	public Boolean adjustVoteResult(String vote_code) {
+	public void adjustVoteResult(String vote_code) {
 		// 영화결과정보 조회(득표수 기준 내림차순 정렬)
 		List<Map<String, Object>> voteResultInfoList = moviePickMapper.selectVoteCurrent(vote_code);
-		System.out.println("라라라라라" + voteResultInfoList);
 		// 선정된 영화 코드 리스트
 		List<String> winnerCodeList = new ArrayList<String>();
 		// 비선정된 영화 코드 리스트
@@ -93,15 +95,15 @@ public class MoviePickService {
 			}
 		}
 		
-		for(String a : winnerCodeList) {
-			System.out.println("라라라" + a);
-		}
+		// 1)
+		movieMapper.updateMovieStatusToSeasonUpcoming("상영예정작", "시즌", winnerCodeList);
 		
-		for(String b : loserCodeList) {
-			System.out.println("라라라" + b);
-		}
+		// 2)
+		movieMapper.updateMovieStatusToStandBy("대기", loserCodeList.toArray(new String[loserCodeList.size()]));
 		
-		return true;
+		// 3)
+		String winnerMovieCodeStr = String.join(",", winnerCodeList);
+		moviePickMapper.updateVoteInfoAddWinner(vote_code, winnerMovieCodeStr);
 	}
 	
 	

@@ -114,4 +114,13 @@
 		AND
 			member_id = #{member_id}
 	</select>
+	
+	<!-- 투표로 선정된 영화의 코드를 투표 정보에 업데이트 -->
+	<update id="updateVoteInfoAddWinner">
+		UPDATE vote_info
+		SET 
+			winner_movie_code = #{winner_movie_code}
+		WHERE
+			vote_code = #{vote_code}
+	</update>
 </mapper>

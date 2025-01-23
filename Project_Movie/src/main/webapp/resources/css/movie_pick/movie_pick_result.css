@@ -60,6 +60,11 @@
 	width: 300px;
 }
 
+.movieImg {
+	width: 300px;
+	height: 450px;	
+}
+
 .movie input[type=button] {
 	width: 90%;
 	height: 40px;
@@ -78,6 +83,25 @@
 
 .pick_grade img {
 	width: 150px;
+}
+
+.movie_info {
+    display: none;
+    position: absolute;
+    top: 45px;
+    left: 15px;
+    width: 90%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    box-sizing: border-box;
+    text-align: left;
+    padding: 20px 20px;
+    font-size: 17px;
+}
+
+.movie:hover .movie_info {
+    display: block;
 }
 
 #pick_notice {
@@ -100,8 +124,6 @@
 	text-align: center;
 	margin-bottom: 10px;
 }
-
-
 
 
 

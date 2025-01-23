@@ -47,7 +47,7 @@ $(function() {
 		// 영화 선택여부 판별
 		if(checkMovieCodeStr == "") {
 			alert("영화를 선택해 주세요");
-		} else if($("#isActivation").text() == "활성화") {
+		} else if($("#isActivation").val() == "1") {
 			alert("활성화된 투표의 투표영화는 삭제할 수 없습니다");
 		} else {
 			location.href = "RemoveMovieFromPick?movieCodeStr=" + checkMovieCodeStr;
@@ -87,7 +87,9 @@ $(function() {
 	
 	// 투표결과적용 버튼 클릭시 해당영화 상영예정작의 season 무비로 등록
 	$("#registUpcomingBtn").click(function() {
-		if(confirm("투표결과를 적용 하시겠습니까?\n1등, 2등, 3등 영화가 시즌 상영예정작으로 등록됩니다")) {
+		if($("#isActivation").val() == "1") {
+			alert("투표결과적용을 위해선 투표를 종료하여 주세요");			
+		} else if(confirm("투표결과를 적용 하시겠습니까?\n1등, 2등, 3등 영화가 시즌 상영예정작으로 등록됩니다")) {
 			location.href = "RegistUpcomingSeasonMovie?vote_code=" + $("#voteCode").val();
 		}
 	});

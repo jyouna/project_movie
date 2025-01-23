@@ -141,14 +141,28 @@
 		WHERE movie_code = #{movie_code}
 	</update>
 	
-	<!-- 영화 상태 대기로 변경(IN 사용) -->
-	<update id="updateMovieStatusToStandby">
+	<!-- 영화 상태 대기로 변경 -->
+	<update id="updateMovieStatusToStandBy">
 		UPDATE movie
 		SET 
 			movie_status = #{movie_status}
 		WHERE 
 			movie_code IN (
 			<foreach item="movie_code" collection="movieCodeArr" separator=",">
+				#{movie_code}
+			</foreach>
+			)
+	</update>
+	
+	<!-- 영화 상태 상영예정작, 영화타입 시즌으로 변경 -->
+	<update id="updateMovieStatusToSeasonUpcoming">
+		UPDATE movie
+		SET 
+			movie_status = #{movie_status},
+			movie_type = #{movie_type}
+		WHERE 
+			movie_code IN (
+			<foreach item="movie_code" collection="winnerCodeList" separator=",">
 				#{movie_code}
 			</foreach>
 			)

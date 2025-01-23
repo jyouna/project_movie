@@ -10,6 +10,11 @@ $(function() {
 			vote_code
 		}
 	}).done(function(voteCurrentInfoList) {
+		// 투표등록 후 아직 회원들의 투표전이라 투표현황정보가 없으면 
+		// 그래프 미 출력
+		if(voteCurrentInfoList.length == 0) {
+			return;
+		}
 		let totalCount = 0;
 		let totalMovieName = [];
 		let totalRatioStr = [];
