@@ -64,6 +64,10 @@ public interface BookMapper {
 
 	void insertRefundPoint(Map<String, Object> map);
 
+	List<Map<String, Object>> selectPaymentList();
+
+	int selectPaymentListCount(String howSearch, String searchKeyword, String howSearch2, String searchKeyword2);
+
 
 
 

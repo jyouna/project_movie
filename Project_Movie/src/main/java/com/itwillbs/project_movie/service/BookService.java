@@ -134,6 +134,14 @@ public class BookService {
 		return mapper.updateRefundPayment(map);
 	}
 
+	public List<Map<String, Object>> getPaymentList() {
+		return mapper.selectPaymentList();
+	}
+
+	public int getpaymentListCount(String howSearch, String searchKeyword, String howSearch2, String searchKeyword2) {
+		return mapper.selectPaymentListCount(howSearch, searchKeyword, howSearch2, searchKeyword2);
+	}
+
 
 
 

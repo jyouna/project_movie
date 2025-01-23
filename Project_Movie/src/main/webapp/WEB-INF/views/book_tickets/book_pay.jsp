@@ -42,6 +42,7 @@
 				<form action="BookFinish" id="paymentForm" method="post">
 					<input type="hidden" name="schedule_code" value="${schedule.schedule_code}">
 					<input type="hidden" name="payment_code" value="${payment_code}">
+					<input type="hidden" name="payment_method" id="paymentMethod">
 					<input type="hidden" name="payment_status" id="paymentStatus">
 					<input type="hidden" name="total_payment" id="totalPayment">
 					<div class="main_container">

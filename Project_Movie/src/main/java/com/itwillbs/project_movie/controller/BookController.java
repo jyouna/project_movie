@@ -328,7 +328,7 @@ public class BookController {
 	}
 
 	
-	
+	// 예매 취소
 	@ResponseBody
 	@PostMapping("ReservationCancel")
 	public ResponseEntity<Map<String, Object>> reservationCancel(@RequestParam Map<String, Object> map, HttpSession session, Model model) {
@@ -365,10 +365,58 @@ public class BookController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@GetMapping("ReservationInfo")
+	public String reservationInfo(Model model) {
+		
+		List<Map<String, Object>> paymentList = bookService.getPaymentList();
+		model.addAttribute("paymentList", paymentList);
+		
+		
+		
+		return "adminpage/payment_manage/reservation_info_board";
+	}
 	
+	@GetMapping("ReservationCancelInfo")
+	public String reservationCancelInfo() {
+		return "adminpage/payment_manage/reservation_cancel_board";
+	}
 	
-	
-	
+	private Boolean pagingMethod(Model model, int pageNum, int listLimit, String howSearch, String searchKeyword,
+			String howSearch2, String searchKeyword2) {
+		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
+		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword, howSearch2, searchKeyword2); //총결제 목록(검색 결제 목록)수 조회
+		int pageListLimit = 5; // 한페이지당 페이지번호 수
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
+		int endPage = startPage + pageListLimit - 1; // 각 페이지의 마지막 페이지번호
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		
+		// url 파라미터 조작 방지
+		if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
+			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
+			model.addAttribute("targetURL", "AdminMovieSetList?pageNum=1");
+			return false;
+		}
+		
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		// 조건에맞는 영화 리스트 조회
+		List<MovieVO> movieList = bookService.getMovieList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+		
+		// 지난상영작 페이지 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정
+		// 다른 페이지 listLimit:9, 지난상영작 페이지 listLimit:10
+		if(listLimit == 10) {
+			for(MovieVO movie : movieList) {
+				movie.setMovie_synopsis(movie.getMovie_synopsis().substring(0, 90) + "...");
+			}
+		}
+		model.addAttribute("movieList", movieList);
+		return true;
+	}
 	
 }
 

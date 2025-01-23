@@ -66,7 +66,6 @@ $(function() {
 					movie_code : selectedMovie
 				}
 			}).done(function(scheduleList) {
-				console.log(scheduleList.length);
 				if(scheduleList.length != 0) {
 					
 					for(let schedule of scheduleList) {
@@ -81,15 +80,39 @@ $(function() {
 						
 						// 시간 버튼 출력
 						$("#" + schedule.movie_code).append(`
-						    <a class="time_seat_btn">
+						    <a class="time_seat_btn" id="${schedule.schedule_code}">
 						        <input type="hidden" value="${schedule.schedule_code}">
+						        <input type="hidden" class="isBookingAvail" value="${schedule.booking_avail}">
 						        <span class="mv_time">${schedule.str_start_time}</span>
 						        <span class="details">
-						            <span class="seat">70/${schedule.avail_seat}</span>
+						            
 						            <span class="hall">${hallName}</span>
 						        </span>
 						    </a>
 						`);
+						
+						// 예매 불가능한 스케줄 버튼 어둡게
+						if(schedule.booking_avail == 0) {
+							$("#" + schedule.schedule_code).css({
+							    "background": "#ddd",
+							    "color": "#999",
+							    "border": "1px solid #ccc",
+							    "cursor": "default",
+								"box-shadow": "inset 0px 0px 5px rgba(0, 0, 0, 0.2)"
+							});
+
+						}
+						
+						// 시간 버튼에 남은 좌석 출력
+						$.ajax({
+							type : "GET",
+							url : "GetAvailSeatFromSchedule",
+							data : {
+								schedule_code : schedule.schedule_code
+							}
+						}).done(function(disabledSeatList) {
+							$("#" + schedule.schedule_code).find(".details").prepend(`<span class="seat">${schedule.avail_seat - disabledSeatList.length}/${schedule.avail_seat}</span>`);
+						});
 					}
 					
 				} else if(true) {
