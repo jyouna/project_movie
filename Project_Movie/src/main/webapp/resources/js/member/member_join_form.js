@@ -132,10 +132,10 @@ document.getElementById("sendAuthCodeBtn").addEventListener("click", function (e
     event.preventDefault(); // 기본 폼 제출 방지
     const phone = document.getElementById("phone").value.trim();
 
- // if (!/^\d{10,11}$/.test(phone)) {
- //       alert("전화번호를 정확히 입력하세요.");
- //       return;
- //   }
+	 if (!/^\d{10,11}$/.test(phone)) {
+       alert("전화번호를 정확히 입력하세요.");
+       return;
+   	 }
 
     fetch("sendAuthCode", {
         method: "POST",
@@ -144,7 +144,13 @@ document.getElementById("sendAuthCodeBtn").addEventListener("click", function (e
         },
         body: `phone=${encodeURIComponent(phone)}`
     })
-    .then(response => response.json())
+    .then(response =>  {
+	
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.status === "success") {
             alert("인증번호가 발송되었습니다.");
@@ -155,6 +161,8 @@ document.getElementById("sendAuthCodeBtn").addEventListener("click", function (e
     .catch(error => {
         console.error("Error:", error);
         alert("오류가 발생했습니다. 다시 시도하세요.");
+
+
     });
 });
 

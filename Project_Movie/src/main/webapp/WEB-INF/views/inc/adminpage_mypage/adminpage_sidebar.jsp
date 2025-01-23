@@ -161,7 +161,7 @@
 					</a>
 					<div class="collapse" id="collapseReviews" aria-labelledby="headingReviews" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionReviews">
-					        <a class="nav-link" href="">
+					        <a class="nav-link" href="AdminReviewManage">
 					            조회 및 삭제
 					        </a>
 					    </nav>

@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.itwillbs.project_movie.mapper.AdminReviewMapper">
+	
+	<select id="adminLogin" resultType="adminmanage">
+		SELECT *
+		FROM admin
+		WHERE 
+			admin_id = #{admin_id} AND admin_passwd = #{admin_passwd}
+	</select>
+	
+	<insert id="insertAccount">
+	    INSERT INTO admin 
+	    VALUES (
+	        #{admin_id},
+	        #{admin_passwd},
+	        NOW(),
+	        TRUE,
+	        #{user_name},
+	        #{member_manage},
+	        #{payment_manage},
+	        #{notice_board_manage},
+	        #{movie_manage},
+	        #{theater_manage},
+	        #{vote_manage}
+	    )
+	</insert>
+	
+	<select id="selectAdminPagingListPaging" resultType="adminmanage">
+		SELECT *
+		FROM admin
+		ORDER BY start_date
+		LIMIT
+			#{startRow},
+			#{listLimit}
+	</select>
+	
+	<select id="selectMemberListPaging" resultType="memberAllInfo">
+		SELECT  		
+			m.member_id AS member_id, 
+			COUNT(CASE WHEN c.coupon_status = 0 THEN 1 END) AS coupon_num, 
+			m.point AS remain_point,
+			m.member_name AS member_name,
+			m.member_passwd AS member_passwd,
+			m.birth_date AS birth_date,
+			m.email AS email,
+			m.gender AS gender,
+			m.genre AS gerne,
+			m.phone AS phone,
+			m.text_receive AS text_receive,
+			m.email_receive AS email_receive,
+			m.info_open AS info_open,
+			m.member_type AS member_type,
+			m.email_auth_status AS email_auth_status,
+			m.phone_auth_status AS phone_auth_status,
+			m.member_status AS member_status,
+			m.regis_date AS regis_date
+		FROM 
+			member m 
+		LEFT JOIN 
+			coupon c
+		ON 
+			m.member_id = c.member_id  
+		<if test="!searchContent.equals('')">
+			WHERE
+			<choose>
+				<when test="searchKeyword.equals('searchId')">
+					m.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchEmail')">
+					m.email LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchPhone')">
+					m.phone LIKE '%${searchContent}%'
+				</when>
+			</choose>	                
+		</if>
+		GROUP BY 
+			m.member_id
+		ORDER BY 
+			m.regis_date
+		LIMIT
+			#{startRow},
+			#{listLimit}				
+	</select>
+	
+	<select id="checkAdminId" resultType="String">
+		SELECT admin_id
+		FROM admin
+		WHERE admin_id = #{id}
+	</select>
+	
+	<delete id="deleteAdminAccount">
+		DELETE FROM admin
+		WHERE admin_id = #{id}
+	</delete>
+	
+	<select id="getBoardListCount">
+		SELECT count(*)
+		FROM admin
+	</select> 
+	
+	<select id="selectAdminAccountInfo" resultType="adminmanage">
+		SELECT *
+		FROM admin
+		WHERE admin_id = #{admin_id}
+	</select>
+	
+	<update id="adminAccountModify">
+		UPDATE admin
+		SET 
+			user_name = #{user_name},
+			admin_passwd = #{admin_passwd},
+			member_manage = #{member_manage},
+			payment_manage = #{payment_manage},
+			notice_board_manage = #{notice_board_manage},
+			movie_manage = #{movie_manage},
+			theater_manage = #{theater_manage},
+			vote_manage = #{vote_manage}
+		WHERE
+			admin_id = #{admin_id}
+	</update>
+	
+	<insert id="insertEventBoard">
+		<selectKey keyProperty="event_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(event_code), 0)
+			FROM event_board;
+		</selectKey>
+		
+		INSERT INTO event_board
+		VALUES(
+			#{event_code}+1,
+			#{event_subject},
+			#{event_content},
+			#{event_file1},
+			#{event_file2},
+			#{event_file3},
+			#{event_writer},
+			now(),
+			#{view_count},
+			#{event_status},
+			#{event_start_date},
+			#{event_end_date},
+			DEFAULT
+		)
+	</insert>
+	
+	<select id="selectEventBoardList" resultType="eventboard">
+		SELECT *
+		FROM event_board
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('eventSubject')">
+					event_subject LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventContent')">
+					event_content LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventWriter')">
+					event_writer LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY 
+			event_status asc,
+			event_start_date desc
+		LIMIT
+			#{startRow},
+			#{listLimit}		
+	</select>
+	
+	<update id="updateEventStatusStart">
+		UPDATE event_board
+		SET 
+			event_status = 1,
+			event_start_date = now()
+		WHERE event_code = #{event_code}
+	</update>
+	
+	<update id="updateEventStatusEnd">
+		UPDATE event_board
+		SET event_status = 2, 
+			event_end_date = now()
+		WHERE event_code = #{event_code}
+	</update>
+	
+	<update id="updateEventWinnerSetStatus">
+		UPDATE event_board
+		SET set_winner_status = true
+		WHERE event_code = #{event_code}
+	</update>
+	
+	<select id="getEventBoardList" resultType="eventboard">
+		SELECT *
+		FROM event_board
+		WHERE event_code = #{event_code}
+	</select> 
+	
+	<select id="getEndEventList" resultType="eventboard">
+		SELECT *
+		FROM event_board
+		WHERE event_status = 2
+	</select>
+	
+	<select id="selectMemberInfoForEvent" resultType="member">
+		SELECT *
+		FROM member; 
+	</select>
+	
+<!-- 	<select id="checkEventStatus" resultType="eventboard"> -->
+<!-- 		SELECT event_status, set_winner_status -->
+<!-- 		FROM event_board -->
+<!-- 		WHERE event_code = #{event_code} -->
+<!-- 	</select> -->
+	
+	<insert id="insertCoupon">
+		<selectKey keyProperty="coupon_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(coupon_code), 0)
+			FROM coupon;
+		</selectKey>
+		
+		INSERT INTO coupon
+		VALUES (
+			#{coupon_code}+1,
+			#{coupon_type},
+			#{discount_amount},
+			#{discount_rate},
+			now(),
+			#{expired_date},
+			#{coupon_status},
+			#{member_id},
+			#{event_code}
+		)
+	</insert>
+	
+	<update id="creditPoint">
+		UPDATE member
+		SET point = point + #{point_amount}
+		WHERE member_id = #{id}
+	</update>
+	
+	<insert id="insertPointInfo">
+		<selectKey keyProperty="point_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(point_code), 0)
+			FROM point;
+		</selectKey>
+		
+		INSERT INTO point
+		VALUES (
+			#{point_code}+1,
+			#{point_amount},
+			DEFAULT,
+			#{event_code},
+			#{id},
+			now(),
+			DEFAULT,
+			DEFAULT
+		)
+	</insert>
+
+	<insert id="addPointInfo">
+		<selectKey keyProperty="point_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(point_code), 0)
+			FROM point;
+		</selectKey>
+		
+		INSERT INTO point
+		VALUES (
+			#{point_code}+1,
+			#{point_amount},
+			DEFAULT,
+			DEFAULT,
+			#{id},
+			now(),
+			DEFAULT,
+			DEFAULT
+		)
+	</insert>
+	
+	<select id="selectAllEventWinner" resultType="EventWinner">
+		SELECT 
+			c.event_code AS event_code, 
+			c.member_id AS winner_id, 
+			e.event_subject AS event_subject, 
+			e.event_start_date AS event_start_date, 
+			e.event_end_date AS event_end_date,
+			c.coupon_type AS coupon_type,
+			c.discount_amount AS discount_amount,
+			c.discount_rate AS discount_rate,
+			c.regis_date AS prize_datetime
+		FROM 
+			event_board e 
+		JOIN 
+			coupon c
+		ON 
+			e.event_code = c.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					c.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY 
+			event_code desc
+		LIMIT
+			#{startRow},
+			#{listLimit}				
+	</select>
+	
+	<select id="getPointWinnerList" resultType="EventWinner">
+		SELECT 
+			p.event_code AS event_code,
+		    p.point_holder AS winner_id,
+			e.event_subject AS event_subject, 
+			e.event_start_date AS event_start_date, 
+			e.event_end_date AS event_end_date,
+		    p.point_credited AS point_amount,
+		    p.regis_date AS prize_datetime
+		FROM 
+			event_board e 
+		JOIN 
+			point p
+		ON 
+			e.event_code = p.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					p.point_holder LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY 
+			event_code desc
+		LIMIT
+			#{startRow},
+			#{listLimit}
+	</select>
+
+	<select id="getCouponInfo" resultType="map">
+		SELECT c.member_id, count(*) AS coupon
+		FROM member m 
+		JOIN coupon c
+		ON m.member_id = c.member_id
+		GROUP BY c.member_id
+	</select>
+		
+	<select id="getAdminListCount" resultType="int">
+		SELECT count(*)
+		FROM admin
+	</select>
+	
+	<select id="getMemberListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM member m 
+		<if test="!searchContent.equals('')">
+			WHERE
+			<choose>
+				<when test="searchKeyword.equals('searchId')">
+					m.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchEmail')">
+					m.email LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchPhone')">
+					m.phone LIKE '%${searchContent}%'
+				</when>
+			</choose>	                
+		</if>
+	</select>
+	
+	<select id="getEventBoardListCount" resultType="int">
+		SELECT count(*)
+		FROM event_board
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('eventSubject')">
+					event_subject LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventContent')">
+					event_content LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventWriter')">
+					event_writer LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+	</select>
+	
+	<select id="getCouponWinnerListCount" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			event_board e 
+		JOIN 
+			coupon c
+		ON 
+			e.event_code = c.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					c.member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>		
+	</select>
+	
+	<select id="getPointWinnerListCount" resultType="int">
+		SELECT 
+			COUNT(p.point_holder)
+		FROM 
+			event_board e 
+		JOIN 
+			point p
+		ON 
+			e.event_code = p.event_code
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('winnerId')">
+					p.point_holder LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventSubject')">
+					e.event_subject LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>		
+	</select>
+	
+	<select id="getCouponListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM coupon
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('couponHolder')">
+					member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('couponStatus')">
+					coupon_status LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+	</select>
+	
+	<select id="getCouponList" resultType="coupon">
+		SELECT *
+		FROM coupon
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('couponHolder')">
+					member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('couponStatus')">
+					coupon_status LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY coupon_code		
+		LIMIT
+			#{startRow},
+			#{listLimit}		
+	</select>
+	
+	<select id="getPointListCount" resultType="int">
+      SELECT COUNT(*)
+      FROM point
+      <if test="!searchContent.equals('')">
+      WHERE
+         <choose>
+            <when test="searchKeyword.equals('pointHolder')">
+               point_holder LIKE '%${searchContent}%'
+            </when>
+            <when test="searchKeyword.equals('eventCode')">
+               event_code LIKE '%${searchContent}%'
+            </when>
+         </choose>      
+      </if>	
+	</select>
+	
+	<select id="getPointRecord" resultType="point">
+		SELECT *
+		FROM point
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('pointHolder')">
+					point_holder LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('eventCode')">
+					event_code LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+		ORDER BY 
+			point_code DESC
+		LIMIT
+			#{startRow},
+			#{listLimit}					
+	</select>
+	
+	<select id="getMonthlyTotalNewMember" resultType="int">
+		SELECT COUNT(*)
+		FROM member
+		WHERE 
+			regis_date 
+		BETWEEN
+			CONCAT(#{year}, '-', #{month}, '-01')
+		AND
+			LAST_DAY(CONCAT(#{year}, '-', #{month}, '-01'))
+	</select>
+	
+	<update id="modifyEventBoard">
+		UPDATE 
+			event_board
+		SET
+			event_subject = #{event_subject},
+			event_start_date = #{event_start_date},
+			event_end_date = #{event_end_date},
+			event_content = #{event_content},
+			event_file1 = #{event_file1},
+			event_file2 = #{event_file2},
+			event_file3 = #{event_file3}
+		WHERE 
+			event_code = #{event_code}
+	</update>
+	
+	<select id="checkEventStatusForDelete" resultType="int">
+		SELECT 
+			event_status
+		FROM
+			event_board
+		WHERE
+			event_code = #{event_code}
+	</select>
+	
+	<delete id="deleteEventBoard">
+		DELETE FROM event_board
+		WHERE event_code = #{event_code}
+	</delete>
+	
+	<select id="getMemberCount">
+		SELECT count(*)
+		FROM member
+		<if test="!searchContent.equals('')">
+		WHERE
+			<choose>
+				<when test="searchKeyword.equals('searchId')">
+					member_id LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchEmail')">
+					email LIKE '%${searchContent}%'
+				</when>
+				<when test="searchKeyword.equals('searchPhone')">
+					phone LIKE '%${searchContent}%'
+				</when>
+			</choose>		
+		</if>
+	</select>
+	
+	<select id="getTotalPeriodMemberJoin">
+		SELECT count(*) AS member_count
+		FROM member
+		WHERE year(regis_date) = #{year}
+	</select> 
+	
+		<!-- 회원 생성 메크로 -->
+	<insert id="createMembers">
+		INSERT INTO member (
+			member_id, 
+			member_passwd,
+			member_name, 
+			birth_date,
+		    email, 
+		    phone, 
+		    gender, 
+		    genre,
+			text_receive, 
+			email_receive, 
+			info_open, 
+			point,
+			member_type, 
+			email_auth_status, 
+			phone_auth_status, 
+			member_status, 
+			regis_date
+			
+		) VALUES (
+			#{member_id}, 
+			#{member_passwd},
+		    #{member_name}, 
+		    #{birth_date},
+		    #{email}, 
+		    #{phone},
+		    #{gender}, 
+		    #{genre},
+		    #{text_receive}, 
+		    #{email_receive}, 
+		    #{info_open},
+			0,
+			1,
+			0,
+			1,
+			1, 
+			#{regis_date}
+		)
+	</insert>
+	
+	<select id="getAllEventWinnerCount" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM event_board e 
+			LEFT JOIN coupon c ON e.event_code = c.event_code 
+			LEFT JOIN point p ON e.event_code = p.event_code
+		WHERE 
+			(((c.discount_amount is null AND c.discount_rate is null) AND (p.point_credited is not null)) 
+			OR ((c.discount_amount is not null AND c.discount_rate is not null) AND (p.point_credited is null)))
+			<if test="!searchContent.equals('')">
+				AND
+				<choose>
+					<when test="searchKeyword.equals('winnerId')">
+						CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) LIKE '%${searchContent}%'
+					</when>
+					<when test="searchKeyword.equals('eventSubject')">
+						e.event_subject LIKE '%${searchContent}%'
+					</when>
+				</choose>		
+			</if>			
+	</select>
+	
+	<select id="getAllEventWinnerList" resultType="EventWinner">
+		SELECT 
+			e.event_code AS event_code,
+			CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) AS winner_id,
+			e.event_subject AS event_subject,
+			e.event_start_date AS event_start_date,
+			e.event_end_date AS event_end_date,
+		    IFNULL(c.discount_amount, NULL) AS discount_amount,
+		    IFNULL(c.discount_rate, NULL) AS discount_rate,
+		    IFNULL(p.point_credited, NULL) AS point_amount,
+			COALESCE(c.regis_date, p.regis_date) AS prize_datetime -- 첫번째로 NULL 값이 아닌 수를 반환! 
+		FROM event_board e 
+			LEFT JOIN coupon c ON e.event_code = c.event_code 
+			LEFT JOIN point p ON e.event_code = p.event_code
+		WHERE 
+			(((c.discount_amount is null AND c.discount_rate is null) 
+				AND (p.point_credited is not null)) 
+		    OR ((c.discount_amount is not null AND c.discount_rate is not null) 
+		    	AND (p.point_credited is null)))
+			<if test="!searchContent.equals('')">
+				AND
+				<choose>
+					<when test="searchKeyword.equals('winnerId')">
+						CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) LIKE '%${searchContent}%'
+					</when>
+					<when test="searchKeyword.equals('eventSubject')">
+						e.event_subject LIKE '%${searchContent}%'
+					</when>
+				</choose>		
+			</if>		
+		ORDER BY event_code ASC
+		LIMIT
+			#{startRow},
+			#{listLimit}		
+	</select>
+	
+	<select id="getWinnerList" resultType="EventWinner">
+		SELECT 
+			e.event_code AS event_code,
+			CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) AS winner_id,
+			e.event_subject AS event_subject,
+			e.event_start_date AS event_start_date,
+			e.event_end_date AS event_end_date,
+		    IFNULL(c.discount_amount, NULL) AS discount_amount,
+		    IFNULL(c.discount_rate, NULL) AS discount_rate,
+		    IFNULL(p.point_credited, NULL) AS point_amount,
+			COALESCE(c.regis_date, p.regis_date) AS prize_datetime -- 첫번째로 NULL 값이 아닌 수를 반환! 
+		FROM event_board e 
+			LEFT JOIN coupon c ON e.event_code = c.event_code 
+			LEFT JOIN point p ON e.event_code = p.event_code
+		WHERE 
+			(((c.discount_amount is null AND c.discount_rate is null) 
+				AND (p.point_credited is not null)) 
+		    OR ((c.discount_amount is not null AND c.discount_rate is not null) 
+		    	AND (p.point_credited is null)))
+		    AND e.event_code = #{event_code}		
+	</select> 
+	
+	<select id="getSingleEventWinnerCount" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM event_board e 
+			LEFT JOIN coupon c ON e.event_code = c.event_code 
+			LEFT JOIN point p ON e.event_code = p.event_code
+		WHERE 
+			(((c.discount_amount is null AND c.discount_rate is null) AND (p.point_credited is not null)) 
+			OR ((c.discount_amount is not null AND c.discount_rate is not null) AND (p.point_credited is null)))
+			AND e.event_code = #{event_code}	
+	</select>
+	
+	<select id="getNoticeBoardList" resultType="notice_board">
+		SELECT *
+		FROM 
+			notice_board
+		ORDER BY 
+			regis_date DESC
+	</select>
+	
+	<select id="getInquiryBoardList" resultType="inquiry">
+		SELECT *
+		FROM 
+			Inquiry
+		where 
+			response_status = 0	
+		ORDER BY
+			inquriy_date DESC
+	</select>
+	
+	<select id="getMyInfo" resultType="member">
+		SELECT * 
+		FROM 
+			member
+		WHERE 
+			member_id = #{sMemberId}
+	</select> 
+	
+	<select id="getDbPasswd" resultType="String">
+		SELECT 
+			member_passwd
+		FROM 
+			member
+		WHERE
+			member_id = #{member_id}
+	</select>
+	
+	<update id="updateMyInfo">
+		UPDATE member
+		SET 
+			member_passwd = #{member_passwd},
+			genre = #{genre},
+			text_receive = #{text_receive},
+			email_receive = #{email_receive},
+			info_open = #{info_open}
+		WHERE
+			member_id = #{member_id}
+	</update>
+	
+	<insert id="createSalesRecord">
+		INSERT INTO payment
+		VALUES(
+			#{payment_code},
+			#{payment_date},
+			#{member_id},
+			#{schedule_code},
+			#{ticket_count},
+			#{total_discount},
+			#{point_discount},
+			#{coupon_discount},
+			#{total_discount},
+			#{total_payment},
+			#{seat_selection_time},
+			#{payment_method},
+			#{payment_status},
+			#{total_seat_code}
+		)
+	</insert>
+	
+	<select id="getMonthlySales" resultType="int">
+		SELECT 
+			IFNULL(SUM(total_payment),0)
+		FROM 
+			payment
+		WHERE 
+			payment_status = 1
+			AND	
+				YEAR(payment_date) = #{year}
+			AND
+				MONTH(payment_date) = #{month}
+	</select>
+	
+	<select id="getMonthlyRefund" resultType="int">
+		SELECT 
+			IFNULL(SUM(refund_amount),0)
+		FROM 
+			refund
+		WHERE 
+			refund_status = 1
+			AND	
+				YEAR(refund_completed_date) = #{year}
+			AND
+				MONTH(refund_completed_date) = #{month}	
+	</select>
+
+	<select id="getAnnualSales" resultType="int">
+		SELECT 
+			IFNULL(SUM(total_payment),0)
+		FROM 
+			payment
+		WHERE 
+			payment_status = 1
+			AND	
+				YEAR(payment_date) = #{year}
+	</select>
+	
+	<select id="getAnnualRefund" resultType="int">
+		SELECT 
+			IFNULL(SUM(refund_amount),0)
+		FROM 
+			refund
+		WHERE 
+			refund_status = 1
+			AND	
+				YEAR(refund_completed_date) = #{year}
+	</select>
+	
+	<update id="handlingExpiredCoupon">
+		UPDATE
+			coupon
+		set 
+			coupon_status = 1
+		WHERE
+			expired_date &lt; #{date}
+	</update>
+	
+	<select id="getBookingEventWinnerList" resultType="String">
+		SELECT 
+			member_id
+		FROM 
+			payment
+		WHERE
+			((payment_date &lt;= #{event_end_date}
+			AND payment_date &gt;= #{event_start_date})
+			AND payment_status = 1)
+	</select>
+	
+	<select id="getMemberIdList" resultType="String">
+		SELECT 
+			member_id
+		FROM
+			member
+	</select>
+	
+	<select id="getDailySales" resultType="map">
+		SELECT 
+			DAY(payment_date) AS day, 
+			SUM(total_payment) AS total
+		FROM 
+			payment
+		WHERE
+			(DATE(payment_date) BETWEEN #{firstDay} AND #{lastDay})
+			AND
+			(payment_status = 1)
+		GROUP BY 
+			DAY(payment_date)
+		ORDER BY
+			DAY(payment_date) ASC
+	</select>
+	
+	<insert id="createCoupon">
+		<selectKey keyProperty="coupon_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(coupon_code), 0)
+			FROM coupon;
+		</selectKey>
+		
+		INSERT INTO coupon
+		VALUES (
+			#{coupon_code}+1,
+			#{couponType},
+			#{discountAmount},
+			#{discountRate},
+			now(),
+			#{expiredDate},
+			0,
+			#{id},
+			0
+		)
+		
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->
+
+<!-- 	리뷰 총 개수 출력 -->
+	<select id="selectReviewListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM review
+	</select>
+<!-- 	리뷰 글 시작번호 끝번호 -->
+	<select id="selectReviewList" resultType="map">
+		SELECT review.*, movie.movie_name
+		FROM review
+		JOIN movie ON review.movie_code = movie.movie_code
+		LIMIT #{startRow}, #{listLimit}
+	</select>
+	
+	<select id="selectIsRegistReview" resultType="map">
+		SELECT *
+		FROM review
+		WHERE movie_code = #{movie_code}
+		AND review_writer = #{id}
+	</select>
+	<!-- 	관람한 리뷰 작성 -->
+	<insert id="insertReview">
+		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(review_code),0)
+			FROM review;
+		</selectKey>
+		INSERT INTO review(
+			movie_code,
+			review_content,
+			review_recommend,
+			review_writer
+		)VALUES(
+			#{movieCode},
+			#{reviewContent},
+			#{reviewRecommend},
+			#{id}
+		)
+	</insert>
+<!-- 	관람한 영화 리뷰 수정 -->
+	<update id="updateReview">
+		UPDATE review
+		SET review_content = #{review_content},
+		review_recommend = #{review_recommend}
+		WHERE movie_code = #{movie_code}
+	</update>
+	
+<!-- 	관람한 영화 리뷰 삭제 -->
+	<delete id="deleteReview">
+		DELETE FROM review
+		WHERE movie_code = #{movie_code}
+	</delete>
+	
+
+
+
+
+<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->
+	
+	
+	
+	
+	
+	
+ </mapper>
+ 
+ 
+ 
+ 
+ 

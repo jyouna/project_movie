@@ -1,5 +1,5 @@
 package com.itwillbs.project_movie.controller;
-// 250120
+//장민기 20250122
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -36,7 +36,7 @@ import com.itwillbs.project_movie.service.SmsService;
 //import org.springframework.web.bind.annotation.*;
 import java.util.Random;
 
-//장민기
+
 @Controller
 public class MemberController {
    @Autowired
@@ -44,10 +44,10 @@ public class MemberController {
    @Autowired
    private MailService mailService;
    @Autowired
-    private SmsService smsService;
+    private SmsService smsService; 
    
-   // 회원 가입 폼 뷰페이지 포워딩 처리(MemberJoin - GET)
-   // 연결된 뷰: member/member_join_form.jsp
+   
+   //--------------------------------------------------------------------------------------------------- 회원 가입 
    
    @GetMapping("MemberAgree")
    public String memberAgreeForm() {
@@ -61,38 +61,6 @@ public class MemberController {
       return "redirect:/MemberJoin";
    }
    
-   /*
-   @PostMapping("MemberAgree")
-   public String memberAgree(MemberVO member, Model model, BCryptPasswordEncoder passwordEncoder) {
-        // 약관 동의 여부 확인
-        if (!member.isTermsAgree() || !member.isPrivacyAgree()) {
-            model.addAttribute("errorMsg", "모든 약관에 동의해야 합니다.");
-            return "member/member_agree_form";
-        }
-
-        // 비밀번호 암호화
-        String securedPasswd = passwordEncoder.encode(member.getMember_passwd());
-        member.setMember_passwd(securedPasswd);
-
-        int insertCount = 0;
-        try {
-            insertCount = memberService.registMember(member);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (insertCount > 0) {
-            EmailAuthVO emailAuthVO = mailService.sendAuthMail(member);
-            memberService.registMailAuthInfo(emailAuthVO);
-            return "redirect:/MemberJoinSuccess"; // 연결된 뷰: member/member_join_success.jsp
-        } else {
-            model.addAttribute("msg", "회원가입 실패!");
-            return "result/fail"; // 연결된 뷰: result/fail.jsp
-        }
-   }
-   */
-   
-   
    @PostMapping("checkId")
    @ResponseBody
    public ResponseEntity<Boolean> checkId(@RequestParam("member_id") String member_id) {
@@ -104,15 +72,12 @@ public class MemberController {
    }
    
 
-   
-   
    @GetMapping("MemberJoin")
    public String memberJoinForm() {
       return "member/member_join_form";
    }
    
-   // 회원 가입 비즈니스 로직 처리(MemberJoin - POST)
-   // 연결된 서비스: registMember(), sendAuthMail(), registMailAuthInfo()
+   // 회원 가입 
    @PostMapping("MemberJoin")
    public String memberJoin(MemberVO member, Model model, BCryptPasswordEncoder passwordEncoder) {
       
@@ -121,15 +86,6 @@ public class MemberController {
       System.out.println("평문 : " + member.getMember_passwd());
       System.out.println("암호문 : " + securedPasswd);
       member.setMember_passwd(securedPasswd);
-
-       // 전화번호 검증 및 NULL 방지
-      /*
-       if (member.getPhone() == null || member.getPhone().trim().isEmpty()) {
-          System.out.println("c118) 서버에서 수신한 전화번호: " + member.getPhone());
-           model.addAttribute("msg", "c119)전화번호를 입력하세요.");
-           return "result/process";
-       }      
-       */
        
        // ***** 디버깅 코드 - 최종 SQL 데이터 확인 (DB 저장 직전) *****
        System.out.println("최종 저장 SQL 데이터 - 생년월일: " + member.getBirth_date());
@@ -143,35 +99,40 @@ public class MemberController {
        
     } catch (Exception e) {
        e.printStackTrace();
-       model.addAttribute("msg", "서버 오류가 발생했습니다. 다시 시도해주세요");
+       model.addAttribute("msg", "오류가 발생했습니다. 다시 시도해주세요");
        return "result/process";
     }
     
     // ***** 디버깅 코드 - 저장 결과 확인 (DB 저장 후) *****
     System.out.println("DB 저장 완료 여부: " + (insertCount > 0 ? "성공" : "실패"));
     
-    // -------------------------------------------------------------
     // 회원가입 결과 판별하여 포워딩 처리
-    // => 성공 시 : MemberJoinSuccess 서블릿 주소 리다이렉트
-    // => 실패 시 : result/fail.jsp 페이지 포워딩
+    
     if(insertCount > 0) {
       //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
       EmailAuthVO emailAuthVO = mailService.sendAuthMail(member);
       mailService.registMailAuthInfo(emailAuthVO);
       System.out.println("c143)인증메일 정보 :" + emailAuthVO );
       
+      
+      
       mailService.registMailAuthInfo(emailAuthVO);
-      return "redirect:/";
+   
+      
+      model.addAttribute("msg", "입력하신 주소로 메일을 전송했습니다.  \\n메일은 5분내로 전송됩니다. \\n인증을 완료하신후 로그인해주세요.");
+      model.addAttribute("targetURL", "MemberLogin");
+      return "result/process";
+      //return "redirect:/";
    } else {
        // fail.jsp 페이지에서 출력할 메세지("회원가입 실패!")를 Model 객체에 저장(속성명 msg)
-       model.addAttribute("msg", "c149) 회원가입 실패!");
+       model.addAttribute("msg", "회원가입에 실패했습니다. 재가입을 시도해주세요 \\n문제 재발시 관리자에게 문의해주세요!");
        return "result/process";
     }
     
  }
    
    
-   /* 팝업으로 전환
+   /* alert로 알림후 메인페이지로 리다이렉트
     
    // 회원 가입 성공 페이지 포워딩(MemberJoinSuccess - GET)
    // 연결된 뷰: member/member_join_success.jsp
@@ -180,39 +141,9 @@ public class MemberController {
       return "member/member_join_success";
    }
    */
-   
-   
-   
-   
-   
-   // 아이디 및 비밀번호 찾기 폼 페이지 포워딩(MemberFindForm - GET)
-  
-   /*
-   @GetMapping("MemberFindId")
-   public String memberFindIdForm() {
-       return "member/member_find_form"; // 뷰: member_find_form.jsp
-   }
-   
-   @PostMapping("MemberFindId")
-   public String memberFindId(MemberVO member, Model model) {
-       String name = member.getMember_name();
-       Date birthDate = member.getBirth_date(); // String 타입
-       String email = member.getEmail();
 
-       String memberId = memberService.findMemberId(name, birthDate, email);
-
-       if (memberId != null) {
-           model.addAttribute("memberId", memberId);
-           System.out.println(name + birthDate + email);
-       } else {
-           model.addAttribute("errorMsg", "입력한 정보로 등록된 계정이 없습니다.");
-       }
-
-       return "member/member_find_form";
-   }
-   */
    
-   // --------------------------------------------------------------------------- 아이디 찾기 시작
+   // -------------------------------------------------------------------------------------------- 아이디 찾기 시작
   
    
    @GetMapping("MemberFind")
@@ -235,7 +166,7 @@ public class MemberController {
        
        
        if (member_id != null) {
-    	   System.out.println("찾는 아이디는 " + member_id);
+          System.out.println("찾는 아이디는 " + member_id);
            model.addAttribute("member_id", member_id);
            System.out.println("===============================");
            System.out.println(member_name +" " + birth_date +" "+ email);
@@ -250,12 +181,12 @@ public class MemberController {
    
    
    
-  // -------------------------------------------------------------------------비밀번호찾기 시작
+  // ---------------------------------------------------------------------------------------------------비밀번호찾기 시작
    
    @GetMapping("MemberFindPasswd")
    
    public String memberFindPasswdForm() {
-	   
+      
        return "member/member_find_passwd_form"; // 뷰: member_find_form.jsp
    }
    
@@ -266,9 +197,9 @@ public class MemberController {
    @PostMapping("MemberFindPasswd")
    public String memberFindPasswd(MemberVO member, Model model) {
        // 입력받은 정보 추출
-	   
-	   String member_id = member.getMember_id();
-	   String member_name = member.getMember_name();
+      
+      String member_id = member.getMember_id();
+      String member_name = member.getMember_name();
        Date birth_date = member.getBirth_date();
        String email = member.getEmail();
        
@@ -290,13 +221,12 @@ public class MemberController {
        boolean isTemporaryPasswordSent = mailService.sendTemporaryPassword(member,email);
        if (!isTemporaryPasswordSent) {
            // 임시 비밀번호 생성 또는 이메일 전송 실패
-           model.addAttribute("errorMsg", "임시 비밀번호 발급 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+           model.addAttribute("errorMsg", "가입을 다시 시도해주세요. 오류 재발생시 관리자에게 문의하세요.");
            return "member/member_find_passwd_form";
        }
 
        // 3. 성공 메시지 전달
        System.out.println("임시 비밀번호가 이메일로 발송됨 이메일을 확인하세요.");
-       
        model.addAttribute("email",email);
        return "member/member_find_passwd_form";
      
@@ -311,10 +241,6 @@ public class MemberController {
        return "result/process";
    }
    */
-   
-   
-   
-      
    // 회원 로그인 폼 페이지 포워딩(MemberLogin - GET)
    // 연결된 뷰: member/member_login_form.jsp
 //   @GetMapping("MemberLogin")
@@ -325,7 +251,7 @@ public class MemberController {
 //   
    
    
-   // 240105 1900i ######################################################## 로그인 + 쿠키로 아이디 저장
+   // ------------------------------------------------------------------------------------- 로그인 + 쿠키로 아이디 저장
    // 추가: 쿠키값을 읽어 로그인 폼에 전달
    @GetMapping("MemberLogin")
    public String memberLoginForm(@CookieValue(value = "rememberId", required = false)
@@ -349,7 +275,7 @@ public class MemberController {
       
       
       if(dbMember == null || !passwordEncoder.matches(member.getMember_passwd(), dbMember.getMember_passwd())) {
-         model.addAttribute("msg", "로그인 실패!");
+         model.addAttribute("msg", "로그인 실패! 아이디 비밀번호를 다시 확인후 시도해주세요");
          return "result/process"; // 연결된 뷰: result/fail.jsp
          
       } else if(dbMember.getMember_status() == 3) {
@@ -360,18 +286,15 @@ public class MemberController {
          //***** 수정전: mail_auth_status ----> 수정후: email_auth_status *****
          
       }else if(!dbMember.isEmail_auth_status()) {
-         //db가 bollean 타입으로 바뀜. 추가 수정 ***************************************************
+         //db가 bollean 타입으로 바뀜. 추가 수정 ******
          
             model.addAttribute("msg", "이메일 인증 후 로그인 가능합니다!");
          return "result/process"; // 연결된 뷰: result/fail.jsp
 
          
          
-//         =================================================================================
 //         이름관련  오류가 생겨 gpt의견 듣고 수정한 부분 바로 아래 ********
-//         =================================================================================
-
-         
+       
 //      } else if(!dbMember.isEmail_auth_status()) { 
 //         //***** 수정전: getEmail_auth_status() ----> 수정후: isEmail_auth_status() *****
 //         model.addAttribute("msg", "이메일 인증 후 로그인 가능합니다!");
@@ -383,39 +306,9 @@ public class MemberController {
          session.setAttribute("sMemberId", member.getMember_id());
          session.setMaxInactiveInterval(1800*10); // 1800초 = 30분 (기본값이므로 생략 가능) X10 
          
-         // **************************************************************************************************250103
                   // [ 로그인 폼에서 "아이디 기억하기" 항목 체크박스에 대한 쿠키 처리 ]
                   System.out.println("아이디 저장하기 체크박스값 : " + rememberId);
-                  // 파라미터로 전달받은 "rememberId" 값 null 여부 판별
-//                  if(rememberId != null) { // 변수값이 null 이 아닐 때(= 아이디 기억하기 체크박스 체크)
-//                     // 1. javax.servlet.http.Cookie 타입 객체 생성
-//                     // => 파라미터 : 쿠키명("rememberId"), 쿠키값(로그인에 성공한 아이디)
-//                     Cookie cookie = new Cookie("rememberId", member.getId());
-//                     
-//                      // 2. 쿠키 유효기간(만료기간) 설정(초 단위)
-//                     // => Cookie 객체의 setMaxAge() 메서드 활용
-//                     cookie.setMaxAge(60 * 60 * 24 * 30); // 30일 = (60초 * 60분 * 24시간 * 30일)
-//                     
-//                     // 3. 클라이언트측으로 쿠키 정보를 전송하기 위해서
-//                     // 응답 정보를 관리하는 HttpServletResponse 객체의 addCookie() 메서드를 호출하여
-//                     // 응답 정보에 쿠키 정보 추가
-//                     // => memberLogin() 메서드 선언부에 HttpServletResponse 객체 자동 주입 필요
-//                     response.addCookie(cookie);
-//                  } else { // 변수값이 null 일 때(= 아이디 기억하기 체크박스 체크해제(미체크))
-//                     // 기존 쿠키 중 "rememberId" 라는 이름의 쿠키 삭제
-//                     // => 쿠키는 삭제의 개념을 MaxAge 값(만료시간)을 0 으로 설정 후 전송하여 처리
-//                     // => 이 때, 쿠키 이름은 반드시 삭제해야할 쿠키의 이름을 정확하게 설정
-//                     //    (저장되는 쿠키값은 상관없음 = null 값 또는 아무값이나 가능)
-//                     Cookie cookie = new Cookie("rememberId", null); // 아무값이나 전달 가능
-//                     
-//                     // 쿠키의 유효기간을 반드시 0 으로 설정
-//                     // => 이 쿠키를 수신한 클라이언트는 해당 쿠키를 즉시 삭제
-//                     //    (이 때, 동일한 이름의 쿠키를 원래 가지고 있었을 경우 해당 쿠키가 삭제됨)
-//                     cookie.setMaxAge(0);
-//                     
-//                     // 응답 데이터에 쿠키 포함시키기
-//                     response.addCookie(cookie);
-//                  }
+                  
                   
                   // --------- 쿠키 생성 코드 중복 제거 ----------
                   // 생성/삭제 관계없이 쿠키값을 무조건 로그인 한 아이디로 설정
@@ -429,19 +322,15 @@ public class MemberController {
                   }
                   
                   response.addCookie(cookie);
-                  
-                  // ---------------------------------------------------------------------------
-                  // 메인페이지로 리다이렉트
-         
+                           
          return "redirect:/"; // 연결된 뷰: main.jsp
       } //else
+      
    } //memberLogin
    
    
- // ===============================================================================  
-
-   // 회원 로그아웃 처리(MemberLogout - GET)
-   // 뷰 포워딩 없음, 메인페이지로 리다이렉트
+ // ------------------------------------------------------------------------------------------------------------로그아웃  
+   // 뷰 포워딩 x, 메인페이지로 리다이렉트
    @GetMapping("MemberLogout")
    public String memberLogout(HttpSession session) {
       //***** 수정전: sId ----> 수정후: sMemberId *****
@@ -449,8 +338,7 @@ public class MemberController {
       return "redirect:/"; // 연결된 뷰: main.jsp
    }
 
-   // 회원 상세정보 조회(MemberInfo - GET)
-   // 연결된 서비스: getMember()
+   // 회원 상세정보 조회
    @GetMapping("MemberInfo")
    public String memberInfo(HttpSession session, Model model) {
       //***** 수정전: sId ----> 수정후: sMemberId *****
@@ -467,9 +355,7 @@ public class MemberController {
       
    }
    
-
-   // 240105 1900i ####################
-   // 회원 정보 수정 폼 - GET
+   // 회원 정보 수정 폼 
    @GetMapping("MemberModify")
    public String memberModifyForm(HttpSession session, Model model) {
        String id = (String)session.getAttribute("sMemberId");
@@ -485,8 +371,7 @@ public class MemberController {
    }
 
    
-   // 240105 1900i ####################
-   //---------------------------------------------------------------------------------------- 회원 정보 수정 처리 - POST
+   //회원 정보 수정 처리 
    @PostMapping("MemberModify")
    public String memberModify(
        @RequestParam Map<String, String> map, 
@@ -530,16 +415,16 @@ public class MemberController {
    
  
    
-//   휴대폰번호 인증 api   *************************************************************
+//   --------------------------------------------------------------------------------------휴대폰번호 인증 api   
    
    // 인증번호 전송
    @PostMapping("sendAuthCode")
    @ResponseBody
    public Map<String, String> sendAuthCode(@RequestParam("phone") String phone, HttpSession session) {
        // 전화번호 형식 검증 (추가된 코드)
-       if (phone == null || !phone.matches("^\\d{10,11}$")) {
-           return Map.of("status", "fail", "message", "전화번호 형식이 올바르지 않습니다.");
-       }
+    //   if (phone == null || !phone.matches("^\\d{10,11}$")) {
+    //       return Map.of("status", "fail", "message", "전화번호 형식이 올바르지 않습니다.");
+    //   }
 
        // 인증번호 생성
        String authCode = String.format("%04d", new Random().nextInt(10000)); 
@@ -588,7 +473,7 @@ public class MemberController {
            model.addAttribute("msg", "메일 인증 실패! 코드 불일치 또는 만료.");
            return "result/process";
        } else {
-           model.addAttribute("msg", "메일 인증 성공!\\n로그인 페이지로 이동합니다.");
+           model.addAttribute("msg", "메일 인증 성공! \\n로그인 페이지로 이동합니다.");
            model.addAttribute("targetURL", "MemberLogin");
            return "result/process";
        }
@@ -610,7 +495,7 @@ public class MemberController {
    
    
    
-   // 회원 탈퇴 처리 - POST
+   // 회원 탈퇴 처리 
    @PostMapping("MemberWithdraw")
    public String memberWithdraw(String passwd, BCryptPasswordEncoder passwordEncoder, HttpSession session, Model model) {
        // 세션에서 로그인 아이디 확인
@@ -637,12 +522,5 @@ public class MemberController {
            return "result/process"; // 실패 페이지 이동
        }
    }
-   
-   
-   
-
-   
-   
-   
    
 }
