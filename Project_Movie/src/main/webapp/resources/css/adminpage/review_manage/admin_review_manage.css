@@ -9,7 +9,7 @@ body {
 
 .box {
 	width: 100%;
-	height: 80%;
+	height: 100%;
 	}
 
 /* Search bar styling */
@@ -49,7 +49,7 @@ body {
 /* Article styling */
 article {
     background-color: #fff;
-    margin: 20px;
+    margin: 5px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -96,7 +96,7 @@ article {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
+    margin: 30px;
     gap: 5px;
 }
 
@@ -202,3 +202,54 @@ article {
 reivew{
 	margin: 13px;
 }
+/* Flexbox 컨테이너 설정 */
+#container {
+    display: flex;                /* Flexbox 사용 */
+    justify-content: space-between; /* 좌우 배치 */
+    align-items: center;          /* 세로 중앙 정렬 */
+    padding: 0;
+    margin: 0;
+    width: 100%;                  /* 전체 너비 */
+}
+
+#topButton {
+    position: absolute;       /* 절대 위치 지정 */
+    top: 85px;                /* 상단에서의 거리 */
+    right: 20px;              /* 우측에서의 거리 */
+    
+}
+
+#search-bar {
+    margin-right: 150px;      /* 오른쪽 버튼과 겹치지 않도록 여백 추가 */
+    text-align: left;         /* 검색바의 내용 왼쪽 정렬 */
+}
+
+
+
+#Modify,#delete {
+ width : 100px;
+ height: 40px;
+ padding: 10px;
+  background: #888; /* 버튼 기본 색상 */
+  color: white;
+  border: none;
+  cursor: pointer;
+    border-radius: 8px; /* 둥글게 만들기 */
+  
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

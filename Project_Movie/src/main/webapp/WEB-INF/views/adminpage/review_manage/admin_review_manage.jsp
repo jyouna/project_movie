@@ -39,20 +39,36 @@
 	
 		<article class="box post">
 		<div id="title">
-			<h1>리뷰 목록 </h1>
+			<h1>관리용 전체 리뷰 목록</h1>
 		</div>
-			<div id="topButton" style="text-align: right;">
-				<input type="button" value="수정" id="Modify">
+			<div id="topButton">
+				<input type="button" value="수정" id="Modify" >
 				<input type="button" value="삭제" id="delete">
 			</div>
+			<div id="search-bar" style="text-align:	left;">
+<!-- 		여기서 선택하고 검색한 값을 넘겨줘야하니까 form 태그로 감싸고 action = NoticeList , 전달방식 - get -->
+				<form action="AdminReviewManage" method="get" name="searchForm">
+					<select id="searchType" name="searchType">
+	<!-- 			옵션에 각각 값을 넣어준다 -->
+						<option value="movie_name">영화명</option>
+<!-- 						<option value="movie_code">영화코드</option> -->
+						<option value="review_writer">작성자아이디</option>
+						
+					</select>
+	<!-- 			검색어에는 name값을 searchKeyword로 준다 -->
+					<input type="text" name ="searchKeyword" placeholder="검색어를 입력하세요.">
+					<input type="submit" value="검색">
+				</form>
+	    	</div>
 	      <section id="listForm">
 	         <table>
 	            <tr id="tr_top" align="center">
-	               <td width="30"><input type="radio" disabled="disabled"></td>
+	               <td width="1%">택</td>
+	               <td width="7%">리뷰코드</td> 
 	               <td width="100">영화명</td>
-	               <td width="200">한줄평</td>
-	               <td width="80">추천 / 비추천</td>
-	               <td width="90">작성자</td>
+	               <td width="170">영화리뷰</td>
+	               <td width="6%">추천여부</td>
+	               <td width="15%">작성자</td>
 	            </tr>
 	               
 	            <c:choose>	
@@ -63,6 +79,7 @@
 	                  <c:forEach var="review" items="${reviewList}" varStatus="status">
 	                     <tr>
 	                        <td><input type="radio" name="movie_code" value="${review.movie_code}" class="movie_code"></td>
+	                        <td>${review.review_code}</td> <!-- 리뷰 코드 표시 -->
 	                        <td>${review.movie_name}</td>
 	                        <td>${review.review_content}</td>
 	                        <td>
@@ -82,9 +99,12 @@
 	            </c:choose>
 	         </table>
 	      </section>
+	      <c:if test="${not empty param.searchKeyword}">
+				<c:set var="searchParam" value="&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}" />
+			</c:if>
 	            <section id="pageList">
 	         <input type="button" value="&lt" 
-	            onclick="location.href='AdminReviewManage?pageNum=${pageInfo.pageNum - 1}'" 
+	            onclick="location.href='AdminReviewManage?pageNum=${pageInfo.pageNum - 1}${searchParam}'" 
 	             <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 	         
 	         <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -94,14 +114,14 @@
 	               
 	               </c:when>
 	               <c:otherwise>
-	                  <a href="AdminReviewManage?pageNum=${i}">${i}</a>
+	                  <a href="AdminReviewManage?pageNum=${i}${searchParam}">${i}</a>
 	               </c:otherwise>
 	            </c:choose>
 	         </c:forEach>
 	         
 	         
 	         <input type="button" value="&gt" 
-	            onclick="location.href='AdminReviewManage?pageNum=${pageInfo.pageNum + 1}'" 
+	            onclick="location.href='AdminReviewManage?pageNum=${pageInfo.pageNum + 1}${searchParam}'" 
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>
@@ -112,7 +132,7 @@
 				    <hr>
 				    <div>
 				        <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
-				        <label id="review_content">한줄리뷰</label>
+				        <label id="review_content">영화 리뷰내용</label>
 				        <br>
 				        <textarea cols="40" rows="3" name="review" required="required">
 				        

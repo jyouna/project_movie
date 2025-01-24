@@ -1,7 +1,7 @@
 package com.itwillbs.project_movie.controller;
 
 //장민기 20250123
-import com.itwillbs.project_movie.service.AdminManageService;
+import com.itwillbs.project_movie.service.MemberService;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -39,13 +39,14 @@ public class AdminReviewController {
 	
 	@Autowired
 	//private MypageService service;
-	private AdminManageService service;
+	private MemberService service;
 	
 	
 	
 	//리뷰 관리 게시판
 	@GetMapping("AdminReviewManage")
-	public String review(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNum ) {
+	public String review(Model model, HttpSession session, @RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue="1") int pageNum ) {
 		
 		/*
 		String id = (String)session.getAttribute("sMemberId");
@@ -86,7 +87,7 @@ public class AdminReviewController {
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
-		List<Map<String, Object>> reviewList = service.getReviewList(startRow, listLimit); //id*****
+		List<Map<String, Object>> reviewList = service.getReviewList(startRow, listLimit, searchType, searchKeyword); //id*****
 		model.addAttribute("reviewList", reviewList);
 		
 		return "adminpage/review_manage/admin_review_manage";
