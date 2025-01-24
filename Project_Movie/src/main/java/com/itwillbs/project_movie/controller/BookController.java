@@ -365,26 +365,7 @@ public class BookController {
 		return ResponseEntity.ok(response);
 	}
 	
-//	@GetMapping("ReservationInfo")
-//	public String reservationInfo(@RequestParam(defaultValue = "1") int pageNum, Model model,
-//			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
-//		
-//		// 전체 결제내역 조회
-////		List<Map<String, Object>> allPaymentList = bookService.getAllPaymentList();
-////		model.addAttribute("allPaymentList", allPaymentList);
-//		
-//		String howSearch2 = "";
-//		String searchKeyword2 = "";
-//		
-//		// 페이징처리 메서드 
-//		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
-//			return "result/process";
-//		}
-//		
-//		
-//		return "adminpage/payment_manage/reservation_info_board";
-//	}
-	
+	// ============================= [ 관리자 페이지 예매/취소 내역 ] ====================================
 	@GetMapping("AdminPaymentList")
 	public String adminPaymentList(@RequestParam(defaultValue = "1") int pageNum, Model model,
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
@@ -393,34 +374,37 @@ public class BookController {
 		String howSearch2 = "";
 		String searchKeyword2 = "";
 		
+		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword, howSearch2, searchKeyword2); //총결제 목록(검색된 결제 목록)수 조회
+		
 		//페이징 처리 메서드
-		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod(1, model, pageNum, 10, listCount, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
 			return "result/process";
 		}
 		
 		return "adminpage/payment_manage/reservation_info_board";
 	}
 	
-	@GetMapping("ReservationCancelInfo")
-	public String reservationCancelInfo(@RequestParam(defaultValue = "1") int pageNum, Model model,
+	@GetMapping("AdminRefundList")
+	public String adminRefundList(@RequestParam(defaultValue = "1") int pageNum, Model model,
 	@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
 		String howSearch2 = "";
 		String searchKeyword2 = "";
 		
+		int listCount = bookService.getRefundListCount(howSearch, searchKeyword, howSearch2, searchKeyword2);
+		
 		// 페이징처리 메서드 
-		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod(2, model, pageNum, 10, listCount, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
 			return "result/process";
 		}
 		
 		return "adminpage/payment_manage/reservation_cancel_board";
 	}
 	
-	
-	private Boolean pagingMethod(Model model, int pageNum, int listLimit, String howSearch, String searchKeyword,
+	// ==================== [ 페이징 메서드 ] ======================
+	private Boolean pagingMethod(int index, Model model, int pageNum, int listLimit, int listCount, String howSearch, String searchKeyword,
 			String howSearch2, String searchKeyword2) {
 		int startRow = (pageNum - 1) * listLimit; // 조회할 결제테이블의 DB 행 번호(= row 값)
-		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword, howSearch2, searchKeyword2); //총결제 목록(검색된 결제 목록)수 조회
 		int pageListLimit = 10; // 한페이지당 페이지번호 수
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
@@ -431,26 +415,34 @@ public class BookController {
 		}
 		
 		// url 파라미터 조작 방지
-		if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
-			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
-			model.addAttribute("targetURL", "AdminPaymentList?pageNum=1");
-			return false;
+		if(index == 1) {
+			if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
+				model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
+				model.addAttribute("targetURL", "AdminPaymentList?pageNum=1");
+				return false;
+			}
+		} else if(index == 2) {
+			if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
+				model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
+				model.addAttribute("targetURL", "AdminRefundList?pageNum=1");
+				return false;
+			}
 		}
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		// 조건에맞는 결제내역 리스트 조회
-		List<Map<String, Object>> paymentList = bookService.getpaymentList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+		if(index == 1) {
+			// 조건에 맞는 결제내역 리스트 조회
+			List<Map<String, Object>> paymentList = bookService.getpaymentList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+			model.addAttribute("paymentList", paymentList);
+		} else if(index == 2) {
+			// 조건에 맞는 환불내역 리스트 조회
+			List<Map<String, Object>> refundList = bookService.getRefundList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+			model.addAttribute("refundList", refundList);
+		}
+
 		
-		// 지난상영작 페이지 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정
-		// 다른 페이지 listLimit:9, 지난상영작 페이지 listLimit:10
-//		if(listLimit == 10) {
-//			for(PaymentVO payment : paymentList) {
-//				payment.setMovie_synopsis(payment.getMovie_synopsis().substring(0, 90) + "...");
-//			}
-//		}
-		model.addAttribute("paymentList", paymentList);
 		return true;
 	}
 	

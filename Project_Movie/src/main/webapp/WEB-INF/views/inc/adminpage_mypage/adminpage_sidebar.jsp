@@ -47,7 +47,7 @@
 					        <a class="nav-link" href="AdminPaymentList">
 					            예매/결제내역
 					        </a>
-					        <a class="nav-link" href="ReservationCancelInfo">
+					        <a class="nav-link" href="AdminRefundList">
 					            취소내역/처리
 					        </a>
 					    </nav>

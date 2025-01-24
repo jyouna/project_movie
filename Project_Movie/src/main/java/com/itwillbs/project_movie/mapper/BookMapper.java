@@ -64,12 +64,17 @@ public interface BookMapper {
 
 	void insertRefundPoint(Map<String, Object> map);
 
-	List<Map<String, Object>> selectAllPaymentList();
-
 	int selectPaymentListCount(@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword,
 			@Param("howSearch2") String howSearch2, @Param("searchKeyword2") String searchKeyword2);
 
 	List<Map<String, Object>> selectPaymentList(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword,
+			@Param("howSearch2") String howSearch2, @Param("searchKeyword2") String searchKeyword2);
+
+	int selectRefundCount(@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword,
+			@Param("howSearch2") String howSearch2, @Param("searchKeyword2") String searchKeyword2);
+
+	List<Map<String, Object>> selectRefundList(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword,
 			@Param("howSearch2") String howSearch2, @Param("searchKeyword2") String searchKeyword2);
 
