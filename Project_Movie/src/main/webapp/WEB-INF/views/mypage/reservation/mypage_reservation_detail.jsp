@@ -42,7 +42,7 @@
                
             <c:choose>
                <c:when test="${empty reservationList}"> 
-                  <tr><td colspan="9">게시물이 존재하지 않습니다</td></tr>
+                  <tr><td colspan="9">예매내역이 존재하지 않습니다</td></tr>
                </c:when>
                <c:otherwise>
                   <c:forEach var="reservationDetail" items="${reservationList}" varStatus="status">
