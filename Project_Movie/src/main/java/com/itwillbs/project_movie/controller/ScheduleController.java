@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
+import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.service.ScheduleService;
 import com.itwillbs.project_movie.vo.ScheduleVO;
@@ -29,11 +33,17 @@ public class ScheduleController {
 	
 	@Autowired
 	private BookService bookService;
-
+	
+	@Autowired
+	private AdminManageService adminService;
+	
 	// 관리자페이지 영화관리 상영스케줄관리 페이지 맵핑
 	@GetMapping("AdminMovieSetSchedule")
-	public String adminMovieSetSchedule(@RequestParam(defaultValue = "T1") String theater_code, @RequestParam(required = false) String selectedMonth, Model model) {
+	public String adminMovieSetSchedule(@RequestParam(defaultValue = "T1") String theater_code, @RequestParam(required = false) String selectedMonth,
+			Model model, HttpSession session) {
 		LocalDate date;
+		// 접근권한 판별
+		if(!isHaveAuth(model, session)) {return "result/process";}
 		
 		// 처음 뷰페이지 포워딩시 오늘날짜기준 달력 생성
 		// 상영스케줄 관리 페이지에서 날짜 선택시 해당 날짜 달력 생성
@@ -215,5 +225,24 @@ public class ScheduleController {
 			model.addAttribute("msg", "스케줄 삭제 실패");
 			return "result/process";
 		}
+	}
+	
+	// 영화관리,스케줄관리 관리자 권한 판별 메서드
+	private Boolean isHaveAuth(Model model, HttpSession session){
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return false;
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("movie_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return false;
+		}
+		
+		return true;
 	}
 }

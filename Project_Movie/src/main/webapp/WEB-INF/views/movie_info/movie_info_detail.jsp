@@ -77,20 +77,28 @@
 					<table>
 						<tr>
 							<th>ID</th>
-							<th>영화명</th>
 							<th>한줄평</th>
 							<th>추천/비추천</th>
-							<th>작성일자</th>
 						</tr>
-						<c:forEach var="i" begin="1" end="10">
-							<tr>
-								<td>asdfqer</td>
-								<td>소방관</td>
-								<td>다시 보고 싶은 영화입니다.</td>
-								<td>추천</td>
-								<td>2024-12-16</td>
-							</tr>
-						</c:forEach>
+						<c:choose>
+							<c:when test="${empty reviewList}">
+								<tr><td colspan="3">등록된 관람평이 없습니다.</td></tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="review" items="${reviewList}">
+									<tr>
+										<td>${review.review_writer}</td>
+										<td>${review.review_content}</td>
+										<td>
+											<c:choose>
+												<c:when test="${review.review_recommend eq 0}">추천</c:when>
+												<c:otherwise>비추천</c:otherwise>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</table>
 				</div>
 				<div id="page_button_group">

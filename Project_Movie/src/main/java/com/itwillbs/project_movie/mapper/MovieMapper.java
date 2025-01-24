@@ -19,13 +19,11 @@ public interface MovieMapper {
 	MovieVO SelectMovieByCode(String movie_code);
 	
 	// 총 영화목록 수 조회 메서드
-	int selectMovieListCount(@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword,
-			@Param("howSearch2") String howSearch2, @Param("searchKeyword2") String searchKeyword2);
+	int selectMovieListCount(@Param("movie_status") String movie_status, @Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
 	
 	// 영화목록 조회
-	List<MovieVO> selectMovieList(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword,
-			@Param("howSearch2") String howSearch2, @Param("searchKeyword2") String searchKeyword2);
+	List<MovieVO> selectMovieList(@Param("movie_status") String movie_status, @Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
 	
 	// 조건에 따른 영화목록 조회 메서드
 	List<MovieVO> selectMovieListCheck(Map<String, String> map);
@@ -51,6 +49,13 @@ public interface MovieMapper {
 	// 영화상태 상영예정작, 영화타입 시즌 으로 변경(복수)
 	void updateMovieStatusToSeasonUpcoming(@Param("movie_status") String movie_status, @Param("movie_type") String movie_type,
 			@Param("winnerCodeList") List<String> winnerCodeList);
+	
+	// 해당영화의 리뷰 수 조회
+	int selectReviewListOfMovieCount(@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
+	
+	// 해당영화의 리뷰 조회
+	List<ReviewVO> selectReviewListOfMovie(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
+			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
 
 	
 }

@@ -28,13 +28,13 @@ public class MovieService {
 	}
 	
 	// 페이징 처리를 위한 영화 목록 수 조회
-	public int getMovieListCount(String howSearch, String searchKeyword, String howSearch2, String searchKeyword2) {
-		return movieMapper.selectMovieListCount(howSearch, searchKeyword, howSearch2, searchKeyword2);
+	public int getMovieListCount(String movie_status, String howSearch, String searchKeyword) {
+		return movieMapper.selectMovieListCount(movie_status, howSearch, searchKeyword);
 	}
 	
 	// 페이징 후 페이지에 필요한 만큼의 영화목록 조회
-	public List<MovieVO> getMovieList(int startRow, int listLimit, String howSearch, String searchKeyword, String howSearch2, String searchKeyword2) {
-		return movieMapper.selectMovieList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+	public List<MovieVO> getMovieList(String movie_status, int startRow, int listLimit, String howSearch, String searchKeyword) {
+		return movieMapper.selectMovieList(movie_status, startRow, listLimit, howSearch, searchKeyword);
 	}
 	
 	// 검색조건(컬럼명), 검색어를 파라미터로 전달 후 해당 영화리스트 조회
@@ -170,6 +170,17 @@ public class MovieService {
 	// 영화가격 조회
 	public int getTicketPrice() {
 		return movieMapper.selectTicketPrice();
+	}
+	
+	// 해당영화의 리뷰리스트 수 조회
+	public int getReviewListCountOfMovie(String howSearch, String searchKeyword) {
+		return movieMapper.selectReviewListOfMovieCount(howSearch, searchKeyword);
+	}
+	
+	// 해당영화의 리뷰리스트 조회
+	public List<ReviewVO> getReviewListCountOfMovie(int startRow, int listLimit, String howSearch,
+			String searchKeyword) {
+		return movieMapper.selectReviewListOfMovie(startRow, listLimit, howSearch, searchKeyword);
 	}
 
 }

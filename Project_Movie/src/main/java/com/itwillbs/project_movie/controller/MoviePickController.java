@@ -3,6 +3,8 @@ package com.itwillbs.project_movie.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
+import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.service.MoviePickService;
 import com.itwillbs.project_movie.service.MovieService;
 import com.itwillbs.project_movie.vo.MovieVO;
@@ -19,10 +23,13 @@ import com.itwillbs.project_movie.vo.MovieVO;
 public class MoviePickController {
 	
 	@Autowired
-	MovieService movieService;
+	private MovieService movieService;
 	
 	@Autowired
-	MoviePickService moviePickService;
+	private MoviePickService moviePickService;
+	
+	@Autowired
+	private AdminManageService adminService;
 	
 	// 영화투표하기 페이지 맵핑
 	@GetMapping("MoivePick")
@@ -108,7 +115,10 @@ public class MoviePickController {
 	// vote_code가 파라미터로 전달되지않으면 현재날짜에 해당하는 투표 정보 출력
 	// 파라미터 전달디면 해당 투표 정보 출력
 	@GetMapping("AdminMoviePickSet")
-	public String adminMoviePickSet(@RequestParam(required = false) String vote_code, Model model) {
+	public String adminMoviePickSet(@RequestParam(required = false) String vote_code, Model model, HttpSession session) {
+		// 접근권한 판별
+		if(!isHaveAuth(model, session)) {return "result/process";}
+				
 		// 투표목록 설렉트박스에 투표 리스트 정보 전달
 		List<Map<String, Object>> voteInfoList = moviePickService.getVoteInfoList();
 		model.addAttribute("voteInfoList", voteInfoList);
@@ -254,6 +264,25 @@ public class MoviePickController {
 		model.addAttribute("voteCurrentInfoList", voteCurrentInfoList);
 		model.addAttribute("totalCount", totalCount);
 		
+	}
+	
+	// 투표관리 관리자 권한 판별 메서드
+	private Boolean isHaveAuth(Model model, HttpSession session){
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return false;
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return false;
+		}
+		
+		return true;
 	}
 	
 }

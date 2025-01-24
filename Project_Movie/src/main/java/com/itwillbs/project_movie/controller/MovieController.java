@@ -1,11 +1,5 @@
 package com.itwillbs.project_movie.controller;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
 import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.service.MovieService;
-import com.itwillbs.project_movie.service.MypageService;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.PageInfo;
 import com.itwillbs.project_movie.vo.PaymentVO;
@@ -31,6 +25,8 @@ import com.itwillbs.project_movie.vo.ReviewVO;
 
 @Controller
 public class MovieController {
+	@Autowired
+	private AdminManageService adminService;
 	
 	@Autowired
 	private MovieService movieService;
@@ -88,12 +84,8 @@ public class MovieController {
 	@GetMapping("PastMovieInfo")
 	public String pastMovieInfo(@RequestParam(defaultValue = "1") int pageNum, Model model,
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
-		// 기본 영화 리스트 페이징처리와 구분을 위한 변수선언
-		String howSearch2 = "movie_status";
-		String searchKeyword2 = "지난상영작";
-		
 		// 페이징처리 메서드 
-		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod("pastMovie", model, pageNum, 10, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
@@ -102,12 +94,17 @@ public class MovieController {
 	
 	// 영화상세안내 페이지 맵핑
 	@GetMapping("MovieInfoDetail")
-	public String movieInfoDetail(Model model, String movie_code) {
+	public String movieInfoDetail(Model model, String movie_code, @RequestParam(defaultValue = "1") int pageNum) {
 		// 영화코드로 영화정보 조회
 		MovieVO movie = movieService.searchMovieInfo(movie_code);
 		
 		// 영화 가격 조회
 		int generalPrice = movieService.getTicketPrice();
+		
+		// 해당 영화의 리뷰리스트 조회, 페이징처리
+		if(!pagingMethod("reviewOfmovie", model, pageNum, 10, "movie_code", movie_code)) {
+			return "result/process";
+		}
 				
 		model.addAttribute("movie", movie);
 		model.addAttribute("generalPrice", generalPrice);
@@ -117,14 +114,12 @@ public class MovieController {
 	//관리자페이지 영화관리 영화목록 페이지 맵핑, 영화리스트 출력, 검색한 영화 리스트 출력
 	@GetMapping("AdminMovieSetList")
 	public String adminMovieSetList(@RequestParam(defaultValue = "1") int pageNum, Model model,
-			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
-		
-		// 지난상영작 리스트 페이징처리와 구분하기위한 변수선언
-		String howSearch2 = "";
-		String searchKeyword2 = "";
+			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword, HttpSession session) {
+		// 접근권한 판별
+		if(!isHaveAuth(model, session)) {return "result/process";}
 		
 		//페이징 처리 메서드
-		if(!pagingMethod(model, pageNum, 9, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod("allMovie", model, pageNum, 9, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
@@ -150,9 +145,8 @@ public class MovieController {
 	// 관리자 영화목록에서 영화등록 로직
 	@PostMapping("AdminMovieInfoRegist")
 	public String movieInfoRegist(MovieVO movieVO, Model model, HttpSession session) {
-		/* sId 판별식 추가 예정 */
-//		String id = (String)session.getAttribute("sId");
-		movieVO.setRegist_admin_id("admin");
+		String id = (String)session.getAttribute("admin_sId");
+		movieVO.setRegist_admin_id(id);
 		
 		// 이미 등록된 영화인지 확인을 위해 영화정보 조회
 		MovieVO dbMovieVO = movieService.searchMovieInfo(movieVO.getMovie_code());
@@ -306,7 +300,10 @@ public class MovieController {
 	
 	//관리자페이지 영화관리 상영예정작 페이지 맵핑
 	@GetMapping("AdminMovieSetUpcoming")
-	public String adminMovieSetUpcoming(Model model) {
+	public String adminMovieSetUpcoming(Model model, HttpSession session) {
+		// 접근권한 판별
+		if(!isHaveAuth(model, session)) {return "result/process";}
+		
 		List<MovieVO> upcomingMovieList = movieService.getUpcomingMovieList();
 		int seasonMovieCount = movieService.getCountSeasonUpcomingMovie();
 		int generalMovieCount = movieService.getCountGeneralUpcomingMovie();
@@ -395,10 +392,17 @@ public class MovieController {
 	
 	//관리자페이지 영화관리 현재상영작 페이지 맵핑
 	@GetMapping("AdminMovieSetCurrently")
-	public String aminMovieSetCurrently(Model model) {
+	public String aminMovieSetCurrently(Model model, HttpSession session) {
+		// 접근권한 판별
+		if(!isHaveAuth(model, session)) {return "result/process";}
+		
+		// 현재상영작 리스트 조회
 		List<MovieVO> currentlyMovieList = movieService.getCurrentlyMovieList();
+		// 시즌 현재상영작 수
 		int seasonMovieCount = movieService.getCountSeasonCurrentlyMovie();
+		// 일반 현재상영작 수
 		int generalMovieCount = movieService.getCountGeneralCurrentlyMovie();
+		
 		model.addAttribute("movieList", currentlyMovieList);
 		model.addAttribute("seasonMovieCount", seasonMovieCount);
 		model.addAttribute("generalMovieCount", generalMovieCount);
@@ -408,14 +412,12 @@ public class MovieController {
 	//관리자페이지 영화관리 지난상영작 페이지 맵핑
 	@GetMapping("AdminMovieSetPast")
 	public String AdminMovieSetPast(@RequestParam(defaultValue = "1") int pageNum, Model model,
-			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
-		
-		// 기본 영화 리스트 페이징처리와 구분을 위한 변수선언
-		String howSearch2 = "movie_status";
-		String searchKeyword2 = "지난상영작";
+			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword, HttpSession session) {
+		// 접근권한 판별
+		if(!isHaveAuth(model, session)) {return "result/process";}
 		
 		// 페이징처리 메서드 
-		if(!pagingMethod(model, pageNum, 9, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod("pastMovie", model, pageNum, 9, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
@@ -423,10 +425,18 @@ public class MovieController {
 	}
 	
 	// 페이징 처리 메서드
-	private Boolean pagingMethod(Model model, int pageNum, int listLimit, String howSearch, String searchKeyword,
-			String howSearch2, String searchKeyword2) {
-		int startRow = (pageNum - 1) * listLimit; // 조회할 영화의 DB 행 번호(= row 값)
-		int listCount = movieService.getMovieListCount(howSearch, searchKeyword, howSearch2, searchKeyword2); //총영화 목록(검색 영화 목록)수 조회
+	private Boolean pagingMethod(String whatSearch, Model model, int pageNum, int listLimit, String howSearch, String searchKeyword) {
+		int startRow = (pageNum - 1) * listLimit; // 조회할 테이블컬럼의 DB 행 번호(= row 값)
+		int listCount = 0;
+		
+		// 영화페이징 처리
+		if(whatSearch.equals("allMovie") || whatSearch.equals("pastMovie")) {
+			listCount = movieService.getMovieListCount(whatSearch, howSearch, searchKeyword); //총영화 목록(검색 영화 목록)수 조회
+		//리뷰 페이징처리
+		} else {
+			listCount = movieService.getReviewListCountOfMovie(howSearch, searchKeyword); //해당영화의 리뷰 목록 수 조회
+		}
+		
 		int pageListLimit = 5; // 한페이지당 페이지번호 수
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
@@ -447,16 +457,59 @@ public class MovieController {
 		model.addAttribute("pageInfo", pageInfo);
 		
 		// 조건에맞는 영화 리스트 조회
-		List<MovieVO> movieList = movieService.getMovieList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
-		
-		// 지난상영작 페이지 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정
-		// 다른 페이지 listLimit:9, 지난상영작 페이지 listLimit:10
-		if(listLimit == 10) {
-			for(MovieVO movie : movieList) {
-				movie.setMovie_synopsis(movie.getMovie_synopsis().substring(0, 90) + "...");
+		if(whatSearch.equals("allMovie") || whatSearch.equals("pastMovie")) {
+			List<MovieVO> movieList = movieService.getMovieList(whatSearch, startRow, listLimit, howSearch, searchKeyword);
+			// 영화안내 지난상영작 페이지(관리자 지난상영작 페이지x) 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정
+			// 다른 페이지 listLimit:9, 영화안내 지난상영작 페이지 listLimit:10
+			if(listLimit == 10) {
+				for(MovieVO movie : movieList) {
+					movie.setMovie_synopsis(movie.getMovie_synopsis().substring(0, 90) + "...");
+				}
 			}
+			model.addAttribute("movieList", movieList);
+			return true;
+		// 해당영화의 리뷰 리스트 조회
+		} else if(whatSearch.equals("reviewOfmovie")) {
+			List<ReviewVO> reviewList = movieService.getReviewListCountOfMovie(startRow, listLimit, howSearch, searchKeyword);
+			
+			if(reviewList.size() != 0) {
+				// 영화안내 영화상세페이지에 리뷰 표시시 개인정보 보호를위해 id 변환
+				for(ReviewVO review : reviewList) {
+					char[] chArr = review.getReview_writer().toCharArray();
+					Random r = new Random();
+					
+					// *처리할 문자의 수(3문자당 1개)만큼 반복
+					for(int i = 1; i <= chArr.length / 3; i++) {
+						chArr[r.nextInt(chArr.length)] = '*';
+					}
+					
+					review.setReview_writer(new String(chArr));
+				}
+			}
+			model.addAttribute("reviewList", reviewList);
+			return true;
 		}
-		model.addAttribute("movieList", movieList);
+		
+		model.addAttribute("msg", "정보 조회에 실패하였습니다");
+		return false;
+	}
+	
+	// 영화관리 관리자 권한 판별 메서드
+	private Boolean isHaveAuth(Model model, HttpSession session){
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return false;
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("movie_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return false;
+		}
+		
 		return true;
 	}
 	

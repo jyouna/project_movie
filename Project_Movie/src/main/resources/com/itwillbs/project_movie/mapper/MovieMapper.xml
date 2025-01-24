@@ -46,15 +46,24 @@
 		SELECT COUNT(*)
 		FROM movie
 		<choose>
-			<when test="!howSearch.equals('') and howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
+			<when test="movie_status.equals('pastMovie')">
+				WHERE 
+					movie_status = "지난상영작"
+				AND
+				<choose>
+					<when test="!howSearch.equals('') and (howSearch.equals('movie_name') or howSearch.equals('movie_genre')
+						or howSearch.equals('age_limit'))">
+						${howSearch} LIKE '%${searchKeyword}%'
+					</when>
+					<otherwise>
+						1=1
+					</otherwise>
+				</choose>
 			</when>
-			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch2} = #{searchKeyword2}
-			</when>
-			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
-				AND ${howSearch2} = #{searchKeyword2}
+			<when test="movie_status.equals('allMovie') and (howSearch.equals('movie_name') or howSearch.equals('movie_genre')
+						or howSearch.equals('movie_status'))">
+				WHERE 
+					${howSearch} LIKE '%${searchKeyword}%'
 			</when>
 		</choose>
 	</select>
@@ -64,15 +73,24 @@
 		SELECT *
 		FROM movie
 		<choose>
-			<when test="!howSearch.equals('') and howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
+			<when test="movie_status.equals('pastMovie')">
+				WHERE 
+					movie_status = "지난상영작"
+				AND
+				<choose>
+					<when test="!howSearch.equals('') and (howSearch.equals('movie_name') or howSearch.equals('movie_genre')
+						or howSearch.equals('age_limit'))">
+						${howSearch} LIKE '%${searchKeyword}%'
+					</when>
+					<otherwise>
+						1=1
+					</otherwise>
+				</choose>
 			</when>
-			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch2} = #{searchKeyword2}
-			</when>
-			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
-				AND ${howSearch2} = #{searchKeyword2}
+			<when test="movie_status.equals('allMovie') and (howSearch.equals('movie_name') or howSearch.equals('movie_genre')
+						or howSearch.equals('movie_status'))">
+				WHERE 
+					${howSearch} LIKE '%${searchKeyword}%'
 			</when>
 		</choose>
 		ORDER BY movie_name ASC
@@ -111,7 +129,8 @@
 	<select id="selectMovieCount" resultType="int">
 		SELECT COUNT(*)
 		FROM movie
-		WHERE ${columnName} = #{selectCondition}
+		WHERE 
+			${columnName} = #{selectCondition}
 		<if test="columnName2 != null and selectCondition2 != null">
 			AND ${columnName2} = #{selectCondition2}
 		</if>
@@ -120,7 +139,8 @@
 	<!-- 영화상태 업데이트 -->
 	<update id="updateMovieStatus">
 		UPDATE movie
-		SET movie_status = #{movie_status}
+		SET 
+			movie_status = #{movie_status}
 		<choose>
 			<when test="movie_type == null or movie_type == ''">
 				, movie_type = null	
@@ -171,14 +191,34 @@
 	<!-- 영화정보 삭제 -->
 	<delete id="deleteMovie">
 		DELETE FROM movie
-		WHERE movie_code = #{movie_code}
+		WHERE 
+			movie_code = #{movie_code}
 	</delete>
 	
 	<!-- 일반티켓 가격 조회 -->
 	<select id="selectTicketPrice" resultType="int">
 		SELECT ticket_amount
 		FROM ticket
-		WHERE ticket_code = 0
+		WHERE 
+			ticket_code = 0
 	</select>
 	
+	<!-- 해당영화의 리뷰 수 조회 -->
+	<select id="selectReviewListOfMovieCount" resultType="int">
+		SELECT COUNT(*)
+		FROM review
+		WHERE 
+			${howSearch} = #{searchKeyword}
+	</select>
+	
+	<!-- 해당영화의 리뷰 조회 -->
+	<select id="selectReviewListOfMovie" resultType="review">
+		SELECT *
+		FROM review
+		WHERE 
+			${howSearch} = #{searchKeyword}
+		LIMIT
+			#{startRow}
+			, #{listLimit}
+	</select>
 </mapper>

@@ -30,6 +30,7 @@
 		<typeAlias type="com.itwillbs.project_movie.vo.MemberAllInfoVO" alias="memberAllInfo"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.InquiryVO" alias="inquiry"/>
 		<typeAlias type="com.itwillbs.project_movie.vo.PaymentVO" alias="payment"/>
+		<typeAlias type="com.itwillbs.project_movie.vo.ReviewVO" alias="review"/>
 	</typeAliases>
 	
 </configuration>
