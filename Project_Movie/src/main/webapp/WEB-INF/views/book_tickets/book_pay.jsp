@@ -151,9 +151,12 @@
 							<section class="pay_container">
 								<h4>최종 결제수단</h4>
 								<div class="pay_type">
-									<label><input type="radio" class="pay" name="payment_method" value="신용카드">신용카드</label>
-									<label><input type="radio" class="pay" name="payment_method" value="카카오페이">카카오페이</label>
-									<label><input type="radio" class="pay" name="payment_method" value="토스페이">토스페이</label>
+									<label><input type="radio" class="pay" >신용카드</label>
+									<label><input type="radio" class="pay" >카카오페이</label>
+									<label><input type="radio" class="pay" >토스페이</label>
+<!-- 									<label><input type="radio" class="pay" name="payment_method" value="신용카드">신용카드</label> -->
+<!-- 									<label><input type="radio" class="pay" name="payment_method" value="카카오페이">카카오페이</label> -->
+<!-- 									<label><input type="radio" class="pay" name="payment_method" value="토스페이">토스페이</label> -->
 								</div>
 							</section>
 							
@@ -310,12 +313,13 @@
 				);
 			}
 			
-			function handlePaymentResponse(rsp) {
+			function handlePaymentResponse(rsp, payment_method) {
 				if(rsp.success) {
 					alert("결제가 완료되었습니다");
 					
 					$("#paymentStatus").val("1");
 					$("#totalPayment").val(rsp.paid_amount);
+					$("#paymentMethod").val(payment_method);
 					
 					$("#paymentForm").submit();
 				} else {
