@@ -220,8 +220,7 @@
  		SELECT COUNT(*)
  		FROM Inquiry
 		WHERE 
-			inquiry_writer = #{id} OR inquiry_writer = #{admin}
-
+			inquiry_writer = #{id} OR inquiry_writer = 'admin'
  		<if test="!searchKeyword.equals('')">
  			AND
  			<choose>
@@ -239,7 +238,8 @@
  		SELECT *
  		FROM Inquiry
 		WHERE 
-			inquiry_writer = #{id} OR inquiry_writer = ''
+			inquiry_writer = #{id} 
+
  		<if test="!searchKeyword.equals('')">
  			AND
  			<choose>
