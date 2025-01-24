@@ -14,14 +14,17 @@ $(function() {
 				if(calAmount < 0) {
 					if(confirm("할인 금액이 결제 금액보다 큽니다.\n사용하시겠습니까?")) {
 						calAmount = 0;
+						$(".div02 .price").text($(".div01 .price").text()); 
 					} else {
 						location.reload();
 					}
+				} else {
+					$(".div02 .price").text(coupon.discount_amount);
 				}
 
-				$(".div02 .price").text(coupon.discount_amount);
 				$(".div03 .price").text(calAmount);
 				$("input[name='total_discount']").val($(".div02 .price").text());
+
 				
 				// 결제금액과 할인금액이 동일할 시 결제수단 비활성화
 				discountEqualPrice();

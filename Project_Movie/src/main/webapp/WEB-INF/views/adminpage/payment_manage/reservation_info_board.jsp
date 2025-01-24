@@ -49,16 +49,16 @@
 		<div id="sec02">
 			<table>
 				<tr>
-					<th style="width:3%"><input type="radio" name="payment_radio" disabled></th>
-	                <th style="width:12%">예매번호</th>
+					<th style="width:2%"><input type="radio" name="payment_radio" disabled></th>
+	                <th style="width:8%">예매번호</th>
 	                <th style="width: 7%">예매자</th>
-	                <th style="width:15%">영화명</th>
-	                <th style="width:10%">상영일시</th>
-	                <th style="width:7%">관람좌석</th>
-	                <th style="width:7%">할인</th>
-	                <th style="width:7%">결제금액</th>
-	                <th style="width:7%">결제수단</th>
-	                <th style="width:10%">결제일자</th>
+	                <th style="width:13%">영화명</th>
+	                <th style="width:8%">상영일시</th>
+	                <th style="width:6%">관람좌석</th>
+	                <th style="width:6%">할인</th>
+	                <th style="width:6%">결제금액</th>
+	                <th style="width:6%">결제수단</th>
+	                <th style="width:8%">결제일자</th>
 				</tr>
 				<c:choose>
 					<c:when test="${empty paymentList}">
@@ -106,19 +106,23 @@
 		            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
 		            onclick="location.href='AdminPaymentList?pageNum=${pageInfo.pageNum + 1}${searchParam}'">
 				</c:if>
+				<div>
+	<!-- 				<input type="button" value="투표영화로 등록" id="regist_pick"> -->
+					<input type="button" value="예매취소" id="regist_upcoming">
+				</div>
 	        </div>
 		</div>
-		<div id="sec03">
-			<div>
-				<input type="button" value="영화등록" id="regist_modal_open">
-				<input type="button" value="영화삭제" id="delete_movie">
-				<input type="button" value="영화정보" id="movie_detail_info">
-			</div>
-			<div>
-				<input type="button" value="투표영화로 등록" id="regist_pick">
-				<input type="button" value="예매취소" id="regist_upcoming">
-			</div>
-		</div>
+<!-- 		<div id="sec03"> -->
+<!-- 			<div> -->
+<!-- 				<input type="button" value="영화등록" id="regist_modal_open"> -->
+<!-- 				<input type="button" value="영화삭제" id="delete_movie"> -->
+<!-- 				<input type="button" value="영화정보" id="movie_detail_info"> -->
+<!-- 			</div> -->
+<!-- 			<div> -->
+<!-- 				<input type="button" value="투표영화로 등록" id="regist_pick"> -->
+<!-- 				<input type="button" value="예매취소" id="regist_upcoming"> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 	
     </section>
     

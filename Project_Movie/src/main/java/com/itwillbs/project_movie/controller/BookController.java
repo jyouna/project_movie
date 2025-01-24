@@ -126,7 +126,7 @@ public class BookController {
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		// 스케줄 코드 없을 시 접근 불가
@@ -135,7 +135,7 @@ public class BookController {
 		if(schCode == null) {
 			model.addAttribute("msg", "잘못된 접근입니다");
 			model.addAttribute("targetURL", "BookTickets");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		// 좌석 정보 조회
@@ -193,7 +193,7 @@ public class BookController {
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		// 스케줄 코드 없을 시 접근 불가
@@ -201,7 +201,7 @@ public class BookController {
 		if(schCode == null) {
 			model.addAttribute("msg", "잘못된 접근입니다");
 			model.addAttribute("targetURL", "BookTickets");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		return "book_tickets/book_pay";
@@ -214,7 +214,7 @@ public class BookController {
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용 가능합니다");
 			model.addAttribute("targetURL", "MemberLogin");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		// 스케줄 코드 없을 시 접근 불가
@@ -222,7 +222,7 @@ public class BookController {
 		if(schCode == null) {
 			model.addAttribute("msg", "잘못된 접근입니다");
 			model.addAttribute("targetURL", "BookTickets");
-			return "result/fail";
+			return "result/process";
 		}
 		
 		// 회원 정보(이름, 메일, 전화번호) 세션에 저장

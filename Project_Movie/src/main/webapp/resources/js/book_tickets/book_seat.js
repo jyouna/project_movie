@@ -93,7 +93,7 @@ $(function () {
 		
 		
 		// 휠체어석 선택 시 알림창
-		if(($(this).text() == "A8" || $(this).text() == "A9") && $(this).hasClass("selected")) {
+		if(($(this).text().trim() == "A8" || $(this).text().trim() == "A9") && $(this).hasClass("selected")) {
 			alert("해당 좌석은 휠체어석입니다.\n일반 고객은 다른 좌석을 선택해 주시기 바랍니다.");
 		}
 
