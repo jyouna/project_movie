@@ -9,7 +9,7 @@ body {
 
 .box {
 	width: 100%;
-	height: 80%;
+	height: 100%;
 	}
 
 /* Search bar styling */
@@ -49,7 +49,6 @@ body {
 /* Article styling */
 article {
     background-color: #fff;
-    margin: 20px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -75,10 +74,6 @@ article {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
-}
-
-#listForm table tr:nth-child(even) {
-    background-color: #f9f9f9;
 }
 
 #listForm table tr:hover {

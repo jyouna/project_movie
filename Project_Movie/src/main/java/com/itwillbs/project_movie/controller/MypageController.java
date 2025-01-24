@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -115,8 +116,8 @@ public class MypageController {
 			maxPage = 1;
 		}
 		
-		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
-		int endPage = startPage + pageListLimit -1;
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit +1;
+		int endPage = startPage + pageListLimit - 1;
 		if (endPage > maxPage) {
 			endPage = maxPage; 
 		}
@@ -126,7 +127,7 @@ public class MypageController {
 			model.addAttribute("targetURL", "ReservationCancel?pageNum=1");
 			return "result/process";
 		}
-		
+		System.out.println("999999999" +maxPage);
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
@@ -270,7 +271,7 @@ public class MypageController {
 			return "result/process";
 		}
 		int listCount = service.getCouponListCount(id);
-		int listLimit = 7;
+		int listLimit = 5;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
@@ -811,5 +812,62 @@ public class MypageController {
 		return"mypage/mypage_main";
 	}
 	
+	// 마이페이지 회원 정보란 이동
+	@GetMapping("ShowMyInfo")
+	public String showMyInfo(HttpSession session, Model model) {
+		String sMemberId = (String) session.getAttribute("sMemberId");
+		System.out.println("회원정보 로그인 세션 아이디 : " + sMemberId);
+		
+		if(sMemberId == null) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "MemberLogin");
+			return "result/process";
+		}
+		
+		MemberVO member = adminService.getMyInfo(sMemberId);
+		System.out.println("member에 저장된 값 : " + member);
+		String gender =  Character.toString(member.getGender()); // char 타입이라 jstl에서 비교 안되어 별도 전달
+
+		model.addAttribute("member", member);
+		model.addAttribute("gender", gender);
+		return "mypage/myprofile/myprofile_correction";
+	}
+	
+	// 마이페이지 회원정보 수정 폼 제출 시
+	@GetMapping("UpdateMyInfo")
+	public String updateMyInfo(MemberVO member, BCryptPasswordEncoder passwordEncoder, Model model) {
+//		System.out.println("변경할 회원 정보 : " + member);
+	      String securedPasswd = passwordEncoder.encode(member.getMember_passwd());
+//	      System.out.println("비밀번호 : " + member.getMember_passwd());
+//	      System.out.println("암호화 : " + securedPasswd);
+	      member.setMember_passwd(securedPasswd);
+//	      System.out.println("암호화 후 정보 : " + member);
+	      
+	      int updateCount = adminService.updateMyInfo(member); 
+	      
+	      if(updateCount > 0) {
+	    	  return "redirect:/MypageMain";
+	      }	else {
+				model.addAttribute("msg", "회원정보 수정 실패");
+				model.addAttribute("targetURL", "MypageMain");
+				return "result/process";
+	      }
+	}
+	
+	// 회원정보 변경 비밀번호 확인 ajax
+	@GetMapping("checkOldPasswd")
+	@ResponseBody
+	public Boolean checkOldPasswd(String passwd, String member_id, BCryptPasswordEncoder passwordEncoder) {
+//		System.out.println("비밀번호 체크 컨트롤러 호출 : " + passwd + " " + member_id);
+		 String dbPasswd = adminService.getDbPasswd(member_id);
+//		 System.out.println("DB 비번 : " + dbPasswd);
+		 System.out.println("일치여부 확인 : " + (passwordEncoder.matches(passwd, dbPasswd)));
+		 
+		 if(passwordEncoder.matches(passwd, dbPasswd)) {
+			 return true;
+		 } else {
+			 return false;
+		 }
+	}
 	
 }

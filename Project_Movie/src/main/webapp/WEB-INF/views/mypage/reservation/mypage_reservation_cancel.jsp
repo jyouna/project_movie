@@ -20,7 +20,7 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
 <article class="box post">
 	<div id="title">
-		<h1>취소 내역</h1>
+		<h1>취소내역</h1>
 	</div>
       <section id="listForm">
          <table>
@@ -62,7 +62,6 @@
          </table>
       </section>
 
-<!--       오른쪽 정렬 -->
          <section id="pageList">
          <input type="button" value="&lt" 
             onclick="location.href='ReservationCancel?pageNum=${pageInfo.pageNum - 1}'" 

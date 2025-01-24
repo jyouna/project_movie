@@ -44,6 +44,7 @@ public class EventController {
 		
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageinfo);
+		
 		List<EventBoardVO> eventList = service.getEventList(startRow, listLimit, searchType, searchKeyword);
 		model.addAttribute("eventList", eventList);
 		return "event/event_list";

@@ -56,11 +56,6 @@ private MyPageMapper mapper;
 		// TODO Auto-generated method stub
 		return mapper.selectIsRegistReview(id,string);
 	}
-	//리뷰 등록창
-//	public Map<String, Object> searchWatchedmovieReview(String movie_code) {
-//		// TODO Auto-generated method stub
-//		return mapper.selectWatchedmovieReview(movie_code);
-//	}
 
 	//무비로그 - 관람평 글 전체 가져오기
 	public int getReviewListCount(String id) {
@@ -227,7 +222,6 @@ private MyPageMapper mapper;
 				return 0;
 			}
 		}
-		
 		return mapper.deleteInquiryAdmin(inquiry);
 	}
 	//1:1문의 글 답변
