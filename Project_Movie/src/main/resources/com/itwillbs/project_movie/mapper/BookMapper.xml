@@ -261,15 +261,8 @@
 		FROM payment p
 		WHERE payment_status = 1
 		<choose>
-			<when test="!howSearch.equals('') and howSearch2.equals('')">
+			<when test="!howSearch.equals('')">
 				AND ${howSearch} LIKE '%${searchKeyword}%'
-			</when>
-			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				AND ${howSearch2} = #{searchKeyword2}
-			</when>
-			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				AND ${howSearch} LIKE '%${searchKeyword}%'
-				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 		</choose>
 	</select>
@@ -282,20 +275,13 @@
 		JOIN movie mo ON mo.movie_code = s.movie_code
 		WHERE payment_status = 1
 		<choose>
-			<when test="!howSearch.equals('') and howSearch2.equals('')">
+			<when test="!howSearch.equals('')">
 				<if test="howSearch == 'member_id'">
 		            AND m.member_id LIKE '%${searchKeyword}%'
 		        </if>
 		        <if test="howSearch == 'payment_code'">
 		            AND p.payment_code LIKE '%${searchKeyword}%'
 		        </if>
-			</when>
-			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				AND ${howSearch2} = #{searchKeyword2}
-			</when>
-			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				AND ${howSearch} LIKE '%${searchKeyword}%'
-				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 		</choose>
 		ORDER BY payment_date DESC
@@ -312,7 +298,7 @@
 		JOIN member m ON p.member_id = m.member_id
 		JOIN movie mo ON mo.movie_code = s.movie_code
 		<choose>
-			<when test="!howSearch.equals('') and howSearch2.equals('')">
+			<when test="!howSearch.equals('')">
 				<if test="howSearch == 'member_id'">
 		            WHERE m.member_id LIKE '%${searchKeyword}%'
 		        </if>
@@ -322,13 +308,6 @@
 		        <if test="howSearch == 'refund_code'">
 		            WHERE r.refund_code LIKE '%${searchKeyword}%'
 		        </if>
-			</when>
-			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch2} = #{searchKeyword2}
-			</when>
-			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
-				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 		</choose>
 	</select>
@@ -341,7 +320,7 @@
 		JOIN member m ON p.member_id = m.member_id
 		JOIN movie mo ON mo.movie_code = s.movie_code
 		<choose>
-			<when test="!howSearch.equals('') and howSearch2.equals('')">
+			<when test="!howSearch.equals('')">
 				<if test="howSearch == 'member_id'">
 		            WHERE m.member_id LIKE '%${searchKeyword}%'
 		        </if>
@@ -351,13 +330,6 @@
 		        <if test="howSearch == 'refund_code'">
 		            WHERE r.refund_code LIKE '%${searchKeyword}%'
 		        </if>
-			</when>
-			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch2} = #{searchKeyword2}
-			</when>
-			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
-				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 		</choose>
 		ORDER BY refund_code DESC

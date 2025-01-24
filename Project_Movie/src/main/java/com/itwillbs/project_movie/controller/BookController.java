@@ -371,13 +371,13 @@ public class BookController {
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
 		// 지난상영작 리스트 페이징처리와 구분하기위한 변수선언
-		String howSearch2 = "";
-		String searchKeyword2 = "";
+//		String howSearch2 = "";
+//		String searchKeyword2 = "";
 		
-		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword, howSearch2, searchKeyword2); //총결제 목록(검색된 결제 목록)수 조회
+		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword); //총결제 목록(검색된 결제 목록)수 조회
 		
 		//페이징 처리 메서드
-		if(!pagingMethod(1, model, pageNum, 10, listCount, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod(1, model, pageNum, 10, listCount, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
@@ -388,13 +388,13 @@ public class BookController {
 	public String adminRefundList(@RequestParam(defaultValue = "1") int pageNum, Model model,
 	@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
-		String howSearch2 = "";
-		String searchKeyword2 = "";
+//		String howSearch2 = "";
+//		String searchKeyword2 = "";
 		
-		int listCount = bookService.getRefundListCount(howSearch, searchKeyword, howSearch2, searchKeyword2);
+		int listCount = bookService.getRefundListCount(howSearch, searchKeyword);
 		
 		// 페이징처리 메서드 
-		if(!pagingMethod(2, model, pageNum, 10, listCount, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod(2, model, pageNum, 10, listCount, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
@@ -402,8 +402,7 @@ public class BookController {
 	}
 	
 	// ==================== [ 페이징 메서드 ] ======================
-	private Boolean pagingMethod(int index, Model model, int pageNum, int listLimit, int listCount, String howSearch, String searchKeyword,
-			String howSearch2, String searchKeyword2) {
+	private Boolean pagingMethod(int index, Model model, int pageNum, int listLimit, int listCount, String howSearch, String searchKeyword) {
 		int startRow = (pageNum - 1) * listLimit; // 조회할 결제테이블의 DB 행 번호(= row 값)
 		int pageListLimit = 10; // 한페이지당 페이지번호 수
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
@@ -434,11 +433,11 @@ public class BookController {
 		
 		if(index == 1) {
 			// 조건에 맞는 결제내역 리스트 조회
-			List<Map<String, Object>> paymentList = bookService.getpaymentList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+			List<Map<String, Object>> paymentList = bookService.getpaymentList(startRow, listLimit, howSearch, searchKeyword);
 			model.addAttribute("paymentList", paymentList);
 		} else if(index == 2) {
 			// 조건에 맞는 환불내역 리스트 조회
-			List<Map<String, Object>> refundList = bookService.getRefundList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
+			List<Map<String, Object>> refundList = bookService.getRefundList(startRow, listLimit, howSearch, searchKeyword);
 			model.addAttribute("refundList", refundList);
 		}
 
