@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.service.ScheduleService;
 import com.itwillbs.project_movie.vo.ScheduleVO;
 
@@ -25,6 +26,9 @@ public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
+	private BookService bookService;
 
 	// 관리자페이지 영화관리 상영스케줄관리 페이지 맵핑
 	@GetMapping("AdminMovieSetSchedule")
@@ -82,6 +86,9 @@ public class ScheduleController {
 		
 		// 상영스케줄 상세페이지에 예매종료 표시를 하기위해 start_time 현재 날짜 시간과 비교
 		for(Map<String, Object> schedule : scheduleList) {
+			// 예매불가좌석, 예매 완료 좌석수 조회
+			int disabledSeatCount = bookService.getDisabledSeat((String)schedule.get("schedule_code")).size();
+			schedule.put("disabledSeatCount", disabledSeatCount);
 			// 현재 날짜 시간
 			LocalDateTime now = LocalDateTime.now();
 			// 스케줄 시작,끝 날짜 시간
@@ -100,6 +107,7 @@ public class ScheduleController {
 				// 상영중인 스케줄
 				schedule.put("isPassed", false);
 			}
+			
 		}
 		model.addAttribute("scheduleList", scheduleList);
 		return "adminpage/movie_set/movie_schedule_info_detail";

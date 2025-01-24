@@ -19,6 +19,9 @@
 			</p>
 		</section>
 		<section>
+			<img src="${pageContext.request.contextPath}/resources/images/logo_nobg.png" style="width:150px;"><br>
+		</section>
+		<section>
 			<h3 class="icon solid fa-envelope">Email</h3>
 			<p>
 				<a href="#">info@untitled.tld</a>

@@ -24,7 +24,7 @@
 	<section>
 		<div id="body_top">
 			<div id="title">상영스케줄</div>
-			<div id="btnGroup01">
+			<div id="btnGroup">
 				<select class="changeScheduleTable">
 						<option value="T1" <c:if test="${param.theater_code eq 'T1'}">selected</c:if>>1관</option>
 						<option value="T2" <c:if test="${param.theater_code eq 'T2'}">selected</c:if>>2관</option>

@@ -122,7 +122,7 @@
 		UPDATE movie
 		SET movie_status = #{movie_status}
 		<choose>
-			<when test="movie_type == null">
+			<when test="movie_type == null or movie_type == ''">
 				, movie_type = null	
 			</when>
 			<otherwise>

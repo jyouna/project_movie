@@ -115,7 +115,8 @@
 			</div>
 			<div>
 				<input type="button" value="투표영화로 등록" id="regist_pick">
-				<input type="button" value="상영예정작으로 등록" id="regist_upcoming">
+				<input type="button" value="일반상영예정작으로 등록" id="regist_upcoming_general">
+				<input type="button" value="시즌상영예정작으로 등록" id="regist_upcoming_season">
 			</div>
 		</div>
 	

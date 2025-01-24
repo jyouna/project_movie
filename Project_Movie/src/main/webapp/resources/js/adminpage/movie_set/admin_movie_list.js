@@ -296,62 +296,21 @@ $(function() {
 		selectMovieStatus = $(this).find("td:eq(5)").text();
 	});
 	
+	// 일반 상영예정작으로 등록 버튼 클릭시 영화 상태 변경
+	$("#regist_upcoming_general").click(function() {
+		// 영화상태 변경 메서드
+		updateMovieStatus("상영예정작", "UpdateMovieStatusToUpcoming", "일반");
+	});
 	
-	// 상영예정작으로 등록 버튼 클릭시 영화 상태 변경
-	$("#regist_upcoming").click(function() {
-		
-		// 영화 선택 여부 판별
-		if(selectMovieCode != "") {
-			// 상영예정작으로 등록 가능 여부 판별
-			if(selectMovieStatus != "대기") {
-				alert("해당영화는 상영예정작으로 등록할 수 없습니다\n(영화상태가 대기인 경우에만 상영예정작으로 등록가능)")
-			} else if(confirm("<" + selectMovieName + ">을 상영예정작으로 등록 하시겠습니까?")){
-				
-				$.ajax({
-					type : "POST",
-					url : "UpdateMovieStatusToUpcoming",
-					data : {
-						movie_code : selectMovieCode,
-						movie_status : "상영예정작",
-						movie_type : "일반"
-					},
-				}).done(function(result) {
-					alert(result.msg);
-					location.reload();
-				}).fail(function() {
-					alert("상영예정작으로 등록 실패");
-				});
-			}
-		} else {
-			alert("영화를 선택해주세요");
-		}
+	// 시즌 상영예정작으로 등록 버튼 클릭시 영화 상태 변경
+	$("#regist_upcoming_season").click(function() {
+		updateMovieStatus("상영예정작", "UpdateMovieStatusToUpcoming", "시즌");
 	});
 	
 	// 투표영화로 등록 버튼 클릭시 영화 상태 변경
 	$("#regist_pick").click(function() {
-		// 영화 선택 여부 판별
-		if(selectMovieCode != "") {
-			// 투표영화로 등록 가능 여부 판별
-			if(selectMovieStatus != "대기") {
-				alert("해당영화는 투표영화로 등록할 수 없습니다\n(영화상태가 대기인 경우에만 투표영화로 등록가능)")
-			} else if(confirm("<" + selectMovieName + ">을 투표영화로 등록 하시겠습니까?")){
-				$.ajax({
-					type : "POST",
-					url : "UpdateMovieStatusToPick",
-					data : {
-						movie_code : selectMovieCode,
-						movie_status : "투표영화",
-					},
-				}).done(function(result) {
-					alert(result.msg);
-					location.reload();
-				}).fail(function() {
-					alert("투표예정작으로 등록 실패");
-				});
-			}
-		} else {
-			alert("영화를 선택해주세요");
-		}
+		// 영화상태 변경 메서드
+		updateMovieStatus("투표영화", "UpdateMovieStatusToPick", null);
 	});
 	
 	// 영화삭제 버튼 클릭시 영화 정보 삭제
@@ -439,6 +398,39 @@ $(function() {
 		 	$("#request_movie_info_btn").click(); 
 		}
 	});
+	
+	// 영화상태변경  메서드
+	function updateMovieStatus(movie_status, url, movie_type) {
+		let confirmStr = "";
+		if(movie_type == "시즌") {
+			confirmStr = "시즌 상영예정작은 투표를 통해 선정하는것을 권합니다\n"
+		}
+		// 영화 선택 여부 판별
+		if(selectMovieCode != "") {
+			// 영화상태변경 가능 여부 판별
+			if(selectMovieStatus != "대기") {
+				alert("해당영화는 " + movie_status + "(으)로 등록할 수 없습니다\n(영화상태가 대기인 경우에만 " + movie_status + "(으)로 등록가능)")
+			} else if(confirm(confirmStr + "<" + selectMovieName + ">을 " + movie_status + "으로 등록 하시겠습니까?")){
+				
+				$.ajax({
+					type : "POST",
+					url : url,
+					data : {
+						movie_code : selectMovieCode,
+						movie_status : movie_status,
+						movie_type : movie_type
+					},
+				}).done(function(result) {
+					alert(result.msg);
+					location.reload();
+				}).fail(function() {
+					alert(movie_status + "(으)로 등록 실패");
+				});
+			}
+		} else {
+			alert("영화를 선택해주세요");
+		}
+	} 
 	
 }); // document ready 끝
 	

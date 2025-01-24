@@ -10,16 +10,16 @@ section {
 	margin-bottom: 35px;
 }
 
-#btnGroup01 {
+#btnGroup {
 	display: inline-block;
 	margin-bottom: 10px;
 }	
 
-#btnGroup01 {
+#btnGroup {
 	float:left;
 }
 
-#btnGroup01 input, #btnGroup01 select {
+#btnGroup input, #btnGroup select {
 	padding: 10px 15px;
 	font-size: 14px;
 	border: 1px solid #ccc;
@@ -28,7 +28,7 @@ section {
 	cursor: pointer;
 }
 
-#btnGroup01 input:hover {
+#btnGroup input:hover {
 	background-color: #e2e2e2;
 }
 
@@ -51,7 +51,7 @@ table td {
 	padding: 10px;
 	text-align: left;
 	vertical-align: top;
-	height: 90px;
+	height: 60px;
 	cursor: pointer;
 }
 
@@ -59,10 +59,6 @@ table th {
 	background-color: #f4f4f4;
 	font-weight: bold;
 	height: 20px;
-}
-
-table td:nth-child(even) {
-	background-color: #f9f9f9;
 }
 
 table td:hover {
@@ -75,6 +71,10 @@ table tr th:first-child, table tr td:first-child {
 
 table tr th:last-child, table tr td:last-child {
     color: blue;
+}
+
+.day, b {
+	line-height: 10px;
 }
 
 

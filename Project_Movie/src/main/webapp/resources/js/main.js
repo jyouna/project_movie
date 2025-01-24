@@ -41,6 +41,7 @@ $(function() {
 		} else {
 			$(".style2").append(addMovieListStr[lastIndex + 1]);
 		}
+		
 	});
 	
 	// 왼쪽 버튼 클릭시 마지막 영화 포스터 삭제 후 이전 영화 포스터 추가

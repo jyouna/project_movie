@@ -57,6 +57,7 @@
 				            </ul>
 				        </div>
 					</div>
+					<c:if test="${status.count % 3 == 0}"><hr></c:if>
 				</c:forEach>
 			</div>
 			<div id="pick_notice">

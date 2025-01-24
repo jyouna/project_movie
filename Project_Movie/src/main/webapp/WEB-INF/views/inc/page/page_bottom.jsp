@@ -7,7 +7,7 @@
 </section>
 
 <section id="footer" class="wrapper">
-	<div class="container">
+	<div class="container" style="margin: 0; width: 100%; margin: 0 auto; text-align: center;">
 		<section>
 			<h3 class="icon solid fa-home">Mailing Address</h3>
 			<p>
@@ -23,6 +23,9 @@
 				<a href="#">linkedin.com/untitled</a><br />
 				<a href="#">facebook.com/untitled</a>
 			</p>
+		</section>
+		<section>
+			<img src="${pageContext.request.contextPath}/resources/images/logo_nobg.png" style="width:150px;"><br>
 		</section>
 		<section>
 			<h3 class="icon solid fa-envelope">Email</h3>

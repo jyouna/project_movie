@@ -65,7 +65,7 @@
 										<c:otherwise>(3관),</c:otherwise>
 									</c:choose>
 									
-									좌석현황 (?? / ${schedule.avail_seat})<br>
+									좌석현황 (${schedule.avail_seat - schedule.disabledSeatCount} / ${schedule.avail_seat})<br>
 									<b>&lt;${schedule.movie_name}&gt;</b> 러닝타임 (${schedule.running_time}분)<br>
 									<fmt:parseDate var="parsedStartTime" value="${schedule.start_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />
 									<fmt:parseDate var="parsedEndTime" value="${schedule.end_time}"	pattern="yyyy-MM-dd HH:mm" type="both" />

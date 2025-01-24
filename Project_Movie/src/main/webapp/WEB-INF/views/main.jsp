@@ -36,28 +36,22 @@
 					<div class="col-4 col-12-medium">
 						<section class="highlight">
 							<h3><a href="#">공지사항</a></h3>
-							<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-							<ul class="actions">
-								<li><a href="" class="button style1">Learn More</a></li>
-							</ul>
+							<div>
+							</div>
 						</section>
 					</div>
 					<div class="col-4 col-12-medium">
 						<section class="highlight">
 							<h3><a href="#">FAQ</a></h3>
-							<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-							<ul class="actions">
-								<li><a href="#" class="button style1">Learn More</a></li>
-							</ul>
+							<div>
+							</div>
 						</section>
 					</div>
 					<div class="col-4 col-12-medium">
 						<section class="highlight">
-							<h3><a href="#">광고판</a></h3>
-							<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-							<ul class="actions">
-								<li><a href="#" class="button style1">Learn More</a></li>
-							</ul>
+							<h3><a href="#">이벤트</a></h3>
+							<div>
+							</div>
 						</section>
 					</div>
 				</div>

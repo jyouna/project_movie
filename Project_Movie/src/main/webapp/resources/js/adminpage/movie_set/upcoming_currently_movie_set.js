@@ -122,6 +122,7 @@ $(function() {
 		
 	});
 	
+	// 상영예정작에서 삭제 버튼 클릭시 영화상태를 상영예정작에서 대기로 변경
 	$("#remove_from_upcoming_btn").click(function() {
 		// 영화 선택 여부 판별
 		if(!isClicked()) {
@@ -129,6 +130,13 @@ $(function() {
 		}
 		
 		if(confirm("<" + movie_name + ">을 상영예정작에서 삭제 하시겠습니까?")){
+			// 투표로 선정된 시즌 영화는 다시한번 컨펌창 출력
+			if(movie_type == '시즌') {
+				if(!confirm("시즌 영화는 투표로 선정된 영화입니다. 정말 삭제하시겠습니까?")) {
+					return;
+				}
+			}
+			
 			// 상영예정작에서 삭제 가능 여부 판별
 			$.ajax({
 				type : "GET",
@@ -173,7 +181,7 @@ $(function() {
 		if(start_screening_date == "" || end_screening_date == "") {
 			alert("상영기간을 설정해 주세요");
 		} else {
-			location.href = "AdminMovieSetScheduleDetail?theater_code=T1&select_date=" + start_screening_date;
+			location.href = "AdminMovieSetSchedule";
 		}
 	});
 	
@@ -254,22 +262,6 @@ $(function() {
 			});
 		}
 	});
-	
-	// 상영예정작에서 삭제 버튼 클릭시 영화상태를 상영예정작에서 대기로 변경
-	$("#remove_from_upcoming_btn").click(function() {
-		// 테이블 선택여부 판별 메서드 호출
-		if(!isClicked()) {
-			return;
-		}
-		
-		// 시즌영화는 투표를 통해 선정한 영화이기 때문에 삭제 불가
-		if(movie_type == '시즌') {
-			alert("시즌 영화는 투표로 선정된 영화이기 때문에 삭제 불가합니다");
-			return;
-		}
-		
-//		location.href
-	})
 	
 	// 테이블 선택여부 판별 메서드
 	function isClicked() {

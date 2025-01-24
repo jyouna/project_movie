@@ -102,8 +102,8 @@ table th[colspan] {
 
 .page_btn_group {
 	position: absolute;
-	left: 450px;
-	bottom: 50px;
+	left: 45%;
+	bottom: 70px;
 }
 
 #sec02 td input[type="radio"] {
