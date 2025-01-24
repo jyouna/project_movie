@@ -152,7 +152,7 @@
 				$(".modal_content").css("display", "none");
 			});
 			
-			let contextPath = "${pageContext.request.contextPath}";
+			let contextPath = "/";
 			
 			// 긴 영화제목 스크롤 애니메이션 효과
 			$(document).ready(function () {

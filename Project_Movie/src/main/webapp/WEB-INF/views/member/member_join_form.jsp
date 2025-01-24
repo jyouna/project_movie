@@ -222,7 +222,7 @@
    
 	<script>
     // 컨텍스트 경로를 JavaScript 변수에 전달
-    const contextPath = "${pageContext.request.contextPath}";
+    const contextPath = "/";
 	</script>
 	
 	

@@ -6,7 +6,7 @@
 		<!-- Top Nav -->
 		<div class="navbar"> 
 			<div class="navbar-right"> 
-				<a href="${pageContext.request.contextPath}">홈</a> 
+				<a href="/">홈</a> 
 				<c:choose>
 					<c:when test="${empty sessionScope.sMemberId}">
 						<a href="MemberLogin">로그인</a> 
@@ -33,7 +33,7 @@
 
 		<!-- Logo -->
 			<div id="logo" style="width: 100%; height: 300px;">
-			    <div id="logoImg" onclick="location.href='${pageContext.request.contextPath}'" style="cursor: pointer;">
+			    <div id="logoImg" onclick="location.href='/'" style="cursor: pointer;">
 			        PICKCINE
 			    </div>
 			</div>

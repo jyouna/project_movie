@@ -163,7 +163,7 @@
 	            });
 	        });
 	        
-	        let contextPath = "${pageContext.request.contextPath}";
+	        let contextPath = "/";
 	    </script>
 	</article>
 

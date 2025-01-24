@@ -6,7 +6,7 @@
 		<!-- Top Nav -->
 		<div class="navbar"> 
 			<div class="navbar-right"> 
-				<a href="${pageContext.request.contextPath}">홈</a> 
+				<a href="/">홈</a> 
 				<c:choose>
 					<c:when test="${empty sessionScope.sMemberId}">
 						<a href="MemberLogin">로그인</a> 
