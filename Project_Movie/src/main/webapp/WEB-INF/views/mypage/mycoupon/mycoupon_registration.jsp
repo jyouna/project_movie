@@ -53,7 +53,7 @@
 	  </div>
 	</div>
 
-	<h6>${sessionScope.sMemberId } 님의 사용 가능한 쿠폰은 ${couponList.size()}장 입니다.</h6>
+	<h6>${sessionScope.sMemberId} 님의 사용 가능한 쿠폰은 ${couponList.size()}장 입니다.</h6>
 	<section id="listForm">
     	<table>
         	<tr id="tr_top">

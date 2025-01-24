@@ -148,7 +148,7 @@ private MyPageMapper mapper;
 	//공지사항 글 등록
 	public int registNotice(NoticeBoardVO notice) {
 		// TODO Auto-generated method stub
-		return mapper.updateNoticeAdmin(notice);
+		return mapper.insertNoticeAdmin(notice);
 	}
 	//관리자페이지 - 공지사항 글 자세히보기 
 	public NoticeBoardVO getNotice(int notice_code, boolean isIncreaseReadcount) {

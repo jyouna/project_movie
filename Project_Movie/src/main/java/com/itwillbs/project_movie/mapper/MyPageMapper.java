@@ -78,7 +78,7 @@ public interface MyPageMapper {
 	//관리자 페이지 - 공지사항 글 시작번호 끝번호 
 	List<NoticeBoardVO> selectNoticeList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("searchType") String searchType,@Param("searchKeyword") String searchKeyword);
 	//관리자 페이지 - 공지사항 글 등록 
-	int updateNoticeAdmin(NoticeBoardVO notice);
+	int insertNoticeAdmin(NoticeBoardVO notice);
 	//관리자 페이지 - 공지사항 글 자세히
 	NoticeBoardVO selectNotice(int notice_code);
 	//관리자 페이지 - 공지사항 글 수정 

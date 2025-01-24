@@ -28,7 +28,8 @@
 			<section id="basicInfoArea">
 				<table>
 					<tr>
-						<input type="hidden" value="${inquiry.response_status }">
+						<input type="hidden" value="${inquiry.response_status}">
+						<input type="hidden" value="${inquiry.inquiry_writer}">
 						<th width="100">제목</th>
 						<td colspan="3">${inquiry.inquiry_subject}</td>
 						<th width="120">등록일</th>
@@ -46,8 +47,10 @@
 		<input type="button" value="목록" id="listButton" onclick="location.href='InquiryList?pageNum=${param.pageNum}'">
 		</div>
 		<section id="commandCell">
-			<input type="button" value="수정" onclick="location.href='InquiryModify?inquiry_code=${param.inquiry_code}&pageNum=${param.pageNum}'">
-			<input type="button" value="삭제" id="deleteInquiry">
+			<c:if test="${sessionScope.sMemberId eq inquiry.inquiry_writer}">
+				<input type="button" value="수정" onclick="location.href='InquiryModify?inquiry_code=${param.inquiry_code}&pageNum=${param.pageNum}'">
+				<input type="button" value="삭제" id="deleteInquiry">
+			</c:if>
 		</section>
 		
 		<table>

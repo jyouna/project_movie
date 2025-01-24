@@ -61,7 +61,7 @@ public class MypageController {
 		
 		//페이징 처리
 		int listCount = service.getReservationListCount(id);
-		int listLimit = 5; 
+		int listLimit = 10; 
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
@@ -108,7 +108,7 @@ public class MypageController {
 		}
 		//페이징 처리
 		int listCount = service.getReservationCancelCount(id);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1: 0);
@@ -147,7 +147,7 @@ public class MypageController {
 		}
 		//페이징 처리
 		int listCount = service.getWatchedMovieCount(id,searchYear);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1: 0);
@@ -216,7 +216,7 @@ public class MypageController {
 		}
 		// 페이징 처리
 		int listCount = service.getReviewListCount(id);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1: 0);
@@ -271,7 +271,7 @@ public class MypageController {
 			return "result/process";
 		}
 		int listCount = service.getCouponListCount(id);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
@@ -309,7 +309,7 @@ public class MypageController {
 			return "result/process";
 		}
 		int listCount = service.getPointListCount(id);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
@@ -345,7 +345,7 @@ public class MypageController {
 			return "result/process";
 		}
 		int listCount = service.getInquiryListCount(searchType, searchKeyWord, id);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
@@ -496,7 +496,7 @@ public class MypageController {
 			return "result/process";
 		}
 		int listCount = service.getNoticeListCount(searchType, searchKeyword);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 :0);
@@ -531,6 +531,7 @@ public class MypageController {
 	@PostMapping("AdminNoticeWrite")
 	public String adminNoticeWrite2(HttpServletRequest request, HttpSession session, Model model, NoticeBoardVO notice) {
 		notice.setNotice_writer_ip(getClientIp(request));
+		notice.setNotice_writer((String)session.getAttribute("admin_sId"));
 		int insertNoticeCount = service.registNotice(notice);
 		if(insertNoticeCount > 0) {
 			return "redirect:/AdminNotice";
@@ -603,7 +604,7 @@ public class MypageController {
 			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
-		int listLimit = 5; // 한 페이지 당 표시할 게시물 수
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
 		int listCount = service.getFaqListCount();
 		int pageListLimit = 5;
@@ -717,7 +718,7 @@ public class MypageController {
 			return "result/process";
 		}
 		int listCount = service.getInquiryListCount(searchType,searchKeyword);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);

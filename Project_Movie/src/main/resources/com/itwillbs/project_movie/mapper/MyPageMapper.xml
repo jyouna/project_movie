@@ -219,9 +219,11 @@
  	<select id="selectInquiryListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM Inquiry
+		WHERE 
+			inquiry_writer = #{id} OR inquiry_writer = #{admin}
+
  		<if test="!searchKeyword.equals('')">
- 			WHERE 
-				inquiry_writer = #{id}
+ 			AND
  			<choose>
  				<when test="searchType.equals('subject')">
 		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
@@ -236,9 +238,10 @@
  	<select id="selectInquiryList" resultType="inquiry">
  		SELECT *
  		FROM Inquiry
+		WHERE 
+			inquiry_writer = #{id} OR inquiry_writer = ''
  		<if test="!searchKeyword.equals('')">
- 			WHERE 
- 				inquiry_writer = #{id}
+ 			AND
  			<choose>
  				<when test="searchType.equals('subject')">
 		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
@@ -326,15 +329,19 @@
 		WHERE notice_code = #{notice_board}
 	</select>
 <!-- 	공지사항 등록 -->
-	<insert id="updateNoticeAdmin">
+	<insert id="insertNoticeAdmin">
 		INSERT INTO notice_board(
 		notice_subject
 		, notice_content
 		, regis_date
+		, notice_writer
+		,notice_writer_ip
 		) VALUES(
 			#{notice_subject}
 			,#{notice_content}
 			,NOW()
+			,#{notice_writer}
+			,#{notice_writer_ip}
 		)
 	</insert>
 <!-- 	공지사항 수정 -->
