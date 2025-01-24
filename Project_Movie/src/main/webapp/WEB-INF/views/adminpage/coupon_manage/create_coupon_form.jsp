@@ -160,7 +160,7 @@ $(function(){
 				window.opener.location.replace("MemberList");
 				window.close();
 			} else {
-				alert("쿠폰 지급 실패");
+				alert("쿠폰 등록 실패");
 			}
 		});
 	});	

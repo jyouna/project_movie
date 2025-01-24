@@ -28,6 +28,8 @@ th, td {
 	text-align: left !important;}
 #formTag {
 	float: right;}
+#layoutSidenav_content {
+	padding-left: 1em;}
 </style>
 </head>
 <body>

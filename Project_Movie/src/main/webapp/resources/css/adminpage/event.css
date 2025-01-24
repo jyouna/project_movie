@@ -1,8 +1,8 @@
 @charset "EUC-KR";
 h3 {
 	margin-left: 30px;
-	margin-top: 20px;
-	margin-bottom: 20px;}
+	margin-top: 0px;
+	margin-bottom: 5px;}
 
 #divTop {
 	margin-left: 30px;
@@ -10,23 +10,16 @@ h3 {
 	max-width: 1600px;}
 
 #divTopLeft {
-	/* margin-left: 30px; */
 	margin-bottom: 5px;
 	text-align: left;
-	/* width: 40% !important; */
     float: left;}
 
 #divTopLeft input {letter-spacing: -0.1em;}
-
-/* .memberTable { */
-/* 	letter-spacing: -0.1em; */
-/* } */
 
 #divTopRight {
 	margin-left: 30px;
 	margin-bottom: 5px;
 	text-align: right;
-/* 	width: 40% !important; */
      float: right;}
 
 #tableDiv {
@@ -98,7 +91,6 @@ h3 {
    vertical-align: middle; /* 수직 가운데 정렬 */
    padding: 5px; /* 셀 안쪽 여백 */}
 
-/* 호버 효과 */
 tr:hover {
     background-color: #f9f9f9 !important;}
 
@@ -106,21 +98,17 @@ input[type="button"],
 input[type="submit"] {
 	padding:5px;
 	border-radius: 20px;
-	border: 3px;
-}
+	border: 3px;}
 
 a {
 	text-decoration: none;}
 
  input[type="radio"] {
-    transform: scale(1.3); /* 크기 조정 */
-/*     margin: 10px; 여백 추가 */
-}
+    transform: scale(1.3);}
 
 #couponSet {
 	text-align: center;
-	margin: 1em;
-}
+	margin: 1em;}
 
 .selectOption {
 	font: inherit;
@@ -131,8 +119,7 @@ a {
 	background-color: lightgrey;
 	border: none;
 	text-align: center;
-    vertical-align: middle;
-}
+    vertical-align: middle;}
 
 .selectNoOption {
 	font: inherit;
@@ -144,8 +131,7 @@ a {
 	border: none;
 	text-align: center;
     vertical-align: middle;
-    pointer-events: none;
-}
+    pointer-events: none;}
 
 #pointTopDiv {
 	width: 40%;
@@ -157,33 +143,24 @@ a {
 
 
 #event_content {
-	padding: 1em;
-}
+	padding: 1em;}
 
 #event_subject_link {
-	color: black;
-}
+	color: black;}
 
 #event_subject_link:hover {
-	background-color: grey;
-}
+	background-color: grey;}
 
 #sub, #add {
 	border: 0;
 	margin: 0.1em;
 	border-radius: 15px;
-	text-align: center;
-}
+	text-align: center;}
 
 #coupon_count{
 	text-align: center;
-	width: 50px;
-}
+	width: 50px}
 
-#discount_amount{
-	width: 100px;
-}
+#discount_amount {width: 100px;}
 
-#expired_date {
-	width: 100px;
-}
+#expired_date {width: 100px;}

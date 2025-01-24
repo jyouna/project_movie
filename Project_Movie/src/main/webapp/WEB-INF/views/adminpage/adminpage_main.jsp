@@ -22,7 +22,6 @@
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-<!-- 	<h3>주요 현황</h3> -->
 	<article id="testArticle">
 		<div id="time"></div>
 		<section id="sec01" class="secMain">
@@ -34,10 +33,10 @@
 			<div id="noticeBoardMain" class="secitonBoard">
 				<table>
 					<tr class="tr01">
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>등록일</th>
+						<th width="40px">번호</th>
+						<th width="150px">제목</th>
+						<th width="70px">작성자</th>
+						<th width="70px">등록일</th>
 					</tr>
 					<c:choose>
 						<c:when test="${empty noticeVo}">
@@ -49,9 +48,9 @@
 							<c:forEach var="notice" items="${noticeVo}" begin="0" end="9">
 								<tr>
 									<td>${notice.notice_code}</td>
-									<td>${notice.notice_subject}</td>
+									<td class="subjectTextAlign">${notice.notice_subject}</td>
 									<td>${notice.notice_writer}</td>
-									<td><fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd hh:mm" /></td>
+									<td><fmt:formatDate value="${notice.regis_date}" pattern="yyyy-MM-dd" /></td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>
@@ -68,11 +67,11 @@
 			<div class="secitonBoard">
 				<table>
 					<tr class="tr01">
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>등록일</th>
-						<th>답변여부</th>
+						<th width="40px">번호</th>
+						<th width="150px">제목</th>
+						<th width="70px">작성자</th>
+						<th width="70px">등록일</th>
+<!-- 						<th width="50px">답변여부</th> -->
 					</tr>
 					<c:choose>
 						<c:when test="${empty inquiryVo}">
@@ -84,10 +83,10 @@
 							<c:forEach var="inquiry" items="${inquiryVo}" begin="0" end="9">
 								<tr>
 									<td>${inquiry.inquiry_code}</td>
-									<td>${inquiry.inquiry_subject}</td>
+									<td class="subjectTextAlign">${inquiry.inquiry_subject}</td>
 									<td>${inquiry.inquiry_writer}</td>
-									<td><fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd hh:mm" /></td>
-									<td>미답변</td>
+									<td><fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd" /></td>
+<!-- 									<td>미답변</td> -->
 								</tr>
 							</c:forEach>
 						</c:otherwise>
@@ -119,8 +118,8 @@
 			</div>
 		</section>
 		<hr>
-	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	</article>
+	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 <script type="text/javascript">
 </script>	
 

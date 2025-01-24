@@ -249,13 +249,17 @@ public class AdminEventManageController {
 	    @RequestParam(value = "discount_rate", required = false, defaultValue = "0") int discountRate, // 기본값 0
 	    @RequestParam(value = "discount_amount", required = false, defaultValue = "0") int discountAmount, // 기본값 0
 	    @RequestParam(value = "member_id") List<String> memberId,
-	    @RequestParam("coupon_count") int coupon_count) {
+	    @RequestParam("coupon_count") int coupon_count,
+	    Model model) {
 		
+		System.out.println("쿠폰 타입 : " + couponType);
 		// 문자열로 입력된 쿠폰타입을 DB 데이터 타입에 맞게 변경
-		if(couponType.equals("할인금액")) {
+		if(couponType.equals("금액할인")) {
 			couponType = "0";
-		} else {
+		} else if(couponType.equals("할인율")){
 			couponType = "1";
+		} else {
+			return false;
 		}
 		int insertCount = adminService.createCoupon(expiredDate, couponType, discountRate, discountAmount, memberId, coupon_count);
 		System.out.println("쿠폰 등록 횟수 : " + insertCount);

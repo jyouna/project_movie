@@ -13,7 +13,8 @@ public class CouponExpiredHandler {
 	@Autowired
 	AdminManageService adminService;
 	
-	@org.springframework.scheduling.annotation.Scheduled(cron = "0 47 13 * * ?")
+	@org.springframework.scheduling.annotation.Scheduled(cron = "59 59 23 * * ?")
+	// 쿠폰 만료일 23시 59분 59초에 해당 쿠폰 '사용불가' 상태로 변겅
 	public void couponExpired() {
 		System.out.println("쿠폰 기한 만료 처리 스케줄러 작동!");
 		LocalDate date = LocalDate.now();
