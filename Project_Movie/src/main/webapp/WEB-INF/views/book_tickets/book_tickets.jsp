@@ -90,12 +90,13 @@
 						
 						<div class="date_list">
 						<%
-	
-			                // 현재 날짜부터 10일치 생성
-			                Calendar calendar = Calendar.getInstance();
-			                SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyy년 MM월");
-			                SimpleDateFormat dayFormat = new SimpleDateFormat("E");
-			                SimpleDateFormat dateFormat = new SimpleDateFormat("d");
+						 	Locale locale = new Locale("ko", "KR");
+							
+							// 현재 날짜부터 10일치 생성
+			                Calendar calendar = Calendar.getInstance(locale);
+			                SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyy년 MM월", locale);
+			                SimpleDateFormat dayFormat = new SimpleDateFormat("E", locale);
+			                SimpleDateFormat dateFormat = new SimpleDateFormat("d", locale);
 			                
 			             // 오늘 날짜와 비교하기 위해 현재 날짜 정보 저장
 			                Calendar today = Calendar.getInstance();
