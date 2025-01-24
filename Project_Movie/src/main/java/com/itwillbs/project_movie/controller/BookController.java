@@ -370,8 +370,8 @@ public class BookController {
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
 		// 전체 결제내역 조회
-		List<Map<String, Object>> allPaymentList = bookService.getAllPaymentList();
-		model.addAttribute("allPaymentList", allPaymentList);
+//		List<Map<String, Object>> allPaymentList = bookService.getAllPaymentList();
+//		model.addAttribute("allPaymentList", allPaymentList);
 		
 		String howSearch2 = "";
 		String searchKeyword2 = "";
@@ -433,14 +433,14 @@ public class BookController {
 		// url 파라미터 조작 방지
 		if(pageNum < 1 || (maxPage > 0 && pageNum > maxPage)) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다!");
-			model.addAttribute("targetURL", "AdminMovieSetList?pageNum=1");
+			model.addAttribute("targetURL", "AdminPaymentList?pageNum=1");
 			return false;
 		}
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		// 조건에맞는 영화 리스트 조회
+		// 조건에맞는 결제내역 리스트 조회
 		List<Map<String, Object>> paymentList = bookService.getpaymentList(startRow, listLimit, howSearch, searchKeyword, howSearch2, searchKeyword2);
 		
 		// 지난상영작 페이지 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정

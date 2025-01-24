@@ -264,46 +264,52 @@
 		JOIN movie mo ON mo.movie_code = s.movie_code
 		WHERE payment_status = 1
 		ORDER BY payment_date DESC
-		LIMIT 100
+		LIMIT 120
 	</select>
 	
-	<select id="selectPaymentListCount">
+	<select id="selectPaymentListCount" resultType="int">
 		SELECT COUNT(*)
-		FROM payment
+		FROM payment p
+		WHERE payment_status = 1
 		<choose>
 			<when test="!howSearch.equals('') and howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
+				AND ${howSearch} LIKE '%${searchKeyword}%'
 			</when>
 			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch2} = #{searchKeyword2}
+				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
+				AND ${howSearch} LIKE '%${searchKeyword}%'
 				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 		</choose>
 	</select>
 	
-	<select id="selectPaymentList">
+	<select id="selectPaymentList" resultType="map">
 		SELECT *
 		FROM payment p
-<!-- 		JOIN schedule s ON p.schedule_code = s.schedule_code -->
-<!-- 		JOIN member m ON p.member_id = m.member_id -->
-<!-- 		JOIN movie mo ON mo.movie_code = s.movie_code -->
-<!-- 		WHERE payment_status = 1 -->
+		JOIN schedule s ON p.schedule_code = s.schedule_code
+		JOIN member m ON p.member_id = m.member_id
+		JOIN movie mo ON mo.movie_code = s.movie_code
+		WHERE payment_status = 1
 		<choose>
 			<when test="!howSearch.equals('') and howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
+				<if test="howSearch == 'member_id'">
+		            AND m.member_id LIKE '%${searchKeyword}%'
+		        </if>
+		        <if test="howSearch == 'payment_code'">
+		            AND p.payment_code LIKE '%${searchKeyword}%'
+		        </if>
 			</when>
 			<when test="howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch2} = #{searchKeyword2}
+				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 			<when test="!howSearch.equals('') and !howSearch2.equals('')">
-				WHERE ${howSearch} LIKE '%${searchKeyword}%'
+				AND ${howSearch} LIKE '%${searchKeyword}%'
 				AND ${howSearch2} = #{searchKeyword2}
 			</when>
 		</choose>
-<!-- 		ORDER BY payment_date DESC -->
+		ORDER BY payment_date DESC
 		LIMIT
 			#{startRow}
 			, #{listLimit}

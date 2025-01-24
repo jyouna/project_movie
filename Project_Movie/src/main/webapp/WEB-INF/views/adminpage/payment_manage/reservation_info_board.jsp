@@ -13,7 +13,8 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link href="${pageContext.request.contextPath}/resources/css/adminpage/movie_set/admin_movie_list.css" rel="stylesheet" />
+<%-- 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/movie_set/admin_movie_list.css" rel="stylesheet" /> --%>
+	<link href="${pageContext.request.contextPath}/resources/css/adminpage/reservation_info_board.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_set/admin_movie_list.js"></script>
@@ -60,7 +61,7 @@
 	                <th style="width:10%">결제일자</th>
 				</tr>
 				<c:choose>
-					<c:when test="${empty allPaymentList}">
+					<c:when test="${empty paymentList}">
 						<tr>
 							<td colspan="10">
 								조회된 예매내역이 없습니다
@@ -68,7 +69,7 @@
 						<tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="payment" items="${allPaymentList}">
+						<c:forEach var="payment" items="${paymentList}">
 							<tr>
 				                <td><input type="radio" name="payment_radio"></td>
 				                <td>${payment.payment_code}</td>
@@ -91,19 +92,19 @@
 				</c:if>
 				<c:if test="${pageInfo.maxPage != 0}">
 		            <input type="button" value="<" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>
-		            	onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum - 1}${searchParam}'">
+		            	onclick="location.href='AdminPaymentList?pageNum=${pageInfo.pageNum - 1}${searchParam}'">
 		            <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
 		            	<c:choose>
 		            		<c:when test="${pageInfo.pageNum eq i}">
 		            			<b>${i}</b>
 		            		</c:when>
 		            		<c:otherwise>
-		            			<a href="AdminMovieSetList?pageNum=${i}${searchParam}">${i}</a>
+		            			<a href="AdminPaymentList?pageNum=${i}${searchParam}">${i}</a>
 		            		</c:otherwise>
 		            	</c:choose>
 		            </c:forEach>
 		            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
-		            onclick="location.href='AdminMovieSetList?pageNum=${pageInfo.pageNum + 1}${searchParam}'">
+		            onclick="location.href='AdminPaymentList?pageNum=${pageInfo.pageNum + 1}${searchParam}'">
 				</c:if>
 	        </div>
 		</div>
@@ -120,6 +121,14 @@
 		</div>
 	
     </section>
+    
+    <script>
+    	$(".search_box").click(function() {
+	    	if($("input[name='searchKeyword']").val() != "") {
+	    		$("input[name='searchKeyword']").val("");
+	    	}
+		});
+    </script>
     
     <jsp:include page="/WEB-INF/views/inc/adminpage_mypage/movie_set/movie_regist_modal.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
