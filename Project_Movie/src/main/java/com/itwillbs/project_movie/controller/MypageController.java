@@ -391,7 +391,6 @@ public class MypageController {
 		}
 		return "mypage/inquiry/inquiryWrite";
 	}
-	
 	//7-3. 1:1문의 - 글 작성 post폼 
 	@PostMapping("InquiryWrite")
 	public String inquiryWrite(InquiryVO inquiry, HttpServletRequest request, HttpSession session, Model model) {
