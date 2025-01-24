@@ -103,54 +103,6 @@
 	
 		<div class="movie_schedule_info">
 			<h4>날짜를 선택해주세요</h4>
-<%-- 			<c:forEach var="movie" items="${movieList}"> --%>
-<%-- 				<section class="sec01" id="${movie.movie_name}"> --%>
-<!-- 				    <div class="movie_container"> -->
-<!-- 				        <div class="mv_age"> -->
-<%-- 					       <c:choose> --%>
-<%-- 								<c:when test="${movie.age_limit eq '12세이상관람가'}"> --%>
-<%-- 									<img src="${pageContext.request.contextPath}/resources/images/mv_age(12).png"> --%>
-<%-- 								</c:when> --%>
-<%-- 								<c:when test="${movie.age_limit eq '15세이상관람가'}"> --%>
-<%-- 									<img src="${pageContext.request.contextPath}/resources/images/mv_age(15).png"> --%>
-<%-- 								</c:when> --%>
-<%-- 								<c:when test="${movie.age_limit eq '청소년관람불가'}"> --%>
-<%-- 									<img src="${pageContext.request.contextPath}/resources/images/mv_age(19).png"> --%>
-<%-- 								</c:when> --%>
-<%-- 								<c:otherwise> --%>
-<%-- 									<img src="${pageContext.request.contextPath}/resources/images/mv_age(all).png"> --%>
-<%-- 								</c:otherwise> --%>
-<%-- 							</c:choose> --%>
-<!-- 						</div> -->
-<%-- 				        <div class="mv_title">${movie.movie_name}</div> --%>
-<!-- 				    </div> -->
-<%-- 				    <div class="time_seat_container" id="${movie.movie_code}"> --%>
-<%-- 				    	<c:forEach var="schedule" items="${schWithMovie}"> --%>
-<!-- 					     	<a class="time_seat_btn"> -->
-<%-- 						        <input type="hidden" value="${schedule.schedule_code}"> --%>
-<%-- 						        <span class="mv_time">${schedule.start_time}</span> --%>
-<!-- 						        <span class="details"> -->
-<%-- 						            <span class="seat">70/${schedule.avail_seat}</span> --%>
-<!-- 						            <span class="hall"> -->
-<%-- 						            	<c:choose> --%>
-<%-- 						            		<c:when test="${schedule.theater_code eq 'T1'}"> --%>
-<!-- 									            1관 -->
-<%-- 						            		</c:when> --%>
-<%-- 						            		<c:when test="${schedule.theater_code eq 'T1'}"> --%>
-<!-- 									            2관 -->
-<%-- 						            		</c:when> --%>
-<%-- 						            		<c:otherwise> --%>
-<!-- 						            			3관 -->
-<%-- 						            		</c:otherwise> --%>
-<%-- 						            	</c:choose> --%>
-<!-- 						            </span> -->
-<!-- 						        </span> -->
-<!-- 						    </a> -->
-<%-- 				    	</c:forEach> --%>
-<!-- 				    </div> -->
-<!-- 				</section> -->
-<%-- 			</c:forEach> --%>
-			
 		</div>
 		<script>
 	        // jQuery를 사용하여 날짜 항목을 동적으로 관리
@@ -163,7 +115,6 @@
 	            });
 	        });
 	        
-	        let contextPath = "/";
 	    </script>
 	</article>
 

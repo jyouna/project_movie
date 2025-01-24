@@ -87,42 +87,32 @@
 				</c:choose>
 			</table>
 	       	<div class="page_btn_group">
-				<c:if test="${not empty param.searchKeyword}">
-					<c:set var="searchParam" value="&howSearch=${param.howSearch}&searchKeyword=${param.searchKeyword}"/>			
-				</c:if>
-				<c:if test="${pageInfo.maxPage != 0}">
-		            <input type="button" value="<" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>
-		            	onclick="location.href='AdminPaymentList?pageNum=${pageInfo.pageNum - 1}${searchParam}'">
-		            <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
-		            	<c:choose>
-		            		<c:when test="${pageInfo.pageNum eq i}">
-		            			<b>${i}</b>
-		            		</c:when>
-		            		<c:otherwise>
-		            			<a href="AdminPaymentList?pageNum=${i}${searchParam}">${i}</a>
-		            		</c:otherwise>
-		            	</c:choose>
-		            </c:forEach>
-		            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
-		            onclick="location.href='AdminPaymentList?pageNum=${pageInfo.pageNum + 1}${searchParam}'">
-				</c:if>
-				<div>
-	<!-- 				<input type="button" value="투표영화로 등록" id="regist_pick"> -->
-					<input type="button" value="예매취소" id="regist_upcoming">
+	       		<div class="page_btn">
+					<c:if test="${not empty param.searchKeyword}">
+						<c:set var="searchParam" value="&howSearch=${param.howSearch}&searchKeyword=${param.searchKeyword}"/>			
+					</c:if>
+					<c:if test="${pageInfo.maxPage != 0}">
+			            <input type="button" value="<" <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>
+			            	onclick="location.href='AdminPaymentList?pageNum=${pageInfo.pageNum - 1}${searchParam}'">
+			            <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+			            	<c:choose>
+			            		<c:when test="${pageInfo.pageNum eq i}">
+			            			<b>${i}</b>
+			            		</c:when>
+			            		<c:otherwise>
+			            			<a href="AdminPaymentList?pageNum=${i}${searchParam}">${i}</a>
+			            		</c:otherwise>
+			            	</c:choose>
+			            </c:forEach>
+			            <input type="button" value=">" <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>
+			            onclick="location.href='AdminPaymentList?pageNum=${pageInfo.pageNum + 1}${searchParam}'">
+					</c:if>
+	       		</div>
+				<div class="cancel_btn">
+					<input type="button" value="예매취소" id="cancel">
 				</div>
 	        </div>
 		</div>
-<!-- 		<div id="sec03"> -->
-<!-- 			<div> -->
-<!-- 				<input type="button" value="영화등록" id="regist_modal_open"> -->
-<!-- 				<input type="button" value="영화삭제" id="delete_movie"> -->
-<!-- 				<input type="button" value="영화정보" id="movie_detail_info"> -->
-<!-- 			</div> -->
-<!-- 			<div> -->
-<!-- 				<input type="button" value="투표영화로 등록" id="regist_pick"> -->
-<!-- 				<input type="button" value="예매취소" id="regist_upcoming"> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
 	
     </section>
     

@@ -365,25 +365,25 @@ public class BookController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@GetMapping("ReservationInfo")
-	public String reservationInfo(@RequestParam(defaultValue = "1") int pageNum, Model model,
-			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
-		
-		// 전체 결제내역 조회
-//		List<Map<String, Object>> allPaymentList = bookService.getAllPaymentList();
-//		model.addAttribute("allPaymentList", allPaymentList);
-		
-		String howSearch2 = "";
-		String searchKeyword2 = "";
-		
-		// 페이징처리 메서드 
-		if(!pagingMethod(model, pageNum, 20, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
-			return "result/process";
-		}
-		
-		
-		return "adminpage/payment_manage/reservation_info_board";
-	}
+//	@GetMapping("ReservationInfo")
+//	public String reservationInfo(@RequestParam(defaultValue = "1") int pageNum, Model model,
+//			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
+//		
+//		// 전체 결제내역 조회
+////		List<Map<String, Object>> allPaymentList = bookService.getAllPaymentList();
+////		model.addAttribute("allPaymentList", allPaymentList);
+//		
+//		String howSearch2 = "";
+//		String searchKeyword2 = "";
+//		
+//		// 페이징처리 메서드 
+//		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+//			return "result/process";
+//		}
+//		
+//		
+//		return "adminpage/payment_manage/reservation_info_board";
+//	}
 	
 	@GetMapping("AdminPaymentList")
 	public String adminPaymentList(@RequestParam(defaultValue = "1") int pageNum, Model model,
@@ -394,7 +394,7 @@ public class BookController {
 		String searchKeyword2 = "";
 		
 		//페이징 처리 메서드
-		if(!pagingMethod(model, pageNum, 20, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
 			return "result/process";
 		}
 		
@@ -409,7 +409,7 @@ public class BookController {
 		String searchKeyword2 = "";
 		
 		// 페이징처리 메서드 
-		if(!pagingMethod(model, pageNum, 20, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
+		if(!pagingMethod(model, pageNum, 10, howSearch, searchKeyword, howSearch2, searchKeyword2)) {
 			return "result/process";
 		}
 		
@@ -421,7 +421,7 @@ public class BookController {
 			String howSearch2, String searchKeyword2) {
 		int startRow = (pageNum - 1) * listLimit; // 조회할 결제테이블의 DB 행 번호(= row 값)
 		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword, howSearch2, searchKeyword2); //총결제 목록(검색된 결제 목록)수 조회
-		int pageListLimit = 5; // 한페이지당 페이지번호 수
+		int pageListLimit = 10; // 한페이지당 페이지번호 수
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
 		int endPage = startPage + pageListLimit - 1; // 각 페이지의 마지막 페이지번호

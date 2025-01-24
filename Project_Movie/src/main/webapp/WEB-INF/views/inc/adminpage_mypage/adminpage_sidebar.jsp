@@ -44,7 +44,7 @@
 					</a>
 					<div class="collapse" id="collapsePayments" aria-labelledby="headingPayments" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPayments">
-					        <a class="nav-link" href="ReservationInfo">
+					        <a class="nav-link" href="AdminPaymentList">
 					            예매/결제내역
 					        </a>
 					        <a class="nav-link" href="ReservationCancelInfo">

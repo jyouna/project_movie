@@ -71,13 +71,13 @@ $(function() {
 				let ageLimit = movie.age_limit;
 				let img = "";
 				if(ageLimit == "12세이상관람가") {
-					img = `<img src="${contextPath}/resources/images/mv_age(12).png">`;
+					img = `<img src="resources/images/mv_age(12).png">`;
 				} else if(ageLimit == "15세이상관람가") {
-					img = `<img src="${contextPath}/resources/images/mv_age(15).png">`;
+					img = `<img src="resources/images/mv_age(15).png">`;
 				} else if(ageLimit == "청소년관람불가") {
-					img = `<img src="${contextPath}/resources/images/mv_age(19).png">`;
+					img = `<img src="resources/images/mv_age(19).png">`;
 				} else {
-					img = `<img src="${contextPath}/resources/images/mv_age(all).png">`;
+					img = `<img src="resources/images/mv_age(all).png">`;
 				}
 				
 				$(".movie_schedule_info").append(`

@@ -195,8 +195,6 @@
 				$(".modal_content").css("display", "none");
 			});
 	        
-	        let contextPath = "/";
-	        
 		</script>
 	</article>
 

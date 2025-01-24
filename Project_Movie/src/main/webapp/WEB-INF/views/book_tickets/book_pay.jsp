@@ -154,9 +154,6 @@
 									<label><input type="radio" class="pay" >신용카드</label>
 									<label><input type="radio" class="pay" >카카오페이</label>
 									<label><input type="radio" class="pay" >토스페이</label>
-<!-- 									<label><input type="radio" class="pay" name="payment_method" value="신용카드">신용카드</label> -->
-<!-- 									<label><input type="radio" class="pay" name="payment_method" value="카카오페이">카카오페이</label> -->
-<!-- 									<label><input type="radio" class="pay" name="payment_method" value="토스페이">토스페이</label> -->
 								</div>
 							</section>
 							
