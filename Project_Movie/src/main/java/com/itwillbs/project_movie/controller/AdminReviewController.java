@@ -66,9 +66,9 @@ public class AdminReviewController {
 		
 		//리뷰 관리 게시판의 게시판설정
 		int listCount = service.getReviewListCount(); //id *****
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
-		int pageListLimit = 3;
+		int pageListLimit = 10;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1: 0);
 		if(maxPage == 0) {
 			maxPage = 1;
@@ -80,7 +80,7 @@ public class AdminReviewController {
 		}
 		if(pageNum < 1 || pageNum > maxPage) {
 			model.addAttribute("msg", "해당 페이지는 존재하지 않습니다.");
-			model.addAttribute("targetURL", "Review?pageNum=1");
+			model.addAttribute("targetURL", "AdminReviewManage?pageNum=1");
 			return "result/process";
 		}
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );

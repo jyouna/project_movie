@@ -1,8 +1,15 @@
 package com.itwillbs.project_movie.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.service.MovieService;
+import com.itwillbs.project_movie.service.MypageService;
 import com.itwillbs.project_movie.vo.MovieVO;
 import com.itwillbs.project_movie.vo.PageInfo;
+import com.itwillbs.project_movie.vo.PaymentVO;
+import com.itwillbs.project_movie.vo.ReviewVO;
 
 @Controller
 public class MovieController {
@@ -448,7 +459,5 @@ public class MovieController {
 		model.addAttribute("movieList", movieList);
 		return true;
 	}
-	
-	
 	
 }
