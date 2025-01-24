@@ -210,12 +210,6 @@
 		FROM member; 
 	</select>
 	
-<!-- 	<select id="checkEventStatus" resultType="eventboard"> -->
-<!-- 		SELECT event_status, set_winner_status -->
-<!-- 		FROM event_board -->
-<!-- 		WHERE event_code = #{event_code} -->
-<!-- 	</select> -->
-	
 	<insert id="insertCoupon">
 		<selectKey keyProperty="coupon_code" resultType="int" order="BEFORE">
 			SELECT IFNULL(MAX(coupon_code), 0)
@@ -890,28 +884,9 @@
 			0,
 			#{id},
 			0
-		)
-		
+		)	
 	</insert>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->
-
-<!-- 	리뷰 총 개수 출력 -->
 	<select id="selectReviewListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM review
@@ -948,6 +923,12 @@
 			#{id}
 		)
 	</insert>
+
+
+
+
+
+
 <!-- 	관람한 영화 리뷰 수정 -->
 	<update id="updateReview">
 		UPDATE review
@@ -955,25 +936,12 @@
 		review_recommend = #{review_recommend}
 		WHERE movie_code = #{movie_code}
 	</update>
-	
 <!-- 	관람한 영화 리뷰 삭제 -->
 	<delete id="deleteReview">
 		DELETE FROM review
 		WHERE movie_code = #{movie_code}
 	</delete>
-	
-
-
-
-
-<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->
-	
-	
-	
-	
-	
-	
-	
+<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->	
  </mapper>
  
  

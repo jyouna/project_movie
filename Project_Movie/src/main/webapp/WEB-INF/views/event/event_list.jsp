@@ -36,7 +36,6 @@
 					<td width="55px">상태</td>
 					<td width="200px" >제목</td>
 					<td width="150px">이벤트 기간</td>
-<!-- 					<td width="35px">조회수</td> -->
 					<td width="35px">당첨자</td>
 				</tr>
 				<c:choose>
@@ -51,12 +50,10 @@
 									<c:if test="${event_board.event_status == 0}"> 미진행 </c:if>
 									<c:if test="${event_board.event_status == 1}"> 진행중 </c:if>
 									<c:if test="${event_board.event_status == 2}"> 종료 </c:if></td>
-<%-- 								<td class="event_subject"><a href="eventPost?event_code=${event_board.event_code}">${event_board.event_subject}</a></td> --%>
 								<td class="event_subject">${event_board.event_subject}</td>
 								<td>
 									<p>${event_board.event_start_date} - ${event_board.event_end_date}</p>
 								</td>
-<%-- 								<td>${event_board.view_count}</td> --%>
 								<td>
 									<button value="${event_board.event_code}" class="winnerList">보기</button>
 								</td>
