@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.ReviewVO;
 
 @Mapper
 public interface MovieMapper {
@@ -50,5 +51,6 @@ public interface MovieMapper {
 	// 영화상태 상영예정작, 영화타입 시즌 으로 변경(복수)
 	void updateMovieStatusToSeasonUpcoming(@Param("movie_status") String movie_status, @Param("movie_type") String movie_type,
 			@Param("winnerCodeList") List<String> winnerCodeList);
+
 	
 }

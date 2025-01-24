@@ -84,7 +84,7 @@
 	      </section>
 	            <section id="pageList">
 	         <input type="button" value="&lt" 
-	            onclick="location.href='Review?pageNum=${pageInfo.pageNum - 1}'" 
+	            onclick="location.href='AdminReviewManage?pageNum=${pageInfo.pageNum - 1}'" 
 	             <c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 	         
 	         <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
@@ -94,14 +94,14 @@
 	               
 	               </c:when>
 	               <c:otherwise>
-	                  <a href="Review?pageNum=${i}">${i}</a>
+	                  <a href="AdminReviewManage?pageNum=${i}">${i}</a>
 	               </c:otherwise>
 	            </c:choose>
 	         </c:forEach>
 	         
 	         
 	         <input type="button" value="&gt" 
-	            onclick="location.href='Review?pageNum=${pageInfo.pageNum + 1}'" 
+	            onclick="location.href='AdminReviewManage?pageNum=${pageInfo.pageNum + 1}'" 
 	             <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	      </section>
 		</article>

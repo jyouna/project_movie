@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.project_movie.mapper.MovieMapper;
 import com.itwillbs.project_movie.vo.MovieVO;
+import com.itwillbs.project_movie.vo.ReviewVO;
 
 @Service
 public class MovieService {
@@ -170,5 +171,5 @@ public class MovieService {
 	public int getTicketPrice() {
 		return movieMapper.selectTicketPrice();
 	}
-	
+
 }

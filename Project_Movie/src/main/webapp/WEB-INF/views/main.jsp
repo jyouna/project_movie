@@ -57,7 +57,6 @@
 				</div>
 			</div>
 		</section>
-	
 	<jsp:include page="/WEB-INF/views/inc/main_bottom.jsp"></jsp:include>
 	
 </body>
