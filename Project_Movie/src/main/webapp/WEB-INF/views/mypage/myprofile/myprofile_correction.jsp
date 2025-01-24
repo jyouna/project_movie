@@ -75,7 +75,7 @@
 							<tr>
 								<th>전화번호 *</th>
 								<td>
-									<input type="text" name="phone" value="${member.phone}">
+									<input type="text" name="phone" value="${member.phone}" readonly="readonly">
 								</td>
 							</tr>
 							<tr>

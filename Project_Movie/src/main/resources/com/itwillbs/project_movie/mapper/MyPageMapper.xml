@@ -202,16 +202,19 @@
 	
 <!-- 	포인트 전체 조회 -->
 	<select id="selectPointListCount" resultType="int">
-		SELECT COUNT(*)
-		FROM point JOIN event_board
-		ON point.event_code = event_board.event_code
+		select COUNT(*)
+		from point po left join payment pa on po.payment_code = pa.payment_code
+		left join refund re on po.refund_code = re.refund_code
+		left join event_board ev on ev.event_code = po.event_code
 		WHERE point_holder = #{id}
 	</select>
 <!-- 	포인트 시작번호 끝번호 -->
 	<select id="selectPointList" resultType="map">
-		SELECT point.point_code, point.regis_date, event_board.event_subject, point.point_credited, point.point_debited
-		FROM point JOIN event_board
-		ON point.event_code = event_board.event_code
+		select po.point_credited, po.point_debited, po.point_holder, ev.event_subject, 
+	      		pa.payment_code, po.regis_date, re.refund_code, po.point_code
+		from point po left join payment pa on po.payment_code = pa.payment_code
+		left join refund re on po.refund_code = re.refund_code
+		left join event_board ev on ev.event_code = po.event_code
 		WHERE point_holder = #{id}
 		LIMIT #{startRow}, #{listLimit}
 	</select>
@@ -221,7 +224,7 @@
  		SELECT COUNT(*)
  		FROM Inquiry
 		WHERE 
-			inquiry_writer = #{id} OR inquiry_writer = 'admin'
+			inquiry_writer = #{id}
  		<if test="!searchKeyword.equals('')">
  			AND
  			<choose>

@@ -82,8 +82,6 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-			
-			
 			<input type="button" value="&gt" 
 				onclick="location.href='AdminNotice?pageNum=${pageInfo.pageNum + 1}'" 
 				 <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>

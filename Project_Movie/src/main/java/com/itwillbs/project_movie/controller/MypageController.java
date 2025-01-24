@@ -340,10 +340,12 @@ public class MypageController {
 	public String inquiryList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session, 
 			@RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="")String searchKeyWord) {
 		String id = (String)session.getAttribute("sMemberId");
+//		String admin = 
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
+		
 		int listCount = service.getInquiryListCount(searchType, searchKeyWord, id);
 		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
@@ -543,7 +545,18 @@ public class MypageController {
 	
 	// 관리자페이지 - 공지사항 자세히보기
 	@GetMapping("AdminNoticePost")
-	public String adminNoticePost(NoticeBoardVO notice, Model model, int notice_code) {
+	public String adminNoticePost(NoticeBoardVO notice, Model model, int notice_code, String type) {
+		
+//		String targetColumnName = "notice_code";
+//		
+//		XXX = service.getPrevNextNotice(targetColumnName);
+//		
+//		if(type.equals("next")) {
+//			notice_code = xxx;
+//		} else {
+//			notice_code = yyy;
+//		}
+//		
 		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");

@@ -7,9 +7,6 @@
  	<select id="selectEventListCount" resultType="int">
  		SELECT COUNT(*)
 		FROM event_board 	
-<!-- 검색기능을 위한 where절 추가 -->
-<!-- 서치 키워드가 널스트링이 아닌경우, when절 실행 -->
-<!-- 서치 타입이 제목인 경우, 게시물 제목과 서치키워드의 제목 일부가 일치한것을 출력  -->
 			<if test="!searchKeyword.equals('')">
  				WHERE 
  				<choose>
@@ -21,7 +18,9 @@
  					</when>
  				</choose>
  			</if>
- 			ORDER BY event_code DESC
+ 			ORDER BY event_code ASC,
+ 				event_start_date DESC
+ 			
  	</select>
 <!--  이벤트 게시물 시작번호 끝번호 -->
  	<select id="selectEventList" resultType="eventboard">
@@ -38,7 +37,9 @@
  					</when>
  				</choose>
  			</if>
-		ORDER BY event_code DESC
+		ORDER BY event_status ASC,
+			event_start_date DESC,
+			event_end_date DESC
 		LIMIT 
 			#{startRow}
 			, #{listLimit}

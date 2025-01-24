@@ -24,7 +24,7 @@ public class EventController {
 			@RequestParam(defaultValue ="") String searchKeyword,
 			@RequestParam(defaultValue="1") int pageNum, Model model) {
 		int listCount = service.getEventListCount(searchType, searchKeyword);
-		int listLimit = 5;
+		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit;
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 :0);

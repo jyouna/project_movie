@@ -28,7 +28,7 @@ public class CustomerServiceController {
 			@RequestParam(defaultValue="") String searchType, 
 			@RequestParam(defaultValue="") String searchKeyword) {
 		int listCount = service.getNoticeListCount(searchType,searchKeyword);
-		int listLimit = 5; // 한 페이지 당 표시할 게시물 수
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
 		int pageListLimit = 3;
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0? 1 : 0);
@@ -71,7 +71,7 @@ public class CustomerServiceController {
 	// 자주하는 문의 - 글 목록
 	@GetMapping("FaqList")
 	public String faqList(Model model, @RequestParam(defaultValue = "1") int pageNum ) {
-		int listLimit = 5; // 한 페이지 당 표시할 게시물 수
+		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
 		int listCount = service.getFaqListCount();
 		int pageListLimit = 5;
