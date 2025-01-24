@@ -91,7 +91,6 @@ input[type="checkbox"] {
 			</c:choose>		
 		</table>			
 	</div>
-	<br>
 	<div id="divBottom" class="view">
 		<input type="button" value="이전" 
 			onclick="location.href='AdminAccountManage?pageNum=${pageInfo.pageNum - 1}'" 
@@ -109,57 +108,59 @@ input[type="checkbox"] {
 		<input type="button" value="다음" onclick="location.href='AdminAccountManage?pageNum=${pageInfo.pageNum + 1}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>
-	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
-	<script type="text/javascript">
-		$(function(){
-			// id조회 창 출력
-			$("#idSearch").on("click", function(){
-				window.open(                
-					'AdminPageIdSearch', 
-		            'ID 조회',    
-		            'width=300,height=150,scrollbars=no,resizable=no');
-			});	
-			
-			// 권한 설정
-		$("#setAuth").on("click", function () {
-			alert("권한 설정은 개별 아이디를 클릭하여 진행해주시기 바랍니다.");
-	    });
-		
-		// 계정 등록 폼 이동
-		$("#createId").on("click", function(){
-			window.open("AdminAccountRegis", "관리자계정생성", "width=600, height=600, top=240, left=660, resizable=no, scrollbars=yes");
-		});
-		
-		// 선택한 계정 삭제
-		$("#deleteId").on("click", function(){
-		    // 선택된 체크박스 가져오기
-		    let selectedCheckbox = $(".deleteCheck:checked");
-// 			console.log(selectedCheckbox);
-		    // 체크된 항목이 있는지 확인
-		    if (selectedCheckbox.length > 0) {
-		        let selectedIds = []; // 선택된 ID들을 저장할 배열
-// 		        console.log(selectedIds);
-		        selectedCheckbox.each(function () {
-		            selectedIds.push($(this).val());// 체크박스의 value 값 (admin_id)을 배열에 추가
-		        });
-
-		        if (confirm("해당 계정을 삭제하시겠습니까? 되돌릴 수 없습니다.")) {
-		            location.href = "DeleteAdminAccount?admin_id=" + selectedIds.join(",");
-		        }
-		    } else {
-		        alert("삭제할 계정을 선택하세요.");
-		    }
-		});
-		
-		$("#selectAll").on("click", function(){
-		    let checkboxes = $(".deleteCheck");  // 체크박스 항목들을 다루기 위한 객체 생성
-		    let isChecked = $(this).data("checked") || false; // 전체선택 버튼의 현재 체크 상태값 저장. 없는 경우 false 값으로 설정.
-		    $(this).data("checked", !isChecked); // 체크가 안된 상태에서 클릭했으면 true로 변경
-		    checkboxes.prop("checked", !isChecked); // 체크가 안된 상태에서 클릭했으면 true로 변경
-		});
+<script type="text/javascript">
+$(function(){
+	// id조회 창 출력
+	$("#idSearch").on("click", function(){
+		window.open(                
+			'AdminPageIdSearch', 
+            'ID 조회',    
+            'width=300,height=150,scrollbars=no,resizable=no');
+	});	
+	
+	// 권한 설정
+	$("#setAuth").on("click", function () {
+		alert("권한 설정은 개별 아이디를 클릭하여 진행해주시기 바랍니다.");
+    });
+	
+	// 계정 등록 폼 이동
+	$("#createId").on("click", function(){
+		window.open("AdminAccountRegis", "관리자계정생성", "width=600, height=600, top=240, left=660, resizable=no, scrollbars=yes");
 	});
-	</script>
+	
+	// 선택한 계정 삭제
+	$("#deleteId").on("click", function(){
+	    // 선택된 체크박스 가져오기
+	    let selectedCheckbox = $(".deleteCheck:checked");
+	    // 체크된 항목이 있는지 확인
+	    if (selectedCheckbox.length > 0) {
+	        let selectedIds = []; // 선택된 ID들을 저장할 배열
+	        selectedCheckbox.each(function () {
+	            selectedIds.push($(this).val());// 체크박스의 value 값 (admin_id)을 배열에 추가
+	        });
+
+	        if (confirm("해당 계정을 삭제하시겠습니까? 되돌릴 수 없습니다.")) {
+	            location.href = "DeleteAdminAccount?admin_id=" + selectedIds.join(",");
+	        }
+	    } else {
+	        alert("삭제할 계정을 선택하세요.");
+	    }
+	});
+	
+	// 전체선택
+	$("#selectAll").on("click", function(){
+		// 체크박스 항목들을 다루기 위한 객체 생성
+	    let checkboxes = $(".deleteCheck");  
+	 	// 전체선택 버튼의 현재 체크 상태값 저장. 없는 경우 false 값으로 설정.
+	    let isChecked = $(this).data("checked") || false; 
+		 // 체크가 안된 상태에서 클릭했으면 true로 변경
+	    $(this).data("checked", !isChecked); 
+		 // 체크가 안된 상태에서 클릭했으면 true로 변경		 
+	    checkboxes.prop("checked", !isChecked); 
+	});
+});
+</script>
 </body>
 </html>

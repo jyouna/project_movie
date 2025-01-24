@@ -103,7 +103,7 @@
 					</c:choose> 
 				</table>
 			</div> <!--  테이블 div  -->
-			<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
+			<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}&searchContent=${param.eventStatus}&eventWinnerStatus=${param.eventWinnerStatus}" />
 			
 			<div id="divBottom" class="view"> <!-- 바텀디브 -->
 				<input type="button" value="이전" onclick="location.href='EventBoardManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
@@ -125,26 +125,7 @@
 	<%--==================================================================== 페이지 구분선 ===================================================================== --%>
 
 <script type="text/javascript">
-$(function(){
-	$("#eventStatus, #eventSetWinnerStatus").on("change", function(){
-		alert("값 변경");
-		console.log("현재 값 : " + $(this).val());
-// 	  console.log("eventStatus 변경됨");
-		if($(this).val() !== "") {
-			$("#eventStatusHidden").val($("#eventStatus").val());
-			console.log($("#eventStatus").val());
-			console.log("eventStatusHidden 값 : " + $("#eventStatusHidden").val());
-		}
-		
-		if($("#eventSetWinnerStatus").val() !== "") {
-			$("#eventWinnerStatusHidden").val($("#eventSetWinnerStatus").val());
-			console.log($("#eventSetWinnerStatus").val());
-			console.log("eventSetWinnerStatus 값 : " + $("#eventWinnerStatusHidden").val());
-		}
-		
-// 		$("#searchForm").submit();
-	});
-})
+
 </script>
 </body>
 </html>

@@ -19,6 +19,27 @@ import com.itwillbs.project_movie.vo.PointVO;
 
 @Mapper
 public interface AdminManageMapper {
+	//관리자 후기 관리 - 장민기 20250123 시작 **********
+	//내가 본 영화 - 리뷰 등록
+	int insertReview(@Param("movieName") String movieName, @Param("reviewContent")String reviewContent, 
+			@Param("reviewRecommend")int reviewRecommend, @Param("movieCode")int movieCode, @Param("id") String id);
+	//int insertReview(@Param("map") Map<String, String> map);
+	//내가 본 영화 - 리뷰 창 띄우기 
+	//Map<String, Object> selectWatchedmovieReview(String movie_code);
+	//내가 본 영화 - 리뷰등록 포함 출력
+	Map<String, Object> selectIsRegistReview(@Param("id") String id, @Param("movie_code") String movie_code);
+	//관람평 글 개수 조회
+	int selectReviewListCount();
+	//관람평 시작번호 끝번호
+	List<Map<String, Object>> selectReviewList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
+	//관람한 영화 리뷰 수정 
+	int updateReview(Map<String, String> map);
+	//관람한 영화 리뷰 삭제
+	int deleteReview(Map<String, String> map);
+	//관리자 후기 관리 - 장민기 20250123 끝 **********	
+	
+	
+	
 	// 관리자 계정 관리
 	// 1. 관리자 계정 등록
 	int insertAccount(AdminRegisVO adminVo);
@@ -74,9 +95,9 @@ public interface AdminManageMapper {
 	int insertCoupon(CouponVO coupon);
 	// 2. 쿠폰 내역 목록 조회
 	List<CouponVO> getCouponList(@Param("startRow") int startRow, 
-			@Param("listLimit") int listLimit, 
-			@Param("searchKeyword") String searchKeyword, 
-			@Param("searchContent") String searchContent);
+								@Param("listLimit") int listLimit, 
+								@Param("searchKeyword") String searchKeyword, 
+								@Param("searchContent") String searchContent);
 	// 3. 회원별 보유 쿠폰 개수 가져오기 
 	List<Map<String, String>> getCouponInfo();
 	
@@ -110,7 +131,9 @@ public interface AdminManageMapper {
 						   @Param("searchContent") String searchContent);
 	
 	int getEventBoardListCount(@Param("searchKeyword") String searchKeyword, 
-							   @Param("searchContent") String searchContent);
+							   @Param("searchContent") String searchContent,
+							   @Param("eventStatus")String eventStatus,
+							   @Param("eventStatus") String eventWinnerStatus);
 	
 	int getCouponWinnerListCount(@Param("searchKeyword") String searchKeyword, 
 								 @Param("searchContent") String searchContent);
@@ -130,7 +153,9 @@ public interface AdminManageMapper {
 	List<EventBoardVO> selectEventBoardList(@Param("startRow") int startRow, 
 											@Param("listLimit") int listLimit, 
 											@Param("searchKeyword") String searchKeyword, 
-											@Param("searchContent") String searchContent);
+											@Param("searchContent") String searchContent, 
+											@Param("eventStatus") String eventStatus, 
+											@Param("eventWinnerStatus") String eventWinnerStatus);
 	
 	// 2, 3번 차트 월 가입자 수 조회
 	int getMonthlyTotalNewMember(@Param("year")int year,
@@ -204,49 +229,5 @@ public interface AdminManageMapper {
 	// 관리자가 직접 쿠폰 지급
 	int createCoupon(@Param("expiredDate") Date expiredDate, @Param("couponType") String couponType, 
 					@Param("discountRate") int discountRate, @Param("discountAmount")int discountAmount, @Param("id")String id);
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//관리자 후기 관리 - 장민기 20250123 시작 **********
-	// 내가 본 영화 - 리뷰 등록
-	int insertReview(@Param("movieName") String movieName, @Param("reviewContent")String reviewContent, @Param("reviewRecommend")int reviewRecommend, @Param("movieCode")int movieCode,
-			@Param("id") String id);
-//	int insertReview(@Param("map") Map<String, String> map);
-	//내가 본 영화 - 리뷰 창 띄우기 
-//	Map<String, Object> selectWatchedmovieReview(String movie_code);
-	//내가 본 영화 - 리뷰등록 포함 출력
-	Map<String, Object> selectIsRegistReview(@Param("id") String id, @Param("movie_code") String movie_code);
-	//관람평 글 개수 조회
-	int selectReviewListCount();
-	//관람평 시작번호 끝번호
-	List<Map<String, Object>> selectReviewList(@Param("startRow")int startRow, @Param("listLimit")int listLimit);
-	//관람한 영화 리뷰 수정 
-	int updateReview(Map<String, String> map);
-	//관람한 영화 리뷰 삭제
-	int deleteReview(Map<String, String> map);
-	//관리자 후기 관리 - 장민기 20250123 끝 **********
 	
 }

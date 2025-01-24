@@ -150,8 +150,10 @@
 	<select id="selectEventBoardList" resultType="eventboard">
 		SELECT *
 		FROM event_board
-		<if test="!searchContent.equals('')">
 		WHERE
+			1 = 1
+		<if test="!searchContent.equals('')">
+			AND	
 			<choose>
 				<when test="searchKeyword.equals('eventSubject')">
 					event_subject LIKE '%${searchContent}%'
@@ -161,9 +163,17 @@
 				</when>
 				<when test="searchKeyword.equals('eventWriter')">
 					event_writer LIKE '%${searchContent}%'
-				</when>
-			</choose>		
+				</when>				
+			</choose>	
 		</if>
+		<if test="!eventStatus.equals('')">
+			AND
+				event_status = #{eventStatus}
+		</if>
+		<if test="!eventWinnerStatus.equals('')">
+			AND
+				set_winner_status = #{eventWinnerStatus}
+		</if>				
 		ORDER BY 
 			event_status asc,
 			event_start_date desc
@@ -378,7 +388,7 @@
 		SELECT count(*)
 		FROM event_board
 		<if test="!searchContent.equals('')">
-		WHERE
+		WHERE		
 			<choose>
 				<when test="searchKeyword.equals('eventSubject')">
 					event_subject LIKE '%${searchContent}%'
@@ -390,7 +400,15 @@
 					event_writer LIKE '%${searchContent}%'
 				</when>
 			</choose>		
-		</if>
+			<if test="!eventStatus.equals('')">
+				AND
+					event_status = #{eventStatus}
+			</if>
+			<if test="!eventWinnerStatus.equals('')">
+				AND
+					set_winner_status = #{eventWinnerStatus}
+			</if>
+		</if>		
 	</select>
 	
 	<select id="getCouponWinnerListCount" resultType="int">

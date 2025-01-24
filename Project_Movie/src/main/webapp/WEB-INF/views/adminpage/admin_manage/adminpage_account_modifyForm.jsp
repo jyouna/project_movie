@@ -16,26 +16,21 @@
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <style type="text/css">
-
-#mainArticle {
-/* 	border: 1px solid; */
-	text-align: center;
-}
-
 h3 {
 	margin-top: 1em;
-}
-
-#mainSection {
 	text-align: center;
+    margin-bottom: 15px;
 }
 
 #mainTable {
     width: 700px; /* 설정할 크기 */
     max-width: 100%; /* 테이블이 상위 요소를 초과하지 않도록 */
-    table-layout: fixed;
+/*     table-layout: fixed; */
     height: 700px;
-    transform: translate(500px, 30px);
+	margin: auto; /* 수평 중앙 배치 */
+    border-collapse: collapse; /* 테두리 선 정리 */
+    margin-bottom: 15px;
+/*     transform: translate(500px, 30px); */
 }
 #mainTable th, 
 #mainTable td {
@@ -56,6 +51,10 @@ tr:hover {
 	border-radius: 20px !important;
 	border: 3px !important;
 	background-color: lightgrey;}
+
+.btns:hover {
+	background-color: grey;
+}
 	
 input[type="checkbox"] {
     transform: scale(1.5); /* 1.5배 확대 */
@@ -65,67 +64,62 @@ input[type="checkbox"] {
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	<article id="mainArticle">
 	<h3>관리자 계정 정보 변경</h3>
-		<section id="mainSection">
-			<form action="AdminAccountModify" name="adminModify" method="post" id="accountModifyForm">
-				<table id="mainTable">
-					<tr id="tr01">
-						<th>ID</th>
-						<td width="300">
-							<input type="text" name="admin_id" value="${voList.admin_id}" maxlength="10" readonly>
-						</td>
-					</tr>
-					<tr>
-						<th>이름</th>
-						<td>
-							<input type="text" id="name" name="user_name" value="${voList.user_name}" maxlength="6" required>
-							<div id="checkNameResult"></div>
-						</td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td>
-							<input type="password" id="passwd" name="admin_passwd" value="${voList.admin_passwd}" maxlength="10" required>
-							<div id="checkPasswdResult"></div>					
-						</td>
-					</tr>
-					<tr>
-						<th>계정|<br>통계관리</th>
-						<td><input type="checkbox" name="member_manage" ${voList.member_manage ? 'checked' : ''}></td>
-					</tr>
-					<tr>
-						<th>결제관리</th>
-						<td><input type="checkbox" name="payment_manage" ${voList.payment_manage ? 'checked' : ''}></td>
-					</tr>
-					<tr>
-						<th>게시판관리</th>
-						<td><input type="checkbox" name="notice_board_manage" ${voList.notice_board_manage ? 'checked' : ''}></td>
-					</tr>
-					<tr>
-						<th>영화관리</th>
-						<td><input type="checkbox" name="movie_manage" ${voList.movie_manage ? 'checked' : ''}></td>
-					</tr>
-					<tr>
-						<th>상영관관리</th>
-						<td><input type="checkbox" name="theater_manage" ${voList.theater_manage ? 'checked' : ''}></td>
-					</tr>
-					<tr>
-						<th>이벤트|<br>투표관리</th>
-						<td><input type="checkbox" name="vote_manage" ${voList.vote_manage ? 'checked' : ''}></td>
-					</tr>
-					<tr>
-						<td colspan="2" align="center">
-							<input type="submit" value="변경" class="btns">
-							<input type="reset" value="초기화" class="btns">
-							<input type="button" value="돌아가기" onclick="history.back()" class="btns">
-						</td>
-					</tr>
-				</table>
-			</form>
-		</section>
-	</article>
-	<br>
+	<form action="AdminAccountModify" name="adminModify" method="post" id="accountModifyForm">
+		<table id="mainTable">
+			<tr id="tr01">
+				<th>ID</th>
+				<td width="300">
+					<input type="text" name="admin_id" value="${voList.admin_id}" maxlength="10" readonly>
+				</td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td>
+					<input type="text" id="name" name="user_name" value="${voList.user_name}" maxlength="6" required>
+					<div id="checkNameResult"></div>
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<input type="password" id="passwd" name="admin_passwd" value="${voList.admin_passwd}" maxlength="10" required>
+					<div id="checkPasswdResult"></div>					
+				</td>
+			</tr>
+			<tr>
+				<th>계정|<br>통계관리</th>
+				<td><input type="checkbox" name="member_manage" ${voList.member_manage ? 'checked' : ''}></td>
+			</tr>
+			<tr>
+				<th>결제관리</th>
+				<td><input type="checkbox" name="payment_manage" ${voList.payment_manage ? 'checked' : ''}></td>
+			</tr>
+			<tr>
+				<th>게시판관리</th>
+				<td><input type="checkbox" name="notice_board_manage" ${voList.notice_board_manage ? 'checked' : ''}></td>
+			</tr>
+			<tr>
+				<th>영화관리</th>
+				<td><input type="checkbox" name="movie_manage" ${voList.movie_manage ? 'checked' : ''}></td>
+			</tr>
+			<tr>
+				<th>상영관관리</th>
+				<td><input type="checkbox" name="theater_manage" ${voList.theater_manage ? 'checked' : ''}></td>
+			</tr>
+			<tr>
+				<th>이벤트|<br>투표관리</th>
+				<td><input type="checkbox" name="vote_manage" ${voList.vote_manage ? 'checked' : ''}></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="변경" class="btns">
+					<input type="reset" value="초기화" class="btns">
+					<input type="button" value="돌아가기" onclick="history.back()" class="btns">
+				</td>
+			</tr>
+		</table>
+	</form>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 
 </body>

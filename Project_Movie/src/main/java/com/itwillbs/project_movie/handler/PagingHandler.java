@@ -53,6 +53,7 @@ public class PagingHandler {
 		if(maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		System.out.println("pageNum 1번 : " + pageNum);
 		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
 		int endPage = startPage + pageListLimit - 1;	
@@ -73,7 +74,6 @@ public class PagingHandler {
 		}	
 		
 		PageInfo2 pageInfo = new PageInfo2(listCount, pageListLimit, maxPage, startPage, endPage, pageNum, listLimit, startRow);
-		
 		return pageInfo;
 	}
 
@@ -101,6 +101,49 @@ public class PagingHandler {
 		if(pageNum < 1 || pageNum > maxPage) {
 			return null;
 		}	
+		PageInfo2 pageInfo = new PageInfo2(listCount, pageListLimit, maxPage, startPage, endPage, pageNum, listLimit, startRow);
+		return pageInfo;
+	}
+	
+	// 이벤트 게시판 별도 페이징 처리
+	public PageInfo2 pagingProcess(int pageNum, String boardName, String searchKeyword, String searchContent, String eventStatus, String eventWinnerStatus) {
+		System.out.println("일반 페이징 서비스 호출");
+		System.out.println("페이징 핸들러 호출");
+		System.out.println("전달 받은 페이지 번호 : " + pageNum);
+		System.out.println("전달 받은 호출코드 : " + boardName);
+		
+		int listLimit = 20;
+		int startRow = (pageNum - 1) * listLimit;
+		int listCount = adminService.getBoardListForPaging(boardName, searchKeyword, searchContent, eventStatus, eventWinnerStatus); // 서비스에서 boardName값 판별하여 다르게 작동!
+		System.out.println("리스트 카운트 : " + listCount);
+
+		int pageListLimit = 10;
+		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0);	
+		System.out.println("MaxPage 값 1번 : " + maxPage);
+
+		if(maxPage == 0) {
+			maxPage = 1;
+		}
+		
+		System.out.println("pageNum 1번 : " + pageNum);
+		int startPage = (pageNum-1)/pageListLimit * pageListLimit + 1;
+		int endPage = startPage + pageListLimit - 1;	
+
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		System.out.println("pageNum 2번 : " + pageNum);
+		}
+		
+		if(pageNum > maxPage) {
+			pageNum = 1;
+		}
+
+		if(pageNum < 1 || pageNum > maxPage) {
+			System.out.println("pageNum 3번" + pageNum);
+			System.out.println("MaxPage 값 2번 : " + maxPage);
+			return null;
+		}	
+		
 		PageInfo2 pageInfo = new PageInfo2(listCount, pageListLimit, maxPage, startPage, endPage, pageNum, listLimit, startRow);
 		return pageInfo;
 	}

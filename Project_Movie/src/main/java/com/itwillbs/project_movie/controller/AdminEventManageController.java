@@ -43,7 +43,9 @@ public class AdminEventManageController {
 	@GetMapping("EventBoardManage") // 이벤트 게시판 관리 + 이벤트 목록 출력
 	public String eventBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 										@RequestParam(defaultValue = "") String searchKeyword,
-										@RequestParam(defaultValue = "") String searchContent) {
+										@RequestParam(defaultValue = "") String searchContent,
+										@RequestParam(defaultValue = "") String eventStatus,
+										@RequestParam(defaultValue = "") String eventWinnerStatus) {
 		// 로그인 유무 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -58,8 +60,11 @@ public class AdminEventManageController {
 			return "result/process";
 		}
 		
-		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventBoardList", searchKeyword, searchContent);
-		List<EventBoardVO> eventList = adminService.eventBoardList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+		System.out.println("이벤트 상태값 : " + eventStatus);
+		System.out.println("이벤트 위너 상태값 : " + eventWinnerStatus);
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "eventBoardList", searchKeyword, searchContent, eventStatus, eventWinnerStatus);
+		List<EventBoardVO> eventList = adminService.eventBoardList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent, eventStatus, eventWinnerStatus);
 		model.addAttribute("eventVo", eventList);
 		model.addAttribute("pageInfo", pageInfo);
 		

@@ -1,7 +1,7 @@
 @charset "EUC-KR";
 h3 {
 	margin-left: 30px;
-	margin-top: 0px;
+	margin-top: 10px;
 	margin-bottom: 5px;}
 
 #divTop {
@@ -66,17 +66,17 @@ h3 {
 	background-color: lightgrey;}
 
 #mainTable th, #mainTable td {
-   text-align: center; /* 텍스트 가운데 정렬 */
-   vertical-align: middle; /* 수직 가운데 정렬 */
-   padding: 5px; /* 셀 안쪽 여백 */}
+   text-align: center; 
+   vertical-align: middle; 
+   padding: 5px;}
 
 #mainTable {
-	width: 90%; /* 테이블이 화면의 100% 너비에 맞게 조정 */
-	max-width: 1600px; /* 테이블 최대 너비 제한 */
-	border-collapse: collapse; /* 경계선 겹침 제거 */
-	white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
-	overflow: hidden;    /* 넘치는 텍스트를 숨김 */
-	text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */}
+	width: 90%; 
+	max-width: 1600px; 
+	border-collapse: collapse; 
+	white-space: nowrap;
+	overflow: hidden;   
+	text-overflow: ellipsis;}
 
 .mainTable {
 	width: 90%; /* 테이블이 화면의 100% 너비에 맞게 조정 */

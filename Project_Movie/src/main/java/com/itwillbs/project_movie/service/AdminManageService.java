@@ -30,6 +30,32 @@ public class AdminManageService {
 	@Autowired
 	private AdminManageMapper manageMapper;
 	
+    //관리자 후기 관리 - 장민기 20250123 시작 **********
+	//리뷰 등록창
+	//무비로그 - 관람평 글 전체 가져오기
+	public int getReviewListCount() {
+		// TODO Auto-generated method stub
+		return manageMapper.selectReviewListCount();
+	}
+	//무비로그 - 관람평 시작번호 끝번호
+	public List<Map<String, Object>> getReviewList(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return manageMapper.selectReviewList(startRow, listLimit);
+	}
+	//관람한 영화 리뷰 수정 
+	public int getReviewModify(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return manageMapper.updateReview(map);
+	}
+	//관람한 영화 리뷰 삭제
+	public int removeReview(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return manageMapper.deleteReview(map);
+	}
+	//관리자 후기 관리 - 장민기 20250123 끝 **********
+
+	
+	
 	public int createAccount(AdminRegisVO adminVo) {
 		return manageMapper.insertAccount(adminVo);
 	}
@@ -203,8 +229,8 @@ public class AdminManageService {
 		switch (boardName) {
 		case "memberList" : 
 			listCount = manageMapper.getMemberListCount(searchKeyword, searchContent); break;
-		case "eventBoardList" : 
-			listCount = manageMapper.getEventBoardListCount(searchKeyword, searchContent); break;
+//		case "eventBoardList" : 
+//			listCount = manageMapper.getEventBoardListCount(searchKeyword, searchContent); break;
 		case "couponWinnerList" : 
 			listCount = manageMapper.getCouponWinnerListCount(searchKeyword, searchContent); break;
 		case "pointWinnerList" : 
@@ -219,19 +245,20 @@ public class AdminManageService {
 		return listCount;
 	}
 	
-	// 검색기능 없는 게시판용 오버로딩
+	// 검색기능 없는 게시판 listcount 오버로딩
 	public int getBoardListForPaging(String boardName) {
-		
-		System.out.println("서비스까지 호출됨!!");
-		int listCount = 0;
-		
-		switch (boardName) {
-		case "adminList" :
-			listCount = manageMapper.getAdminListCount(); break;
-		}
-		return listCount;
+		return manageMapper.getAdminListCount();
 	}
 
+	// 이벤트 보드 게시판  listcount 별도 계산 오버로딩
+	// boardName 필요없음
+	public int getBoardListForPaging(String boardName, String searchKeyword, String searchContent, String eventStatus, String eventWinnerStatus) {
+		// TODO Auto-generated method stub
+		System.out.println("서비스까지 호출됨!!");
+		return manageMapper.getEventBoardListCount(searchKeyword, searchContent, eventStatus, eventWinnerStatus);	
+	}
+	
+	
 	// 관리자 계정 리스트 조회
 	public List<AdminRegisVO> queryAdminList(int startRow, int listLimit) {
 		// TODO Auto-generated method stub
@@ -245,19 +272,19 @@ public class AdminManageService {
 	}
 
 	// 이벤트 게시판 리스트 조회
-	public List<EventBoardVO> eventBoardList(int startRow, int listLimit, String searchKeyword, String searchContent) {
+	public List<EventBoardVO> eventBoardList(int startRow, int listLimit, String searchKeyword, String searchContent, String eventStatus, String eventWinnerStatus) {
 		// TODO Auto-generated method stub
-		return manageMapper.selectEventBoardList(startRow, listLimit, searchKeyword, searchContent);
+		return manageMapper.selectEventBoardList(startRow, listLimit, searchKeyword, searchContent, eventStatus, eventWinnerStatus);
 	}
 	
 	// 쿠폰 당첨자 리스트 조회
-	public List<EventWinnerVO> getEventWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) { // 쿠폰 당첨자 리스트 
+	public List<EventWinnerVO> getEventWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) {
 		// TODO Auto-generated method stub
 		return manageMapper.selectAllEventWinner(startRow, listLimit, searchKeyword, searchContent);
 	}
 
 	// 포인트 당첨자 리스트 조회
-	public List<EventWinnerVO> getPointWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) { // 포인트 당첨자 리스트
+	public List<EventWinnerVO> getPointWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) {
 		// TODO Auto-generated method stub
 		return manageMapper.getPointWinnerList(startRow, listLimit, searchKeyword, searchContent);
 	}
@@ -520,44 +547,4 @@ public class AdminManageService {
 			return insertCount;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    //관리자 후기 관리 - 장민기 20250123 시작 **********
-	//리뷰 등록창
-	//무비로그 - 관람평 글 전체 가져오기
-	public int getReviewListCount() {
-		// TODO Auto-generated method stub
-		return manageMapper.selectReviewListCount();
-	}
-	//무비로그 - 관람평 시작번호 끝번호
-	public List<Map<String, Object>> getReviewList(int startRow, int listLimit) {
-		// TODO Auto-generated method stub
-		return manageMapper.selectReviewList(startRow, listLimit);
-	}
-	//관람한 영화 리뷰 수정 
-	public int getReviewModify(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return manageMapper.updateReview(map);
-	}
-	//관람한 영화 리뷰 삭제
-	public int removeReview(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return manageMapper.deleteReview(map);
-	}
-	//관리자 후기 관리 - 장민기 20250123 끝 **********
 }

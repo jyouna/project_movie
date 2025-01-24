@@ -38,6 +38,10 @@ import com.itwillbs.project_movie.vo.PointVO;
 import kotlinx.serialization.json.JsonObject;
 import retrofit2.http.GET;
 
+
+// 데이터 자동 생성을 위한 컨트롤러
+// 결제일, 가입일 모두 다르게 설정하여 연->월->일 반복횟수를 난수로 생성하여 반복 작업 수행
+
 @Controller
 public class CreateDataController {
 	@Autowired
@@ -47,22 +51,21 @@ public class CreateDataController {
 	@GetMapping("createNewmember")
 	public void createNewMember() {
 		Random r = new Random();
-		r.nextInt(5000);
-		
 		MemberVO member = new MemberVO();
 		LocalDate localDate = LocalDate.of(2002, 2, 2);
 		Date date = Date.valueOf(localDate);
 		
 		int year = 2020;
 		int month = 0;
-//		int day = 10;
 		
 		for(int i = 1; i < 4; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
 				int repetitionCount = (int) ((Math.random()*200)+100);
 				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 생성 계정 수
-					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(28)+1, 11, 11, 11, 11);
+					LocalDate lastDay = YearMonth.of(year, month).atEndOfMonth();
+					int dayOfMonth = lastDay.getDayOfMonth(); 
+					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(dayOfMonth)+1, 11, 11, 11, 11);
 					Timestamp regis_date = Timestamp.valueOf(time);
 					member.setMember_id(r.nextInt(999) + "tes" + r.nextInt(999) + r.nextInt(999) + r.nextInt(999));
 					member.setMember_passwd("abcdedfg");
@@ -76,7 +79,7 @@ public class CreateDataController {
 					member.setEmail_receive(true);
 					member.setInfo_open(true);
 					member.setRegis_date(regis_date);
-					
+					// 회원 생성
 					adminService.createMembers(member);
 				}
 			}
@@ -97,7 +100,8 @@ public class CreateDataController {
 		for(int i = 0; i < 4; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
-				int repetitionCount = (int) ((Math.random()*300)+100);
+				// 100~399 사이 난수 생성 : 월 생성할 데이터 개수
+				int repetitionCount = (int) ((Math.random()*300)+100); 
 				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 매출 발생 수
 					// 해당 월의 마지막 날 출력
 					LocalDate lastDay = YearMonth.of(year, month).atEndOfMonth();
@@ -107,14 +111,13 @@ public class CreateDataController {
 					// 날짜 설정
 					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(dayOfMonth)+1, 11, 11, 11, 11);
 					Timestamp regis_date = Timestamp.valueOf(time);
-					System.out.println(regis_date);
 					int count = r.nextInt(9)+1;
 					int amount = 10000*count;
-					
 					payment.setPayment_code(r.nextInt(99) + r.nextInt(99) + r.nextInt(99) + "tes" + r.nextInt(99) + r.nextInt(99) + r.nextInt(99) + "a" + r.nextInt(99) + r.nextInt(99));
 					payment.setPayment_date(regis_date);
 					payment.setMember_id(id);
-					payment.setSchedule_code("T120136803202501130910");
+					// 스케줄 코드는 결제일 <= 상영시간 등의 복잡성 때문에 고정
+					payment.setSchedule_code("T120136803202501130910"); 
 					payment.setTicket_count(count);
 					payment.setTotal_amount(amount);
 					payment.setPoint_discount(0);
@@ -126,6 +129,7 @@ public class CreateDataController {
 					payment.setPayment_status(r.nextInt(2));
 					payment.setTotal_seat_code("A1, A2");
 					
+					// 매출 데이터 생성
 					adminService.createSalesRecord(payment);
 				}
 			}

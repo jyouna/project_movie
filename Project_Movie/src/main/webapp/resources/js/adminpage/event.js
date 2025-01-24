@@ -215,9 +215,28 @@ $(function(){
 					} else {
 						alert("종료된 이벤트는 삭제 불가합니다.");
 					}
-				}).fail(function(response){
-				})	
+				});
 			}
 		}
 	});
+	
+	$("#eventStatus, #eventSetWinnerStatus").on("change", function(){
+		let status = $("#eventStatus").val();
+		console.log("이벤트상태 : " + status);
+		console.log("추첨상태 : " + $("#eventWinnerSetStatus").val());
+		if($("#eventStatus").val() !== "") {
+			$("#eventStatusHidden").val($("#eventStatus").val());
+			console.log($("#eventStatus").val());
+			console.log("eventStatusHidden 값 : " + $("#eventStatusHidden").val());
+		}
+		
+		if($("#eventSetWinnerStatus").val() !== "") {
+			$("#eventWinnerStatusHidden").val($("#eventSetWinnerStatus").val());
+			console.log($("#eventSetWinnerStatus").val());
+			console.log("eventSetWinnerStatus 값 : " + $("#eventWinnerStatusHidden").val());
+		}
+		
+		$("#searchForm").submit();
+	});
+	
 });
