@@ -42,21 +42,22 @@
 					</div>
 					
 <!-- 					쿠폰 탭 -->
-					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCoupons" aria-expanded="false" aria-controls="collapseCoupons">
+					<a class="nav-link" href="CouponList" >
 					    쿠폰
-					    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 					</a>
-					<div class="collapse" id="collapseCoupons" aria-labelledby="headingCoupons" data-bs-parent="#sidenavAccordion">
-					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionCoupons">
-					        <a class="nav-link" href="CouponList">
-					            쿠폰등록
-					        </a>
-<!-- 					       쿠폰 등록과 내역을 합쳐서 주석처리함  -->
-<!-- 					        <a class="nav-link" href=""> -->
-<!-- 					            쿠폰내역 -->
-<!-- 					        </a> --> 
-					    </nav>
-					</div>
+<!-- 					쿠폰 하나로 퉁 쳐서 주석처리 -->
+<!-- 					    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
+<!-- 					<div class="collapse" id="collapseCoupons" aria-labelledby="headingCoupons" data-bs-parent="#sidenavAccordion"> -->
+<!-- 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionCoupons"> -->
+<!-- 					        <a class="nav-link" href="CouponList"> -->
+<!-- 					            쿠폰등록 -->
+<!-- 					        </a> -->
+<!-- <!-- 					       쿠폰 등록과 내역을 합쳐서 주석처리함  --> 
+<!-- <!-- 					        <a class="nav-link" href=""> --> 
+<!-- <!-- 					            쿠폰내역 --> 
+<!-- <!-- 					        </a> --> 
+<!-- 					    </nav> -->
+<!-- 					</div> -->
 					
 <!-- 					포인트 탭 -->
 					<a class="nav-link" href="MypointReward">

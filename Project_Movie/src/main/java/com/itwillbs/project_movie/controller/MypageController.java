@@ -127,7 +127,7 @@ public class MypageController {
 			model.addAttribute("targetURL", "ReservationCancel?pageNum=1");
 			return "result/process";
 		}
-		System.out.println("999999999" +maxPage);
+		System.out.println("@@@@@@@@@@@@@@@@listCount = " + listCount + " maxPage = " + maxPage + " startRow = " + startRow + " endPage = " + endPage);
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		

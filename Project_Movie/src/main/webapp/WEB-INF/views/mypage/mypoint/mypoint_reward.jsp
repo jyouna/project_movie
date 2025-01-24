@@ -70,7 +70,7 @@
 	                     <tr>
 	                        <td>${point.point_code}</td>
 	                        <td>
-	                           <fmt:formatDate value="${point.regis_date}" pattern="yy-MM-dd"/>
+	                           <fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd"/>
 	                        </td>
 	                        <td>${point.event_subject}</td>
 	                        <td>+${point.point_credited}</td>

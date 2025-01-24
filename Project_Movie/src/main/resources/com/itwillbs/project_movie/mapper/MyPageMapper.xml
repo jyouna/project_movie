@@ -51,8 +51,10 @@
 		ON payment.schedule_code = schedule.schedule_code
 		JOIN movie 
 		ON schedule.movie_code = movie.movie_code
+		WHERE member_id = #{id}
 		ORDER BY 
  			start_time DESC
+ 	 
 	</select>
 <!-- 	예매취소 글 시작번호 끝번호 -->
 	<select id="selectReservationCancel" resultType="map">
@@ -66,9 +68,6 @@
 		WHERE payment.member_id = #{id}
 		ORDER BY 
 		 	start_time DESC
-		LIMIT 
-			#{startRow}
-			, #{listLimit}
 	</select>
 	
 <!-- 	2.내가 본 영화 글 전체 가져오기 -->
@@ -113,19 +112,19 @@
 			AND	schedule.end_time &lt; NOW()
  			<choose>
  				<when test="searchYear.equals('2025')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 			start_time BETWEEN '2025-01-01' AND '2025-12-31';
  				</when>
  				<when test="searchYear.equals('2024')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 			start_time BETWEEN '2024-01-01' AND '2024-12-31';
  				</when>
  				<when test="searchYear.equals('2023')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 			start_time BETWEEN '2023-01-01' AND '2023-12-31';
  				</when>
  				<when test="searchYear.equals('2022')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 			start_time BETWEEN '2022-01-01' AND '2022-12-31';
  				</when>
  				<when test="searchYear.equals('2021')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 			start_time BETWEEN '2021-01-01' AND '2021-12-31';
  				</when>
  			</choose>
  		</if>
@@ -191,6 +190,7 @@
 	<select id="selectCouponListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM coupon 
+		WHERE member_id = #{id}
 	</select>
 <!-- 	쿠폰 시작번호 끝번호 -->
 	<select id="selectCouponList" resultType="map">
@@ -203,12 +203,13 @@
 <!-- 	포인트 전체 조회 -->
 	<select id="selectPointListCount" resultType="int">
 		SELECT COUNT(*)
-		FROM point
+		FROM point JOIN event_board
+		ON point.event_code = event_board.event_code
 		WHERE point_holder = #{id}
 	</select>
 <!-- 	포인트 시작번호 끝번호 -->
 	<select id="selectPointList" resultType="map">
-		SELECT *
+		SELECT point.point_code, point.regis_date, event_board.event_subject, point.point_credited, point.point_debited
 		FROM point JOIN event_board
 		ON point.event_code = event_board.event_code
 		WHERE point_holder = #{id}
@@ -239,7 +240,6 @@
  		FROM Inquiry
 		WHERE 
 			inquiry_writer = #{id} 
-
  		<if test="!searchKeyword.equals('')">
  			AND
  			<choose>
