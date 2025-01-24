@@ -74,8 +74,6 @@
 			</c:forEach>
 		</table>
 	</div>
-	<br>
-	<br>
 	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 	<div id="divBottom" class="view">
 <%-- 이전 페이지 이동 --%>	
@@ -103,7 +101,6 @@
 		<input type="button" value="끝" onclick="location.href='EventAllWinnerList?pageNum=${pageInfo.maxPage}${searchRecord}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>	
-	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
 	<script type="text/javascript">

@@ -65,7 +65,7 @@ $(function(){
 	// 스팬 영역에 기간 표시 
 	$("#showPeriod").text(" : " + year).css("color", "blue");
 	
-	// 1. 디폴트 차트
+	// 1. 디폴트 화면 표시 차트
 	$.ajax({
 		url: "GetYearSales",
 		type: "get",

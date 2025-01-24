@@ -48,12 +48,12 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th>코드</th>
-				<th>ID</th>
-				<th>포인트적립</th>
-				<th>포인트차감</th>
-				<th>변동사유</th>
-				<th>변동일시</th>
+				<th class="alignLeft">코드</th>
+				<th class="alignLeft">ID</th>
+				<th class="number">포인트적립</th>
+				<th class="number">포인트차감</th>
+				<th class="alignLeft">변동사유</th>
+				<th class="alignLeft">변동일시</th>
 			</tr>
 			<c:choose>
 				<c:when test="${empty pointVo}">

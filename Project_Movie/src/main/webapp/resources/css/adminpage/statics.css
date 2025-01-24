@@ -13,13 +13,11 @@
 	margin-left: 1em;
 }
 
-
 h3 {
 	padding: 10px;
 	background-color: lightgrey;}
 
 #tableDiv {
-/* 	border: 1px solid red; */
 	width: 800px;
 	margin: 20px;
 }

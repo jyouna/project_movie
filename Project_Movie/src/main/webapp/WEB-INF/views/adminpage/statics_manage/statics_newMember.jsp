@@ -17,15 +17,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/statics.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 <style type="text/css">
-#headTitle {
-	background-color: lightblue;
-	padding: 0.3em;
-	font-weight: bold;
-}
-#myChart {
-	width: 100%;
-	height: 100%;
-}
 </style>
 </head>
 <body>
@@ -74,14 +65,8 @@ $(function(){
 	let year = date.getFullYear()-1;
 	let month = date.getMonth();
 	$("#showPeriod").text(" : " + year).css("color", "blue");
-/*
-*
-*
-*			디폴트 화면 표시 차트 
-*
-*
-*
-*/
+	
+	// 1. 디폴트 화면 표시 차트
 	$.ajax({
 		url: "GetYearTotalMemberJoinStaticsInfo",
 		type: "get",
@@ -117,6 +102,8 @@ $(function(){
 					}]
 				},
 				options: {
+			        responsive: true, // 반응형 차트 설정
+			        maintainAspectRatio: false, // 가로세로 비율 고정 해제						
 					plugins: {
 			            legend: {
 			                labels: {
@@ -207,6 +194,8 @@ $(function(){
 							}]
 						},
 						options: {
+					        responsive: true, // 반응형 차트 설정
+					        maintainAspectRatio: false, // 가로세로 비율 고정 해제								
 							plugins: {
 								subtitle: { // 차트 제목
 									display: true,
@@ -277,6 +266,8 @@ $(function(){
 							}]
 						},
 						options: {
+					        responsive: true, // 반응형 차트 설정
+					        maintainAspectRatio: false, // 가로세로 비율 고정 해제								
 							plugins: {
 					            legend: {
 					                labels: {
@@ -370,6 +361,8 @@ $(function(){
 					}]
 				},
 				options: {
+			        responsive: true, // 반응형 차트 설정
+			        maintainAspectRatio: false, // 가로세로 비율 고정 해제						
 					plugins: {
 			            legend: {
 			                labels: {

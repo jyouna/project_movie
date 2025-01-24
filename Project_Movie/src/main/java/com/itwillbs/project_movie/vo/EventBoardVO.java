@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class EventBoardVO {
-	private int event_code;
+	private int event_code;           // 0번은 이벤트가 아니라 관리자가 임의로 직접 발급한 쿠폰을 표시하기 위해 사용
 	private String event_subject;
 	private String event_content;
 	private String event_file1;    

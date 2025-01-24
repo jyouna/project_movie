@@ -89,21 +89,20 @@ public class CreateDataController {
 	public String createSalesRecord() {
 		System.out.println("매출생성 버튼 컨트롤러 호출됨");
 		Random r = new Random();
-		int year = 2022;
+		int year = 2020;
 		int month = 0;
 		PaymentVO payment = new PaymentVO();
 		// 매출 데이터 생성에 필요한 멤버 아이디 조회 
 		List<String> memberList = adminService.getMemberIdList();
-		for(int i = 0; i < 3; i++) { // 4년
+		for(int i = 0; i < 4; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
 				int repetitionCount = (int) ((Math.random()*300)+100);
 				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 매출 발생 수
-					// 전체 회원 목록 중 랜덤으로 아이디 1개 선택
 					// 해당 월의 마지막 날 출력
 					LocalDate lastDay = YearMonth.of(year, month).atEndOfMonth();
 					int dayOfMonth = lastDay.getDayOfMonth(); 
-					
+					// 전체 회원 목록 중 랜덤으로 아이디 1개 선택
 					String id = memberList.get(r.nextInt(memberList.size()));
 					// 날짜 설정
 					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(dayOfMonth)+1, 11, 11, 11, 11);

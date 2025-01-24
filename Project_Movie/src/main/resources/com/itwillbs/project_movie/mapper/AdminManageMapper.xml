@@ -626,6 +626,7 @@
 		WHERE 
 			(((c.discount_amount is null AND c.discount_rate is null) AND (p.point_credited is not null)) 
 			OR ((c.discount_amount is not null AND c.discount_rate is not null) AND (p.point_credited is null)))
+			AND e.event_code != 0
 			<if test="!searchContent.equals('')">
 				AND
 				<choose>
@@ -658,6 +659,7 @@
 				AND (p.point_credited is not null)) 
 		    OR ((c.discount_amount is not null AND c.discount_rate is not null) 
 		    	AND (p.point_credited is null)))
+		    AND e.event_code != 0
 			<if test="!searchContent.equals('')">
 				AND
 				<choose>
@@ -694,7 +696,8 @@
 				AND (p.point_credited is not null)) 
 		    OR ((c.discount_amount is not null AND c.discount_rate is not null) 
 		    	AND (p.point_credited is null)))
-		    AND e.event_code = #{event_code}		
+		    AND e.event_code = #{event_code}
+		    AND c.even_code != 0		
 	</select> 
 	
 	<select id="getSingleEventWinnerCount" resultType="int">
@@ -706,7 +709,7 @@
 		WHERE 
 			(((c.discount_amount is null AND c.discount_rate is null) AND (p.point_credited is not null)) 
 			OR ((c.discount_amount is not null AND c.discount_rate is not null) AND (p.point_credited is null)))
-			AND e.event_code = #{event_code}	
+			AND e.event_code = #{event_code}
 	</select>
 	
 	<select id="getNoticeBoardList" resultType="notice_board">
