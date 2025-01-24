@@ -221,7 +221,7 @@
  		FROM Inquiry
  		<if test="!searchKeyword.equals('')">
  			WHERE 
- 			inquiry_writer = #{id}
+				inquiry_writer = #{id}
  			<choose>
  				<when test="searchType.equals('subject')">
 		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
@@ -238,7 +238,7 @@
  		FROM Inquiry
  		<if test="!searchKeyword.equals('')">
  			WHERE 
- 			inquiry_writer = #{id} 
+ 				inquiry_writer = #{id}
  			<choose>
  				<when test="searchType.equals('subject')">
 		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
