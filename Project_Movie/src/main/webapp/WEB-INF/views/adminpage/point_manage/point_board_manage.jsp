@@ -21,10 +21,15 @@
 .number {
 	text-align: right !important;
 	padding-right: 4em;
+	width: 20%;
 }
 .alignLeft {
-	text-align: left !important;
+	text-align: center !important;
 	padding-left : 4em !important;
+}
+
+#idWidth {
+	width: 20%;
 }
 </style>
 </head>
@@ -49,7 +54,7 @@
 		<table id="mainTable">
 			<tr align="center" id="tr01">
 				<th class="alignLeft">코드</th>
-				<th class="alignLeft">ID</th>
+				<th id="idWidth" class="alignLeft">ID</th>
 				<th class="number">포인트적립</th>
 				<th class="number">포인트차감</th>
 				<th class="alignLeft">변동사유</th>

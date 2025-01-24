@@ -147,5 +147,4 @@ public class PagingHandler {
 		PageInfo2 pageInfo = new PageInfo2(listCount, pageListLimit, maxPage, startPage, endPage, pageNum, listLimit, startRow);
 		return pageInfo;
 	}
-
 }

@@ -133,7 +133,7 @@ public interface AdminManageMapper {
 	int getEventBoardListCount(@Param("searchKeyword") String searchKeyword, 
 							   @Param("searchContent") String searchContent,
 							   @Param("eventStatus")String eventStatus,
-							   @Param("eventStatus") String eventWinnerStatus);
+							   @Param("eventWinnerStatus") String eventWinnerStatus);
 	
 	int getCouponWinnerListCount(@Param("searchKeyword") String searchKeyword, 
 								 @Param("searchContent") String searchContent);

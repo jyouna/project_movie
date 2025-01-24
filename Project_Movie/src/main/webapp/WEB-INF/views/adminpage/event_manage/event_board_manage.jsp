@@ -59,17 +59,17 @@
 						<th width="150">작성자</th>
 						<th width="150">
 							<select class="selectOption" id="eventStatus"> 
-								<option value="" selected>진행상태</option>
-								<option value="0">대기</option>
-								<option value="1">진행중</option>
-								<option value="2">종료</option>
+								<option value="" <c:if test="${param.eventStatus eq ''}">selected</c:if>>진행상태</option>
+								<option value="0" <c:if test="${param.eventStatus eq '0'}">selected</c:if>>대기</option>
+								<option value="1" <c:if test="${param.eventStatus eq '1'}">selected</c:if>>진행중</option>
+								<option value="2" <c:if test="${param.eventStatus eq '2'}">selected</c:if>>종료</option>
 							</select>
 						</th>
 						<th width="150">
 							<select class="selectOption" id="eventSetWinnerStatus">
-								<option value="" selected>당첨진행</option>
-								<option value="0">대기</option>
-								<option value="1">완료</option>
+								<option value="" <c:if test="${param.eventWinnerStatus eq ''}">selected</c:if>>당첨진행</option>
+								<option value="0" <c:if test="${param.eventWinnerStatus eq '0'}">selected</c:if>>대기</option>
+								<option value="1" <c:if test="${param.eventWinnerStatus eq '1'}">selected</c:if>>완료</option>
 							</select>
 						</th>
 					</tr>
@@ -103,7 +103,7 @@
 					</c:choose> 
 				</table>
 			</div> <!--  테이블 div  -->
-			<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}&searchContent=${param.eventStatus}&eventWinnerStatus=${param.eventWinnerStatus}" />
+			<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}&eventStatus=${param.eventStatus}&eventWinnerStatus=${param.eventWinnerStatus}" />
 			
 			<div id="divBottom" class="view"> <!-- 바텀디브 -->
 				<input type="button" value="이전" onclick="location.href='EventBoardManage?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 

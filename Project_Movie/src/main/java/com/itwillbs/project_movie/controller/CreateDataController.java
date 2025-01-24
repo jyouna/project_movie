@@ -51,7 +51,6 @@ public class CreateDataController {
 	@GetMapping("createNewmember")
 	public void createNewMember() {
 		Random r = new Random();
-		MemberVO member = new MemberVO();
 		LocalDate localDate = LocalDate.of(2002, 2, 2);
 		Date date = Date.valueOf(localDate);
 		
@@ -63,6 +62,7 @@ public class CreateDataController {
 				month = j; // 1~12월 
 				int repetitionCount = (int) ((Math.random()*200)+100);
 				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 생성 계정 수
+					MemberVO member = new MemberVO();
 					LocalDate lastDay = YearMonth.of(year, month).atEndOfMonth();
 					int dayOfMonth = lastDay.getDayOfMonth(); 
 					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(dayOfMonth)+1, 11, 11, 11, 11);
@@ -94,7 +94,6 @@ public class CreateDataController {
 		Random r = new Random();
 		int year = 2020;
 		int month = 0;
-		PaymentVO payment = new PaymentVO();
 		// 매출 데이터 생성에 필요한 멤버 아이디 조회 
 		List<String> memberList = adminService.getMemberIdList();
 		for(int i = 0; i < 4; i++) { // 4년
@@ -103,6 +102,7 @@ public class CreateDataController {
 				// 100~399 사이 난수 생성 : 월 생성할 데이터 개수
 				int repetitionCount = (int) ((Math.random()*300)+100); 
 				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 매출 발생 수
+					PaymentVO payment = new PaymentVO();
 					// 해당 월의 마지막 날 출력
 					LocalDate lastDay = YearMonth.of(year, month).atEndOfMonth();
 					int dayOfMonth = lastDay.getDayOfMonth(); 
@@ -111,8 +111,9 @@ public class CreateDataController {
 					// 날짜 설정
 					LocalDateTime time = LocalDateTime.of(year, month, r.nextInt(dayOfMonth)+1, 11, 11, 11, 11);
 					Timestamp regis_date = Timestamp.valueOf(time);
-					int count = r.nextInt(9)+1;
-					int amount = 10000*count;
+					int count = (r.nextInt(9) + 1);
+					int amount = (10000 * count);
+					
 					payment.setPayment_code(r.nextInt(99) + r.nextInt(99) + r.nextInt(99) + "tes" + r.nextInt(99) + r.nextInt(99) + r.nextInt(99) + "a" + r.nextInt(99) + r.nextInt(99));
 					payment.setPayment_date(regis_date);
 					payment.setMember_id(id);

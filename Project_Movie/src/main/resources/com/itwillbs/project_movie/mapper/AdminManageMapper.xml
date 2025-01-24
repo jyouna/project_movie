@@ -152,7 +152,7 @@
 		FROM event_board
 		WHERE
 			1 = 1
-		<if test="!searchContent.equals('')">
+		<if test="searchContent != '' and searchContent != null">
 			AND	
 			<choose>
 				<when test="searchKeyword.equals('eventSubject')">
@@ -166,11 +166,11 @@
 				</when>				
 			</choose>	
 		</if>
-		<if test="!eventStatus.equals('')">
+		<if test="eventStatus != '' and eventStatus != null">
 			AND
 				event_status = #{eventStatus}
 		</if>
-		<if test="!eventWinnerStatus.equals('')">
+		<if test="eventWinnerStatus != '' and eventWinnerStatus != null">
 			AND
 				set_winner_status = #{eventWinnerStatus}
 		</if>				
@@ -387,8 +387,10 @@
 	<select id="getEventBoardListCount" resultType="int">
 		SELECT count(*)
 		FROM event_board
+		WHERE
+			1=1
 		<if test="!searchContent.equals('')">
-		WHERE		
+			AND
 			<choose>
 				<when test="searchKeyword.equals('eventSubject')">
 					event_subject LIKE '%${searchContent}%'
@@ -400,15 +402,15 @@
 					event_writer LIKE '%${searchContent}%'
 				</when>
 			</choose>		
-			<if test="!eventStatus.equals('')">
-				AND
-					event_status = #{eventStatus}
-			</if>
-			<if test="!eventWinnerStatus.equals('')">
-				AND
-					set_winner_status = #{eventWinnerStatus}
-			</if>
 		</if>		
+		<if test="!eventStatus.equals('')">
+			AND
+				event_status = #{eventStatus}
+		</if>
+		<if test="!eventWinnerStatus.equals('')">
+			AND
+				set_winner_status = #{eventWinnerStatus}
+		</if>
 	</select>
 	
 	<select id="getCouponWinnerListCount" resultType="int">
@@ -485,7 +487,8 @@
 				</when>
 			</choose>		
 		</if>
-		ORDER BY coupon_code		
+		ORDER BY 
+			coupon_code	DESC	
 		LIMIT
 			#{startRow},
 			#{listLimit}		
@@ -689,7 +692,8 @@
 					</when>
 				</choose>		
 			</if>		
-		ORDER BY event_code ASC
+		ORDER BY 
+			prize_datetime DESC
 		LIMIT
 			#{startRow},
 			#{listLimit}		

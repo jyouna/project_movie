@@ -31,6 +31,5 @@
 		</main>
 	</div>
 </article>
-
 </body>
 </html>

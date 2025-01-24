@@ -221,21 +221,8 @@ $(function(){
 	});
 	
 	$("#eventStatus, #eventSetWinnerStatus").on("change", function(){
-		let status = $("#eventStatus").val();
-		console.log("이벤트상태 : " + status);
-		console.log("추첨상태 : " + $("#eventWinnerSetStatus").val());
-		if($("#eventStatus").val() !== "") {
-			$("#eventStatusHidden").val($("#eventStatus").val());
-			console.log($("#eventStatus").val());
-			console.log("eventStatusHidden 값 : " + $("#eventStatusHidden").val());
-		}
-		
-		if($("#eventSetWinnerStatus").val() !== "") {
-			$("#eventWinnerStatusHidden").val($("#eventSetWinnerStatus").val());
-			console.log($("#eventSetWinnerStatus").val());
-			console.log("eventSetWinnerStatus 값 : " + $("#eventWinnerStatusHidden").val());
-		}
-		
+		$("#eventStatusHidden").val($("#eventStatus").val());
+		$("#eventWinnerStatusHidden").val($("#eventSetWinnerStatus").val());
 		$("#searchForm").submit();
 	});
 	

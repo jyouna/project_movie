@@ -37,9 +37,9 @@ input[type="checkbox"] {
 	<h3>관리자 계정관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" onclick="location.href='createNewmember'" value="회원생성">
-			<input type="button" value="매출생성" onclick="location.href='CreateSalesRecord'">
-			<input type="button" value="권한설정" id="setAuth">
+			<input type="button" value="회원생성" id="createMember">
+			<input type="button" value="매출생성" id="createSalesRecord">
+<!-- 			<input type="button" value="권한설정" id="setAuth"> -->
 			<input type="button" value="관리자등록" id="createId">
 			<input type="button" value="관리자삭제" id="deleteId">
 		</div>	
@@ -159,6 +159,18 @@ $(function(){
 	    $(this).data("checked", !isChecked); 
 		 // 체크가 안된 상태에서 클릭했으면 true로 변경		 
 	    checkboxes.prop("checked", !isChecked); 
+	});
+	
+	$("#createMember").on("click", function(){
+		if(confirm("회원 계정 데이터를 생성하시겠습니까?")){
+			location.href="createNewmember";
+		}
+	});
+	
+	$("#createSalesRecord").on("click", function(){
+		if(confirm("매출 데이터를 생성하시겠습니까?")){
+			location.href="CreateSalesRecord";
+		}
 	});
 });
 </script>
