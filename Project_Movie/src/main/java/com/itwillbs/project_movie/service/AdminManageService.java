@@ -520,5 +520,50 @@ public class AdminManageService {
 			return insertCount;
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    //관리자 후기 관리 - 장민기 20250123 시작 **********
+	
+	//리뷰 등록창
+	//무비로그 - 관람평 글 전체 가져오기
+	public int getReviewListCount() {
+		// TODO Auto-generated method stub
+		return manageMapper.selectReviewListCount();
+	}
+	
+	//무비로그 - 관람평 시작번호 끝번호
+	public List<Map<String, Object>> getReviewList(int startRow, int listLimit) {
+		// TODO Auto-generated method stub
+		return manageMapper.selectReviewList(startRow, listLimit);
+	}
+	//관람한 영화 리뷰 수정 
+	public int getReviewModify(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return manageMapper.updateReview(map);
+	}
+	//관람한 영화 리뷰 삭제
+	public int removeReview(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return manageMapper.deleteReview(map);
+	}
+
+
+			
+		//관리자 후기 관리 - 장민기 20250123 끝 **********
 
 }

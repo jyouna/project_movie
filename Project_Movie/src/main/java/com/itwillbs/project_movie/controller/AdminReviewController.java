@@ -1,7 +1,7 @@
 package com.itwillbs.project_movie.controller;
-//장민기 20250123
-import com.itwillbs.project_movie.service.AdminReviewService;
 
+//장민기 20250123
+import com.itwillbs.project_movie.service.AdminManageService;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -36,9 +36,10 @@ public class AdminReviewController {
 	// service는 MypageService의 
 	// 마이페이지 리뷰관리 서비스와 매핑 
 	// 65번행부터~
+	
 	@Autowired
 	//private MypageService service;
-	private AdminReviewService service;
+	private AdminManageService service;
 	
 	
 	

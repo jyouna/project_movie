@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>리뷰 수정 창</title>
 <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/movie_log/review_register.css"/> --%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminpage/review_manage/review_register.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminpage/review_manage/admin_review_register.css"/>
 </head>
 <body>
 <!-- 예전에 썻던 리뷰를 가져오고 수정 할 수 있도록 해야함 -->
