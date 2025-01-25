@@ -340,7 +340,6 @@ public class MypageController {
 	public String inquiryList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session, 
 			@RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="")String searchKeyWord) {
 		String id = (String)session.getAttribute("sMemberId");
-//		String admin = 
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
@@ -380,6 +379,7 @@ public class MypageController {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
 			return "result/process";
 		}
+
 		model.addAttribute("inquiry", inquiry);
 		return "mypage/inquiry/inquiry_post";
 	}
@@ -476,7 +476,15 @@ public class MypageController {
 			return "result/process";
 		}
 	}
-	
+	//8. 회원 탈퇴 
+	@GetMapping("MemberWithDraw")
+	public String MemberWithDraw(MemberVO member, Model model) {
+		
+		String member_id = member.getMember_id();
+		service.updateMemberStatus(member_id);
+		model.addAttribute("closeWindow", true);
+		return "redirect:/ReservationDetail";
+	}
 	//------------------------------------ 관리자 페이지 중 고객지원 관리 부분 ------------------------------------------------------------------
 	
 	// 관리자 페이지 - 고객지원 관리 - 공지사항 관리
@@ -547,16 +555,8 @@ public class MypageController {
 	@GetMapping("AdminNoticePost")
 	public String adminNoticePost(NoticeBoardVO notice, Model model, int notice_code, String type) {
 		
-//		String targetColumnName = "notice_code";
-//		
-//		XXX = service.getPrevNextNotice(targetColumnName);
-//		
-//		if(type.equals("next")) {
-//			notice_code = xxx;
-//		} else {
-//			notice_code = yyy;
-//		}
-//		
+	
+		
 		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");

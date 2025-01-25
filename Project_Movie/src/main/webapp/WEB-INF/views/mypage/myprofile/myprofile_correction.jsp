@@ -13,10 +13,11 @@
 	<title>마이페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/myprofile_correction.css" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/myprofile_correction.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/mypage/myprofile_correction.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
@@ -134,6 +135,7 @@
 							</tr>
 						</table>
 						<div class="button-group">
+							<button type="button" id="MemberWithDraw" >회원탈퇴</button>
 							<button type="submit" class="btn submit-btn">정보수정</button>
 							<button type="button" id="cancel-btn" class="btn cancel-btn" onclick="history.back()">취소</button>
 						</div>
@@ -141,146 +143,6 @@
 			</div>
 	 </article>
 </div>	 
-<script type="text/javascript">
-$(function(){
-	let checkOldPasswdResult = false // 기존 비밀번호 검사
-	let checkPasswdResult = false; // 신규 비밀번호 검사
-	let checkPasswd2Result = false; // 비빌번호 다시 입력 검사
-	
-	// 기존 비밀번호 일치 여부 검사
-	$("#password").on("blur", function(){
-		let member_id = $("#id").val();
-		let passwd = $(this).val();
-		console.log("패스워드 : " + passwd);
-		console.log("아이디 : " + id);
-		
-		$.ajax({
-			url: "checkOldPasswd",
-			type: "get",
-			data: {
-				passwd : passwd,
-				member_id : member_id
-			}		
-		}).done(function(response){
-			if(response) {
-				checkOldPasswdResult = true;
-				$("#check_oldPasswd").text("기존 비밀번호 일치").css("color", "blue");
-				return;
-			} else {
-				checkOldPasswdResult = false;
-				$("#check_oldPasswd").text("기존 비밀번호 불일치").css("color", "red");
-				return;
-			}
-		});
-	});
-	
-	// 신규 비밀번호 기존 비밀번호와 같거나 정규표현식에 맞지 않으면 경고 표시
-	$("#new_passwd").on("blur", function(){
-		let newPasswd = $(this).val();
-		let member_id = $("#id").val();		
-		let lengthRegex = /^[A-Za-z0-9!@#$%]{8,16}$/;
-		let msg;
-		let color;
-		
-		// 기존 비밀번호와 일치할 경우
-		$.ajax({
-			url: "checkOldPasswd",
-			type: "get",
-			data: {
-				passwd : newPasswd,
-				member_id : member_id
-			}		
-		}).done(function(result){
-			if(result == true) {
-				checkPasswdResult = false;
-				$("#check_newPasswd").text("기존 비밀번호와 다른 비밀번호를 설정해주세요.").css("color", "red");
-				return;
-			}
-		})
-		
-		// 신규 비밀번호 정규표현식 검사
-		if(lengthRegex.exec(newPasswd)) {
-			let count = 0; 
-			let engUpperRegex = /[A-Z]/;
-			let engLowerRegex = /[a-z]/;
-			let numRegex = /[\d]/;
-			let specRegex = /[!@#$%]/;
-			
-			if(engUpperRegex.exec(newPasswd)) { count++; } 
-			if(engLowerRegex.exec(newPasswd)) { count++; }
-			if(numRegex.exec(newPasswd)) { count++; }
-			if(specRegex.exec(newPasswd)) { count++; }
-			
-			switch(count) {
-				case 4 : 
-					msg = "안전";
-					color = "GREEN";
-					checkPasswdResult = true;
-					break;
-				case 3 : 
-					msg = "보통";
-					color = "BLACK";
-					checkPasswdResult = true;
-					break;
-				case 2 : 
-					msg = "위험";
-					color = "ORANGE";
-					checkPasswdResult = true;
-					break;
-				case 1 : 
-					msg = "사용 불가";
-					color = "RED";
-					checkPasswdResult = false;
-			}
-		} else {
-			msg = "영문자, 숫자, 특수문자(!@#$%) 8~16 필수!";
-			color = "RED";
-			checkPasswdResult = false;
-		}
-		
-		$("#check_newPasswd").text(msg).css("color", color);
-		$("#new_passwd2").trigger("blur");
-	});
-	
-	$("#new_passwd2").blur(function() {
-		let new_passwd = $("#new_passwd").val();
-		let new_passwd2 = $("#new_passwd2").val();
-		
-		if(new_passwd == new_passwd2) {
-			$("#check_newPasswd2").text("비밀번호 일치").css("color", "BLUE");
-			checkPasswd2Result = true;
-		} else {
-			$("#check_newPasswd2").text("비밀번호 불일치").css("color", "RED");
-			checkPasswd2Result = false;
-		}
-	});
-	
-	// 회원정보 변경 폼 제출
-	$("form").on("submit", function() {
-		
-		if(!checkOldPasswdResult){
-			alert("기존 비밀번호를 다시 확인하세요.");
-			$("#check_oldPasswd").focus();
-			return false;
-		}
-		
-		if(!checkPasswdResult) {
-			alert("새 비밀번호를 다시 확인하세요.");
-			$("#check_newPasswd").focus();
-			return false;
-		}
-		
-		if(!checkPasswd2Result) {
-			alert("비밀번호 재입력 칸을 다시 확인하세요.");
-			$("#check_newPasswd2").focus();
-			return false;
-		}
-			
-	});
-	
-	
-})
-</script>
 
 </body>
 </html>

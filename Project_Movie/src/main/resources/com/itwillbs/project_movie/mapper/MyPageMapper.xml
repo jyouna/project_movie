@@ -220,40 +220,57 @@
 	</select>
 	
 <!-- 1:1문의 글 전체 가져오기 -->
- 	<select id="selectInquiryListCount" resultType="int">
- 		SELECT COUNT(*)
- 		FROM Inquiry
-		WHERE 
-			inquiry_writer = #{id}
- 		<if test="!searchKeyword.equals('')">
- 			AND
- 			<choose>
- 				<when test="searchType.equals('subject')">
-		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
- 				</when>
- 				<when test="searchType.equals('content')">
-		 			inquiry_content LIKE CONCAT('%', #{searchKeyword},'%')
- 				</when>
- 			</choose>
- 		</if>
+	<select id="selectInquiryListCount" resultType="int">
+	    SELECT COUNT(*)
+	    FROM Inquiry
+	    WHERE 
+	       inquiry_writer = #{id}
+	        OR (
+	          response_status = 2 
+	          AND inquiry_re_ref IN (
+	             SELECT inquiry_code
+	             FROM Inquiry
+	             WHERE inquiry_writer = #{id}
+	          )
+	        )
+	    <if test="!searchKeyword.equals('')">
+	        AND
+	        <choose>
+	            <when test="searchType.equals('subject')">
+	                inquiry_subject LIKE CONCAT('%', #{searchKeyword}, '%')
+	            </when>
+	            <when test="searchType.equals('content')">
+	                inquiry_content LIKE CONCAT('%', #{searchKeyword}, '%')
+	            </when>
+	        </choose>
+	    </if>
 	</select>
 <!-- 	1:1문의 글 시작번호,끝번호 -->
- 	<select id="selectInquiryList" resultType="inquiry">
- 		SELECT *
- 		FROM Inquiry
-		WHERE 
-			inquiry_writer = #{id} 
- 		<if test="!searchKeyword.equals('')">
- 			AND
- 			<choose>
- 				<when test="searchType.equals('subject')">
-		 			inquiry_subject LIKE CONCAT('%', #{searchKeyword},'%')
- 				</when>
- 				<when test="searchType.equals('content')">
-		 			inquiry_content LIKE CONCAT('%', #{searchKeyword},'%')
- 				</when>
- 			</choose>
- 		</if>
+
+	<select id="selectInquiryList" resultType="int">
+	    SELECT *
+	    FROM Inquiry
+	    WHERE 
+	       inquiry_writer = #{id}
+	        OR (
+	          response_status = 2 
+	          AND inquiry_re_ref IN (
+	             SELECT inquiry_code
+	             FROM Inquiry
+	             WHERE inquiry_writer = #{id}
+	          )
+	        )
+	    <if test="!searchKeyword.equals('')">
+	        AND
+	        <choose>
+	            <when test="searchType.equals('subject')">
+	                inquiry_subject LIKE CONCAT('%', #{searchKeyword}, '%')
+	            </when>
+	            <when test="searchType.equals('content')">
+	                inquiry_content LIKE CONCAT('%', #{searchKeyword}, '%')
+	            </when>
+	        </choose>
+	    </if>
  		ORDER BY
 			inquiry_re_ref DESC
 			, inquiry_re_seq ASC
@@ -309,6 +326,12 @@
 		DELETE FROM Inquiry
 		WHERE inquiry_code = #{inquiry_code}
 	</delete>
+	
+	<update id="updateMemberstatus">
+		UPDATE member
+		SET member_status = 2
+		WHERE member_id = #{member_id}
+	</update>
 <!-- 	==========================여기서부터 관리자 페이지 ================================================ -->
 <!-- 공지사항 글 개수 -->
 	<select id="selectNoticeListCount" resultType="int">

@@ -231,6 +231,10 @@ private MyPageMapper mapper;
 		mapper.updateInquiryCode2(inquiry);
 		return mapper.insertInquiryReply(inquiry);
 	}
+	//회원탈퇴 
+	public int updateMemberStatus(String member_id) {
+		return mapper.updateMemberstatus(member_id);
+	}
 
 
 

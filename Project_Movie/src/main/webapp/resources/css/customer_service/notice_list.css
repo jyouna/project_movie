@@ -6,7 +6,7 @@ form[name="searchForm"] {
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 8px; 
-    margin: 10px 0px 10px 378px;
+    margin: 10px 0px 10px 448px;
     width: 50%;
     max-width: 524px; 
 }
@@ -71,11 +71,6 @@ form[name="searchForm"] input[type="submit"]:active {
 /* Article styling */
 article {
     background-color: #fff;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
 }
 #title h1 {
     color: #444;

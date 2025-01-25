@@ -28,5 +28,7 @@ public interface CustomerServiceMapper {
 	void updateFaqReadCount(FaqBoardVO faq);
 
 	int deleteNotice(NoticeBoardVO notice);
+	//이전글 다음글
+	int selectCode(int notice_code);
 	
 }

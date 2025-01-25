@@ -16,7 +16,7 @@
 <body class="left-sidebar is-preload">
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/page/event_sidebar.jsp"></jsp:include>
-		<div id="title">
+		<div id="title" >
 			<h1>전체 이벤트</h1>
 		</div>
 	    <div class="search-bar" style="text-align: right;">

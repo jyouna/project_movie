@@ -66,6 +66,8 @@ public interface MyPageMapper {
 	int updateInquiry(InquiryVO inquiry_code);
 	//1:1문의 글 삭제 
 	int deleteInquiry(InquiryVO inquiry);
+	//회원탈퇴
+	int updateMemberstatus(String member_id);
 	
 	
 	
@@ -120,6 +122,7 @@ public interface MyPageMapper {
 	// 부모글만 남으므로 response_status 0으로 변경
 	// (부모글만 존재할 경우)
 	int selectRefCount(InquiryVO inquiry);
+
 	
 	
 

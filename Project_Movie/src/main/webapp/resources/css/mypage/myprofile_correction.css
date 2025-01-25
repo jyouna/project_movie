@@ -1,5 +1,6 @@
 #mainDiv {
-	width: 800px;
+	width: 700px;
+	height: 400px;
 	text-align: center;
 	transform: translate(150px, -100px);
 }
@@ -13,6 +14,7 @@ td {
 h1 {
 	font-size: 2em;
 	font-weight: bold;
+	margin: 86px 0px 35px 0px;
 }
 
 button {
@@ -34,7 +36,6 @@ element.style {
 }
 /* ===== 컨테이너 설정 ===== */
 .container {
-  max-width: 100%;
   margin: 20px auto;
   padding: 20px;
   background: white;
@@ -55,75 +56,74 @@ element.style {
   text-align: left;
 }
 
-/* ===== 입력 필드 및 버튼 크기 조정 ===== */
 input, select, button {
-
   	font-family: Arial, sans-serif;
-    /* padding: 8px; */
     margin-right: 5px;
     font-size: 15px;
     color: #000000;
     font-style: normal;
-
 }
 
 	
 
-input#username,
-input#password,
-input#id,
-input#confirm-password ,
-input#name,
-input#email,
-input#email-code,
-input#phone,
-input#phone-code{
-    padding: 0 !important; /* 우선순위 강제 적용 */
+input #username,
+input #password,
+input #id,
+input #confirm-password ,
+input #name,
+input #email,
+input #email-code,
+input #phone,
+input #phone-code{
+    padding: 0 !important;
 }
 
-input#id {
-    width: 90%;
+input #id,
+input #password,
+input #new_passwd,
+input #new_passwd2 {
+    width: 60%;
     height: 30px;
 }
 
+#MemberWithDraw{
+    padding: 1px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #808080;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    height: 41px;
+    text-align: center;
+    line-height: 41px;
+    width: 80px;
+}
 
-
-input#username {
+input #username {
   width: 60%; 
   height: 30px;
   
 }
 
-input#password {
-  width: 90%; 
-  height: 30px;
-}
-input#confirm-password{
-  width: 90%; 
-  height: 30px;
-}
 
-input#name {
-  width: 35%; 
-  height: 30px;
-  
-}
 
-input#email,
-input#phone{
+input #email,
+input #phone{
   width: 70%; 
   height: 30px;
   
 }
 
-input#email-code,
-input#phone-code{
+input #email-code,
+input #phone-code{
   width: 30%; 
   height: 30px;
   
 }
 
-select#genre {
+select #genre {
     font-family: Arial, sans-serif; /* 폰트를 명시적으로 지정 */
     font-size: 15px; /* 글자 크기 */
     color: #000; /* 기본 글씨 색 검정 */
@@ -133,12 +133,12 @@ select#genre {
     border-radius: 4px; /* 모서리 둥글게 */
 }
 
-select#genre option {
+select #genre option {
     font-family: Arial, sans-serif; /* 옵션 글자 폰트 */
     font-size: 15px; /* 옵션 글자 크기 */
     color: #000; /* 옵션 글자 색 */
 }
-input#captcha{
+input #captcha{
    width:40%;
    height: 15px;
 }
@@ -147,7 +147,6 @@ input#captcha{
 
 /* 버튼 스타일 */
 button {
-/*   padding: 8px 15px; */
   background-color: #007BFF;
   color: white;
   border: none;
@@ -158,8 +157,6 @@ button {
 }
 
 input[type="text"] {
-  /*  all: unset;  초기화 */
-  
    padding: 0;
    margin: 0;
    min-height: 1em;
@@ -171,12 +168,6 @@ input[type="text"] {
    width: 100px;
 }
 
-
-
-/* 라디오 버튼 여백 */
-/* input[type="radio"] { */
-/*   margin-right: 5px; */
-/* } */
 input[type="radio"],
 input[type="checkbox"] {
     width: 16px;
@@ -199,16 +190,13 @@ input[type="checkbox"] {
   background-color: #e0e0e0;
   color: black;
 }
-/* 취소 버튼 스타일 */
+
 .submit-btn {
-  width: 15%;   
-  background-color: #007BFF;
+  width: 13%;   
+  background-color: #0078F8;
   color: #ffffff;
 }
 
-
-
-/* 라벨 사이 여백 */
 label {
   margin-right: 15px;
 }
@@ -303,7 +291,6 @@ input[type="checkbox"]:focus {
 }
 
 .auth-code-section {
-/*     margin-top: 5px; 전화번호 입력 필드 아래 여백  //2 */
     display: flex;
     align-items: center; /* 수직 중앙 정렬 */
     gap: 20px; /* 인증코드 필드와 버튼 간격 */

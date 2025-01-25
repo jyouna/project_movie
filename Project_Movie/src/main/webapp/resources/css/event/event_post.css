@@ -3,10 +3,9 @@
 #articleForm {
     background-color: #fff;
     margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
+/*     padding: 20px; */
+/*     border-radius: 10px; */
+/*     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 #articleForm h1 {
@@ -69,13 +68,4 @@ hr{
     border: 1px solid #ccc; /* 각 셀의 테두리 */
 }
 
-#postList th:first-child {
-    width: 120px; /* 첫 번째 열의 너비 */
-    color: gray; /* 첫 번째 열의 텍스트 색상 */
-    font-weight: normal;
-}
 
-#postList th:nth-child(2) {
-    font-weight: bold;
-    color: black; /* 두 번째 열의 텍스트 색상 */
-}

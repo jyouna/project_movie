@@ -57,6 +57,12 @@ public class CustomerServiceService {
 		// TODO Auto-generated method stub
 		return mapper.deleteNotice(notice);
 	}
+	
+	// 이전글 다음글
+	public int getPrevNextCode(int notice_code) {
+		// TODO Auto-generated method stub
+		return mapper.selectCode(notice_code);
+	}
 
 
 

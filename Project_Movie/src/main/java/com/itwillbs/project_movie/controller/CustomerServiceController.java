@@ -26,7 +26,18 @@ public class CustomerServiceController {
 	@GetMapping("NoticeList")
 	public String noticeList(Model model, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue="") String searchType, 
-			@RequestParam(defaultValue="") String searchKeyword) {
+			@RequestParam(defaultValue="") String searchKeyword, int notice_code) {
+		
+//		int code = service.getPrevNextCode(notice_code);
+//		
+//		if(type.equals("next")) {
+//			notice_code = code;
+//		} else {
+//			notice_code = code;
+//		}
+		
+		
+		// 페이징 처리
 		int listCount = service.getNoticeListCount(searchType,searchKeyword);
 		int listLimit = 10; // 한 페이지 당 표시할 게시물 수
 		int startRow = (pageNum - 1) * listLimit; // 조회할 게시물의 DB 행 번호
