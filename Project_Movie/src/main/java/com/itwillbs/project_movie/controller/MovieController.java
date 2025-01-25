@@ -94,18 +94,37 @@ public class MovieController {
 	
 	// 영화상세안내 페이지 맵핑
 	@GetMapping("MovieInfoDetail")
-	public String movieInfoDetail(Model model, String movie_code, @RequestParam(defaultValue = "1") int pageNum) {
+	public String movieInfoDetail(Model model, String movie_code) {
 		// 영화코드로 영화정보 조회
 		MovieVO movie = movieService.searchMovieInfo(movie_code);
+		// url 조작방지
+		if(movie == null) {
+			model.addAttribute("msg", "조회된 영화의 정보가 없습니다\\n다시 시도하여 주세요");
+			return "result/process";
+		}
 		
 		// 영화 가격 조회
 		int generalPrice = movieService.getTicketPrice();
 		
-		// 해당 영화의 리뷰리스트 조회, 페이징처리
-		if(!pagingMethod("reviewOfmovie", model, pageNum, 10, "movie_code", movie_code)) {
-			return "result/process";
+		// 해당 영화의 리뷰리스트 조회
+		List<ReviewVO> reviewList = movieService.getReviewListOfMovie(movie_code);
+		
+		if(reviewList.size() != 0) {
+			// 영화안내 영화상세페이지에 리뷰 표시시 개인정보 보호를위해 id 변환
+			for(ReviewVO review : reviewList) {
+				char[] chArr = review.getReview_writer().toCharArray();
+				Random r = new Random();
+				
+				// *처리할 문자의 수(3문자당 1개)만큼 반복
+				for(int i = 1; i <= chArr.length / 3; i++) {
+					chArr[r.nextInt(chArr.length)] = '*';
+				}
+				
+				review.setReview_writer(new String(chArr));
+			}
 		}
 				
+		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("movie", movie);
 		model.addAttribute("generalPrice", generalPrice);
 		return "movie_info/movie_info_detail";
@@ -429,14 +448,7 @@ public class MovieController {
 		int startRow = (pageNum - 1) * listLimit; // 조회할 테이블컬럼의 DB 행 번호(= row 값)
 		int listCount = 0;
 		
-		// 영화페이징 처리
-		if(whatSearch.equals("allMovie") || whatSearch.equals("pastMovie")) {
-			listCount = movieService.getMovieListCount(whatSearch, howSearch, searchKeyword); //총영화 목록(검색 영화 목록)수 조회
-		//리뷰 페이징처리
-		} else {
-			listCount = movieService.getReviewListCountOfMovie(howSearch, searchKeyword); //해당영화의 리뷰 목록 수 조회
-		}
-		
+		listCount = movieService.getMovieListCount(whatSearch, howSearch, searchKeyword); //총영화 목록(검색 영화 목록)수 조회
 		int pageListLimit = 5; // 한페이지당 페이지번호 수
 		int maxPage = listCount / listLimit + (listCount % listLimit > 0 ? 1 : 0); // 최대 페이지번호
 		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1; //각 페이지의 첫번째 페이지 번호
@@ -457,41 +469,20 @@ public class MovieController {
 		model.addAttribute("pageInfo", pageInfo);
 		
 		// 조건에맞는 영화 리스트 조회
-		if(whatSearch.equals("allMovie") || whatSearch.equals("pastMovie")) {
-			List<MovieVO> movieList = movieService.getMovieList(whatSearch, startRow, listLimit, howSearch, searchKeyword);
-			// 영화안내 지난상영작 페이지(관리자 지난상영작 페이지x) 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정
-			// 다른 페이지 listLimit:9, 영화안내 지난상영작 페이지 listLimit:10
-			if(listLimit == 10) {
-				for(MovieVO movie : movieList) {
-					movie.setMovie_synopsis(movie.getMovie_synopsis().substring(0, 90) + "...");
-				}
-			}
-			model.addAttribute("movieList", movieList);
-			return true;
-		// 해당영화의 리뷰 리스트 조회
-		} else if(whatSearch.equals("reviewOfmovie")) {
-			List<ReviewVO> reviewList = movieService.getReviewListCountOfMovie(startRow, listLimit, howSearch, searchKeyword);
-			
-			if(reviewList.size() != 0) {
-				// 영화안내 영화상세페이지에 리뷰 표시시 개인정보 보호를위해 id 변환
-				for(ReviewVO review : reviewList) {
-					char[] chArr = review.getReview_writer().toCharArray();
-					Random r = new Random();
-					
-					// *처리할 문자의 수(3문자당 1개)만큼 반복
-					for(int i = 1; i <= chArr.length / 3; i++) {
-						chArr[r.nextInt(chArr.length)] = '*';
-					}
-					
-					review.setReview_writer(new String(chArr));
-				}
-			}
-			model.addAttribute("reviewList", reviewList);
-			return true;
+		List<MovieVO> movieList = movieService.getMovieList(whatSearch, startRow, listLimit, howSearch, searchKeyword);
+		if(movieList.size() == 0) {
+			model.addAttribute("msg", "조회된 영화가 없습니다. 다시 시도하여 주세요.");
+			return false;
 		}
-		
-		model.addAttribute("msg", "정보 조회에 실패하였습니다");
-		return false;
+		// 영화안내 지난상영작 페이지(관리자 지난상영작 페이지x) 리스트 조회시 줄거리 길이 조정을위해 if문 사용 후 줄거리 길이 조정
+		// 다른 페이지 listLimit:9, 영화안내 지난상영작 페이지 listLimit:10
+		if(listLimit == 10) {
+			for(MovieVO movie : movieList) {
+				movie.setMovie_synopsis(movie.getMovie_synopsis().substring(0, 90) + "...");
+			}
+		}
+		model.addAttribute("movieList", movieList);
+		return true;
 	}
 	
 	// 영화관리 관리자 권한 판별 메서드

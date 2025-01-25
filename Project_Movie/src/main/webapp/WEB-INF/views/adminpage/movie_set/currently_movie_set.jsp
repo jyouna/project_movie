@@ -24,7 +24,7 @@
 		<div id="body_top">
 			<div id="title">현재상영작 관리</div>
 			<div id="btnGroup01">
-				<input type="button" id="schedule_info" value="상영스케줄조회">
+				<input type="button" value="스케줄관리하러가기" onclick="location.href='AdminMovieSetSchedule'">
 				<input type="button" id="to_past_movie" value="지난상영작으로등록">
 			</div>
 			<div id="btnGroup02">

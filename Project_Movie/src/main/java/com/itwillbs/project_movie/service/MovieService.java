@@ -172,15 +172,9 @@ public class MovieService {
 		return movieMapper.selectTicketPrice();
 	}
 	
-	// 해당영화의 리뷰리스트 수 조회
-	public int getReviewListCountOfMovie(String howSearch, String searchKeyword) {
-		return movieMapper.selectReviewListOfMovieCount(howSearch, searchKeyword);
-	}
-	
 	// 해당영화의 리뷰리스트 조회
-	public List<ReviewVO> getReviewListCountOfMovie(int startRow, int listLimit, String howSearch,
-			String searchKeyword) {
-		return movieMapper.selectReviewListOfMovie(startRow, listLimit, howSearch, searchKeyword);
+	public List<ReviewVO> getReviewListOfMovie(String movie_code) {
+		return movieMapper.selectReviewListOfMovie(movie_code);
 	}
 
 }

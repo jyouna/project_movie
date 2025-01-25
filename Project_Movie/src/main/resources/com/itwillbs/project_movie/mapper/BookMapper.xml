@@ -65,6 +65,25 @@
 		ORDER BY seat_row ASC, seat_col ASC;
 	</select>
 	
+	<select id="selectSeatByTheater" resultType="seat">
+		SELECT SUBSTR(seat_code, 4) AS seat_code, seat_avail
+		FROM seat
+		WHERE theater_code = #{theater_code}
+		ORDER BY seat_row ASC, seat_col ASC;
+	</select>
+	
+	<update id="updateSeatAvail">
+		UPDATE seat
+		SET
+			seat_avail = #{seat_avail}
+		WHERE 
+			theater_code = #{theater_code}
+		AND 
+			<foreach item="seat" collection="seatCodeArr" separator=" or ">
+				seat_code LIKE '%${seat}%'
+			</foreach>
+	</update>
+	
 	<select id="selectTicketType" resultType="map">
 		SELECT *
 		FROM ticket

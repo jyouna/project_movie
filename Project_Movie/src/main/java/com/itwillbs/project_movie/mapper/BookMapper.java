@@ -74,6 +74,10 @@ public interface BookMapper {
 	List<Map<String, Object>> selectRefundList(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
 			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
 
+	List<SeatVO> selectSeatByTheater(String theater_code);
+
+	int updateSeatAvail(@Param("theater_code") String theater_code, @Param("seatCodeArr") String[] seatCodeArr, @Param("seat_avail") String seat_avail);
+
 
 
 

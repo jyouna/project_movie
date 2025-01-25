@@ -76,35 +76,34 @@
 				<div>
 					<table>
 						<tr>
-							<th>ID</th>
-							<th>한줄평</th>
-							<th>추천/비추천</th>
+							<th style="width:230px;">ID</th>
+							<th style="width:500px;">한줄평</th>
+							<th style="width:145px;">추천/비추천</th>
 						</tr>
-						<c:choose>
-							<c:when test="${empty reviewList}">
-								<tr><td colspan="3">등록된 관람평이 없습니다.</td></tr>
-							</c:when>
-							<c:otherwise>
-								<c:forEach var="review" items="${reviewList}">
-									<tr>
-										<td>${review.review_writer}</td>
-										<td>${review.review_content}</td>
-										<td>
-											<c:choose>
-												<c:when test="${review.review_recommend eq 0}">추천</c:when>
-												<c:otherwise>비추천</c:otherwise>
-											</c:choose>
-										</td>
-									</tr>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
 					</table>
-				</div>
-				<div id="page_button_group">
-					<input type="button" value="<">
-					<input type="button" value="1">
-					<input type="button" value=">">
+					<div id="content_table">
+						<table>
+							<c:choose>
+								<c:when test="${empty reviewList}">
+									<tr><td colspan="3">등록된 관람평이 없습니다.</td></tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="review" items="${reviewList}">
+										<tr>
+											<td style="width:230px;">${review.review_writer}</td>
+											<td style="width:500px;">${review.review_content}</td>
+											<td style="width:145px;">
+												<c:choose>
+													<c:when test="${review.review_recommend eq 0}">추천</c:when>
+													<c:otherwise>비추천</c:otherwise>
+												</c:choose>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

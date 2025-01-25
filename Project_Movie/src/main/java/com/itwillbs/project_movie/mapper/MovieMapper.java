@@ -50,12 +50,8 @@ public interface MovieMapper {
 	void updateMovieStatusToSeasonUpcoming(@Param("movie_status") String movie_status, @Param("movie_type") String movie_type,
 			@Param("winnerCodeList") List<String> winnerCodeList);
 	
-	// 해당영화의 리뷰 수 조회
-	int selectReviewListOfMovieCount(@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
-	
 	// 해당영화의 리뷰 조회
-	List<ReviewVO> selectReviewListOfMovie(@Param("startRow") int startRow, @Param("listLimit") int listLimit,
-			@Param("howSearch") String howSearch, @Param("searchKeyword") String searchKeyword);
+	List<ReviewVO> selectReviewListOfMovie(String movie_code);
 
 	
 }

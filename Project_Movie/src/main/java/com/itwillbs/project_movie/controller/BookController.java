@@ -32,10 +32,6 @@ import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
 
-import retrofit2.http.GET;
-
-
-
 @Controller
 public class BookController {
 	@Autowired private BookService bookService;
@@ -415,6 +411,56 @@ public class BookController {
 //		model.addAttribute("minutesUntilStart", minutesUntilStart);
 		
 		return "adminpage/payment_manage/reservation_info_board";
+	}
+	
+	// 관리자페이지 좌석관리 매핑
+	@GetMapping("AdminSeatSet")
+	public String adminSeatSet(@RequestParam(defaultValue = "T1") String theater_code, Model model) {
+		// 좌석 정보 조회
+		List<SeatVO> seatList = bookService.getSeatByTheater(theater_code);
+		int rowCount = 0;
+		int colCount = 0;
+		int disabledCount = 0;
+		
+		for(SeatVO seat : seatList) {
+			// 열 개수 판별
+			if(seat.getSeat_code().contains("A")) {
+				colCount++;
+			}
+			
+			// 행 개수 판별
+			if(seat.getSeat_code().contains("2")) {
+				rowCount++;
+			}
+			
+			// 비활성화된 좌석수 판별
+			if(seat.getSeat_avail() == 0) {
+				disabledCount++;
+			}
+		}
+		
+		model.addAttribute("seatList", seatList);
+		model.addAttribute("rowCount", rowCount);
+		model.addAttribute("colCount", colCount);
+		model.addAttribute("disabledCount", disabledCount);
+		
+		return "adminpage/theater_manage/seat_set";
+	}
+	
+	// 관리자페이지 좌석관리에서 좌석 활성화/비활성화
+	@ResponseBody
+	@PostMapping("ChangeSeatStatus")
+	public Boolean changeSeatStatus(String theater_code, String selectedSeat, String seat_avail) {
+		// 마이바티스 반복문 사용하기위해 배열로 변경
+		String[] seatCodeArr = selectedSeat.trim().split(" ");
+	    //좌석상태 변경
+		int updateCount = bookService.changeSeatAvail(theater_code, seatCodeArr, seat_avail);
+		
+		if(updateCount > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	

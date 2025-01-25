@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+#seatSetBody {
+    font-family: Arial, sans-serif;
+    margin: 30px 30px 0 30px;
+    position: relative;
+    height: 610px;
+}
+
+#sec01 select {
+    height: 40px;
+   	width: 100px;
+}
+
+#title {
+	font-size: 24px;
+	font-weight: bold;
+	padding-bottom: 25px;
+}
+
+.screen {
+	display: flex; /* 숫자 내부 내용 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	text-align: center;
+	background-color: #ddd;
+	font-size: 14px;
+	width: 650px;
+	height: 30px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+#seatStatus {
+	text-align: center;
+	font-size: 25px;
+}
+
+#seatStatus input {
+	width: 20px;
+	height: 20px;
+}
+
+.seatContainer {
+	margin: 15px 0;
+}
+
+.seat{
+	min-width: unset;
+	display: flex; /* 숫자 내부 내용 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+    background-color: #444451;
+    font-size: 15px;
+    width: 15px;
+    height: 12px;
+    padding: 18.5px;
+    margin: 3px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    color: #bdbfc1;
+    line-height: 1.75em;
+    letter-spacing: 0.025em;
+    border: 4px double #fff;
+}
+
+.seat.selected {
+	background-color: #f98780;
+	color: #444451;
+}
+
+
+.seat:hover {
+	background-color: #f98780;
+	color: #444451;
+}
+
+.seat:nth-of-type(3) {
+	margin-right: 30px;
+}
+.seat:nth-of-type(7) {
+	margin-right: 30px;
+}
+
+.seatRow{
+    display: flex;
+	justify-content: center; 
+	align-items: center; 
+}
+
+.seat.selected {
+	background-color: #f98780;
+	color: #444451;
+}
+
+button[name="wheelChairSeat"] {
+	background-color : #EDC6C6;
+ 	background : #EDC6C6;
+ 	color : #444;
+}
+
+button[name="wheelChairSeat"]:hover {
+	background-color : #f98780;
+}
+
+button[name="wheelChairSeat"].selected {
+	background-color : #f98780;
+ 	background : #f98780;
+ 	color : #444;
+}
+
+#btnGroup {
+	text-align: center;
+}
+
+#btnGroup input[type="button"] {
+	width: 160px;
+    margin-right: 5px;
+    padding: 10px 15px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f4f4f4;
+	cursor: pointer;
+}
+
+#btnGroup input[type="button"]:hover {
+	background-color: #e2e2e2;
+}
+
+.disabled {
+	background-color:#8B0000;
+}

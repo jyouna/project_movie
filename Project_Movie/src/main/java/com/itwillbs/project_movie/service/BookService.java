@@ -150,8 +150,15 @@ public class BookService {
 		return mapper.selectRefundList(startRow, listLimit, howSearch, searchKeyword);
 	}
 
-
-
+	// 관리자페이지 좌석설정페이지
+	public List<SeatVO> getSeatByTheater(String theater_code) {
+		return mapper.selectSeatByTheater(theater_code);
+	}
+	
+	// 관리자페이지 좌석설정페이지 좌석상태 변경
+	public int changeSeatAvail(String theater_code, String[] seatCodeArr, String seat_avail) {
+		return mapper.updateSeatAvail(theater_code, seatCodeArr, seat_avail);
+	}
 
 
 

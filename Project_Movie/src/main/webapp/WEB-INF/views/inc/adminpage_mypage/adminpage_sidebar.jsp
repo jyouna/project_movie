@@ -98,7 +98,7 @@
 					</a>
 					<div class="collapse" id="collapseCinemas" aria-labelledby="headingCinemas" data-bs-parent="#sidenavAccordion">
 					    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionCinemas">
-					        <a class="nav-link" href="">
+					        <a class="nav-link" href="AdminSeatSet">
 					            좌석관리
 					        </a>
 					    </nav>
