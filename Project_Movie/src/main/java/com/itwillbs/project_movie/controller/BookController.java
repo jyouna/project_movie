@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itwillbs.project_movie.handler.AdminMenuAccessHandler;
+import com.itwillbs.project_movie.service.AdminManageService;
 import com.itwillbs.project_movie.service.BookService;
 import com.itwillbs.project_movie.service.MypageService;
 import com.itwillbs.project_movie.vo.CouponVO;
@@ -36,6 +38,7 @@ import com.itwillbs.project_movie.vo.TicketVO;
 public class BookController {
 	@Autowired private BookService bookService;
 	@Autowired private MypageService myPageService;
+	@Autowired private AdminManageService adminService;
 	
 	@GetMapping("MovieScheduleInfo")
 	public String movieScheduleInfo(Model model, @RequestParam Map<String, String> conditionMap, HttpSession session) {
@@ -415,7 +418,21 @@ public class BookController {
 	
 	// 관리자페이지 좌석관리 매핑
 	@GetMapping("AdminSeatSet")
-	public String adminSeatSet(@RequestParam(defaultValue = "T1") String theater_code, Model model) {
+	public String adminSeatSet(@RequestParam(defaultValue = "T1") String theater_code, HttpSession session, Model model) {
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("theater_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
 		// 좌석 정보 조회
 		List<SeatVO> seatList = bookService.getSeatByTheater(theater_code);
 		int rowCount = 0;
