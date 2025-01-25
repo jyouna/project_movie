@@ -17,6 +17,7 @@
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/movie_set/admin_movie_list.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/mypage/reservation_detail.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -48,7 +49,7 @@
 		<div id="sec02">
 			<table>
 				<tr>
-					<th style="width:2%"><input type="radio" name="payment_radio" disabled></th>
+					<th style="width:2%"><input type="radio" name="reservationRadio" disabled></th>
 	                <th style="width:8%">예매번호</th>
 	                <th style="width: 7%">예매자</th>
 	                <th style="width:13%">영화명</th>
@@ -69,8 +70,8 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="payment" items="${paymentList}">
-							<tr>
-				                <td><input type="radio" name="payment_radio"></td>
+							<tr> 
+				                <td><input type="radio" name="reservationRadio" <c:if test="${minutesUntilStart <= 20}">disabled</c:if>></td>
 				                <td>${payment.payment_code}</td>
 				                <td>${payment.member_name}<br>(${payment.member_id})</td>
 				                <td>${payment.movie_name}</td>
@@ -116,11 +117,13 @@
     </section>
     
     <script>
+    	
     	$(".search_box").click(function() {
 	    	if($("input[name='searchKeyword']").val() != "") {
 	    		$("input[name='searchKeyword']").val("");
 	    	}
 		});
+    	
     </script>
     
     <jsp:include page="/WEB-INF/views/inc/adminpage_mypage/movie_set/movie_regist_modal.jsp"></jsp:include>

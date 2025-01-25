@@ -32,6 +32,8 @@ import com.itwillbs.project_movie.vo.ScheduleVO;
 import com.itwillbs.project_movie.vo.SeatVO;
 import com.itwillbs.project_movie.vo.TicketVO;
 
+import retrofit2.http.GET;
+
 
 
 @Controller
@@ -347,6 +349,7 @@ public class BookController {
 		// 상영시간과 현재시간 비교해서 20분차 이하일 때만 예매 취소 가능
 		long minutesUntilStart = ChronoUnit.MINUTES.between(now, start_time);
 		
+		
 		Map<String, Object> response = new HashMap<>();
 		if(minutesUntilStart > 20) {
 			int updateCount = bookService.modifyRefundPayment(map);
@@ -361,6 +364,7 @@ public class BookController {
 			response.put("msg", "상영시간 20분 전까지만 취소 가능합니다.");
 		}
 		
+		session.setAttribute("minutesUntilStart", minutesUntilStart);
 		
 		return ResponseEntity.ok(response);
 	}
@@ -370,9 +374,6 @@ public class BookController {
 	public String adminPaymentList(@RequestParam(defaultValue = "1") int pageNum, Model model,
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
-		// 지난상영작 리스트 페이징처리와 구분하기위한 변수선언
-//		String howSearch2 = "";
-//		String searchKeyword2 = "";
 		
 		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword); //총결제 목록(검색된 결제 목록)수 조회
 		
@@ -388,8 +389,6 @@ public class BookController {
 	public String adminRefundList(@RequestParam(defaultValue = "1") int pageNum, Model model,
 	@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		
-//		String howSearch2 = "";
-//		String searchKeyword2 = "";
 		
 		int listCount = bookService.getRefundListCount(howSearch, searchKeyword);
 		
@@ -400,6 +399,24 @@ public class BookController {
 		
 		return "adminpage/payment_manage/reservation_cancel_board";
 	}
+	
+	@GetMapping("getpaymentList")
+	public String getpaymentList(PaymentVO payment, ScheduleVO schedule, Model model) {
+//		List<PaymentVO> paymentList = bookService.getAllPaymentList();
+		
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime startTime = schedule.getStart_time().toLocalDateTime();
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		String start_time = formatter.format(startTime);
+		
+//		long minutesUntilStart = ChronoUnit.MINUTES.between(now, start_time);
+		
+//		model.addAttribute("minutesUntilStart", minutesUntilStart);
+		
+		return "adminpage/payment_manage/reservation_info_board";
+	}
+	
 	
 	// ==================== [ 페이징 메서드 ] ======================
 	private Boolean pagingMethod(int index, Model model, int pageNum, int listLimit, int listCount, String howSearch, String searchKeyword) {
