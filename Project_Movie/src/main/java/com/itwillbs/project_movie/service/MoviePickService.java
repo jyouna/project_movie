@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.itwillbs.project_movie.mapper.AdminManageMapper;
 import com.itwillbs.project_movie.mapper.MovieMapper;
 import com.itwillbs.project_movie.mapper.MoviePickMapper;
 
@@ -16,10 +17,13 @@ import com.itwillbs.project_movie.mapper.MoviePickMapper;
 public class MoviePickService {
 	
 	@Autowired
-	MoviePickMapper moviePickMapper;
+	private MoviePickMapper moviePickMapper;
 	
 	@Autowired
-	MovieMapper movieMapper;
+	private MovieMapper movieMapper;
+	
+	@Autowired
+	private AdminManageMapper manageMapper;
 	
 	// 투표정보 등록 메서드
 	public int registMoviePickInfo(Map<String, String> map) {
@@ -65,7 +69,11 @@ public class MoviePickService {
 	}
 	
 	// 회원의 투표내역 정보 등록
+	@Transactional
 	public int registMemberVoteInfo(Map<String, String> map) {
+		// 투표시 1000p 지급
+		manageMapper.insertPointInfo(map.get("member_id"), 10, 1000); // 포인트 변동 정보 저장
+		manageMapper.creditPoint(map.get("member_id"), 1000); // 회원에게 포인트 + 시킴
 		return moviePickMapper.insertMemberVoteInfo(map);
 	}
 	

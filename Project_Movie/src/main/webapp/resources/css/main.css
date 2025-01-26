@@ -59,3 +59,25 @@
 	width: 100%;
 	text-align: center;
 }
+
+.board {
+	text-align: left;
+    border: 4px double;
+    border-radius: 30px;
+    padding: 20px;
+    height: 300px;
+}
+
+.board a {
+	font-size: 20px;
+	text-decoration: none;
+    line-height: 2.5em;
+}
+
+.board a:hover {
+	text-decoration: underline;
+}
+
+.wrapper {
+	padding: 2em 0 3em 0;
+}

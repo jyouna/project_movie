@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.AdminManageService;
+import com.itwillbs.project_movie.service.CustomerServiceService;
+import com.itwillbs.project_movie.service.EventService;
 import com.itwillbs.project_movie.service.MovieService;
+import com.itwillbs.project_movie.vo.EventBoardVO;
 import com.itwillbs.project_movie.vo.FaqBoardVO;
 import com.itwillbs.project_movie.vo.InquiryVO;
 import com.itwillbs.project_movie.vo.MovieVO;
@@ -27,11 +30,28 @@ public class MainController {
 	private MovieService movieService;
 	
 	@Autowired
-	AdminManageService adminService;
+	private AdminManageService adminService;
+	
+	@Autowired
+	private CustomerServiceService customerService;
+	
+	@Autowired
+	private EventService eventService;
 	
 	// main페이지 맵핑
 	@GetMapping("/")
-	public String home() {
+	public String home(Model model) {
+		// 공지사항 리스트 조회
+		List<NoticeBoardVO> noticeList = customerService.getNoticeList(0, 5, "", "");
+		// 자주하는 질문 리스트 조회
+		List<FaqBoardVO> faqList = customerService.getFaqList(0, 5);
+		// 이벤트 리스트 조회
+		List<EventBoardVO> eventList = eventService.getEventList(0, 5, "", "");
+		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("faqList", faqList);
+		model.addAttribute("eventList", eventList);
+		
 		return "main";
 	}
 	
