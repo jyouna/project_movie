@@ -50,6 +50,11 @@
 	cursor: pointer;
 }
 
+#notice {
+	font-size: 16px;
+	color: #808895;
+}
+
 
 h4 {
 /* 	margin: 5px 0; */
@@ -345,6 +350,9 @@ a .mv_title {
 }
 
 .time_seat_btn {
+	position: relative; /* 툴팁의 기준점을 버튼으로 설정 */
+    display: inline-block;
+	
  	flex-direction: column; /* 세로 정렬 */
 	line-height: unset;
 	min-height: unset;
@@ -365,10 +373,43 @@ a .mv_title {
     background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
     background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
     background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(248, 248, 248, 1) 100%);
-	    text-align: center; /* 텍스트 중앙 정렬 */
-	    box-sizing: border-box; /* 크기 계산에 패딩 포함 */
-	    gap: 0; /* 내부 간격을 없애고 고정 */
-	    text-decoration: none;
+    text-align: center; /* 텍스트 중앙 정렬 */
+    box-sizing: border-box; /* 크기 계산에 패딩 포함 */
+    gap: 0; /* 내부 간격을 없애고 고정 */
+    text-decoration: none;
+}
+
+.end_time {
+   position: absolute;
+    top: -40px; /* 버튼 위에 배치 */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #444444; /* 흰색 배경 */
+    color: #fff; /* 검정 텍스트 */
+    padding: 5px 10px;
+    font-size: 12px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    visibility: hidden; /* 기본적으로 숨김 */
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    letter-spacing: 0.5px;
+}
+
+.end_time::after {
+    content: '';
+    position: absolute;
+   	top: calc(100%); /* 테두리 안쪽으로 배치 */
+    left: 50%; /* 가로 중앙 정렬 */
+    transform: translateX(-50%);
+    border-width: 5px; /* 삼각형 크기 */
+    border-style: solid;
+    border-color: #444444 transparent transparent transparent; /* 위쪽 흰색 삼각형 */
+}
+
+.time_seat_btn:hover .end_time {
+    visibility: visible;
+    opacity: 1;
 }
 
 

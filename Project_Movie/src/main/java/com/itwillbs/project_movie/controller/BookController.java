@@ -399,23 +399,6 @@ public class BookController {
 		return "adminpage/payment_manage/reservation_cancel_board";
 	}
 	
-	@GetMapping("getpaymentList")
-	public String getpaymentList(PaymentVO payment, ScheduleVO schedule, Model model) {
-//		List<PaymentVO> paymentList = bookService.getAllPaymentList();
-		
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime startTime = schedule.getStart_time().toLocalDateTime();
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		String start_time = formatter.format(startTime);
-		
-//		long minutesUntilStart = ChronoUnit.MINUTES.between(now, start_time);
-		
-//		model.addAttribute("minutesUntilStart", minutesUntilStart);
-		
-		return "adminpage/payment_manage/reservation_info_board";
-	}
-	
 	// 관리자페이지 좌석관리 매핑
 	@GetMapping("AdminSeatSet")
 	public String adminSeatSet(@RequestParam(defaultValue = "T1") String theater_code, HttpSession session, Model model) {

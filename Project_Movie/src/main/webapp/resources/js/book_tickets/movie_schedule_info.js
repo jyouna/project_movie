@@ -85,9 +85,9 @@ $(function() {
 						        <input type="hidden" class="isBookingAvail" value="${schedule.booking_avail}">
 						        <span class="mv_time">${schedule.str_start_time}</span>
 						        <span class="details">
-						            
 						            <span class="hall">${hallName}</span>
 						        </span>
+								<div class="end_time">종료 ${schedule.str_end_time}</div>
 						    </a>
 						`);
 						

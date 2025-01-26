@@ -63,7 +63,7 @@
 						<ul>
 							<li><a href="MovieScheduleInfo">상영시간표</a></li>
 							<li><a href="BookTickets">예매하기</a></li>
-							<li><a href="#">예매확인/취소</a></li>
+							<li><a href="javascript:window.open('ReservationDetail', '_blank', 'width=1300, height=800, top=150, left=300, resizable=no')">예매확인/취소</a></li>
 						</ul>
 					</li>
 					<li>

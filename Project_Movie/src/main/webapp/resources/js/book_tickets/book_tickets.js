@@ -5,6 +5,11 @@ $(function() {
 	// "날짜를 선택해주세요" 출력
 	let isDateSelected = false;
 	
+	// 현재시간과 상영시간 비교해 차이가 20분 이하면 얼럿
+	let currentTime = "";
+	let startTime = "";
+	let timeDifference = "";
+	
 	$(".mv_list").click(function() {
 		// 날짜 선택 없이 영화 선택 시 얼럿창
 		if(!isDateSelected) {
@@ -107,6 +112,11 @@ $(function() {
 				if(scheduleList.length != 0) {
 					
 					for(let schedule of scheduleList) {
+						// 현재시간과 상영시간의 차이 비교
+						currentTime = new Date();
+						startTime = new Date(schedule.start_time);
+						timeDifference = (startTime - currentTime) / (1000 * 60);
+						
 						let hallName = schedule.theater_code;
 						if(hallName == "T1") {
 							hallName = "1관";
@@ -123,9 +133,9 @@ $(function() {
 						        <input type="hidden" class="isBookingAvail" value="${schedule.booking_avail}">
 						        <span class="mv_time">${schedule.str_start_time}</span>
 						        <span class="details">
-						            
 						            <span class="hall">${hallName}</span>
 						        </span>
+								<div class="end_time">종료 ${schedule.str_end_time}</div>
 						    </a>
 						`);
 						
@@ -168,8 +178,16 @@ $(function() {
 						schCode = $(this).find("input[type='hidden']").val();
 						console.log(schCode);
 						
-						if(confirm("좌석선택 페이지로 이동하시겠습니까?")) {
-							location.href = "BookSeat?schedule_code=" + schCode;
+						// 현재시간과 상영시간의 차가 20분 이하인지 판별해서 각각 다른 얼럿
+						if(timeDifference > 20) {
+							if(confirm("좌석선택 페이지로 이동하시겠습니까?")) {
+								location.href = "BookSeat?schedule_code=" + schCode;
+							}
+						} else {
+							if(confirm("예매 취소는 상영시간 20분 전까지만 가능합니다.\n좌석선택 페이지로 이동하시겠습니까?")) {
+								location.href = "BookSeat?schedule_code=" + schCode;
+							}
+							
 						}
 					} else {
 						alert("예매종료된 스케줄입니다.")

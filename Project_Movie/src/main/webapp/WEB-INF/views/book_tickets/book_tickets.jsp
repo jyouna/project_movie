@@ -31,7 +31,26 @@
 	<jsp:include page="/WEB-INF/views/inc/page/book_tickets_sidebar.jsp"></jsp:include>
 
 	<article class="box post">
-		<h2>예매하기</h2>
+		<h2>예매안내</h2>
+		<div id="notice">
+			PICKCINE 인터넷 예매방법과 안내사항 안내드립니다.
+			<br>
+			<br>
+			1. 예매하기 클릭<br>
+			2. 관람 날짜와 영화 선택<br>
+			3. 관람 인원 선택<br>
+			4. 관람 좌석 선택<br>
+			5. 결제 수단 선택<br>
+			6. 결제하기 버튼 누르면 예매 완료<br>
+			7. 예매 확인 및 취소<br>
+			<br>
+			인터넷 예매와 취소는 상영시간 20분 전까지 가능합니다.<br>
+			<br>
+			일반고객이 휠체어석 예매 시 현장에서 입장하실 수 없습니다.<br>
+			단체관람 할인혜택은 전화문의 바랍니다.<br>
+			<br>
+			감사합니다.<br>
+		</div>
 		<!-- 	모달창 -->
 		<div class="modal">
 			<div class="modal_content">
