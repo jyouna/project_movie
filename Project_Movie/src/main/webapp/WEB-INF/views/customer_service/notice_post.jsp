@@ -38,15 +38,16 @@
 			${notice.notice_content}
 		</section>
 		<hr>
-		<div style="text-align: right;" >
-		<input type="button" value="목록" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
+		<div style="text-align: center;" >
+		<input type="button" value="목록" id="btn" onclick="location.href='NoticeList?pageNum=${param.pageNum}'">
 		</div>
-
-		<input type="button" value="◁이전글" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
-		<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-
-		<input type="button" value="▷다음글" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
-		<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		<div style="text-align: right;" >
+			<input type="button" value="◁이전글" id="btn" onclick="location.href='NoticePost?notice_code=${param.notice_code+1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+	
+			<input type="button" value="▷다음글" id="btn" onclick="location.href='NoticePost?notice_code=${param.notice_code-1}&pageNum=${param.pageNum}'"
+			<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		</div>
 
 
 	</article>

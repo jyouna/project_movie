@@ -1,19 +1,11 @@
-/* General body styling */
-/* body { */
-/*     font-family: Arial, sans-serif; */
-/*     background-color: #f4f4f4; */
-/*     color: #333; */
-/*     margin: 0; */
-/*     padding: 0; */
-/* } */
 
 /* Article styling */
 article.box.post {
     background-color: #fff;
     margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/*     padding: 20px; */
+/*     border-radius: 10px; */
+/*     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 article h2 {
@@ -60,10 +52,5 @@ article h2 {
 .list-container ul li h4 {
     color: #666;
     margin: 0 0 5px;
-}
-
-/* Hover effect for list items */
-.list-container ul li:hover {
-    background-color: #eee;
 }
 

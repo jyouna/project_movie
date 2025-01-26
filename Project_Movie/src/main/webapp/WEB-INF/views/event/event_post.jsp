@@ -36,13 +36,15 @@
 		<section id="articleContentArea">
 			${event.event_content}
 		</section>
-		<input type="button" value="목록" style="float: right;" onclick="location.href='EventList?pageNum=${param.pageNum}'">
 		<hr>
+		<div style="text-align:center;">
+			<input type="button" value="목록" id="btn" onclick="location.href='EventList?pageNum=${param.pageNum}'">
+		</div>
 		<div style="text-align:right;">
-			<input type="button" value="◁이전글" onclick="location.href='EventPost?event_code=${param.event_code+1}&pageNum=${param.pageNum}'"
+			<input type="button" id="btn" value="◁이전글" onclick="location.href='EventPost?event_code=${param.event_code+1}&pageNum=${param.pageNum}'"
 			<c:if test="${param.event_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
 	
-			<input type="button" value="▷다음글" onclick="location.href='EventPost?event_code=${param.event_code-1}&pageNum=${param.pageNum}'"
+			<input type="button"  id="btn"value="▷다음글" onclick="location.href='EventPost?event_code=${param.event_code-1}&pageNum=${param.pageNum}'"
 			<c:if test="${param.event_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
 		</div>
 		

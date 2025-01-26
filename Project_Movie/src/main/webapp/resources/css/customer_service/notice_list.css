@@ -6,7 +6,7 @@ form[name="searchForm"] {
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 8px; 
-    margin: 10px 0px 10px 448px;
+   	margin: 10px 0px 10px 358px;
     width: 50%;
     max-width: 524px; 
 }
@@ -16,7 +16,7 @@ form[name="searchForm"] select {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px;
     background-color: #fff;
     color: #333;
     transition: border-color 0.3s ease;
@@ -41,7 +41,6 @@ form[name="searchForm"] input[type="text"] {
 form[name="searchForm"] input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
-    width: 70px;
 }
 
 /* 검색 버튼 */
@@ -166,4 +165,9 @@ article {
     color: #fff;
     background-color: #aeaeae;
     border-radius: 5px;
+    width: 39px;
+    height: 39px;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
 }

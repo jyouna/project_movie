@@ -43,7 +43,7 @@
 	               
 	            <c:choose>	
 	               <c:when test="${empty reviewList}"> 
-	                  <tr><td colspan="7">게시물이 존재하지 않습니다</td></tr>
+	                  <tr><td colspan="7">관람평이 존재하지 않습니다</td></tr>
 	               </c:when>
 	               <c:otherwise>
 	                  <c:forEach var="review" items="${reviewList}" varStatus="status">

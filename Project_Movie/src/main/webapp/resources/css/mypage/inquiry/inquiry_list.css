@@ -10,7 +10,7 @@ body {
 	width: 100%;
 	height: 100%;
 	}
-전체 섹션 스타일
+/* 전체 섹션 스타일 */
 .dateSearch_sec {
     margin: 20px;
     padding: 20px;
@@ -19,7 +19,7 @@ body {
     background-color: #fff;
 }
 
-제목 스타일
+/* 제목 스타일 */
 .dateSearch_sec .haze {
     font-size: 16px;
     font-weight: bold;
@@ -33,7 +33,9 @@ body {
     align-items: center;
     gap: 15px;
 }
-
+searchType{
+	height: 30px;
+}
 /* 기간 선택 제목 */
 .search_list .tit {
     font-size: 14px;
@@ -209,4 +211,9 @@ article {
     color: #fff;
     background-color: #aeaeae;
     border-radius: 5px;
+    width: 39px;
+    height: 39px;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
 }

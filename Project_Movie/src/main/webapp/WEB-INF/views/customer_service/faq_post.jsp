@@ -37,12 +37,16 @@
 		<section id="articleContentArea">
 			${faq.faq_content}
 		</section>
-		<input type="button" value="목록" onclick="location.href='FaqList?pageNum=${param.pageNum}'">
 		<hr>
-		<input type="button" value="◁이전글" onclick="location.href='FaqPost?faq_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"
-		<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-		<input type="button" value="▷다음글" onclick="location.href='FaqPost?faq_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"
-		<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		<div style="text-align: center;">
+			<input type="button" value="목록" id="btn"onclick="location.href='FaqList?pageNum=${param.pageNum}'">
+		</div>
+		<div style="text-align: right;">
+			<input type="button" value="◁이전글" id="btn" onclick="location.href='FaqPost?faq_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"
+			<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+			<input type="button" value="▷다음글"id="btn"  onclick="location.href='FaqPost?faq_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"
+			<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+		</div>
 	</article>
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>

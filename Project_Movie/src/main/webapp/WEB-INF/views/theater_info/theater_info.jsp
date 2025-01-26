@@ -16,10 +16,10 @@
    
    <article class="box post">
 		<div id="title">
-			<h1 style="font-size: 1.5em;">itwill 영화관</h1>
+			<h1 style="font-size: 1.5em;">PICKCINE</h1>
 		</div>
      <div class="content">
-      	<img src="https://via.placeholder.com/150" alt="영화 포스터" class="movie-poster">
+      	<img src="${pageContext.request.contextPath}/resources/images/pickcine.png" alt="영화관" id="pickcine">
       	<p><strong>• 영화관 설명</strong></p>
 			<p>어떤 영화는 시간이 지나도 우리의 가슴 속에 남아있습니다. 
 			그 영화가 처음 상영되던 순간의 감동, 그리운 장면과 대사, 그리고 함께했던 추억까지. 이제 그 특별한 순간을 다시 느낄 수 있는 곳이 있습니다.
@@ -44,7 +44,7 @@
 		      <th>성인</th>
 		      <th>청소년</th>
 		      <th>장애인/국가유공자</th>
-		      <th>단체(10인이상)</th>
+		      <th>단체(8인이상)</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -53,13 +53,13 @@
 		      <td>10000원</td>
 		      <td>7000원</td>
 		      <td>5000원</td>
-		      <td>6000원</td>
+		      <td>*별도문의</td>
 		    </tr>
 		  </tbody>
 		</table>
        </div>
    
-       <div class="list-container">
+       <div class="list-container" >
          <div id="rule">
          	• 상영관 운영 수칙
          </div>
@@ -80,8 +80,6 @@
        
      </div>
    </article>
-
-
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>

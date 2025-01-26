@@ -26,7 +26,7 @@ public class CustomerServiceController {
 	@GetMapping("NoticeList")
 	public String noticeList(Model model, @RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue="") String searchType, 
-			@RequestParam(defaultValue="") String searchKeyword, int notice_code) {
+			@RequestParam(defaultValue="") String searchKeyword) {
 		
 //		int code = service.getPrevNextCode(notice_code);
 //		

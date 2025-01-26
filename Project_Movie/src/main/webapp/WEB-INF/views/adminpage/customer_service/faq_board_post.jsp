@@ -13,7 +13,7 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customer_service/faq_post.css" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_post.css" rel="stylesheet"/>
 	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->

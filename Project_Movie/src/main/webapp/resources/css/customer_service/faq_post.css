@@ -24,7 +24,7 @@
 #basicInfoArea th {
     background-color: #858585;
     color: #fff;
-    text-align:inherit;
+    text-align:center;
     padding: 11px 12px 11px 13px;
     border: 1px solid #ccc;
 }
@@ -82,3 +82,26 @@ hr{
     font-weight: bold;
     color: black; /* 두 번째 열의 텍스트 색상 */
 }
+#btn {
+ -webkit-transition: all .25s ease-in-out;
+    -ms-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-decoration: none;
+    border-radius: 0.35em;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    font-size: 0.9em;
+    min-width: 1em;
+    height: 4em;
+    line-height: 2.5em;
+    background-color:#ccc;
+    color: #5D3A1A;
+    padding: revert;
+    height: 40px;
+   }

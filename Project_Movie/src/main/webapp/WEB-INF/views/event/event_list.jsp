@@ -32,7 +32,7 @@
 		<div id="listForm">
 			<table id="eventForm" border="1">
 				<tr id="tr_top" align="center">
-					<td width="35px">번호</td>
+					<td width="50px">번호</td>
 					<td width="55px">상태</td>
 					<td width="200px" >제목</td>
 					<td width="150px">이벤트 기간</td>
@@ -47,7 +47,7 @@
 							<tr>
 								<td class="event_code">${event_board.event_code }</td>
 								<td class="event_status">
-									<c:if test="${event_board.event_status == 0}"> 미진행 </c:if>
+									<c:if test="${event_board.event_status == 0}"> 진행전 </c:if>
 									<c:if test="${event_board.event_status == 1}"> 진행중 </c:if>
 									<c:if test="${event_board.event_status == 2}"> 종료 </c:if></td>
 								<td class="event_subject">${event_board.event_subject}</td>

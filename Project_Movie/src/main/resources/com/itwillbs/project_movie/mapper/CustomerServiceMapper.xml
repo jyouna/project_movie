@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.itwillbs.project_movie.mapper.CustomerServiceMapper">
-<!--  공지사항  -->
+<!--  공지사항  글 전체 개수-->
  	<select id="selectNoticeListCount" resultType="int">
  		SELECT COUNT(*)
  		FROM notice_board
@@ -20,6 +20,7 @@
  			</if>
  			ORDER BY notice_code DESC
  	</select>
+<!--  	공지사항 글 목록 -->
  	<select id="selectNoticeList" resultType="notice_board">
  		SELECT *
  		FROM notice_board

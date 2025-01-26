@@ -77,7 +77,6 @@
 						<a href="EventList">이벤트</a>
 						<ul>
 							<li><a href="EventList">이벤트목록</a></li>
-							<li><a href="EventWinner">당첨자발표</a></li>
 						</ul>
 					</li>
 					<li>

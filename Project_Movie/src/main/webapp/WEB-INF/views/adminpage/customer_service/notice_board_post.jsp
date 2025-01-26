@@ -13,7 +13,7 @@
 	<title>관리자페이지</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customer_service/faq_post.css" />
+	<link href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_post.css" rel="stylesheet"/>
 	<!-- jQuery를 먼저 추가 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
@@ -22,8 +22,7 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<section>
-<article id="articleForm">
+	<article id="articleForm">
 		<h4>공지사항 - 글</h4><br>
 		<section id="basicInfoArea">
 			<table>
@@ -55,8 +54,5 @@
 			<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
 		</div>
 	</article>
-
-
-	</section>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

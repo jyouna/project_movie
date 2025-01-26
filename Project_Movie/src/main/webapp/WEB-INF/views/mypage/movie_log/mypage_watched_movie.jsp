@@ -63,7 +63,7 @@
 	                      	<td><input type="radio" name="movieList" value="${watchedMovie.movie_code}" class="get_movie_code"></td>
 	                        <td>${watchedMovie.movie_name}</td>
 	                        <td>
-	                        	<fmt:formatDate value="${watchedMovie.start_time}" />
+	                        	<fmt:formatDate value="${watchedMovie.start_time}" pattern="yyyy-MM-dd"/>
                         	</td>
 	                        <td>${watchedMovie.ticket_count}명</td>
 	                        <td>

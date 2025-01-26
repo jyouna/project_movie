@@ -20,7 +20,6 @@
  			</if>
  			ORDER BY event_code ASC,
  				event_start_date DESC
- 			
  	</select>
 <!--  이벤트 게시물 시작번호 끝번호 -->
  	<select id="selectEventList" resultType="eventboard">

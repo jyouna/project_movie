@@ -54,7 +54,6 @@
 	      <section id="listForm">
 	         <table>
 	            <tr id="tr_top">
-	               <td width="100px">구분</td>
 	               <td width="100px">적립날짜</td>
 	               <td width="180px">상세내용</td>
 	               <td width="100px">적립포인트</td>
@@ -68,13 +67,24 @@
 	               <c:otherwise>
 	                  <c:forEach var="point" items="${pointList}" varStatus="status">
 	                     <tr>
-	                        <td>${point.point_code}</td>
 	                        <td>
 	                           <fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd"/>
 	                        </td>
 	                        <td>${point.event_subject}</td>
-	                        <td>+${point.point_credited}</td>
-	                        <td>-${point.point_debited}</td>
+	                        <td>
+	                        	<c:choose>
+									<c:when test="${point.point_credited > 0}">
+									 +${point.point_credited}
+									</c:when>                        
+	                        	</c:choose>
+	                       </td>
+	                        <td>
+                             	<c:choose>
+									<c:when test="${point.point_debited != null}">
+									  -${point.point_debited}
+									</c:when>                        
+	                        	</c:choose>
+	                       </td>
 	                     </tr>
 	                  </c:forEach>
 	               </c:otherwise>               
