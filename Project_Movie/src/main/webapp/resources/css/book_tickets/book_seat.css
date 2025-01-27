@@ -241,7 +241,7 @@ form input[type="text"].count {
 	font-size: 13px;
 	color: #444451;
 	width: auto;
-	height: auto;
+	height: 20px;
 }
 
 .seatType div {
