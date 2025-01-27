@@ -79,7 +79,7 @@
 				<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 				<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
 					<c:choose>
-						<c:when test="${i eq pagInfo.pageNum}">
+						<c:when test="${i eq pageInfo.pageNum}">
 							<strong>${i}</strong>
 						</c:when>
 						<c:otherwise>

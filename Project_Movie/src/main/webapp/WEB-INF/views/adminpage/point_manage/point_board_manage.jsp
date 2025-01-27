@@ -53,7 +53,7 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th class="alignLeft">코드</th>
+				<th class="code">코드</th>
 				<th id="idWidth" class="alignLeft">ID</th>
 				<th class="number">포인트적립</th>
 				<th class="number">포인트차감</th>
@@ -69,7 +69,7 @@
 				<c:otherwise>
 					<c:forEach var="point" items="${pointVo}" varStatus="status">
 						<tr>
-							<td class="alignLeft">${point.point_code}</td>	
+							<td class="code">${point.point_code}</td>	
 							<td class="alignLeft">${point.point_holder}</td>	
 							<td class="number">
 								<c:choose>
@@ -91,9 +91,6 @@
 							</td>
 							<td class="alignLeft">
 								<c:choose>
-									<c:when test="${point.event_code == '0'}">
-										관리자 발급
-									</c:when>
 									<c:when test="${point.event_code != '0'}">
 										이벤트당첨(코드 : ${point.event_code})
 									</c:when>
@@ -103,6 +100,9 @@
 									<c:when test="${not empty point.payment_code}">
 										결제(코드 : ${point.payment_code})
 									</c:when>									
+									<c:when test="${point.event_code == '0'}">
+										관리자 발급
+									</c:when>
 								</c:choose>
 							</td>
 							<td class="alignLeft"><fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd hh:mm"/> </td>	
@@ -122,7 +122,7 @@
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
 			<c:choose>
-				<c:when test="${i eq pagInfo.pageNum}">
+				<c:when test="${i eq pageInfo.pageNum}">
 <%-- 현재 페이지 표시	 --%>
 					<strong>${i}</strong>
 				</c:when>

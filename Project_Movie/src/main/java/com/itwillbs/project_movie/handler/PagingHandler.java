@@ -41,7 +41,7 @@ public class PagingHandler {
 		System.out.println("전달 받은 페이지 번호 : " + pageNum);
 		System.out.println("전달 받은 호출코드 : " + boardName);
 		
-		int listLimit = 20;
+		int listLimit = 12;
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListForPaging(boardName, searchKeyword, searchContent); // 서비스에서 boardName값 판별하여 다르게 작동!
 		System.out.println("리스트 카운트 : " + listCount);
@@ -80,7 +80,7 @@ public class PagingHandler {
 	// 검색기능 없는 게시판을 위한 오버로딩!!
 	public PageInfo2 pagingProcess(int pageNum, String boardName) {
 		System.out.println("오버로딩 페이징 서비스 호출");
-		int listLimit = 20;
+		int listLimit = 12;
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListForPaging(boardName); // 서비스에서 boardName값 판별하여 다르게 작동!
 		System.out.println("리스트 카운트 : " + listCount);
@@ -112,7 +112,7 @@ public class PagingHandler {
 		System.out.println("전달 받은 페이지 번호 : " + pageNum);
 		System.out.println("전달 받은 호출코드 : " + boardName);
 		
-		int listLimit = 20;
+		int listLimit = 12;
 		int startRow = (pageNum - 1) * listLimit;
 		int listCount = adminService.getBoardListForPaging(boardName, searchKeyword, searchContent, eventStatus, eventWinnerStatus); // 서비스에서 boardName값 판별하여 다르게 작동!
 		System.out.println("리스트 카운트 : " + listCount);

@@ -16,7 +16,6 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />	
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
 <style type="text/css">
 input[type="checkbox"] {
     transform: scale(1.5); /* 1.5배 확대 */
@@ -31,7 +30,6 @@ input[type="checkbox"] {
 }
 </style>
 </head>
-
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp" ></jsp:include>
 	<h3>관리자 계정관리</h3>
@@ -46,58 +44,61 @@ input[type="checkbox"] {
 		<div id="divTopRight">
 		</div>	
 	</div>
-	<div id="tableDiv" class="view">
-		<table id="mainTable">
-			<tr align="center" id="tr01">
-				<th width="50"><input type="checkbox" id="selectAll" class="deleteCheck"></th>
-				<th width="70">번호</th>
-				<th width="90">ID</th>
-				<th width="90">비밀번호</th>
-				<th width="150">등록일</th>
-				<th width="80">상태</th>
-				<th width="80">담당자</th>
-				<th width="90">계정|<br>통계관리</th>
-				<th width="80">결제관리</th>
-				<th width="80">게시판관리</th>
-				<th width="80">영화관리</th>
-				<th width="80">상영관관리</th>
-				<th width="80">이벤트|<br>투표관리</th>
-			</tr>
-			<c:choose>		
-				<c:when test="${empty voList}">
-					<tr>
-						<th colspan="15">등록된 계정이 없습니다.</th>
-					</tr>	
-				</c:when>	
-				<c:otherwise>
-					<c:forEach var="vo" items="${voList}" varStatus="status">
-				        <tr>
-				            <td><input type="checkbox" class="deleteCheck" value="${vo.admin_id}"></td>
-				            <td>${status.count}</td>
-				            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}" id="admin_id_link">${vo.admin_id}</a></td>
-				            <td>${vo.admin_passwd}</td>
-				            <td><fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/></td>
-				            <td>${vo.user_status ? '사용중' : '비사용'}</td>
-				            <td>${vo.user_name}</td>
-				            <td>${vo.member_manage ? 'O' : 'X'}</td>
-				            <td>${vo.payment_manage ? 'O' : 'X'}</td>
-				            <td>${vo.notice_board_manage ? 'O' : 'X'}</td>
-				            <td>${vo.movie_manage ? 'O' : 'X'}</td>
-				            <td>${vo.theater_manage ? 'O' : 'X'}</td>
-				            <td>${vo.vote_manage ? 'O' : 'X'}</td>
-				        </tr>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>		
-		</table>			
-	</div>
+<!-- 	<div id="tableDiv" class="view"> -->
+	<table id="mainTable">
+		<tr align="center" id="tr01">
+			<th width="50"><input type="checkbox" id="selectAll" class="deleteCheck"></th>
+			<th width="70">번호</th>
+			<th width="90">ID</th>
+			<th width="90">비밀번호</th>
+			<th width="150">등록일</th>
+			<th width="80">상태</th>
+			<th width="80">담당자</th>
+			<th width="90">계정|<br>통계관리</th>
+			<th width="80">결제관리</th>
+			<th width="80">게시판관리</th>
+			<th width="80">영화관리</th>
+			<th width="80">상영관관리</th>
+			<th width="80">이벤트|<br>투표관리</th>
+		</tr>
+		<c:choose>		
+			<c:when test="${empty voList}">
+				<tr>
+					<th colspan="15">등록된 계정이 없습니다.</th>
+				</tr>	
+			</c:when>	
+			<c:otherwise>
+				<c:forEach var="vo" items="${voList}" varStatus="status">
+			        <tr>
+			            <td><input type="checkbox" class="deleteCheck" value="${vo.admin_id}"></td>
+			            <td>${status.count}</td>
+			            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}" id="admin_id_link">${vo.admin_id}</a></td>
+			            <td>${vo.admin_passwd}</td>
+			            <td><fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/></td>
+			            <td>${vo.user_status ? '사용중' : '비사용'}</td>
+			            <td>${vo.user_name}</td>
+			            <td>${vo.member_manage ? 'O' : 'X'}</td>
+			            <td>${vo.payment_manage ? 'O' : 'X'}</td>
+			            <td>${vo.notice_board_manage ? 'O' : 'X'}</td>
+			            <td>${vo.movie_manage ? 'O' : 'X'}</td>
+			            <td>${vo.theater_manage ? 'O' : 'X'}</td>
+			            <td>${vo.vote_manage ? 'O' : 'X'}</td>
+			        </tr>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>		
+	</table>			
+<!-- 	</div> -->
 	<div id="divBottom" class="view">
+		<input type="button" value="처음" 
+			onclick="location.href='AdminAccountManage?pageNum=1'" 
+			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 		<input type="button" value="이전" 
 			onclick="location.href='AdminAccountManage?pageNum=${pageInfo.pageNum - 1}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
 			<c:choose>
-				<c:when test="${i eq pagInfo.pageNum}">
+				<c:when test="${i eq pageInfo.pageNum}">
 					<strong>${i}</strong>
 				</c:when>
 				<c:otherwise>
@@ -106,6 +107,8 @@ input[type="checkbox"] {
 			</c:choose>
 		</c:forEach>
 		<input type="button" value="다음" onclick="location.href='AdminAccountManage?pageNum=${pageInfo.pageNum + 1}'"
+		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
+		<input type="button" value="마지막" onclick="location.href='AdminAccountManage?pageNum=${pageInfo.maxPage}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
