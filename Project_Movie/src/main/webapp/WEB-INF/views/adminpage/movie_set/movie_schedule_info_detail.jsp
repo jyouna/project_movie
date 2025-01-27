@@ -101,8 +101,8 @@
 				   <label>영화선택</label>
 				<select name="selected_movie">
 					<option value="" selected="selected">선택</option>
-					<optgroup label="상영예정작"></optgroup>
 					<optgroup label="현재상영작"></optgroup>
+					<optgroup label="상영예정작"></optgroup>
 				</select>
 				<br>
 			    <label>영화코드</label>
