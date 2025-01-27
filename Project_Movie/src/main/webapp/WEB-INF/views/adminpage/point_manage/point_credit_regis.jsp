@@ -24,7 +24,7 @@
 		<h3>포인트 지급</h3>
 			<fieldset>
 				<table class="mainTable"> 
-					<tr class="tr01">
+					<tr class="tr01" id="tr02">
 						<th>포인트 금액</th>
 					</tr>
 					<tr>
@@ -67,8 +67,15 @@
 $(function(){
 	$("#givePointForm").on("submit", function(event){
 		event.preventDefault();
-		
+	
 		if(!confirm("포인트를 지급하시겠습니까?")) {
+			return;
+		}
+		
+		// 필수입력 요소 검증
+		// 포인트 금액 입력 여부 검증
+		if($("#point").val().trim() === "0" || $("#point").val().trim() === "") {
+			alert("금액(1~99,999)을 입력해 주세요");
 			return;
 		}
 		

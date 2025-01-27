@@ -20,75 +20,75 @@
 </head>
 <body>
 <!-- 	<form id="CreateCouponForm"> -->
-		<div id="tableDiv" class="view" style="overflow-x: auto;">
-		<h3>쿠폰 발급</h3>
-			<fieldset> <!--  할인쿠폰 / 금액쿠폰 선택 영역  -->
-				<table class="mainTable"> 
-					<tr class="tr01">
-						<th>만료일</th>
-						<th>수량</th>
-						<th>쿠폰타입</th>
-						<th id="thForDiscount"></th>
-					</tr>
-					<tr>
-						<td><input type="date" name="expired_date" id="expired_date" required></td>
-						<td><button id="sub">-</button><input type="text" name="coupon_count" id="coupon_count" value="1" maxlength="1" readonly><button id="add">+</button></td>
-						<td> <!--  할인율/금액할인 선택 -->
-							<select id="coupon_type" name="coupon_type" required>
-								<option>선택</option>
-								<option>금액할인</option>
-								<option>할인율</option>
-							</select>
-						</td>
-						<td> <!-- 할인율 혹은 할인금액 입력!! -->
-							<select id="discount_rate" name="discount_rate" class="discount_rate" hidden>
-								<option value="0" selected>선택</option>
-								<option>10</option>
-								<option>20</option>
-								<option>30</option>
-								<option>40</option>
-								<option>50</option>
-								<option>60</option>
-								<option>70</option>
-								<option>80</option>
-								<option>90</option>
-								<option>100</option>
-							</select>
-							<input type="text" maxlength="5" id="discount_amount" name="discount_amount" value="0" placeholder="1~99999입력" class="discount_amount" hidden>
-						</td>
-					</tr>
-				</table>			
-			</fieldset>
-			<div id="couponSet">
-				<input type="button" value="지급하기" id="CreateCouponForm">
-				<input type="button" value="돌아가기" id="closeForm">
-			</div>
-			<br>
-			<h3>쿠폰 지급 대상자</h3>
-			<fieldset> <!--  지급 대상자 출력 항목 -->
-				<table id="mainTable" class="mainTable">
-					<tr align="center" id="tr01" class="tr01">
-						<th>순서</th>
-						<th>아이디</th>
-					</tr>
-					<c:choose>
-						<c:when test="${empty member_id}">
-							<tr>
-								<th colspan="3">"선택된 대상자가 없습니다"</th>
-							</tr>
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="id" items="${member_id}" varStatus="status">
-								<tr>
-									<td>${status.count}</td>
-									<td class="getIdList">${id}</td>
-								</tr>	
-							</c:forEach>
-						</c:otherwise>
-					</c:choose> 
-				</table>
-			</fieldset>
+	<div id="tableDiv" class="view" style="overflow-x: auto;">
+	<h3>쿠폰 발급</h3>
+		<fieldset> <!--  할인쿠폰 / 금액쿠폰 선택 영역  -->
+			<table class="mainTable"> 
+				<tr class="tr01" id="tr02">
+					<th>만료일</th>
+					<th>수량</th>
+					<th>쿠폰타입</th>
+					<th id="thForDiscount"></th>
+				</tr>
+				<tr>
+					<td><input type="date" name="expired_date" id="expired_date" required></td>
+					<td><button id="sub">-</button><input type="text" name="coupon_count" id="coupon_count" value="1" maxlength="1" readonly><button id="add">+</button></td>
+					<td> <!--  할인율/금액할인 선택 -->
+						<select id="coupon_type" name="coupon_type" required>
+							<option>선택</option>
+							<option>금액할인</option>
+							<option>할인율</option>
+						</select>
+					</td>
+					<td> <!-- 할인율 혹은 할인금액 입력!! -->
+						<select id="discount_rate" name="discount_rate" class="discount_rate" hidden>
+							<option value="0" selected>선택</option>
+							<option>10</option>
+							<option>20</option>
+							<option>30</option>
+							<option>40</option>
+							<option>50</option>
+							<option>60</option>
+							<option>70</option>
+							<option>80</option>
+							<option>90</option>
+							<option>100</option>
+						</select>
+						<input type="text" maxlength="5" id="discount_amount" name="discount_amount" value="0" placeholder="1~99999입력" class="discount_amount" hidden>
+					</td>
+				</tr>
+			</table>			
+		</fieldset>
+		<div id="couponSet">
+			<input type="button" value="지급하기" id="CreateCouponForm">
+			<input type="button" value="돌아가기" id="closeForm">
 		</div>
+		<br>
+		<h3>쿠폰 지급 대상자</h3>
+		<fieldset> <!--  지급 대상자 출력 항목 -->
+			<table id="mainTable" class="mainTable">
+				<tr align="center" id="tr01" class="tr01">
+					<th>순서</th>
+					<th>아이디</th>
+				</tr>
+				<c:choose>
+					<c:when test="${empty member_id}">
+						<tr>
+							<th colspan="3">"선택된 대상자가 없습니다"</th>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="id" items="${member_id}" varStatus="status">
+							<tr>
+								<td>${status.count}</td>
+								<td class="getIdList">${id}</td>
+							</tr>	
+						</c:forEach>
+					</c:otherwise>
+				</c:choose> 
+			</table>
+		</fieldset>
+	</div>
 <!-- 	</form> -->
 <script type="text/javascript">
 $(function(){
@@ -141,6 +141,37 @@ $(function(){
 		let discount_rate = $("#discount_rate").val();
 		// 수량
 		let coupon_count = $("#coupon_count").val();
+		
+		// 2. 필수요소 입력 여부 검증
+		// 2-1) 날짜 
+		if(expired_date === "") {
+			alert("날짜를 입력해 주세요");
+			expired_date.focus();
+			return;
+		}
+		
+		// 2-2) 쿠폰타입 선택
+		if(coupon_type === "선택") {
+			alert("쿠폰 타입을 선택해 주세요");
+			coupon_type.focus();
+			return;
+		}
+		
+		// 2-3) 할인금액
+		if(coupon_type === "금액할인") {
+			if(discount_amount === "0" || discount_amount === "")
+			alert("금액(1~99,999)을 입력해 주세요");
+			discount_amount.focus();
+			return;
+		}
+
+		// 2-4) 할인율
+		if(coupon_type === "할인율") {
+			if(discount_rate === "0")
+			alert("할인율을 선택해주세요");
+			discount_rate.focus();
+			return;
+		}
 		
 		$.ajax({
 			url: "CreateCoupon",

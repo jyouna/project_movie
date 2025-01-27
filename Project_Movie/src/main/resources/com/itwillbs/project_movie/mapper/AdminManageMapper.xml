@@ -175,8 +175,10 @@
 				set_winner_status = #{eventWinnerStatus}
 		</if>				
 		ORDER BY 
-			event_status asc,
-			event_start_date desc
+			set_winner_status ASC,
+			event_status ASC,
+			event_code DESC,
+			event_start_date DESC
 		LIMIT
 			#{startRow},
 			#{listLimit}		

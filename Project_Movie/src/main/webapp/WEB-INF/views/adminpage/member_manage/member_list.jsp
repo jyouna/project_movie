@@ -16,7 +16,6 @@
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
 <style type="text/css">
 table {
 	white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
@@ -34,7 +33,6 @@ th, td {
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	
 	<h3>회원 정보 조회</h3>
 	<div id="divTop">
 		<div id="divTopLeft">
@@ -159,38 +157,35 @@ th, td {
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	
-	<script type="text/javascript">
-	$(function(){
-		$("#sidebarToggle").trigger("click");
-		const urlParams = new URLSearchParams(window.location.search);
-		const searchKeyword = urlParams.get("searchKeyword");
-		const searchContent = urlParams.get("searchContent");
-		
-		$.ajax({
-			url: "countMember",
-			type: "get",
-			data: {
-				searchKeyword : searchKeyword,
-				searchContent : searchContent
-			}
-		}).done(function(response){
-			$("#member_count").text("조회 수 : " + response.toLocaleString('ko-KR') + "명").css("color", "red");	
-		}).fail(function(){
-			
-		});
-		
-		$("#listSearch").on("click", function(){
-			alert("전체 목록을 출력했습니다.");
-		});
-		
-		$("#idSearch").on("click", function(){
-			window.open(                
-				'AdminPageIdSearch', // 팝업 창에 로드할 파일
-	            'ID 조회',    // 팝업 창 이름
-	            'width=300,height=150,scrollbars=no,resizable=no');
-		});	
-		
+<script type="text/javascript">
+$(function(){
+	$("#sidebarToggle").trigger("click");
+	const urlParams = new URLSearchParams(window.location.search);
+	const searchKeyword = urlParams.get("searchKeyword");
+	const searchContent = urlParams.get("searchContent");
 	
+	$.ajax({
+		url: "countMember",
+		type: "get",
+		data: {
+			searchKeyword : searchKeyword,
+			searchContent : searchContent
+		}
+	}).done(function(response){
+		$("#member_count").text("조회 수 : " + response.toLocaleString('ko-KR') + "명").css("color", "red");	
+	}).fail(function(){
+	});
+	
+	$("#listSearch").on("click", function(){
+		alert("전체 목록을 출력했습니다.");
+	});
+	
+	$("#idSearch").on("click", function(){
+		window.open(                
+			'AdminPageIdSearch', // 팝업 창에 로드할 파일
+            'ID 조회',    // 팝업 창 이름
+            'width=300,height=150,scrollbars=no,resizable=no');
+	});	
 	// 쿠폰 발급하기
 	$("#createCoupon").on("click", function(){
 	  const selectedIds = $(".selectedId:checked").map(function () {
@@ -240,6 +235,6 @@ th, td {
 	    selectedId.prop("checked", !isChecked);
 	});	
 });
-	</script>
+</script>
 </body>
 </html>

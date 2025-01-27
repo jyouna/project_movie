@@ -183,7 +183,7 @@ public class AdminEventManageController {
 		EventBoardVO eventVo = adminService.selectWinner(event_code);
 		// 이벤트 당첨자 목록 조회 (이벤트 시작일 ~ 종료일 사이 예매한 대상 조회)
 		List<String> winnerIdList = adminService.getBookingEventWinnerList(eventVo.getEvent_start_date(), eventVo.getEvent_end_date());
-		// 해당 기간 내 예매자 중 50명을 선별하여 저장하기 위한 객체
+		// 해당 기간 내 예매자 중 50명을 선별하여 저장
 		List<String> winnerList = new ArrayList<>(); 
 		Random r = new Random(); 
 		// 경품 추첨 대상자 수
