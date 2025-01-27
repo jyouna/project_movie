@@ -49,13 +49,6 @@ $(function() {
 		loadSchedule(selectedDate, selectedMovie);
 	});
 	
-//	$(".mv_sel select").change(function(){
-//		$(this).val();
-//		location.href="BookTickets?howOrder=" + $(this).val();
-//		console.log($(this).val());
-//	});
-	
-	
 	
 	// 예매 날짜 영화 선택시 스케줄 표시 메서드
 	function loadSchedule(selectedDate, selectedMovie) {

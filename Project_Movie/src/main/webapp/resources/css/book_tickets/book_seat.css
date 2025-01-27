@@ -212,6 +212,46 @@ form input[type="text"].count {
 	align-items: center; 
 }
 
+.seatType {
+	display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    justify-content: center;
+    position: absolute;
+    right: 60px; /* 화면 오른쪽으로 이동 */
+    top: 52%; /* 원하는 위치 조정 */
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
+    gap: 10px; /* 각 아이템 간격 */
+}
+
+.seatType div span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    width: 12px;
+    height: 9px;
+    padding: 7px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border: 4px double #fff;
+}
+
+
+.seatType div div {
+	font-size: 13px;
+	color: #444451;
+	width: auto;
+	height: auto;
+}
+
+.seatType div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	height: 20px;
+}
+
 .mv_info_container {
     display: flex; /* 가로로 정렬 */
     justify-content: space-between; /* 양쪽 버튼을 중앙 내용 양쪽 끝으로 배치 */

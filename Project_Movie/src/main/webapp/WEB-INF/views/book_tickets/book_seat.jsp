@@ -74,14 +74,22 @@
 			            </c:forEach>
 			        </div>
 			        <div class="seatType">
-			        	<span>1</span>
-			        	<div>선택</div>
-			        	<span></span>
-			        	<div>예매완료</div>
-			        	<span></span>
-			        	<div>일반</div>
-			        	<span></span>
-			        	<div>휠체어석</div>
+			        	<div>
+				        	<span style="background-color: #bdbfc1; border: 4px solid #fff;"></span>
+				        	<div>예매완료</div>
+			        	</div>
+			        	<div>
+				        	<span style="background-color: #f98780;"></span>
+				        	<div>선택</div>
+			        	</div>
+			        	<div>
+				        	<span style="background-color: #444451;"></span>
+				        	<div>일반</div>
+			        	</div>
+			        	<div>
+				        	<span style="background-color: #EDC6C6;"></span>
+				        	<div>휠체어석</div>
+			        	</div>
 			        </div>
 					
 					<span class="space_line"></span>
@@ -106,11 +114,11 @@
 						        <div class="row">
 						            <div class="header">일시</div>
 						            <div class="data">
-						            	<fmt:parseDate var="parsedReplyDate"
-														value="${schedule.start_time}"
-														pattern="yyyy-MM-dd HH:mm"
-														type="both" />
-										<fmt:formatDate value="${parsedReplyDate}" pattern="yyyy-MM-dd'('E')' HH:mm"/>
+<%-- 						            	<fmt:parseDate var="parsedReplyDate" --%>
+<%-- 														value="${schedule.start_time}" --%>
+<%-- 														pattern="yyyy-MM-dd HH:mm" --%>
+<%-- 														type="both" /> --%>
+										<fmt:formatDate value="${schedule.start_time}" pattern="yyyy-MM-dd'('E')' HH:mm"/>
 						            </div>
 						        </div>
 						        <div class="row">
