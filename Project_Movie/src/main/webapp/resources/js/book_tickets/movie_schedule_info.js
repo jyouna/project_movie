@@ -1,8 +1,11 @@
 $(function() {
 	let selectedDate = "";
 	let selectedMovie = "";
-	// 페이지 로드됐을 때 상영시간 안보이게 처리하고
-	// "날짜를 선택해주세요" 출력
+	
+	// 현재시간과 상영시간 비교해 차이가 20분 이하면 얼럿
+	let currentTime = "";
+	let startTime = "";
+	let timeDifference = "";
 	
 	// 날짜 선택 시 ajax로 해당 날짜 시간표 출력
 	$(".date_item").click(function() {
@@ -69,6 +72,11 @@ $(function() {
 				if(scheduleList.length != 0) {
 					
 					for(let schedule of scheduleList) {
+						// 현재시간과 상영시간의 차이 비교
+						currentTime = new Date();
+						startTime = new Date(schedule.start_time);
+						timeDifference = (startTime - currentTime) / (1000 * 60);
+
 						let hallName = schedule.theater_code;
 						if(hallName == "T1") {
 							hallName = "1관";
@@ -78,9 +86,17 @@ $(function() {
 							hallName = "3관";
 						}
 						
+						// 조조, 심야영화 아이콘
+						let timeIcon = "";
+						if(schedule.showtime_type == '조조') {
+							timeIcon = `<img src="resources/images/jojo.png">`;
+						} else if(schedule.showtime_type == '심야') {
+							timeIcon = `<img src="resources/images/night.png">`;
+						}
+						
 						// 시간 버튼 출력
 						$("#" + schedule.movie_code).append(`
-						    <a class="time_seat_btn" id="${schedule.schedule_code}">
+						    <a class="time_seat_btn" id="${schedule.schedule_code}" data-time-difference="${timeDifference}">
 						        <input type="hidden" value="${schedule.schedule_code}">
 						        <input type="hidden" class="isBookingAvail" value="${schedule.booking_avail}">
 						        <span class="mv_time">${schedule.str_start_time}</span>
@@ -88,6 +104,7 @@ $(function() {
 						            <span class="hall">${hallName}</span>
 						        </span>
 								<div class="end_time">종료 ${schedule.str_end_time}</div>
+								<div class="icon">${timeIcon}</div>
 						    </a>
 						`);
 						
@@ -124,12 +141,25 @@ $(function() {
 				
 				$(".movie_schedule_info").css("display", "block");
 				
+				// 시간 버튼 클릭 시 스케줄 코드 가지고 좌석 선택 페이지로 이동
 				$(".time_seat_btn").click(function() {
-					schCode = $(this).find("input[type='hidden']").val();
-					console.log(schCode);
-					
-					if(confirm("좌석선택 페이지로 이동하시겠습니까?")) {
-						location.href = "BookSeat?schedule_code=" + schCode;
+					if($(this).find(".isBookingAvail").val() == 1) {
+						schCode = $(this).find("input[type='hidden']").val();
+						timeDifference = $(this).data("time-difference");
+						console.log(schCode);
+						
+						// 현재시간과 상영시간의 차가 20분 이하인지 판별해서 각각 다른 얼럿
+						if(timeDifference > 20) {
+							if(confirm("좌석선택 페이지로 이동하시겠습니까?")) {
+								location.href = "BookSeat?schedule_code=" + schCode;
+							}
+						} else {
+							if(confirm("예매 취소는 상영시간 20분 전까지만 가능합니다.\n좌석선택 페이지로 이동하시겠습니까?")) {
+								location.href = "BookSeat?schedule_code=" + schCode;
+							}
+						}
+					} else {
+						alert("예매종료된 스케줄입니다.")
 					}
 				});
 				

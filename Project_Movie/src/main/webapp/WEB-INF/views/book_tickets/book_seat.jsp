@@ -73,6 +73,16 @@
 				            </div>
 			            </c:forEach>
 			        </div>
+			        <div class="seatType">
+			        	<span>1</span>
+			        	<div>선택</div>
+			        	<span></span>
+			        	<div>예매완료</div>
+			        	<span></span>
+			        	<div>일반</div>
+			        	<span></span>
+			        	<div>휠체어석</div>
+			        </div>
 					
 					<span class="space_line"></span>
 	

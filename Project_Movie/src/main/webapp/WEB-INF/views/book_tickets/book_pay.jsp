@@ -151,9 +151,9 @@
 							<section class="pay_container">
 								<h4>최종 결제수단</h4>
 								<div class="pay_type">
-									<label><input type="radio" class="pay" >신용카드</label>
-									<label><input type="radio" class="pay" >카카오페이</label>
-									<label><input type="radio" class="pay" >토스페이</label>
+									<label><input type="radio" class="pay" name="pay">신용카드</label>
+									<label><input type="radio" class="pay" name="pay">카카오페이</label>
+									<label><input type="radio" class="pay" name="pay">토스페이</label>
 								</div>
 							</section>
 							

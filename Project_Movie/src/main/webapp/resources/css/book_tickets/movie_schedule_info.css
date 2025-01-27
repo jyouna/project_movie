@@ -231,6 +231,13 @@
     background-color: #ddd;
 }
 
+.icon img {
+	position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+}
 
 .mv_time {
 	font-weight: bold;
