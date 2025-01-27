@@ -94,7 +94,7 @@ $(function(){
 				data: {
 					labels : monthOrder, // 축
 					datasets: [{ // 각 축에 들어갈 값 설정
-						label: year + "년 가입자 수", // 값 이름
+						label: year + "년 가입자 수(명)", // 값 이름
 						data: data, // 값
 						backgroundColor: 'rgba(255, 99, 132, 0.2)',
 						borderColor: 'rgba(54, 162, 235, 1)',
@@ -186,7 +186,7 @@ $(function(){
 						data: {
 							labels : [month+"월"], // 축
 							datasets: [{ // 각 축에 들어갈 값 설정
-								label:  yearAndMonth + "년 가입자 수", // 값이름
+								label:  yearAndMonth + "년 가입자 수(명)", // 값이름
 								data: [response], // 값
 								backgroundColor: 'rgba(255, 99, 132, 0.2)',
 // 								borderColor: 'rgba(54, 162, 235, 1)',
@@ -258,7 +258,7 @@ $(function(){
 						data: {
 							labels : monthOrder, // 축
 							datasets: [{ // 각 축에 들어갈 값 설정
-								label:  year + "년 가입자 수" , // 값 이름
+								label:  year + "년 가입자 수(명)" , // 값 이름
 								data: data, // 값
 								backgroundColor: 'rgba(255, 99, 132, 0.2)',
 								borderColor: 'rgba(54, 162, 235, 1)',
@@ -353,7 +353,7 @@ $(function(){
 				data: {
 					labels : years, // 축
 					datasets: [{ // 각 축에 들어갈 값 설정
-						label:  "연도별 가입자 수" , // 값 이름
+						label:  "연도별 가입자 수(명)" , // 값 이름
 						data: counts, // 값
 						backgroundColor: 'transparent',
 						borderColor: 'rgba(54, 162, 235, 1)',
