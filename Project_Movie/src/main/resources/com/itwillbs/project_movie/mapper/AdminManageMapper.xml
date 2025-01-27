@@ -948,6 +948,15 @@
 			#{id}
 		)
 	</insert>
+	
+	<update id="endEventWithoutWinner">
+		UPDATE
+			event_board
+		SET
+			set_winner_status = 1
+		WHERE
+			event_code = #{event_code}
+	</update>
 
 
 

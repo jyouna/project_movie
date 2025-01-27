@@ -60,7 +60,6 @@ public interface AdminManageMapper {
 	// 1. 전체 회원 정보 조회
 	List<MemberVO> selectMemberInfoForEvent();
 	
-	
 	// 이벤트 관리
 	// 1. 이벤트 등록
 	void insertEventBoard(EventBoardVO eventVo);
@@ -229,5 +228,8 @@ public interface AdminManageMapper {
 	// 관리자가 직접 쿠폰 지급
 	int createCoupon(@Param("expiredDate") Date expiredDate, @Param("couponType") String couponType, 
 					@Param("discountRate") int discountRate, @Param("discountAmount")int discountAmount, @Param("id")String id);
+	
+	// 기간 내 예매자가 없을 경우 이벤트 자동종료
+	void endEventWithoutWinner(@Param("event_code") int event_code);
 	
 }

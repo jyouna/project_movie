@@ -30,18 +30,18 @@
 		<h3>쿠폰 지급</h3>
 			<fieldset> <!--  할인쿠폰 / 금액쿠폰 선택 영역  -->
 				<table class="mainTable"> 
-					<tr class="tr01">
+					<tr class="tr01" id="tr02">
 						<th>만료일</th>
 						<th>쿠폰타입</th>
 						<th id="thForDiscount"></th>
 					</tr>
 					<tr>
-						<td><input type="date" name="expired_date" required id="expired_date"></td>
+						<td><input type="date" name="expired_date" id="expired_date" required></td>
 						<td> <!--  할인율/금액할인 선택 -->
 							<select id="coupon_type" name="coupon_type" required>
 								<option>선택</option>
 								<option>금액할인</option>
-								<option>할인율</option>
+								<option >할인율</option>
 							</select>
 						</td>
 						<td> <!-- 할인율 혹은 할인금액 입력!! -->
@@ -67,7 +67,6 @@
 				<input type="button" value="지급하기" id="couponSubmit">
 				<input type="button" value="돌아가기" id="cancel">
 			</div>
-			<br>
 			<h3>당첨자</h3>
 			<fieldset> <!--  지급 대상자 출력 항목 -->
 				<table id="mainTable" class="mainTable">
@@ -113,6 +112,49 @@ $(function(){
 	console.log("today : " + today);
 // 	console.log("today2 : " + today2);
 	$("#expired_date").attr("min", today);
+
+	
+	
+	// 쿠폰 지급 폼 제출 시 검증
+	$("#giveCouponForm").on("submit", function(e){
+		
+		// 날짜 미입력 검증
+		if($("#expired_date").val() === "") {
+			 e.preventDefault();
+			 alert("날짜를 입력해주세요.");
+			 $("#expired_date").focus();
+			 return;
+		}
+		
+		// 쿠폰 타입 선택 검증
+		if($("#coupon_type").val() === "선택") {
+			 e.preventDefault();
+			 alert("쿠폰  타입을 선택해주세요.");
+			 $("#coupon_type").focus();
+			 return;
+		}
+		
+		// 금액할인 선택 시 입력 여부 및 입력 값이 0인지 검증
+		if($("#coupon_type").val() === "금액할인") {
+			if($("#discount_amount").val().trim() === "" || $("#discount_amount").val().trim() === "0") {
+				 e.preventDefault();
+				 alert("할인금액을 입력해주세요.");
+				 $("#discount_amount").focus();
+				 return;
+			}
+			
+		// 할인율 선택 시 할인비율 선택 검증
+		} else if($("#coupon_type").val() === "할인율") {
+			if($("#discount_rate").val() === "0") {
+				 e.preventDefault();
+				 alert("할인율을 선택해주세요.");
+				 $("#discount_rate").focus();
+				 return;
+			}
+			
+		}
+ 	})
+
 })
 </script>
 </body>

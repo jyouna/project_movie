@@ -27,11 +27,11 @@
 		<h3>포인트 지급</h3>
 			<fieldset>
 				<table class="mainTable"> 
-					<tr class="tr01">
+					<tr class="tr01" id="tr02">
 						<th>포인트 금액</th>
 					</tr>
 					<tr>
-						<td><input type="text" maxlength="5" name="point_amount" value="0" placeholder="금액 입력" ></td>
+						<td><input type="text" maxlength="5" name="point_amount" id="point_amount" value="0" placeholder="금액 입력" ></td>
 					</tr>
 				</table>			
 			</fieldset>
@@ -39,7 +39,6 @@
 				<input type="submit" value="지급하기">
 				<input type="button" value="돌아가기" id="cancel">
 			</div>
-			<br>
 			<h3>포인트 지급 대상자</h3>
 			<fieldset> <!--  지급 대상자 출력 항목 -->
 				<table id="mainTable" class="mainTable">
@@ -58,12 +57,6 @@
 						<c:otherwise>
 							<c:forEach var="id" items="${member_id}" varStatus="status">
 								<tr>
-<!-- 									<td> -->
-<%-- 											<input type="checkbox" class="eventSetCheckbox" value="${id}"> --%>
-<!-- 									</td> -->
-<!-- 									<td> -->
-<%-- 											<input type="hidden" name="event_code" value="${event_code}"> --%>
-<!-- 									</td> -->
 									<td>
 										${status.count}
 									</td>
@@ -82,6 +75,18 @@
 	</form>
 	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
-
+<script type="text/javascript">
+	$(function(){
+		// 포인트 지금 폼 제출 시 검증
+		$("#givePointForm").on("submit", function(e){
+			if($("#point_amount").val().trim() === "" || $("#point_amount").val().trim() === "0") {
+				 e.preventDefault();
+				 alert("포인트 금액(1~99999)을 입력해주세요.");
+				 $("#point_amount").focus();
+				 return;
+			} 
+		});
+	})
+</script>
 </body>
 </html>

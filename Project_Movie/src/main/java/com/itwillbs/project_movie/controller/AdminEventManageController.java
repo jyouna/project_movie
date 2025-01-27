@@ -187,22 +187,38 @@ public class AdminEventManageController {
 		List<String> winnerList = new ArrayList<>(); 
 		Random r = new Random(); 
 		// 경품 추첨 대상자 수
-		int winnerCount = winnerIdList.size();
-		
-		while(winnerList.size() != 50) {
-			String id = winnerIdList.get(r.nextInt(winnerCount));
-			 // 해당 기간에 예매한 인원 중 랜덤으로 50명 추첨 
-			 // 만약 동일한 아이디가 나올 시 재추첨
-			if(!winnerList.contains(id)) {
-				winnerList.add(id);
-			} 
+		int winnerCount = winnerIdList.size();		
+		System.out.println("winnerCount : " + winnerCount);
+		// 만약 해당 기간 내 결제한 인원이 한 명도 없을 경우 오류 메세지 창 출력 및 이벤트 자동종료
+		if(winnerCount == 0) {
+			adminService.endEventWithoutWinner(eventVo.getEvent_code());
+			model.addAttribute("msg", "해당 기간 내 예매한 회원이 없습니다.");
+			model.addAttribute("targetURL", "EventBoardManage");
+			return "result/process";			
 		}
-		
+		// 만약 해당 기간 내 결제한 인원이 50명보다 적을 경우, 조회된 인원 수 만큼만 반복수행
+		if((winnerCount < 50) && (winnerCount > 0)) {
+			for(int i = 0; i < winnerCount; i++) {
+				String id = winnerIdList.get(r.nextInt(winnerCount));
+				// 리스트에 포함되어 있지 않은 아이디만 당첨자 리스트에 추가
+				if(!winnerList.contains(id)) {
+					winnerList.add(id);
+				}
+			}
+		// 해당 기간 내 결제한 인원이 50명 초과일 경우, 50회 반복
+		} else {
+			while(winnerList.size() != 50) {
+				String id = winnerIdList.get(r.nextInt(winnerCount));
+				// 해당 기간에 예매한 인원 중 랜덤으로 50명 추첨 
+				// 만약 동일한 아이디가 나올 시 재추첨
+				if(!winnerList.contains(id)) {
+					winnerList.add(id);
+				} 
+			}
+		}
 		System.out.println("리스트 객체에 저장된 값 개수 : " + winnerList.size());
-
 		model.addAttribute("eventVo", eventVo);
 		model.addAttribute("winnerList", winnerList); // 기존에 memberVo로 이름을 설정하여 그대로 유지 
-		
 		return "adminpage/event_manage/choose_event_winner";
 	}
 	
@@ -213,7 +229,6 @@ public class AdminEventManageController {
 		}
 		model.addAttribute("member_id", member_id);
 		model.addAttribute("event_code", event_code);
-		
 		return "adminpage/coupon_manage/coupon_regis";
 	}
 	
@@ -223,14 +238,13 @@ public class AdminEventManageController {
 		return "redirect:/EventAllWinnerList";
 	}
 	
-	@GetMapping("GivePoint") // 이벤트 당첨자 선택 후 포인트 지급 화면 이동
+	// 이벤트 당첨자 선택 후 포인트 지급 화면 이동
+	@GetMapping("GivePoint") 
 	public String givePoint(@RequestParam("member_id") List<String> member_id, int event_code, Model model) {
 		model.addAttribute("member_id", member_id);
 		model.addAttribute("event_code", event_code);
-		
 		return "adminpage/point_manage/point_regis";
 	}
-	
 	
 	// 회원 관리 메뉴에서 ID 선택 후 포인트 지급 버튼 클릭 시 팝업 창
 	@GetMapping("CreditPoint")

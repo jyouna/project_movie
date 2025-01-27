@@ -53,25 +53,20 @@
 			</c:forEach>
 		</table>
 	</div>
-	
-	<script type="text/javascript">
-	$(function(){
-		const urlParams = new URLSearchParams(window.location.search); // URL 파라미터 가져오기
-	    const event_code = urlParams.get("event_code");
-	
-		console.log("urlParams : " + urlParams);
-		console.log("이벤트코드 : " + event_code);
-		
-		
-		$.ajax({
-			url: "GetWinnerCountForShow",
-			type: "get",
-			data: {event_code : event_code}
-		}).done(function(response){			
-			$("#titleMent").prepend("당첨되신 " + response + "분 ");
-		});
+<script type="text/javascript">
+$(function(){
+	const urlParams = new URLSearchParams(window.location.search); // URL에서 파라미터 값 가져오기
+    const event_code = urlParams.get("event_code");
+	console.log("urlParams : " + urlParams);
+	console.log("이벤트코드 : " + event_code);
+	$.ajax({
+		url: "GetWinnerCountForShow",
+		type: "get",
+		data: {event_code : event_code}
+	}).done(function(response){			
+		$("#titleMent").prepend("당첨되신 " + response + "분 ");
 	});
-	</script>
-	
+});
+</script>
 </body>
 </html>

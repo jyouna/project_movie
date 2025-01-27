@@ -136,13 +136,16 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.selectMemberInfoForEvent();
 	}
-
+	
+	// 이벤트 당첨자 쿠폰 지급 
 	public void insertCoupon(GetGiveCouponInfoVO vo) {
 		
 		String coupon_type = vo.getCoupon_type();
 		int discount_amount = Integer.parseInt(vo.getDiscount_amount());
 		int discount_rate = Integer.parseInt(vo.getDiscount_rate());
 		int event_code = vo.getEvent_code();
+		
+		// 당첨자 id 리스트 가져와 저장
 		List<String> id = vo.getMember_id();
 		int insertCount = 0;
 		
@@ -180,16 +183,16 @@ public class AdminManageService {
 	// 1. 회원에게 포인트 + 시키고
 	// 2. 포인트 테이블에 정보 저장
 	// 3. 이벤트 당첨자 추첨 상태 true
-	@Transactional
 	public int GivePointToWinner(List<String> member_id, int event_code, int point_amount) {
 		// TODO Auto-generated method stub
 		
+		System.out.println("이벤트 코드 : ");
 		int updateCount1 = 0;
 		int updateCount2 = 0;
-		
+
 		for(String id : member_id) {
-			updateCount1 = manageMapper.insertPointInfo(id, event_code, point_amount); // 포인트 변동 정보 저장
-			updateCount2 = manageMapper.creditPoint(id, point_amount); // 회원에게 포인트 + 시킴
+			updateCount1 += manageMapper.insertPointInfo(id, event_code, point_amount); // 포인트 변동 정보 저장
+			updateCount2 += manageMapper.creditPoint(id, point_amount); // 회원에게 포인트 + 시킴
 		}
 		
 		if(updateCount1 == updateCount2) {
@@ -209,7 +212,6 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		return manageMapper.getMemberAllInfo();
 	}
-	
 	
 	// 페이징 처리 시 해당 게시판 별 행 개수 조회
 	public int getBoardListForPaging(String boardName, String searchKeyword, String searchContent) {
@@ -546,5 +548,12 @@ public class AdminManageService {
 		} else {
 			return insertCount;
 		}
+	}
+	
+	// 기간 내 예매자가 없을 시 이벤트 자동 종료   
+	public void endEventWithoutWinner(int event_code) {
+		// TODO Auto-generated method stub
+		manageMapper.endEventWithoutWinner(event_code);
+		
 	}
 }
