@@ -204,6 +204,34 @@ public class AdminManageController {
 		return "adminpage/member_manage/member_list";
 	}
 	
+	// 회원리스트 조회 검색바
+	@PostMapping("MemberList")
+	public String memberList(HttpSession session, Model model, 
+							@RequestParam(defaultValue = "") String searchKeyword, 
+							@RequestParam(defaultValue = "") String searchContent) {
+		
+		// 관리자 로그인 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(1, "memberList", searchKeyword, searchContent);
+		List<MemberAllInfoVO> voList = adminService.queryMemberList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("voList", voList);
+		
+		return "adminpage/member_manage/member_list";
+	}
+	
 
 }
 

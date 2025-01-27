@@ -343,6 +343,32 @@ public class AdminEventManageController {
 		return "adminpage/coupon_manage/coupon_winner_manage";
 	}
 
+	@PostMapping("CouponWinnerManage") // 이벤트 당첨자 표시 페이지
+	public String couponWinnerSearchForm(Model model, HttpSession session,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "") String searchContent) {
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(1, "couponWinnerList", searchKeyword, searchContent);
+		List<EventWinnerVO> coupon_winner = adminService.getEventWinnerList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+		model.addAttribute("coupon_winner", coupon_winner);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "adminpage/coupon_manage/coupon_winner_manage";
+	}
+
 	@GetMapping("PointWinnerManage") // 이벤트 당첨자 표시 페이지
 	public String pointWinnerPage(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 									@RequestParam(defaultValue = "") String searchKeyword,
@@ -400,7 +426,37 @@ public class AdminEventManageController {
 		return "adminpage/coupon_manage/coupon_board_manage";
 	}
 	
-	@GetMapping("PointBoardManage") // 포인트 관리 페이지
+	// 쿠폰 관리 페이지 상단 검색바
+	@PostMapping("CouponBoardManage")
+	public String couponBoardSearchForm(Model model, HttpSession session,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "") String searchContent) {
+		
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(1, "couponList", searchKeyword, searchContent);
+		System.out.println("pageInfo 값 : " + pageInfo);
+		
+		List<CouponVO> couponVo = adminService.getCouponList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+		model.addAttribute("couponVo", couponVo);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "adminpage/coupon_manage/coupon_board_manage";
+	}
+	
+	 // 포인트 내역
+	@GetMapping("PointBoardManage")
 	public String pointBoardManagement(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 										@RequestParam(defaultValue = "") String searchKeyword,
 										@RequestParam(defaultValue = "") String searchContent) {
@@ -418,6 +474,32 @@ public class AdminEventManageController {
 		}
 		
 		PageInfo2 pageInfo = pagingHandler.pagingProcess(pageNum, "pointList", searchKeyword, searchContent);
+		List<PointVO> pointVo = adminService.getPointRecord(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+		model.addAttribute("pointVo", pointVo);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "adminpage/point_manage/point_board_manage";
+	}
+	
+	// 포인트 내역 검색바
+	@PostMapping("PointBoardManage")
+	public String pointBoardSearchForm(Model model, HttpSession session,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "") String searchContent) {
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
+		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("vote_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
+		
+		PageInfo2 pageInfo = pagingHandler.pagingProcess(1, "pointList", searchKeyword, searchContent);
 		List<PointVO> pointVo = adminService.getPointRecord(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
 		model.addAttribute("pointVo", pointVo);
 		model.addAttribute("pageInfo", pageInfo);

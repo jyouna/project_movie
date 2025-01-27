@@ -41,7 +41,7 @@ th, td {
 			<span id="member_count"></span>
 		</div>
 		<div id="divTopRight">
-			<form action="MemberList" method="get" id="formTag">
+			<form action="MemberList" method="post" id="formTag">
 				<input type="hidden" name="pageNum" value="${param.pageNum}">	
 				<select name="searchKeyword" id="searchKeyword">
 					<option value="searchId" <c:if test="${param.searchKeyword == 'searchId'}">selected</c:if>>ID</option>
@@ -53,86 +53,86 @@ th, td {
 			</form>
 		</div>	
 	</div>
-<!-- 	<div id="tableDiv"> -->
-	<table id="mainTable" class="memberTable" border="1">
-		<tr align="center" id="tr01">
-			<th><input type="checkbox" id="selectAll" class="selectedId"></th>
-			<th>가입일</th>
-			<th>ID</th>
-			<th>이름</th>
-			<th>메일</th>
-			<th>연락처</th>
-			<th>성별</th>
-			<th>생년<br>월일</th>
-			<th>관심<br>장르</th>
-			<th>문자<br>수신</th>
-			<th>메일<br>수신</th>
-			<th>정보<br>공개</th>
-			<th>메일<br>인증</th>
-			<th>번호<br>인증</th>
-			<th>회원<br>유형</th>
-			<th>보유<br>포인트</th>
-			<th>유효<br>쿠폰</th>
-			<th>계정<br>상태</th>
-		</tr>
-		<c:choose>
-			<c:when test="${empty voList}">
-				<tr>
-					<th colspan="18">등록된 회원이 없습니다</th>
-				</tr>
-			</c:when>
-		<c:otherwise>
-			<c:forEach var="member" items="${voList}" varStatus="status">
-				<tr>
-					<td><input type="checkbox" value="${member.member_id}" class="selectedId"></td>
-					<td><fmt:formatDate value="${member.regis_date}" pattern="yyMMdd"/></td>
-					<td class="alignLeft">${member.member_id}</td>
-					<td class="alignLeft">${member.member_name}</td>
-					<td class="alignLeft">${member.email}</td>
-					<td class="alignLeft">${member.phone}</td>
-					<td>
-						<c:if test="${member.gender eq 'M'}">남</c:if>
-						<c:if test="${member.gender eq 'F'}">여</c:if>
-					</td>
-					<td><fmt:formatDate value="${member.birth_date}" pattern="yyMMdd"/></td>
-					<td>${member.gerne}</td>
-					<td>
-						<c:if test="${member.text_receive eq false}">거부</c:if>
-						<c:if test="${member.text_receive eq true}">동의</c:if>
-					</td>
-					<td>
-						<c:if test="${member.email_receive eq false}">거부</c:if>
-						<c:if test="${member.email_receive eq true}">동의</c:if>
-					</td>
-					<td>
-						<c:if test="${member.info_open eq false}">거부</c:if>						
-						<c:if test="${member.info_open eq true}">동의</c:if>						
-					</td>
-					<td>
-						<c:if test="${member.email_auth_status eq false}">미완</c:if>						
-						<c:if test="${member.email_auth_status eq true}">완료</c:if>						
-					</td>
-					<td>
-						<c:if test="${member.phone_auth_status eq false}">미완</c:if>						
-						<c:if test="${member.phone_auth_status eq true}">완료</c:if>						
-					</td>
-					<td>
-						<c:if test="${member.member_type eq '1'}">일반</c:if>
-						<c:if test="${member.member_type eq '2'}">VIP</c:if>
-					</td>
-					<td class="tdForNumber"><fmt:formatNumber value="${member.remain_point}" type="number" /></td>
-					<td class="tdForNumber"><fmt:formatNumber value="${member.coupon_num}" type="number" /></td>
-					<td>
-						<c:if test="${member.member_status eq '1'}">정상</c:if>						
-						<c:if test="${member.member_status eq '2'}">정지</c:if>						
-						<c:if test="${member.member_status eq '3'}">탈퇴</c:if>						
-					</td>
-				</tr>
-			</c:forEach>
-		</c:otherwise>
-		</c:choose>
-	</table>
-<!-- 	</div> -->
+	<div id="tableDiv">
+		<table id="mainTable" class="memberTable" border="1">
+			<tr align="center" id="tr01">
+				<th><input type="checkbox" id="selectAll" class="selectedId"></th>
+				<th>가입일</th>
+				<th>ID</th>
+				<th>이름</th>
+				<th>메일</th>
+				<th>연락처</th>
+				<th>성별</th>
+				<th>생년<br>월일</th>
+				<th>관심<br>장르</th>
+				<th>문자<br>수신</th>
+				<th>메일<br>수신</th>
+				<th>정보<br>공개</th>
+				<th>메일<br>인증</th>
+				<th>번호<br>인증</th>
+				<th>회원<br>유형</th>
+				<th>보유<br>포인트</th>
+				<th>유효<br>쿠폰</th>
+				<th>계정<br>상태</th>
+			</tr>
+			<c:choose>
+				<c:when test="${empty voList}">
+					<tr>
+						<th colspan="18">등록된 회원이 없습니다</th>
+					</tr>
+				</c:when>
+			<c:otherwise>
+				<c:forEach var="member" items="${voList}" varStatus="status">
+					<tr>
+						<td><input type="checkbox" value="${member.member_id}" class="selectedId"></td>
+						<td><fmt:formatDate value="${member.regis_date}" pattern="yyMMdd"/></td>
+						<td class="alignLeft">${member.member_id}</td>
+						<td class="alignLeft">${member.member_name}</td>
+						<td class="alignLeft">${member.email}</td>
+						<td class="alignLeft">${member.phone}</td>
+						<td>
+							<c:if test="${member.gender eq 'M'}">남</c:if>
+							<c:if test="${member.gender eq 'F'}">여</c:if>
+						</td>
+						<td><fmt:formatDate value="${member.birth_date}" pattern="yyMMdd"/></td>
+						<td>${member.gerne}</td>
+						<td>
+							<c:if test="${member.text_receive eq false}">거부</c:if>
+							<c:if test="${member.text_receive eq true}">동의</c:if>
+						</td>
+						<td>
+							<c:if test="${member.email_receive eq false}">거부</c:if>
+							<c:if test="${member.email_receive eq true}">동의</c:if>
+						</td>
+						<td>
+							<c:if test="${member.info_open eq false}">거부</c:if>						
+							<c:if test="${member.info_open eq true}">동의</c:if>						
+						</td>
+						<td>
+							<c:if test="${member.email_auth_status eq false}">미완</c:if>						
+							<c:if test="${member.email_auth_status eq true}">완료</c:if>						
+						</td>
+						<td>
+							<c:if test="${member.phone_auth_status eq false}">미완</c:if>						
+							<c:if test="${member.phone_auth_status eq true}">완료</c:if>						
+						</td>
+						<td>
+							<c:if test="${member.member_type eq '1'}">일반</c:if>
+							<c:if test="${member.member_type eq '2'}">VIP</c:if>
+						</td>
+						<td class="tdForNumber"><fmt:formatNumber value="${member.remain_point}" type="number" /></td>
+						<td class="tdForNumber"><fmt:formatNumber value="${member.coupon_num}" type="number" /></td>
+						<td>
+							<c:if test="${member.member_status eq '1'}">정상</c:if>						
+							<c:if test="${member.member_status eq '2'}">정지</c:if>						
+							<c:if test="${member.member_status eq '3'}">탈퇴</c:if>						
+						</td>
+					</tr>
+				</c:forEach>
+			</c:otherwise>
+			</c:choose>
+		</table>
+	</div>
 	<div id="divBottom" class="view">
 		<input type="button" value="처음" 
 			onclick="location.href='MemberList?pageNum=1'" 

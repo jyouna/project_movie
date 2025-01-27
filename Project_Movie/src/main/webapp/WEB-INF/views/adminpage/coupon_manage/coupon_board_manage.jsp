@@ -26,7 +26,7 @@
 		<div id="divTopLeft">
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
-			<form action="CouponBoardManage" method="get">
+			<form action="CouponBoardManage" method="post">
 				<input type="hidden" name="pageNum" value="${param.pageNum}">
 				<select name="searchKeyword" id="selectKeyword">
 					<option value="couponHolder" <c:if test="${param.searchKeyword eq 'couponHolder'}">selected</c:if>>아이디</option>

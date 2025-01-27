@@ -136,7 +136,7 @@ $(function(){
 		
 		// 금액할인 선택 시 입력 여부 및 입력 값이 0인지 검증
 		if($("#coupon_type").val() === "금액할인") {
-			if($("#discount_amount").val().trim() === "" || $("#discount_amount").val().trim() === "0") {
+			if($("#discount_amount").val().trim() === "" || $("#discount_amount").val().trim() <== "0") {
 				 e.preventDefault();
 				 alert("할인금액을 입력해주세요.");
 				 $("#discount_amount").focus();

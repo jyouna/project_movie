@@ -28,7 +28,7 @@
 		<h4>쿠폰 당첨자</h4>
 		</div>	
 		<div id="divTopRight"> <!--  우측 상단 검색란 -->
-			<form action="CouponWinnerManage" method="get">
+			<form action="CouponWinnerManage" method="post">
 				<input type="hidden" name="pageNum" value="${param.pageNum}">
 				<select name="searchKeyword">
 					<option value="winnerId" <c:if test="${param.searchKeyword eq 'winnerId'}">selected</c:if>>아이디</option>

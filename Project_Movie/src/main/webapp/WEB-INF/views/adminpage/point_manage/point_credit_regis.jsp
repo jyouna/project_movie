@@ -28,7 +28,10 @@
 						<th>포인트 금액</th>
 					</tr>
 					<tr>
-						<td><input type="text" maxlength="5" name="point_amount" id="point" value="0" placeholder="금액 입력" ></td>
+						<td>
+							<input type="text" maxlength="5" name="point_amount" id="point" value="0" placeholder="금액 입력" >
+							<span>1~99,999 사이 입력</span>
+						</td>
 					</tr>
 				</table>			
 			</fieldset>
@@ -74,7 +77,7 @@ $(function(){
 		
 		// 필수입력 요소 검증
 		// 포인트 금액 입력 여부 검증
-		if($("#point").val().trim() === "0" || $("#point").val().trim() === "") {
+		if(parseInt($("#point").val().trim(), 10) <= 0 || $("#point").val().trim() === "") {
 			alert("금액(1~99,999)을 입력해 주세요");
 			return;
 		}

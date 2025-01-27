@@ -136,7 +136,7 @@ $(function(){
 		// 쿠폰타입
 		let coupon_type = $("#coupon_type").val();
 		// 금액
-		let discount_amount = $("#discount_amount").val();
+		let discount_amount = $("#discount_amount").val().trim();
 		// 할인율
 		let discount_rate = $("#discount_rate").val();
 		// 수량
@@ -159,7 +159,7 @@ $(function(){
 		
 		// 2-3) 할인금액
 		if(coupon_type === "금액할인") {
-			if(discount_amount === "0" || discount_amount === "")
+			if(parseInt(discount_amount, 10) <= 0 <= 0 || discount_amount === "")
 			alert("금액(1~99,999)을 입력해 주세요");
 			discount_amount.focus();
 			return;

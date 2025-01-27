@@ -39,7 +39,7 @@
 	<div id="divTop">
 		<div id="divTopLeft"></div>
 		<div id="divTopRight">
-			<form action="PointBoardManage" method="get" id="pointForm">
+			<form action="PointBoardManage" method="post" id="pointForm">
 				<input type="hidden" name="pageNum" value="${param.pageNum}">
 				<select name="searchKeyword">
 					<option value="pointHolder" <c:if test="${param.searchKeyword eq 'pointHolder'}">selected</c:if>>아이디</option>
