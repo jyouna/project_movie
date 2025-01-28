@@ -10,17 +10,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	
 	<title>쿠폰 지급</title>
-	
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/adminpage_styles.css" rel="stylesheet" />
 	<link href="${pageContext.request.contextPath}/resources/css/adminpage/event.css" rel="stylesheet" />
-
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/adminpage/event.js"></script>
-
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
@@ -107,7 +103,6 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 <script type="text/javascript">
 $(function(){
-	alert("자바스크립트 동작 확인");
 	let time = new Date();
 	time.setHours(time.getHours() + 9); // UTC+9 적용
 	let today = time.toISOString().split('T')[0];
@@ -135,8 +130,8 @@ $(function(){
 		
 		// 금액할인 선택 시 입력 여부 및 입력 값이 0인지 검증
 		if($("#coupon_type").val() === "금액할인") {
-			if($("#discount_amount").val().trim() === "" || $("#discount_amount").val().trim() <== "0") {
-				 alert("할인금액을 입력해주세요.");
+			if($("#discount_amount").val().trim() === "" || $("#discount_amount").val().trim() <= "0") {
+				 alert("할인금액(1~99,999)을 입력해주세요.");
 				 $("#discount_amount").focus();
 				 return;
 			}

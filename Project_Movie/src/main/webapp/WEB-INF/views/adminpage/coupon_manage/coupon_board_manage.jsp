@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="ko_KR" /> <!--  숫자 자리표기법 locale KR 기준 -->
+<fmt:setBundle basename="messages" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,7 +77,7 @@
 										${coupon.discount_rate}% 할인권
 									</c:when>
 									<c:otherwise>
-										${coupon.discount_amount}원 할인권
+										<fmt:formatNumber value="${coupon.discount_amount}" pattern="#,##0" />원 할인권
 									</c:otherwise>
 								</c:choose>
 							</td>	

@@ -83,7 +83,7 @@ $(function(){
 	// 포인트 지금 폼 제출 시 검증
 	$("#givePointForm").on("submit", function(e){
 		 e.preventDefault();
-		if($("#point_amount").val().trim() === "" || parseInt($("#point").val().trim(), 10) <= 0) {
+		if($("#point_amount").val().trim() === "" || parseInt($("#point_amount").val().trim(), 10) <= 0) {
 			 alert("포인트 금액(1~99999)을 입력해주세요.");
 			 $("#point_amount").focus();
 			 return;
