@@ -38,8 +38,6 @@ public interface AdminManageMapper {
 	int deleteReview(Map<String, String> map);
 	//관리자 후기 관리 - 장민기 20250123 끝 **********	
 	
-	
-	
 	// 관리자 계정 관리
 	// 1. 관리자 계정 등록
 	int insertAccount(AdminRegisVO adminVo);
@@ -55,10 +53,33 @@ public interface AdminManageMapper {
 	void adminAccountModify(AdminRegisVO modifyVo);
 	// 7. 관리자 로그인 시 아이디, 패스워드 판별
 	AdminRegisVO adminLogin(AdminRegisVO adminLoginInfo);
-
+	// 8. 관리자 계정관리 페이지 출력 데이터 조회
+	List<AdminRegisVO> selectAdminPagingListPaging(@Param("startRow") int startRow, 
+													@Param("listLimit") int listLimit);
+	// 9. 관리자 계정관리 게시판 listcount 조회
+	int getAdminListCount();
+	
+	
+	
+	
 	// 회원관리
-	// 1. 전체 회원 정보 조회
+	// 1. 회원 테이블 정보 조회
 	List<MemberVO> selectMemberInfoForEvent();
+	// 2. 쿠폰, 포인트 테이블 JOIN을 통한 회원 전체 정보 조회
+	List<MemberAllInfoVO> selectMemberListPaging(@Param("startRow") int startRow, 
+												 @Param("listLimit") int listLimit, 
+												 @Param("searchKeyword") String searchKeyword, 
+												 @Param("searchContent") String searchContent);	
+	// 3. 페이징 없이 회원 전체 정보 조회
+	List<MemberAllInfoVO> getMemberAllInfo();
+	// 4. 회원정보 게시판 listcount 조회
+	int getMemberListCount(@Param("searchKeyword") String searchKeyword, 
+							@Param("searchContent") String searchContent);
+	// 5. 회원리스트 조회
+	List<MemberVO> searchMemberList(@Param("searchKeyword") String searchKeyword,
+									@Param("searchContent") String searchContent);	
+	
+	
 	
 	// 이벤트 관리
 	// 1. 이벤트 등록
@@ -87,7 +108,18 @@ public interface AdminManageMapper {
 	EventBoardVO checkEventStatus(@Param("event_code") int event_code);
 	// 10. 이벤트 당첨자 추첨 시 당첨상태 완료로 변경
 	void updateEventWinnerSetStatus(@Param("event_code") int event_code);
-	
+	// 11. 이벤트 게시판 listcount 조회
+	int getEventBoardListCount(@Param("searchKeyword") String searchKeyword, 
+							   @Param("searchContent") String searchContent,
+							   @Param("eventStatus")String eventStatus,
+							   @Param("eventWinnerStatus") String eventWinnerStatus);
+	// 12. 이벤트 게시판 목록 조회 최종
+	List<EventBoardVO> selectEventBoardList(@Param("startRow") int startRow, 
+											@Param("listLimit") int listLimit, 
+											@Param("searchKeyword") String searchKeyword, 
+											@Param("searchContent") String searchContent, 
+											@Param("eventStatus") String eventStatus, 
+											@Param("eventWinnerStatus") String eventWinnerStatus);
 	
 	// 쿠폰 관련
 	// 1. 쿠폰 등록
@@ -99,12 +131,19 @@ public interface AdminManageMapper {
 								@Param("searchContent") String searchContent);
 	// 3. 회원별 보유 쿠폰 개수 가져오기 
 	List<Map<String, String>> getCouponInfo();
+	// 4. 쿠폰 당첨자 listcount 조회
+	int getCouponWinnerListCount(@Param("searchKeyword") String searchKeyword, 
+			 					@Param("searchContent") String searchContent);	
+	// 5. 쿠폰내역 listcount 조회
+	int getCouponListCount(@Param("searchKeyword") String searchKeyword, 
+							@Param("searchContent") String searchContent);
+	
 	
 	// 포인트 관련
 	// 1. 포인트 지급 
 	int creditPoint(@Param("id") String id, 
 					 @Param("point_amount") int point_amount);
-	// 2. 이벤트 당첨 포인트 정보 추가
+	// 2. 이벤트 당첨 시 포인트 정보 추가
 	int insertPointInfo(@Param("id") String id, 
 			 			 @Param("event_code") int event_code, 
 			 			 @Param("point_amount") int point_amount);
@@ -113,48 +152,12 @@ public interface AdminManageMapper {
 								@Param("listLimit") int listLimit, 
 								@Param("searchKeyword") String searchKeyword, 
 								@Param("searchContent") String searchContent);
-
-	List<MemberAllInfoVO> getMemberAllInfo();
-
-	List<AdminRegisVO> selectAdminPagingListPaging(@Param("startRow") int startRow, 
-												   @Param("listLimit") int listLimit);
-	
-	List<MemberAllInfoVO> selectMemberListPaging(@Param("startRow") int startRow, 
-												 @Param("listLimit") int listLimit, 
-												 @Param("searchKeyword") String searchKeyword, 
-												 @Param("searchContent") String searchContent);
-	
-	int getAdminListCount();
-	
-	int getMemberListCount(@Param("searchKeyword") String searchKeyword, 
-						   @Param("searchContent") String searchContent);
-	
-	int getEventBoardListCount(@Param("searchKeyword") String searchKeyword, 
-							   @Param("searchContent") String searchContent,
-							   @Param("eventStatus")String eventStatus,
-							   @Param("eventWinnerStatus") String eventWinnerStatus);
-	
-	int getCouponWinnerListCount(@Param("searchKeyword") String searchKeyword, 
-								 @Param("searchContent") String searchContent);
-
+	// 4. 포인트 당첨자 listcount 조회
 	int getPointWinnerListCount(@Param("searchKeyword") String searchKeyword, 
-								@Param("searchContent") String searchContent);
-
-	int getCouponListCount(@Param("searchKeyword") String searchKeyword, 
-							@Param("searchContent") String searchContent);
-
+								@Param("searchContent") String searchContent);	
+	// 5. 포인트 내역 listcount 조회
 	int getPointListCount(@Param("searchKeyword") String searchKeyword, 
 						@Param("searchContent") String searchContent);
-
-	List<MemberVO> searchMemberList(@Param("searchKeyword") String searchKeyword, 
-									@Param("searchContent") String searchContent);
-
-	List<EventBoardVO> selectEventBoardList(@Param("startRow") int startRow, 
-											@Param("listLimit") int listLimit, 
-											@Param("searchKeyword") String searchKeyword, 
-											@Param("searchContent") String searchContent, 
-											@Param("eventStatus") String eventStatus, 
-											@Param("eventWinnerStatus") String eventWinnerStatus);
 	
 	// 2, 3번 차트 월 가입자 수 조회
 	int getMonthlyTotalNewMember(@Param("year")int year,

@@ -213,10 +213,10 @@ $(function(){
 								},
 								y: {
 									min : 0,
-									max : 2000000,
+									max : 3000000,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
-										stepSize: 200000
+										stepSize: 300000
 									}
 								}
 							}
@@ -286,7 +286,7 @@ $(function(){
 								},
 								y: {
 									min : 0,
-									max : 50000000,
+									max : 55000000,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
 										stepSize: 5000000

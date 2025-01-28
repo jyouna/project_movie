@@ -53,8 +53,6 @@ public class AdminManageService {
 		return manageMapper.deleteReview(map);
 	}
 	//관리자 후기 관리 - 장민기 20250123 끝 **********
-
-	
 	
 	public int createAccount(AdminRegisVO adminVo) {
 		return manageMapper.insertAccount(adminVo);
@@ -215,10 +213,8 @@ public class AdminManageService {
 	
 	// 페이징 처리 시 해당 게시판 별 행 개수 조회
 	public int getBoardListForPaging(String boardName, String searchKeyword, String searchContent) {
-		
-		System.out.println("서비스까지 호출됨!!");
 		int listCount = 0;
-		/* boardName의 값에 따라 조회하는 테이블을 다르게 한다.
+		/* boardName 값으로 조회하려는 테이블을 정함
 		// 관리자 목록  -> adminList
 		// 회원목록 	 -> memberList
 		// 이벤트목록 	 -> eventBoardList
@@ -252,14 +248,12 @@ public class AdminManageService {
 		return manageMapper.getAdminListCount();
 	}
 
-	// 이벤트 보드 게시판  listcount 별도 계산 오버로딩
+	// 이벤트 보드 게시판(파라미터 추가로) listcount 별도 계산을 위한 오버로딩
 	// boardName 필요없음
 	public int getBoardListForPaging(String boardName, String searchKeyword, String searchContent, String eventStatus, String eventWinnerStatus) {
 		// TODO Auto-generated method stub
-		System.out.println("서비스까지 호출됨!!");
 		return manageMapper.getEventBoardListCount(searchKeyword, searchContent, eventStatus, eventWinnerStatus);	
 	}
-	
 	
 	// 관리자 계정 리스트 조회
 	public List<AdminRegisVO> queryAdminList(int startRow, int listLimit) {

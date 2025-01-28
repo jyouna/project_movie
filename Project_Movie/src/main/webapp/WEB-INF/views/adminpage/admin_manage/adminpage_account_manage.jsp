@@ -21,7 +21,6 @@ input[type="checkbox"] {
     transform: scale(1.5); /* 1.5배 확대 */
     margin: 5px;
 }
-
 #admin_id_link {
 	color: black;
 }    
@@ -35,8 +34,8 @@ input[type="checkbox"] {
 	<h3>관리자 계정관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" value="회원생성" id="createMember">
-			<input type="button" value="매출생성" id="createSalesRecord">
+<!-- 			<input type="button" value="회원생성" id="createMember" disabled> -->
+<!-- 			<input type="button" value="매출생성" id="createSalesRecord" disabled> -->
 <!-- 			<input type="button" value="권한설정" id="setAuth"> -->
 			<input type="button" value="관리자등록" id="createId">
 			<input type="button" value="관리자삭제" id="deleteId">
@@ -48,7 +47,7 @@ input[type="checkbox"] {
 		<table id="mainTable">
 			<tr align="center" id="tr01">
 				<th width="50"><input type="checkbox" id="selectAll" class="deleteCheck"></th>
-				<th width="70">번호</th>
+<!-- 				<th width="70">번호</th> -->
 				<th width="90">ID</th>
 				<th width="90">비밀번호</th>
 				<th width="150">등록일</th>
@@ -71,7 +70,7 @@ input[type="checkbox"] {
 					<c:forEach var="vo" items="${voList}" varStatus="status">
 				        <tr>
 				            <td><input type="checkbox" class="deleteCheck" value="${vo.admin_id}"></td>
-				            <td>${status.count}</td>
+<%-- 				            <td>${status.count}</td> --%>
 				            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}" id="admin_id_link">${vo.admin_id}</a></td>
 				            <td>${vo.admin_passwd}</td>
 				            <td><fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/></td>

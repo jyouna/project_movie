@@ -31,6 +31,10 @@
 #idWidth {
 	width: 20%;
 }
+
+.code {
+	text-align: center;
+}
 </style>
 </head>
 <body>

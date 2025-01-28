@@ -119,6 +119,8 @@ public class AdminManageController {
 	@PostMapping("AdminAccountRegis") // 관리자 계정 생성 처리
 	@ResponseBody
 	public Boolean adminAccountCreate(AdminRegisVO adminVo, Model model) {
+		System.out.println(adminVo);
+		
 		int insertCount = adminService.createAccount(adminVo);
 		System.out.println("관리자 계정 등록 완료 : " + insertCount);
 		if(insertCount > 0) {
@@ -205,32 +207,32 @@ public class AdminManageController {
 	}
 	
 	// 회원리스트 조회 검색바
-	@PostMapping("MemberList")
-	public String memberList(HttpSession session, Model model, 
-							@RequestParam(defaultValue = "") String searchKeyword, 
-							@RequestParam(defaultValue = "") String searchContent) {
-		
-		// 관리자 로그인 판별
-		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
-			model.addAttribute("msg", "로그인 후 이용가능");
-			model.addAttribute("targetURL", "AdminLogin");
-			return "result/process";
-		}
-		
-		// 관리자 메뉴 접근권한 판별
-		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
-			model.addAttribute("msg", "접근 권한이 없습니다.");
-			model.addAttribute("targetURL", "AdminpageMain");
-			return "result/process";
-		}
-		
-		PageInfo2 pageInfo = pagingHandler.pagingProcess(1, "memberList", searchKeyword, searchContent);
-		List<MemberAllInfoVO> voList = adminService.queryMemberList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
-		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("voList", voList);
-		
-		return "adminpage/member_manage/member_list";
-	}
+//	@PostMapping("MemberList")
+//	public String memberList(HttpSession session, Model model, 
+//							@RequestParam(defaultValue = "") String searchKeyword, 
+//							@RequestParam(defaultValue = "") String searchContent) {
+//		
+//		// 관리자 로그인 판별
+//		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+//			model.addAttribute("msg", "로그인 후 이용가능");
+//			model.addAttribute("targetURL", "AdminLogin");
+//			return "result/process";
+//		}
+//		
+//		// 관리자 메뉴 접근권한 판별
+//		if(!AdminMenuAccessHandler.adminMenuAccessCheck("member_manage", session, adminService)) {
+//			model.addAttribute("msg", "접근 권한이 없습니다.");
+//			model.addAttribute("targetURL", "AdminpageMain");
+//			return "result/process";
+//		}
+//		
+//		PageInfo2 pageInfo = pagingHandler.pagingProcess(1, "memberList", searchKeyword, searchContent);
+//		List<MemberAllInfoVO> voList = adminService.queryMemberList(pageInfo.getStartRow(), pageInfo.getListLimit(), searchKeyword, searchContent);
+//		model.addAttribute("pageInfo", pageInfo);
+//		model.addAttribute("voList", voList);
+//		
+//		return "adminpage/member_manage/member_list";
+//	}
 	
 
 }

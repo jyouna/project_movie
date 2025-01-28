@@ -48,7 +48,7 @@ public class AdminMenuAccessHandler {
 			} else {
 				return true;
 			}
-		// 고객지원(공지사항, FAQ, 1:1 문의) 관리 권한	
+		// 고객지원(공지사항, FAQ, 1:1 문의) 관리, 영화 후기 관리 권한	
 		case "board_manage" :
 			if(!adminVo.getNotice_board_manage() || adminVo.getNotice_board_manage() == null) {
 				return false;

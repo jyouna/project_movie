@@ -122,7 +122,6 @@ $(function(){
 	});
 	
 	$("#CreateCouponForm").on("click", function(){
-		event.preventDefault();
 		
 		if(!confirm("해당 쿠폰을 지급하시겠습니까?")) {
 			return;
@@ -131,6 +130,7 @@ $(function(){
 		const member_id = $(".getIdList").map(function() {
 			return $(this).text();
 	    }).get();
+		
 		// 만료일
 		let expired_date = $("#expired_date").val();
 		// 쿠폰타입
@@ -145,32 +145,38 @@ $(function(){
 		// 2. 필수요소 입력 여부 검증
 		// 2-1) 날짜 
 		if(expired_date === "") {
+			event.preventDefault();
 			alert("날짜를 입력해 주세요");
-			expired_date.focus();
+			$("#expired_date").focus();
 			return;
 		}
 		
 		// 2-2) 쿠폰타입 선택
 		if(coupon_type === "선택") {
+			event.preventDefault();
 			alert("쿠폰 타입을 선택해 주세요");
-			coupon_type.focus();
+			$("#coupon_type").focus();
 			return;
 		}
 		
 		// 2-3) 할인금액
 		if(coupon_type === "금액할인") {
-			if(parseInt(discount_amount, 10) <= 0 <= 0 || discount_amount === "")
-			alert("금액(1~99,999)을 입력해 주세요");
-			discount_amount.focus();
-			return;
+			if(parseInt(discount_amount, 10) <= 0 || discount_amount === "") {
+				event.preventDefault();
+				alert("금액(1~99,999)을 입력해 주세요");
+				$("#discount_amount").focus();
+				return;
+			}
 		}
 
 		// 2-4) 할인율
 		if(coupon_type === "할인율") {
-			if(discount_rate === "0")
-			alert("할인율을 선택해주세요");
-			discount_rate.focus();
-			return;
+			if(discount_rate === "0") {
+				event.preventDefault();				
+				alert("할인율을 선택해주세요");
+				$("#discount_rate").focus();
+				return;
+			}
 		}
 		
 		$.ajax({

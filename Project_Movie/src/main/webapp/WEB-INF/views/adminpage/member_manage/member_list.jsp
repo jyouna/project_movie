@@ -41,7 +41,7 @@ th, td {
 			<span id="member_count"></span>
 		</div>
 		<div id="divTopRight">
-			<form action="MemberList" method="post" id="formTag">
+			<form action="MemberList" method="get" id="formTag">
 				<input type="hidden" name="pageNum" value="${param.pageNum}">	
 				<select name="searchKeyword" id="searchKeyword">
 					<option value="searchId" <c:if test="${param.searchKeyword == 'searchId'}">selected</c:if>>ID</option>

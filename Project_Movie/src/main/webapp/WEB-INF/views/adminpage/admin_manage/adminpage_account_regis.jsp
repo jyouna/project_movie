@@ -218,16 +218,17 @@ $(function(){
 					admin_id : $("#id").val(),
 					user_name : $("#name").val(),
 					admin_passwd : $("#passwd").val(),
-					member_manage : $("#member_manage").val(),
-					payment_manage : $("#payment_manage").val(),
-					notice_board_manage : $("#notice_board_manage").val(),
-					movie_manage : $("#movie_manage").val(),
-					theater_manage : $("#theater_manage").val(),
-					vote_manage : $("#vote_manage").val()
-				},
+					member_manage : $("#member_manage").is(":checked"),
+					payment_manage : $("#payment_manage").is(":checked"),
+					notice_board_manage : $("#notice_board_manage").is(":checked"),
+					movie_manage : $("#movie_manage").is(":checked"),
+					theater_manage : $("#theater_manage").is(":checked"),
+					vote_manage : $("#vote_manage").is(":checked")
+				}
 			}).done(function(response){
 				if(response){
 					alert("관리자 등록 성공!");
+					window.opener.location.replace("AdminAccountManage");
 					window.close();
 					return;
 				} else {

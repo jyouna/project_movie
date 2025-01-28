@@ -370,9 +370,22 @@ public class BookController {
 	
 	// ============================= [ 관리자 페이지 예매/취소 내역 ] ====================================
 	@GetMapping("AdminPaymentList")
-	public String adminPaymentList(@RequestParam(defaultValue = "1") int pageNum, Model model,
+	public String adminPaymentList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
+
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
 		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("payment_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 		
 		int listCount = bookService.getpaymentListCount(howSearch, searchKeyword); //총결제 목록(검색된 결제 목록)수 조회
 		
@@ -385,9 +398,22 @@ public class BookController {
 	}
 	
 	@GetMapping("AdminRefundList")
-	public String adminRefundList(@RequestParam(defaultValue = "1") int pageNum, Model model,
+	public String adminRefundList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session,
 	@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
+
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
+			return "result/process";
+		}
 		
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("payment_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
+			return "result/process";
+		}
 		
 		int listCount = bookService.getRefundListCount(howSearch, searchKeyword);
 		
