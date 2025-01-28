@@ -13,7 +13,7 @@ $(function() {
 
     $("#Modify").on("click", function() {
         if (movie_name === "") {
-            alert("수정할 리뷰의 영화를 선택해주세요.");
+            alert("수정 할 리뷰의 영화를 선택해주세요.");
         } else {
             $("#watched_movie_modify_modal").css("display", "block");
             $(".watched_movie_modify input[name='movie_name']").val(movie_name);
@@ -59,22 +59,27 @@ $(function() {
         location.reload(true);
     });
 
-    $("#delete").on("click", function() {
-        movie_code = $(".movie_code:checked").val();
-        if (confirm("관람평을 삭제하시겠습니까?")) {
-            $.ajax({
-                type: "GET",
-                url: "ReviewDelete",
-                data: {
-                    movie_code: movie_code
-                }
-            }).done(function(result) {
-                window.location.href = "Review";
-            }).error(function() {
-                alert("삭제에 실패했습니다. 다시 시도해 주세요.");
-            });
-        }else{
-			return;
-		}
-    });
+	$("#delete").on("click", function () {
+	    const movie_code = $(".movie_code:checked").val();
+		// 영화 선택 안 했을떄
+	    if (!movie_code) {
+	        alert("삭제할 리뷰의 영화를 선택해주세요.");
+	        return;
+	    }
+		
+	    if (confirm("관람평을 삭제하시겠습니까?")) {
+	        $.ajax({
+	            type: "GET",
+	            url: "ReviewDelete",
+	            data: { movie_code: movie_code }
+	        })
+	        .done(function (result) {
+	            window.location.href = "Review";
+	        })
+	        .fail(function () {
+	            alert("삭제에 실패했습니다. 다시 시도해 주세요.");
+	        });
+	    }
+	});
+
 });

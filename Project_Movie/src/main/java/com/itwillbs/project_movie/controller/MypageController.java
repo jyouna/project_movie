@@ -43,7 +43,6 @@ import retrofit2.http.POST;
 public class MypageController {
 	@Autowired
 	private MemberService memberService;
-	
 	@Autowired
 	private MypageService service;
 	@Autowired
@@ -127,7 +126,6 @@ public class MypageController {
 			model.addAttribute("targetURL", "ReservationCancel?pageNum=1");
 			return "result/process";
 		}
-		System.out.println("@@@@@@@@@@@@@@@@listCount = " + listCount + " maxPage = " + maxPage + " startRow = " + startRow + " endPage = " + endPage);
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
@@ -418,7 +416,7 @@ public class MypageController {
 	}
 	//7-4. 1:1문의 - 글 수정 폼
 	@GetMapping("InquiryModify")
-	public String inquiryModify(HttpSession session ,Model model, int inquiry_code) {
+	public String inquiryModify(HttpSession session, Model model, int inquiry_code) {
 		//아이디 가져와서 로그인 여부 판별
 		//null이면 접근권한이 없습니다
 		String id = (String) session.getAttribute("sMemberId");
@@ -427,15 +425,10 @@ public class MypageController {
 			return "result/process";
 		}
 		InquiryVO inquiry = service.getInquiry(inquiry_code);
-//		if(inquiry == null || !id.equals("admin") && !equals(inquiry.getInquiry_writer())) {
-//			model.addAttribute("msg", "잘못된 접근입니다!");
-//			return "result/process";
-//		}
 		model.addAttribute("inquiry", inquiry);
 		// mypageservice에서 getInquiry메서드 재사용해서 게시물 1개 정보 조회
 		//조회결과가 없거나 관리자가 아니거나 작성자가 아닌경우 잘못된접근입니다. 후 fail 페이지로 리턴
 		//조회 결과 페이지 정보 저장
-//		InquiryVO inquiry = service.getInquiry(inquiry);
 		return "mypage/inquiry/inquiryModify";
 	}
 	//7-4-1 1:1문의 - 글 수정 폼 post
@@ -533,8 +526,6 @@ public class MypageController {
 	//관리자 페이지 - 공지사항 작성
 	@GetMapping("AdminNoticeWrite")
 	public String adminNoticeWrite() {
-		
-		
 		return "adminpage/customer_service/notice_board_write";
 	}
 	//관리자 페이지 - 공지사항 작성 - post
@@ -554,9 +545,6 @@ public class MypageController {
 	// 관리자페이지 - 공지사항 자세히보기
 	@GetMapping("AdminNoticePost")
 	public String adminNoticePost(NoticeBoardVO notice, Model model, int notice_code, String type) {
-		
-	
-		
 		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
@@ -715,8 +703,7 @@ public class MypageController {
 	//관리자 페이지 - 고객지원 관리 - 1:1문의 관리
 	@GetMapping("AdminInquiry")
 	public String adminInquiry(@RequestParam(defaultValue="1") int pageNum, Model model, HttpSession session,
-			@RequestParam(defaultValue="") String searchType,
-			@RequestParam(defaultValue ="") String searchKeyword) {
+			@RequestParam(defaultValue="") String searchType) {
 		// 관리자 로그인 판별
 		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
 			model.addAttribute("msg", "로그인 후 이용가능");
@@ -730,7 +717,7 @@ public class MypageController {
 			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
-		int listCount = service.getInquiryListCount(searchType,searchKeyword);
+		int listCount = service.getInquiryListCount(searchType);
 		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -752,7 +739,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
-		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType, searchKeyword);
+		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType);
 		model.addAttribute("inquiryList", inquiryList);
 		return "adminpage/customer_service/inquiry_board_manage";
 	}

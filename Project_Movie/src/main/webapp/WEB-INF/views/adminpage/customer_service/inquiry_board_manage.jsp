@@ -26,14 +26,15 @@
 			<h1>1:1 문의 목록</h1>
 		</div>
 	    <div class="search-bar" style="text-align: right;">
-	    	<form action="AdminInquiry" method="get">
-		      <select name="searchType">
-		        <option value="before" <c:if test="${param.searchType eq before}">selected</c:if>>답변 전</option>
-		        <option value="after" <c:if test="${param.searchType eq after}">selected</c:if>>답변</option>
-		        <option value="finish" <c:if test="${param.searchType eq finish}">selected</c:if>>답변 완료</option>
-		      </select>
-	   		  <input type="submit" value="찾기" id="searchButton">
-   		  	</form>
+			<form action="AdminInquiry" method="get">
+			    <select id="searchType" name="searchType">
+			        <option value="before" <c:if test="${param.searchType eq 'before'}">selected</c:if>>답변 전</option>
+			        <option value="after" <c:if test="${param.searchType eq 'after'}">selected</c:if>>답변</option>
+			        <option value="finish" <c:if test="${param.searchType eq 'finish'}">selected</c:if>>답변 완료</option>
+			    </select>
+		    	<input type="submit" value="찾기">
+			</form>
+
 	    </div>
 		<section id="listForm">
 			<table id="inquiryForm" border="1">

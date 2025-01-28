@@ -102,9 +102,9 @@ public interface MyPageMapper {
 	// faq 글 삭제
 	int deleteFaq(FaqBoardVO faq);
 	//1:1 문의 개수 
-	int selectAdminInquiryListCount(@Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
+	int selectAdminInquiryListCount(@Param("searchType") String searchType);
 	//1:1 문의 시작번호 끝번호 
-	List<InquiryVO> selectAdminInquiryList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("searchType") String searchType,@Param("searchKeyword") String searchKeyword);
+	List<InquiryVO> selectAdminInquiryList(@Param("startRow") int startRow, @Param("listLimit") int listLimit, @Param("searchType") String searchType);
 	// 1:1문의 글 수정 
 	int updateInquiryModify(int inquiry_code);
 	// 1:1 문의 글 삭제

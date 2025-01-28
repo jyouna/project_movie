@@ -48,7 +48,7 @@
 					
 				<c:choose>
 					<c:when test="${empty inquiryList}"> 
-						<tr><td colspan="4">게시글이 존재하지 않습니다. </td></tr>
+						<tr><td colspan="4">게시글이 존재하지 않습니다.</td></tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="inquiry" items="${inquiryList}" varStatus="status">
@@ -75,7 +75,6 @@
 								</td>
 								<td>
 									<fmt:formatDate value="${inquiry.inquriy_date}" pattern="yyyy-MM-dd"/>
-
 								</td>
 							</tr>
 						</c:forEach>

@@ -27,7 +27,7 @@
 			<h1>내가 본 영화</h1>
 		</div>
 			<div id="selectBox">
-				<form action="watchedMovie" method="get" id="watchedForm">
+				<form action="WatchedMovie" method="get" id="watchedForm">
 					<c:if test="${param.searchYear eq '2025'}">selected</c:if>
 					<select id="searchYear">
 						<option value="2025" <c:if test="${param.searchYear eq '2025'}">selected</c:if>>2025</option>

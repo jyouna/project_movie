@@ -35,14 +35,14 @@
                
             <c:choose>
                <c:when test="${empty reservationCancel}"> 
-                  <tr><td colspan="6">게시물이 존재하지 않습니다</td></tr>
+                  <tr><td colspan="6">취소내역이 존재하지 않습니다</td></tr>
                </c:when>
                <c:otherwise>
                   <c:forEach var="reservationCancel" items="${reservationCancel}" varStatus="status">
                      <tr>
                         <td>${reservationCancel.movie_name}</td>
-                        <td>${reservationCancel.start_time}</td>
-                        <td>${reservationCancel.ticket_count}</td>
+                        <td><fmt:formatDate value="${reservationCancel.start_time}" pattern="yyyy-MM-dd    	HH:mm"/></td>
+                        <td>${reservationCancel.ticket_count}명</td>
                         <td>
 <!--                         true일때는 취소완, false일때는 승인전 -->
 	                   		<c:choose>

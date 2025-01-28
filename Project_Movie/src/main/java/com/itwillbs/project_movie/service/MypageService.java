@@ -198,14 +198,14 @@ private MyPageMapper mapper;
 		return mapper.deleteFaq(faq);
 	}
 	//1:1문의 글 개수
-	public int getInquiryListCount(String searchType, String searchKeyword) {
+	public int getInquiryListCount(String searchType) {
 		// TODO Auto-generated method stub
-		return mapper.selectAdminInquiryListCount(searchType, searchKeyword);
+		return mapper.selectAdminInquiryListCount(searchType);
 	}
 	//1:1문의 글 시작번호 끝번호 
-	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType, String searchKeyword) {
+	public List<InquiryVO> getInquiryList(int startRow, int listLimit, String searchType) {
 		// TODO Auto-generated method stub
-		return mapper.selectAdminInquiryList(startRow, listLimit, searchType, searchKeyword);
+		return mapper.selectAdminInquiryList(startRow, listLimit, searchType);
 	}
 	//1:1문의 글 수정 
 	public int getInquiryModify(int inquiry_code) {

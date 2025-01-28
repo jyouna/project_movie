@@ -58,7 +58,7 @@
     	<table>
         	<tr id="tr_top">
                <td width="100px">쿠폰 상태</td>
-               <td width="100px">쿠폰타입</td>
+               <td width="100px">쿠폰 타입</td>
                <td width="200px">쿠폰 상세 정보</td>
                <td width="150px">사용기간</td>
             </tr>
@@ -83,7 +83,7 @@
 					            <td>
 					            	<c:choose>
 					            		<c:when test=" ${coupon.coupon_type == '0'}">금액</c:when>
-					            		<c:otherwise>할인율</c:otherwise>
+					            		<c:otherwise>할인</c:otherwise>
 					            	</c:choose>
 					          	</td>
 					            <td>    
