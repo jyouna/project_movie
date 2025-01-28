@@ -364,3 +364,6 @@ textarea::-ms-input-placeholder {
   font-style: normal;
 }
 
+input, select {
+	border: 0.1px solid;
+}

@@ -135,7 +135,7 @@
 							</tr>
 						</table>
 						<div class="button-group">
-							<button type="button" id="MemberWithDraw" >회원탈퇴</button>
+							<button type="button" id="MemberWithDraw" onclick="withDraw()">회원탈퇴</button>
 							<button type="submit" class="btn submit-btn">정보수정</button>
 							<button type="button" id="cancel-btn" class="btn cancel-btn" onclick="history.back()">취소</button>
 						</div>
@@ -143,6 +143,14 @@
 			</div>
 	 </article>
 </div>	 
+	<script type="text/javascript">
+		// 	회원 탈퇴 
+		function withDraw() {
+			if(confirm("정말 탈퇴 하시겠습니까?")){
+				location.href = 'MemberWithDraw?member_id=${member.member_id}';
+			}
+		}
+	</script>
 
 </body>
 </html>

@@ -11,9 +11,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/customer_service/faq_post.css" />
 		<!-- jQuery를 먼저 추가 -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/preNext.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -42,14 +41,17 @@
 			<input type="button" value="목록" id="btn"onclick="location.href='FaqList?pageNum=${param.pageNum}'">
 		</div>
 		<div style="text-align: right;">
-			<input type="button" value="◁이전글" id="btn" onclick="location.href='FaqPost?faq_code=${faq.faq_code+1}&pageNum=${PageInfo.pageNum }'"
-			<c:if test="${param.notice_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-			<input type="button" value="▷다음글"id="btn"  onclick="location.href='FaqPost?faq_code=${faq.faq_code-1}&pageNum=${PageInfo.pageNum }'"
-			<c:if test="${param.notice_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+			<input type="button" value="◁이전글" id="faqPrevBtn" >
+			<input type="button" value="▷다음글"id="faqNextBtn"  >
 		</div>
 	</article>
 
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
+	
+	<script type="text/javascript">
+		let columnValue = ${param.faq_code};
+		let pageNum = ${param.pageNum};
+	</script>
 	
 </body>
 </html>

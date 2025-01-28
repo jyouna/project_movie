@@ -26,7 +26,7 @@ public interface MyPageMapper {
 	List<Map<String, Object>> selectReservationCancel(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id);
 	
 	// 내가 본 영화 글 전체 가져오기
-	int selectWathedMovieCount(String id, @Param("searchYear") String searchYear);
+	int selectWathedMovieCount(@Param("id") String id, @Param("searchYear") String searchYear);
 	//내가 본 영화 시작번호 끝번호
 	List<Map<String, Object>> selectWatchedMovie(@Param("startRow")int startRow, @Param("listLimit")int listLimit,@Param("id") String id, @Param("searchYear") String searchYear);
 	// 내가 본 영화 - 리뷰 등록

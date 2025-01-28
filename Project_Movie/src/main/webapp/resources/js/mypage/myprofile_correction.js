@@ -132,12 +132,7 @@ $(function(){
 		}
 			
 	});
-	// 	회원 탈퇴 
-	$("#MemberWithDraw").on("click", function() {
-		if(confirm("정말 탈퇴 하시겠습니까?")){
-			location.href = 'MemberWithDraw';
-		}
-	});
+	
 	
 	
 });

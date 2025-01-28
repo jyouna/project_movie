@@ -4,8 +4,11 @@
 <script>
 	alert("${msg}"); 
 	<c:choose>
-		<c:when test="${empty targetURL}">
+		<c:when test="${empty targetURL and empty closeWindow}">
 			history.back();
+		</c:when>
+		<c:when test="${empty targetURL and not empty closeWindow}">
+			window.close();
 		</c:when>
 		<c:otherwise>
 			location.href = "${targetURL}";

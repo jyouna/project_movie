@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,21 @@ private EventMapper mapper;
 			mapper.updateEventReadCount(event);
 		}
 		return event;
+	}
+	
+	// 이벤트 이전글 다음글
+	public Map<String, Object> getPreNext(Map<String, String> map) {
+		// 이벤트
+		if(map.get("tableName").equals("event_board")) {
+			map.put("orderBy", "ORDER BY event_status ASC, event_start_date DESC, event_end_date DESC");
+		} else if(map.get("tableName").equals("notice_board")) {
+			map.put("orderBy", "ORDER BY notice_code DESC");
+		} else if(map.get("tableName").equals("faq_board")) {
+			map.put("orderBy", "ORDER BY faq_code DESC");
+		} else if(map.get("tableName").equals("Inquiry")) {
+			map.put("orderBy", "ORDER BY inquiry_re_ref DESC, inquiry_re_seq ASC");
+		}
+		return mapper.selectPreNextCodeList(map);
 	}
 
 

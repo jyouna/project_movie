@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -17,6 +18,8 @@ public interface EventMapper {
 	EventBoardVO selectEvent(int event_code);
 	//이벤트 글 조회수 증가
 	void updateEventReadCount(EventBoardVO event);
+	//이전글 다음글 버튼 
+	Map<String, Object> selectPreNextCodeList(Map<String, String> map);
 
 
 }

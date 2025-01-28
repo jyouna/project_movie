@@ -60,6 +60,17 @@
  		SET view_count = view_count +1
  		WHERE event_code = #{event_code}
  	</update>
- 	
+<!--  	이전글 다음글  -->
+	<select id="selectPreNextCodeList" resultType="map">
+		SELECT *
+		FROM (
+		    SELECT 
+		       ${columnName},
+		        LAG(${columnName}) OVER (${orderBy}) AS prevCode,
+		        LEAD(${columnName}) OVER (${orderBy}) AS nextCode
+		    FROM ${tableName}
+		) AS subquery
+		WHERE ${columnName} = #{columnValue}
+	</select>
  	
  </mapper>

@@ -75,28 +75,33 @@
 		FROM movie
 		JOIN schedule ON movie.movie_code = schedule.movie_code
 		JOIN payment ON schedule.schedule_code = payment.schedule_code
-		<if test="!searchYear.equals('')">
 	 		WHERE
 				payment.member_id = #{id}
-			AND	schedule.end_time &lt; NOW()
- 			<choose>
- 				<when test="searchYear.equals('2025')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
- 				</when>
- 				<when test="searchYear.equals('2024')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
- 				</when>
- 				<when test="searchYear.equals('2023')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
- 				</when>
- 				<when test="searchYear.equals('2022')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
- 				</when>
- 				<when test="searchYear.equals('2021')">
-		 			start_time LIKE CONCAT('%', #{searchYear},'%')
- 				</when>
- 			</choose>
- 		</if>
+			AND
+				schedule.end_time &lt; NOW()
+			<if test="!searchYear.equals('')">
+				AND 
+		 			<choose>
+		 				<when test="searchYear.equals('2025')">
+				 			 start_time LIKE CONCAT('%', #{searchYear},'%')
+		 				</when>
+		 				<when test="searchYear.equals('2024')">
+				 			 start_time LIKE CONCAT('%', #{searchYear},'%')
+		 				</when>
+		 				<when test="searchYear.equals('2023')">
+				 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 				</when>
+		 				<when test="searchYear.equals('2022')">
+				 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 				</when>
+		 				<when test="searchYear.equals('2021')">
+				 			start_time LIKE CONCAT('%', #{searchYear},'%')
+		 				</when>
+		 				<otherwise>
+		 					1=1
+		 				</otherwise>
+		 			</choose>
+	 		</if>
 	</select>
 <!-- 	내가 본 영화 시작번호 끝번호 -->
 	<select id="selectWatchedMovie" resultType="map">
@@ -104,28 +109,31 @@
 		FROM movie
 		JOIN schedule ON movie.movie_code = schedule.movie_code
 		JOIN payment ON schedule.schedule_code = payment.schedule_code
+		AND
+				schedule.end_time &lt; NOW()
 		<if test="!searchYear.equals('')">
-	 		WHERE
-				payment.member_id = #{id}
-			AND	schedule.end_time &lt; NOW()
- 			<choose>
- 				<when test="searchYear.equals('2025')">
-		 			start_time BETWEEN '2025-01-01' AND '2025-12-31';
- 				</when>
- 				<when test="searchYear.equals('2024')">
-		 			start_time BETWEEN '2024-01-01' AND '2024-12-31';
- 				</when>
- 				<when test="searchYear.equals('2023')">
-		 			start_time BETWEEN '2023-01-01' AND '2023-12-31';
- 				</when>
- 				<when test="searchYear.equals('2022')">
-		 			start_time BETWEEN '2022-01-01' AND '2022-12-31';
- 				</when>
- 				<when test="searchYear.equals('2021')">
-		 			start_time BETWEEN '2021-01-01' AND '2021-12-31';
- 				</when>
- 			</choose>
- 		</if>
+			AND 
+	 			<choose>
+	 				<when test="searchYear.equals('2025')">
+			 			 start_time LIKE CONCAT('%', #{searchYear},'%')
+	 				</when>
+	 				<when test="searchYear.equals('2024')">
+			 			 start_time LIKE CONCAT('%', #{searchYear},'%')
+	 				</when>
+	 				<when test="searchYear.equals('2023')">
+			 			start_time LIKE CONCAT('%', #{searchYear},'%')
+	 				</when>
+	 				<when test="searchYear.equals('2022')">
+			 			start_time LIKE CONCAT('%', #{searchYear},'%')
+	 				</when>
+	 				<when test="searchYear.equals('2021')">
+			 			start_time LIKE CONCAT('%', #{searchYear},'%')
+	 				</when>
+	 				<otherwise>
+	 					1=1
+	 				</otherwise>
+	 			</choose>
+	 		</if>
 		LIMIT 
 			#{startRow}
 			, #{listLimit}
@@ -247,7 +255,7 @@
 	</select>
 <!-- 	1:1문의 글 시작번호,끝번호 -->
 
-	<select id="selectInquiryList" resultType="int">
+	<select id="selectInquiryList" resultType="inquiry">
 	    SELECT *
 	    FROM Inquiry
 	    WHERE 
@@ -549,4 +557,33 @@
 								)
 		
 	</select>
+	
+<!-- 	이전글 다음글 -->
+	<select id="">
+	SELECT *
+FROM (
+   SELECT 
+      notice_code
+        , LAG(notice_code) 
+         OVER 
+            <choose>
+            <when test="board_type eq 'notice'">
+               (ORDER BY notice_code DESC) 
+            </when>
+                <when test="board_type eq 'free'">
+               (ORDER BY board_re_ref DESC, board_re_seq ASC) 
+            </when>
+                
+                
+                
+                
+                
+            </choose>
+            AS next_notice_code
+        , LEAD(notice_code) OVER (ORDER BY notice_code DESC) AS prev_notice_code
+    FROM notice_board
+) AS subquery
+WHERE notice_code = 13;
+	</select>
+	
  </mapper>

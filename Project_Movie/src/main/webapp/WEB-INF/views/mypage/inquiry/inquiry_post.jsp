@@ -15,9 +15,8 @@
 	<link href="${pageContext.request.contextPath}/resources/css/mypage/mypage_styles.css" rel="stylesheet" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/inquiry/inquiry_post.css" />
 			<!-- jQuery를 먼저 추가 -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/preNext.js"></script>
 </head>
 <body class="sb-nav-fixed">
 
@@ -56,15 +55,11 @@
 		<table>
 			<tr>
 				<td>
-					<input type="button" value="△이전글" onclick="location.href='InquiryPost?inquiry_code=${param.inquiry_code-1}&pageNum=${param.pageNum}'"
-					<c:if test="${param.inquiry_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+					<input type="button" value="△이전글" id="inquiryPrevBtn" >
 				</td>
-				<td></td>
 			</tr>
 			<tr>
-				<td><input type="button" value="▽다음글" onclick="location.href='InquiryPost?inquiry_code=${param.inquiry_code+1}&pageNum=${param.pageNum}'"
-				<c:if test="${param.inquiry_code-1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>></td>
-				<td></td>
+				<td><input type="button" value="▽다음글" id="inquiryNextBtn"></td>
 			</tr>
 		</table>
 	<script type="text/javascript">
@@ -76,6 +71,9 @@
 					} 
 			});
 		});
+		
+		let columnValue = ${param.inquiry_code};
+		let pageNum = ${param.pageNum};
 	</script>
 	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

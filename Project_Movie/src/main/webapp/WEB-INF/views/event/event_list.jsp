@@ -10,8 +10,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_list.css" />
-	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/event/event_list.js"></script>
+		<!-- jQuery를 먼저 추가 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
+	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="left-sidebar is-preload">
 	<jsp:include page="/WEB-INF/views/inc/page/page_top.jsp"></jsp:include>

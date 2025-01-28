@@ -29,7 +29,15 @@
 						<th width="10%">제목</th>
 						<td width="60%">${inquiry.inquiry_subject}</td>
 						<th width="10%">작성자</th>
-						<td width="20%">${inquiry.inquiry_writer}</td>
+						<td width="20%">
+							<c:choose>
+								<c:when test="${inquiry.inquiry_writer != null}">
+												${inquiry.inquiry_writer}
+								</c:when>
+								<c:otherwise>
+									${sessionScope.admin_sId}
+								</c:otherwise>
+							</c:choose></td>
 					</tr>
 					<tr>
 						<th width="120">등록일</th>

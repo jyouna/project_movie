@@ -11,9 +11,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/event/event_post.css" />
 		<!-- jQuery를 먼저 추가 -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<!-- 그 후 Font Awesome 아이콘 스크립트 추가 -->
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.7.1.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/preNext.js"></script>
 </head>
 <body class="left-sidebar is-preload">
 
@@ -41,16 +40,16 @@
 			<input type="button" value="목록" id="btn" onclick="location.href='EventList?pageNum=${param.pageNum}'">
 		</div>
 		<div style="text-align:right;">
-			<input type="button" id="btn" value="◁이전글" onclick="location.href='EventPost?event_code=${param.event_code+1}&pageNum=${param.pageNum}'"
-			<c:if test="${param.event_code+1 eq null}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
-	
-			<input type="button"  id="btn"value="▷다음글" onclick="location.href='EventPost?event_code=${param.event_code-1}&pageNum=${param.pageNum}'"
-			<c:if test="${param.event_code-1 eq 0}">alert("해당 게시글이 존재하지 않습니다.")</c:if>>
+			<input type="button" id="eventPrevBtn" value="◁이전글">
+			<input type="button"  id="eventNextBtn"value="▷다음글">
 		</div>
 		
 
 	</article>
-
+	<script type="text/javascript">
+		let columnValue = ${param.event_code};
+		let pageNum = ${param.pageNum};
+	</script>
 	<jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
 	
 </body>

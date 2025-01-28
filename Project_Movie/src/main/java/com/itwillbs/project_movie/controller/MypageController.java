@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -139,6 +140,7 @@ public class MypageController {
 			@RequestParam(defaultValue="") String searchYear) {
 		//로그인 여부
 		String id = (String)session.getAttribute("sMemberId");
+		System.out.println(id);
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
@@ -245,6 +247,7 @@ public class MypageController {
 	//4-2. 리뷰 수정 버튼
 	@PostMapping("ReviewModify")
 	public String reviewModify(Model model,@RequestParam Map<String, String> map) {
+		// 리뷰 수정여부 판별 
 		int updateCount = service.getReviewModify(map);
 		if(updateCount > 0) {
 			model.addAttribute("msg", "리뷰 수정 완료!");
@@ -257,18 +260,22 @@ public class MypageController {
 	//4-3. 리뷰 삭제 버튼
 	@GetMapping("ReviewDelete")
 	public String reviewDelete(@RequestParam Map<String, String> map, Model model) {
-		int deleteCount = service.removeReview(map);
+		//삭제되면 리뷰창으로 리턴
+		service.removeReview(map);
 		return "redirect:/Review";
 	}
 	//5. 쿠폰 - 쿠폰 보기
 	@GetMapping("CouponList")
 	public String couponList(Model model, @RequestParam(defaultValue="1") int pageNum, HttpSession session) {
+		//로그인 판별 
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
+		//
 		int listCount = service.getCouponListCount(id);
+		model.addAttribute("listCount", listCount);
 		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
 		int pageListLimit = 3;
@@ -366,6 +373,7 @@ public class MypageController {
 		model.addAttribute("pageInfo", pageInfo);
 		
 		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType, searchKeyWord, id);
+		System.out.println(inquiryList);
 		model.addAttribute("inquiryList", inquiryList);
 		return "mypage/inquiry/inquiry_list";
 	}
@@ -471,12 +479,27 @@ public class MypageController {
 	}
 	//8. 회원 탈퇴 
 	@GetMapping("MemberWithDraw")
-	public String MemberWithDraw(MemberVO member, Model model) {
+	public String MemberWithDraw(MemberVO member, Model model, HttpSession session) {
 		
 		String member_id = member.getMember_id();
-		service.updateMemberStatus(member_id);
-		model.addAttribute("closeWindow", true);
-		return "redirect:/ReservationDetail";
+		int updateCount =service.updateMemberStatus(member_id);
+		if(updateCount > 0) {
+			session.invalidate();
+			Cookie cookie = new Cookie("rememberId", "");
+			cookie.setMaxAge(0);
+			return "redirect:/MemberWithDrawSuccess";
+		} else {
+			model.addAttribute("msg", "회원탈퇴에 실패하였습니다.");
+			return "result/process";
+		}
+	}
+	
+	// 회원 탈퇴 성공
+	@GetMapping("MemberWithDrawSuccess")
+	public String memberWithDrawSuccess(Model model) {
+		model.addAttribute("msg", "회원탈퇴 완료 되었습니다");
+		model.addAttribute("closeWindow", "true");
+		return "result/process";
 	}
 	//------------------------------------ 관리자 페이지 중 고객지원 관리 부분 ------------------------------------------------------------------
 	

@@ -26,7 +26,6 @@
 		</div>
 		<div id="search-bar" style="text-align:	right;">
 			<form action="NoticeList" method="get" name="searchForm">
-				<c:if test="${param.searchType eq 'subject'}">selected</c:if>
 				<select id="searchType" name="searchType">
 					<option value="subject"<c:if test="${param.searchType eq 'subject'}">selected</c:if>>제목</option>
 					<option value="content"<c:if test="${param.searchType eq 'subject'}">selected</c:if>>내용</option>

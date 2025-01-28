@@ -1,6 +1,7 @@
 package com.itwillbs.project_movie.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.project_movie.service.EventService;
 import com.itwillbs.project_movie.vo.EventBoardVO;
@@ -59,6 +61,14 @@ public class EventController {
 		}
 		model.addAttribute("event", event);
 		return "event/event_post";
+	}
+	
+	// 게시판의 이전글 다음글 코드 조회
+	@ResponseBody
+	@GetMapping("SearchPreNextCode")
+	public Map<String, Object> searchPreNextCode(@RequestParam Map<String, String> map) {
+		Map<String, Object> codeList = service.getPreNext(map);
+		return codeList;
 	}
 	
 }
