@@ -139,12 +139,13 @@ th, td {
 			</c:choose>
 		</table>
 	</div>
+	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 	<div id="divBottom" class="view">
 		<input type="button" value="처음" 
-			onclick="location.href='MemberList?pageNum=1'" 
+			onclick="location.href='MemberList?pageNum=1${searchRecord}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
 		<input type="button" value="이전" 
-			onclick="location.href='MemberList?pageNum=${pageInfo.pageNum - 1}'" 
+			onclick="location.href='MemberList?pageNum=${pageInfo.pageNum - 1}${searchRecord}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>>
 		<c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
 			<c:choose>
@@ -152,13 +153,13 @@ th, td {
 					<strong>${i}</strong>
 				</c:when>
 				<c:otherwise>
-					<a href="MemberList?pageNum=${i}">${i}</a>
+					<a href="MemberList?pageNum=${i}${searchRecord}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-		<input type="button" value="다음" onclick="location.href='MemberList?pageNum=${pageInfo.pageNum + 1}'"
+		<input type="button" value="다음" onclick="location.href='MemberList?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
-		<input type="button" value="마지막" onclick="location.href='MemberList?pageNum=${pageInfo.maxPage}'"
+		<input type="button" value="마지막" onclick="location.href='MemberList?pageNum=${pageInfo.maxPage}${searchRecord}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

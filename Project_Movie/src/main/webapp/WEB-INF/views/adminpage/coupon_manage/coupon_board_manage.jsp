@@ -105,7 +105,7 @@
 	<c:set var="searchRecord" value="&searchKeyword=${param.searchKeyword}&searchContent=${param.searchContent}" />
 	<div id="divBottom" class="view">
 		<input type="button" value="처음" 
-			onclick="location.href='CouponBoardManage?pageNum=1'" 
+			onclick="location.href='CouponBoardManage?pageNum=1${searchRecord}'" 
 			<c:if test="${pageInfo.pageNum eq 1}">disabled</c:if>> 
 <%-- 이전 페이지 이동	 --%>
 		<input type="button" value="이전" 
@@ -126,7 +126,7 @@
 <%-- 다음 페이지 이동	 --%>
 		<input type="button" value="다음" onclick="location.href='CouponBoardManage?pageNum=${pageInfo.pageNum + 1}${searchRecord}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
-		<input type="button" value="마지막" onclick="location.href='CouponBoardManage?pageNum=${pageInfo.maxPage}'"
+		<input type="button" value="마지막" onclick="location.href='CouponBoardManage?pageNum=${pageInfo.maxPage}${searchRecord}'"
 		<c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
 	</div>	
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
