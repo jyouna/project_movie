@@ -27,7 +27,7 @@
    
    <article class="box post">
        <div class="container">
-    <h1>회원가입 <휴대폰 인증 api 만들어놔서, 가능한 db로 가입요망> </h1>
+    <h1>   회원가입</h1>
     
     <hr class="section-line"> <!-- 실선 추가 -->
 

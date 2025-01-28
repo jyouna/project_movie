@@ -122,7 +122,7 @@
   
   
   <jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
-  <script src="${pageContext.request.contextPath}/resources/js/member/member_agree_form.js"></script>
+<%--   <script src="${pageContext.request.contextPath}/resources/js/member/member_agree_form.js"></script> --%>
   
   
 </main>  

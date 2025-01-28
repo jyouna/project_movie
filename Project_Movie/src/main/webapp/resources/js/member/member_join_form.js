@@ -1,8 +1,7 @@
 $(document).ready(function() {
     const csrfToken = $("#_csrf").val(); // CSRF 토큰 가져오기
+    const contextPath = "/project_movie"; // 서버 contextPath
 	
-
-
 
     $("#id").on("blur", function() {
         let id = $("#id").val().trim();

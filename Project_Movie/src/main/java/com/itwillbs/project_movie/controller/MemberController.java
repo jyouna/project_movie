@@ -1,5 +1,5 @@
 package com.itwillbs.project_movie.controller;
-//장민기 20250122
+//장민기 20250128
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -46,8 +46,7 @@ public class MemberController {
    @Autowired
     private SmsService smsService; 
    
-   
-   //--------------------------------------------------------------------------------------------------- 회원 가입 
+   //---------------------------------------------------------------------------- 회원 가입 
    
    @GetMapping("MemberAgree")
    public String memberAgreeForm() {
@@ -131,19 +130,9 @@ public class MemberController {
     
  }
    
-   
-   /* alert로 알림후 메인페이지로 리다이렉트
-    
-   // 회원 가입 성공 페이지 포워딩(MemberJoinSuccess - GET)
-   // 연결된 뷰: member/member_join_success.jsp
-   @GetMapping("MemberJoinSuccess")
-   public String memberJoinSuccess() {
-      return "member/member_join_success";
-   }
-   */
 
    
-   // -------------------------------------------------------------------------------------------- 아이디 찾기 시작
+   // -------------------------------------------------------------------- 아이디 찾기 시작
   
    
    @GetMapping("MemberFind")
@@ -181,7 +170,7 @@ public class MemberController {
    
    
    
-  // ---------------------------------------------------------------------------------------------------비밀번호찾기 시작
+  // -------------------------------------------------------------------------------비밀번호찾기 시작
    
    @GetMapping("MemberFindPasswd")
    
@@ -251,7 +240,7 @@ public class MemberController {
 //   
    
    
-   // ------------------------------------------------------------------------------------- 로그인 + 쿠키로 아이디 저장
+   // ------------------------------------------------------------------ 로그인 + 쿠키로 아이디 저장
    // 추가: 쿠키값을 읽어 로그인 폼에 전달
    @GetMapping("MemberLogin")
    public String memberLoginForm(@CookieValue(value = "rememberId", required = false)
@@ -329,7 +318,7 @@ public class MemberController {
    } //memberLogin
    
    
- // ------------------------------------------------------------------------------------------------------------로그아웃  
+ // --------------------------------------------------------------------------------------로그아웃  
    // 뷰 포워딩 x, 메인페이지로 리다이렉트
    @GetMapping("MemberLogout")
    public String memberLogout(HttpSession session) {
@@ -415,7 +404,7 @@ public class MemberController {
    
  
    
-//   --------------------------------------------------------------------------------------휴대폰번호 인증 api   
+//   ----------------------------------------------------------------------------휴대폰번호 인증 api   
    
    // 인증번호 전송
    @PostMapping("sendAuthCode")
@@ -455,7 +444,7 @@ public class MemberController {
    }
 
 
-//   ======================================================================================= 이메일인증
+//   ========================================================================= 이메일인증
    
    
    @GetMapping("MemberEmailAuth")
@@ -479,7 +468,7 @@ public class MemberController {
        }
    }
 
- // ================================================================================================ 
+ // ================================================================================ 
    
    @GetMapping("MemberWithdraw")
    public String memberWithdrawForm(HttpSession session, Model model) {
