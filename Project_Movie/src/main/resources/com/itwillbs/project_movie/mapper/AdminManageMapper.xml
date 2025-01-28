@@ -967,7 +967,7 @@
 		SET
 			event_status = 1
 		WHERE
-			event_start_date &lt; #{date}
+			event_start_date &lt;= #{date}
 		AND
 			event_status = 0
 	</update>
