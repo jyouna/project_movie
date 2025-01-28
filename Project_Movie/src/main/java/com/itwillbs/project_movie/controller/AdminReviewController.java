@@ -1,7 +1,7 @@
 package com.itwillbs.project_movie.controller;
-
-//장민기 20250123
+//장민기 20250128
 import com.itwillbs.project_movie.service.MemberService;
+import com.itwillbs.project_movie.service.AdminManageService;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -38,9 +38,9 @@ public class AdminReviewController {
 	// 65번행부터~
 	
 	@Autowired
-	//private MypageService service;
 	private MemberService service;
-	
+	@Autowired
+	private AdminManageService adminService;
 	
 	
 	//리뷰 관리 게시판
@@ -48,20 +48,17 @@ public class AdminReviewController {
 	public String review(Model model, HttpSession session, @RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue="1") int pageNum ) {
 		
-		/*
-		String id = (String)session.getAttribute("sMemberId");
-		if(session.getAttribute("admin_sId") == null) {
-		if(id == null) {
-			model.addAttribute("msg", "관리자 로그인 후 이용가능합니다.");
+		// 로그인 유무 판별
+		if(!AdminMenuAccessHandler.adminLoginCheck(session)) {
+			model.addAttribute("msg", "로그인 후 이용가능");
+			model.addAttribute("targetURL", "AdminLogin");
 			return "result/process";
 		}
-		*/
-		String id = (String)session.getAttribute("admin_sId");
 		
-		
-		// 관리자아이디로 로그인 됐는지 확인
-		if(id == null) {
-			model.addAttribute("msg", "관리자 로그인 후 이용가능합니다.");
+		// 관리자 메뉴 접근권한 판별
+		if(!AdminMenuAccessHandler.adminMenuAccessCheck("board_manage", session, adminService)) {
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("targetURL", "AdminpageMain");
 			return "result/process";
 		}
 		
@@ -104,7 +101,7 @@ public class AdminReviewController {
 	@PostMapping("AdminReviewModify")
 	public String reviewModify(Model model,@RequestParam Map<String, String> map) {
 		System.out.println("리뷰수정-map 정보" + map); 
-		int updateCount = service.getReviewModify(map);
+		int updateCount = service.modifyReview(map);
 		if(updateCount > 0) {
 			model.addAttribute("msg", "리뷰 수정 1");
 			return "redirect:/AdminReviewManage";
@@ -118,7 +115,7 @@ public class AdminReviewController {
 	@GetMapping("AdminReviewDelete")
 	public String reviewDelete(Model model,@RequestParam Map<String, String> map) {
 		System.out.println("리뷰삭제-map 정보" + map); 
-		int deleteCount = service.removeReview(map);
+		int deleteCount = service.deleteReview(map);
 		if(deleteCount > 0) {
 			model.addAttribute("msg", "리뷰 삭제 1.");
 			return "redirect:/AdminReviewManage";

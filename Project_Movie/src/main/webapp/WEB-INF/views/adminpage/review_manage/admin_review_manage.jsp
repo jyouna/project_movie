@@ -127,27 +127,36 @@
 		</article>
 		
 		<div id="watched_movie_modify_modal" class="modal">
-			<div class="watched_movie_modify">
-				    <h2>리뷰 수정</h2>
-				    <hr>
-				    <div>
-				        <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
-				        <label id="review_content">영화 리뷰내용</label>
-				        <br>
-				        <textarea cols="40" rows="3" name="review" required="required">
-				        
-				        </textarea>
-				        <br> 
-				        <label id="review_recommend0">추천</label><input type="radio" name="review_recommend" value="0" required="required">
-				        <label id="review_recommend1">비추천</label><input type="radio" name="review_recommend" value="1"><br>
-				    </div>
-			        <hr>
-			        <div class="btnGroup">
-			        	<button type="button" class="submit_modal">등록</button>
-			        	<button type="button" class="cancel_modal">취소</button>
-			        </div>
-			</div>
+		    <div class="watched_movie_modify">
+		        <h2>리뷰 수정</h2>
+		        <hr>
+		        <div>
+		            <!-- 영화명 표시 (readonly로 수정 불가능하게 설정) -->
+		            <label id="review_content">영화명<input type="text" name="movie_name" readonly></label><br>
+		            
+		            <!-- 리뷰 내용 표시 -->
+		            <label id="review_content">영화 리뷰내용</label>
+		            <br>
+		            <!-- 리뷰 내용을 입력할 textarea (필수 입력 필드) -->
+		            <textarea cols="40" rows="3" name="review" required="required"></textarea>
+		            <br> 
+		            
+		            <!-- 추천 여부 선택 (라디오 버튼) -->
+		            <label id="review_recommend0">추천</label>
+		            <input type="radio" name="review_recommend" value="0" required="required">
+		            <label id="review_recommend1">비추천</label>
+		            <input type="radio" name="review_recommend" value="1"><br>
+		        </div>
+		        <hr>
+		        <div class="btnGroup">
+		            <!-- 수정 완료 버튼 -->
+		            <button type="button" class="submit_modal">등록</button>
+		            <!-- 취소 버튼 -->
+		            <button type="button" class="cancel_modal">취소</button>
+		        </div>
+		    </div>
 		</div>
+
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>
 </html>

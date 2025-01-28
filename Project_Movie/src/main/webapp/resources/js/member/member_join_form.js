@@ -85,11 +85,11 @@ $(function() {
             switch (count) {
                 case 4:
                     msg = "안전도 : 안전";
-                    color = "green";
+                    color = "blue";
                     break;
                 case 3:
                     msg = "안전도 : 보통";
-                    color = "yellow";
+                    color = "green";
                     break;
                 case 2:
                     msg = "안전도 : 취약";

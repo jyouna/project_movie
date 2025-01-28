@@ -205,25 +205,81 @@
 	
 	
 	
+	<select id="selectReviewListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM review
+	</select>
+	
+<!-- 	리뷰 글 시작번호 끝번호 -->
+	<select id="selectReviewList" resultType="map">
+		SELECT review.*, movie.movie_name
+		FROM review
+		JOIN movie ON review.movie_code = movie.movie_code
+		<choose>
+			<when test="searchType.equals('movie_name')">
+				WHERE
+					movie.movie_name LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType.equals('movie_code')">
+				WHERE
+					movie.movie_code LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType.equals('review_writer')">
+				WHERE
+					review.review_writer LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+		</choose>
+		ORDER BY review_code DESC
+		LIMIT #{startRow}, #{listLimit}
+	</select>
+	
+	<select id="selectIsRegistReview" resultType="map">
+		SELECT *
+		FROM review
+		WHERE movie_code = #{movie_code}
+		AND review_writer = #{id}
+	</select>
 	
 	
 	
 	
+	<!-- 	관람한 리뷰 작성 
+	<insert id="insertReview">
+		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(review_code),0)
+			FROM review;
+		</selectKey>
+		INSERT INTO review(
+			movie_code,
+			review_content,
+			review_recommend,
+			review_writer
+		)VALUES(
+			#{movieCode},
+			#{reviewContent},
+			#{reviewRecommend},
+			#{id}
+		)
+	</insert>
+	-->
+
+	<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 	관람한 영화 리뷰 수정 -->
+		<update id="updateReview">
+			UPDATE review
+			SET review_content = #{review_content},
+			review_recommend = #{review_recommend}
+			WHERE movie_code = #{movie_code}
+		</update>
+	<!-- 	관람한 영화 리뷰 삭제 -->
+		<delete id="deleteReview">
+			DELETE FROM review
+			WHERE movie_code = #{movie_code}
+		</delete>
+	<!--     관리자 후기 관리 - 장민기 20250123 끝 ********** -->	
+		
+		
 	
 	
 	<select id="adminLogin" resultType="adminmanage">
@@ -1109,77 +1165,7 @@
 		)	
 	</insert>
 	
-	<select id="selectReviewListCount" resultType="int">
-		SELECT COUNT(*)
-		FROM review
-	</select>
-	
-<!-- 	리뷰 글 시작번호 끝번호 -->
-	<select id="selectReviewList" resultType="map">
-		SELECT review.*, movie.movie_name
-		FROM review
-		JOIN movie ON review.movie_code = movie.movie_code
-		<choose>
-			<when test="searchType.equals('movie_name')">
-				WHERE
-					movie.movie_name LIKE CONCAT('%', #{searchKeyword}, '%')
-			</when>
-			<when test="searchType.equals('movie_code')">
-				WHERE
-					movie.movie_code LIKE CONCAT('%', #{searchKeyword}, '%')
-			</when>
-			<when test="searchType.equals('review_writer')">
-				WHERE
-					review.review_writer LIKE CONCAT('%', #{searchKeyword}, '%')
-			</when>
-		</choose>
-		ORDER BY review_code DESC
-		LIMIT #{startRow}, #{listLimit}
-	</select>
-	
-	<select id="selectIsRegistReview" resultType="map">
-		SELECT *
-		FROM review
-		WHERE movie_code = #{movie_code}
-		AND review_writer = #{id}
-	</select>
-	<!-- 	관람한 리뷰 작성 -->
-	<insert id="insertReview">
-		<selectKey keyProperty="review_code" resultType="int" order="BEFORE">
-			SELECT IFNULL(MAX(review_code),0)
-			FROM review;
-		</selectKey>
-		INSERT INTO review(
-			movie_code,
-			review_content,
-			review_recommend,
-			review_writer
-		)VALUES(
-			#{movieCode},
-			#{reviewContent},
-			#{reviewRecommend},
-			#{id}
-		)
-	</insert>
 
-
-
-
-
-
-<!-- 	관람한 영화 리뷰 수정 -->
-	<update id="updateReview">
-		UPDATE review
-		SET review_content = #{review_content},
-		review_recommend = #{review_recommend}
-		WHERE movie_code = #{movie_code}
-	</update>
-<!-- 	관람한 영화 리뷰 삭제 -->
-	<delete id="deleteReview">
-		DELETE FROM review
-		WHERE movie_code = #{movie_code}
-	</delete>
-<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->	
 	
 	
 </mapper>
