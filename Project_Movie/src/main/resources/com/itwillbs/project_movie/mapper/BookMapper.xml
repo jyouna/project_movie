@@ -216,10 +216,10 @@
 	</update>
 	
 	<select id="selectDisabledSeat" resultType="map">
-		SELECT DISTINCT SUBSTR(b.seat_code, 4) as "seat_code", s.seat_avail
+		SELECT SUBSTR(s.seat_code, 4) as "seat_code", s.seat_avail
 		FROM booking b
 		JOIN payment p ON b.payment_code = p.payment_code
-		JOIN seat s ON b.seat_code = s.seat_code
+		RIGHT OUTER JOIN seat s ON b.seat_code = s.seat_code
 		WHERE b.schedule_code = #{schedule_code}
 		AND (payment_status = 1
 		OR DATE_ADD(seat_selection_time, INTERVAL 10 MINUTE) > now())
