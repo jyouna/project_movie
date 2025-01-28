@@ -60,7 +60,7 @@ public class CreateDataController {
 		for(int i = 1; i <= 2; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
-				int repetitionCount = (int) ((Math.random()*200)+100);
+				int repetitionCount = (int) ((Math.random()*400)+100);
 				for(int k = 0; k < repetitionCount; k++) { // repititionCount = 월 생성 계정 수
 					MemberVO member = new MemberVO();
 					LocalDate lastDay = YearMonth.of(year, month).atEndOfMonth();

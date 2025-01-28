@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="ko_KR" /> <!--  숫자 자리표기법 locale KR 기준 -->
+<fmt:setBundle basename="messages" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,13 +61,13 @@
 					<td>
 						<c:choose>
 							<c:when test="${(empty winner.discount_rate || winner.discount_rate == 0) && (empty winner.discount_amount || winner.discount_amount == 0)}">
-								${winner.point_amount}포인트						
+								<fmt:formatNumber value="${winner.point_amount}" pattern="#,##0" />포인트				
 							</c:when>
 							<c:when test="${(empty winner.discount_amount || winner.discount_amount == 0) && (empty winner.point_amount || winner.point_amount == 0)}">
 								${winner.discount_rate}% 할인쿠폰						
 							</c:when>
 							<c:otherwise>
-								${winner.discount_amount}원 할인쿠폰
+								<fmt:formatNumber value="${winner.discount_amount}" pattern="#,##0" />원 할인쿠폰
 							</c:otherwise>	
 						</c:choose>
 					</td>

@@ -22,7 +22,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 
-	<form action="GivePoint" method="post" id="givePointForm">
+	<form action="GivePoint" method="post" id="givePointForm" novalidate>
 		<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<h3>포인트 지급</h3>
 			<fieldset>
@@ -79,17 +79,18 @@
 	<br>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 <script type="text/javascript">
-	$(function(){
-		// 포인트 지금 폼 제출 시 검증
-		$("#givePointForm").on("submit", function(e){
-			if($("#point_amount").val().trim() === "" || parseInt($("#point").val().trim(), 10) <= 0) {
-				 e.preventDefault();
-				 alert("포인트 금액(1~99999)을 입력해주세요.");
-				 $("#point_amount").focus();
-				 return;
-			} 
-		});
-	})
+$(function(){
+	// 포인트 지금 폼 제출 시 검증
+	$("#givePointForm").on("submit", function(e){
+		 e.preventDefault();
+		if($("#point_amount").val().trim() === "" || parseInt($("#point").val().trim(), 10) <= 0) {
+			 alert("포인트 금액(1~99999)을 입력해주세요.");
+			 $("#point_amount").focus();
+			 return;
+		}
+		this.submit();
+	});
+})
 </script>
 </body>
 </html>

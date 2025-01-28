@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="ko_KR" /> <!--  숫자 자리표기법 locale KR 기준 -->
+<fmt:setBundle basename="messages" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,8 +122,12 @@ th, td {
 							<c:if test="${member.member_type eq '1'}">일반</c:if>
 							<c:if test="${member.member_type eq '2'}">VIP</c:if>
 						</td>
-						<td class="tdForNumber"><fmt:formatNumber value="${member.remain_point}" type="number" /></td>
-						<td class="tdForNumber"><fmt:formatNumber value="${member.coupon_num}" type="number" /></td>
+						<td class="tdForNumber">
+							<fmt:formatNumber value="${member.remain_point}" pattern="#,##0" />
+						</td>
+						<td class="tdForNumber">
+							<fmt:formatNumber value="${member.coupon_num}" pattern="#,##0" />
+						</td>
 						<td>
 							<c:if test="${member.member_status eq '1'}">정상</c:if>						
 							<c:if test="${member.member_status eq '2'}">정지</c:if>						

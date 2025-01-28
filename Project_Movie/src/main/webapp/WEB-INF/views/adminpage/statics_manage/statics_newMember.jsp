@@ -127,7 +127,7 @@ $(function(){
 							max : 2000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 100
+								stepSize: 200
 							}
 						}
 					}
@@ -213,7 +213,7 @@ $(function(){
 									max : 2000,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
-										stepSize: 100
+										stepSize: 200
 									}
 									
 								}
@@ -291,7 +291,7 @@ $(function(){
 									max : 2000,
 									ticks: {
 										color: 'rgba(75, 192, 192, 1)',
-										stepSize: 100
+										stepSize: 200
 									}
 									
 								}
@@ -383,10 +383,10 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 18000,
+							max : 20000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 1000
+								stepSize: 2000
 							}
 							
 						}

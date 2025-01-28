@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="ko_KR" /> <!--  숫자 자리표기법 locale KR 기준 -->
+<fmt:setBundle basename="messages" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,7 +82,7 @@
 									<c:when test="${point.point_credited eq '0'}}">
 									</c:when>
 									<c:otherwise>
-										<fmt:formatNumber value="${point.point_credited}" type="number" />
+										<fmt:formatNumber value="${point.point_credited}" pattern="#,##0" />
 									</c:otherwise>
 								</c:choose>							
 							</td>	
@@ -89,7 +91,7 @@
 									<c:when test="${point.point_debited eq '0'}">
 									</c:when>
 									<c:otherwise>
-										<fmt:formatNumber value="${point.point_debited}" type="number" />
+										<fmt:formatNumber value="${point.point_debited}" pattern="#,##0" />
 									</c:otherwise>
 								</c:choose>							
 							</td>
