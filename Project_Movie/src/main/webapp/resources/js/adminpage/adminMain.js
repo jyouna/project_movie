@@ -63,10 +63,10 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 500,
+							max : 1000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 50
+								stepSize: 100
 							}
 						}
 					}

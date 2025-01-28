@@ -54,10 +54,10 @@ public class CreateDataController {
 		LocalDate localDate = LocalDate.of(2002, 2, 2);
 		Date date = Date.valueOf(localDate);
 		
-		int year = 2020;
+		int year = 2023;
 		int month = 0;
 		
-		for(int i = 1; i < 4; i++) { // 4년
+		for(int i = 1; i <= 2; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
 				int repetitionCount = (int) ((Math.random()*200)+100);

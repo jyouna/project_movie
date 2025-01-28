@@ -34,8 +34,8 @@ input[type="checkbox"] {
 	<h3>관리자 계정관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-<!-- 			<input type="button" value="회원생성" id="createMember" disabled> -->
-<!-- 			<input type="button" value="매출생성" id="createSalesRecord" disabled> -->
+<!-- 			<input type="button" value="회원생성" id="createMember"> -->
+<!-- 			<input type="button" value="매출생성" id="createSalesRecord"> -->
 <!-- 			<input type="button" value="권한설정" id="setAuth"> -->
 			<input type="button" value="관리자등록" id="createId">
 			<input type="button" value="관리자삭제" id="deleteId">
