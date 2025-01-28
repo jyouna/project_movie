@@ -35,12 +35,10 @@
 		    </div>
 		
 		    <div id="season_info">
-		        <div>
-		        	시즌 컨셉 및 시즌 이벤트 간략 소개
-		        </div>
-		        ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ
-		        fffffffffffffffffffffffffffffffffffffffffff
-		        ffffffffffffffffffffffffffffffffffffffffff
+		        이번 겨울 시즌,<br>
+				영화와 함께 겨울의 분위기를 만끽할 수 있는 특별한 상영관을 준비했습니다.<br>
+				지금 바로 저희 영화관을 방문하셔서 사랑하는 가족들과 즐거운 시간을 보내세요.<br>
+				따뜻한 영화와 함께하는 특별한 겨울을 놓치지 마세요!
 		    </div>
 		</div>
 	</article>

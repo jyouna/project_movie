@@ -79,14 +79,14 @@
 
 #season_info {
     position: absolute;
-    width: 550px;
+    width: 700px;
     bottom: 30px;
     color: white;
-    font-size: 15px;
+    font-size: 18px;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 10px;
-    left: 200px;
+    left: 15%;
 }
 
 #season_info>div {
