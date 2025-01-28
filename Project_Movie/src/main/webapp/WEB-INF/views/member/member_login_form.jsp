@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>로그인</title>
+	<title></title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	
@@ -35,13 +35,13 @@
            <form action="MemberLogin" method="post" id="loginForm">
           
           <!-- $$$$$ 수정 1: name 속성 추가 및 쿠키 값 처리 $$$$$ -->
-          <label for="member_id">아이디 입력</label>
+          <label for="member_id">로그인</label>
           <input type="text" id="member_id" name="member_id" 
-                 value="<c:out value='${cookie.rememberId.value}' default=''/>" placeholder="ID" />
+                 value="<c:out value='${cookie.rememberId.value}' default=''/>" placeholder="아이디 입력" />
 
           <!-- $$$$$ 수정 1: name 속성 추가 $$$$$ -->
-          <label for="member_passwd">비밀번호 입력</label>
-          <input type="password" id="member_passwd" name="member_passwd" placeholder="PASSWORD" />
+          <label for="member_passwd"></label>
+          <input type="password" id="member_passwd" name="member_passwd" placeholder="비밀번호 입력" />
 
          <!-- 아이디 저장 체크박스 -->
          <!-- $$$$$ 수정 1: 체크박스 checked 속성 수정 $$$$$ -->
@@ -65,13 +65,19 @@
         </div>
 
         <!-- 안내사항 섹션 -->
-        <div class="info-box">
-          <h2 class="section-title">Movie</h2>
-
-          <!-- 안내 이미지 -->
-			<img src="${pageContext.request.contextPath}/resources/images/movielogo.png" 
-			  alt="안내 이미지">
-        </div>
+		<div class="info-box">
+		    <h2 class="section-title">-영화관 안내사항-</h2>
+		
+		    <!-- YouTube 영상 삽입 -->
+		    <iframe 
+		        width="100%" 
+		        height="auto" 
+		        src="https://www.youtube.com/embed/OG5O7I-1LSA?autoplay=0" 
+		        frameborder="0" 
+		        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+		        allowfullscreen>
+		    </iframe>
+		</div>
       </div>
     </main>
   </div>

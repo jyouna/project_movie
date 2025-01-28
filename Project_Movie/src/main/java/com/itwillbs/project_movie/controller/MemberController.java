@@ -267,13 +267,12 @@ public class MemberController {
          model.addAttribute("msg", "로그인 실패! 아이디 비밀번호를 다시 확인후 시도해주세요");
          return "result/process"; // 연결된 뷰: result/fail.jsp
          
-      } else if(dbMember.getMember_status() == 3) {
-         model.addAttribute("msg", "탈퇴한 회원입니다!");
-         return "result/process"; // 연결된 뷰: result/fail.jsp
-      
-//      } else if(dbMember.getEmail_auth_status().equals("N")) { 
-         //***** 수정전: mail_auth_status ----> 수정후: email_auth_status *****
-         
+      }
+      // 회원 상태가 3인 경우 (비활성화된 회원)
+      else if (dbMember.getMember_status() == 3) {
+          model.addAttribute("msg", "이미 탈퇴한 회원입니다.");
+          return "result/process"; // 연결된 뷰: result/fail.jsp
+          
       }else if(!dbMember.isEmail_auth_status()) {
          //db가 bollean 타입으로 바뀜. 추가 수정 ******
          

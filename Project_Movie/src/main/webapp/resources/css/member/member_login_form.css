@@ -33,46 +33,60 @@
 }
 
 .content h1 {
-  margin-bottom: 10px;
+	margin-bottom: 15px !important; /* h1과 .split-box 사이의 간격을 25px로 설정 */
   padding-bottom: 5px;
-  border-bottom: 1px solid rgb(33, 33, 33); /* 제목 아래 실선 */
+  border-bottom: 1px 0 rgb(33, 33, 33); /* 제목 아래 실선 */
 }
 
 /* ========== 박스 섹션 스타일 ========== */
-.split-box {	
-  margin-top: 100px;
-  display: flex; /* Flexbox 사용 */
-  align-items: stretch; /* 세로 길이 통일 */
-  gap: 0px; /* 섹션 간격 제거 */
+
+.split-box {
+  gap: 2px !important; /* 우선순위 강제 적용 */
+/*   margin-top: 100px; */
+  display: flex;
+  align-items: stretch;
 }
 
 .login-box, .info-box {
-      flex: 1;
-    padding: 50px;
-    background: #dcdcdc;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(10, 10, 11, 0.1);
-    position: relative;
-    height: 500px; /* 높이 증가 */
+  flex: 1; /* 기본적으로 동일한 비율로 공간을 차지 */
+  padding: 10px;
+  background: #e9e9e9;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(10, 10, 11, 0.1);
+  position: relative;
+  height: 400px; /* 높이 증가 */
 }
 
 .login-box {
-     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 1px;
-    flex-wrap: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1px;
+  flex-wrap: nowrap;
+  width: 400px; /* .login-box의 너비를 명시적으로 설정 (원하는 값으로 변경 가능) */
+  padding-top: 30px;
 }
 
 .info-box {
+	
   margin: 0; /* 바깥 여백 제거 */
-  padding-top: 60px; /* 제목과 이미지 사이 간격 확보 */
-  display: flex; /* Flexbox 적용 */
+  padding-top: 30px; 
+  display: flex;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 가로 중앙 정렬 */
-  padding: 20px; /* 내부 여백 유지 */
+  padding: 10px; /* 내부 여백 유지 */
+  width: 400px; /* .login-box와 동일한 너비로 설정 */
 }
+
+.info-box iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  
+
+}
+
 
 /* ========== 섹션 타이틀 공통 스타일 ========== */
 .section-title {
@@ -198,10 +212,7 @@ button {
   height: auto; /* 가로 비율 유지 */
 }
 
-.split-box {
-  
-  height: 50vh; /* 화면 전체 높이 */
-}
+
 
 
 .save-id input[type="checkbox"] {

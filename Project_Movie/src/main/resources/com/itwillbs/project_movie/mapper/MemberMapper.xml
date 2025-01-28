@@ -70,10 +70,13 @@
 
 	<!-- 회원 로그인을 위한 아이디, 패스워드 판별 - SELECT -->
 	<select id="selectMemberIdForLogin" resultType="string">
-		SELECT member_id
-		FROM member
-		WHERE member_id = #{member_id} AND member_passwd = #{member_passwd}
+	    SELECT member_id
+	    FROM member
+	    WHERE member_id = #{member_id}
+	    AND member_passwd = #{member_passwd}
+	    AND member_status != 3
 	</select>
+
 
 	<!-- 회원 상세정보 조회 - SELECT -->
 	<select id="selectMember" resultType="com.itwillbs.project_movie.vo.MemberVO">
@@ -204,8 +207,9 @@
 	<!-- ============================= -->
 	
 	
+	<!--     관리자 후기 관리 - 장민기 20250123 끝 ******************************************-->	
 	
-	<select id="selectReviewListCount" resultType="int">
+		<select id="selectReviewListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM review
 	</select>
@@ -263,7 +267,6 @@
 	</insert>
 	-->
 
-	<!--     관리자 후기 관리 - 장민기 20250123 시작 ********** -->	
 	
 	<!-- 	관람한 영화 리뷰 수정 -->
 		<update id="updateReview">
@@ -277,9 +280,25 @@
 			DELETE FROM review
 			WHERE movie_code = #{movie_code}
 		</delete>
-	<!--     관리자 후기 관리 - 장민기 20250123 끝 ********** -->	
+	<!--     관리자 후기 관리 - 장민기 20250123 끝 ******************************************-->	
 		
 		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<select id="adminLogin" resultType="adminmanage">
