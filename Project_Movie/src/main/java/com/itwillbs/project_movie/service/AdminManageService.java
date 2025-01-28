@@ -556,4 +556,16 @@ public class AdminManageService {
 		manageMapper.endEventWithoutWinner(event_code);
 		
 	}
+	
+	// 이벤트 시작 스케줄러 실행
+	public void eventAutoStart(LocalDate date) {
+		// TODO Auto-generated method stub
+		manageMapper.eventAutoStart(date);
+	}
+	
+	// 이벤트 종료 스케줄러 실행
+	public void eventAutoEnd(LocalDate date) {
+		// TODO Auto-generated method stub
+		manageMapper.eventAutoEnd(date);
+	}
 }

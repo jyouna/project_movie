@@ -959,6 +959,30 @@
 		WHERE
 			event_code = #{event_code}
 	</update>
+	
+<!--  이벤트 자동 시작 스케줄러 실행 -->
+	<update id="eventAutoStart">
+		UPDATE
+			event_board
+		SET
+			event_status = 1
+		WHERE
+			event_start_date &lt; #{date}
+		AND
+			event_status = 0
+	</update>
+
+<!--  이벤트 자동 종료 스케줄러 실행 -->
+	<update id="eventAutoEnd">
+		UPDATE
+			event_board
+		SET
+			event_status = 2
+		WHERE
+			event_end_date &lt; #{date}
+		AND
+			event_status = 1
+	</update>
 
 
 

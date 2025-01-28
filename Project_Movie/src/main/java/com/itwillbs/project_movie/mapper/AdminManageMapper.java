@@ -231,5 +231,9 @@ public interface AdminManageMapper {
 	
 	// 기간 내 예매자가 없을 경우 이벤트 자동종료
 	void endEventWithoutWinner(@Param("event_code") int event_code);
+	// 이벤트 자동 시작 스케줄러 실행
+	void eventAutoStart(@Param("date") LocalDate date);
+	// 이벤트 자동 종료 스케줄러 실행
+	void eventAutoEnd(@Param("date") LocalDate date);
 	
 }
