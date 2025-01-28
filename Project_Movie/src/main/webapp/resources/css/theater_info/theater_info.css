@@ -33,7 +33,7 @@
 }
 
 .content p {
-    margin: 10px 0 10px 0;
+    margin: 2px 0 12px 0;
     font-size: 1em;
     text-align: justify;
     color: #555;
@@ -88,7 +88,16 @@ table tbody tr:nth-child(even) {
     color: black;
 }
 
+#season,
+#content{
+	color:black;
+	font-size: 15px;
+}
 
+h5{
+	margin: 10px;
+	margin: 10px 12px -2px 0px;
+}
 #rule {
     font-weight: bold;
     margin-bottom: 10px;
