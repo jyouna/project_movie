@@ -20,9 +20,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	
 	<h3>이벤트 당첨자 목록</h3>
-	
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
 		<h4>이벤트 당첨자</h4>

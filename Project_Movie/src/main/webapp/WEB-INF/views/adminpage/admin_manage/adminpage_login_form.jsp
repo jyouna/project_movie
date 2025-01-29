@@ -7,20 +7,28 @@
 	<title>Insert title here</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_assets/css/main.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/member_login_form.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminpage/admin_login_main.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminpage/admin_login_form.css" />
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <style type="text/css">
 .login-box {
 	padding: 100px;
 }
+h1 {
+	text-align: center;
+    font-size: 2em;
+    margin-top: 6%;
+}
+.split-box {
+	margin-top: 0;
+}
 </style>
 <body class="left-sidebar is-preload">
 <article class="box post">
 	<div class="container">
 		<main class="content">
-		<h1>로그인</h1>
+			<h1>관리자 로그인</h1>
 			<div class="split-box">
 				<div class="login-box">
 				<h2 class="section-title"></h2>

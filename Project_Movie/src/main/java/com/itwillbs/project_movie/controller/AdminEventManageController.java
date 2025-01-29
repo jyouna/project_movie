@@ -594,6 +594,7 @@ public class AdminEventManageController {
 		return "adminpage/event_manage/event_winner_manage";
 	}
 	
+	// 이벤트 페이지 당첨자 표시
 	@GetMapping("ShowEventWinnerList")
 	public String showEventWinnerList(int event_code, Model model) {
 		System.out.println("당첨자 컨트롤러 호출됨");
@@ -601,6 +602,7 @@ public class AdminEventManageController {
 		List<EventWinnerVO> voList = adminService.getWinnerList(event_code);
 		System.out.println("당첨자 : " + voList);
 		model.addAttribute("voList", voList);
+		model.addAttribute("count", voList.size());
 		
 		return "adminpage/event_manage/event_winner_list_toShow";
 	}

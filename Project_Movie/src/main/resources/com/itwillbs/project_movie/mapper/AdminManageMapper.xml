@@ -721,7 +721,7 @@
 		    OR ((c.discount_amount is not null AND c.discount_rate is not null) 
 		    	AND (p.point_credited is null)))
 		    AND e.event_code = #{event_code}
-		    AND c.even_code != 0		
+		    AND c.event_code != 0		
 	</select> 
 	
 	<select id="getSingleEventWinnerCount" resultType="int">

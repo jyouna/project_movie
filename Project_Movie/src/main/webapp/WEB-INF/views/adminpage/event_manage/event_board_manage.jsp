@@ -50,8 +50,8 @@
 	<div id="tableDiv" class="view" style="overflow-x: auto;">
 		<table id="mainTable">
 			<tr align="center" id="tr01">
-				<th width="100">선택</th>
-				<th width="100">이벤트번호</th>
+				<th width="50">선택</th>
+				<th width="50">번호</th>
 				<th width="350">제목</th>
 				<th width="150">등록일자</th>
 				<th width="150">시작일자</th>
