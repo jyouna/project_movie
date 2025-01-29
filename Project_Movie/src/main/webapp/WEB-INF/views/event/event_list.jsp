@@ -102,11 +102,11 @@
 				console.log("event_code = " + event_code);
 // 				console.log("eventCode : "  + eventCode);
 				$.ajax({
-					url: "GetWinnerCountForShow",
+					url: "CheckEventStatusForShowing",
 					type: "get",
 					data: {event_code : event_code}
 				}).done(function(response){			
-					if(response < 1) { // 당첨자 수(response)가 1보다 적을 시 당첨 추첨 미진행이므로 알림 팝업창 표시
+					if(!response) { // 이벤트 당첨자 추첨 상태가 false 이므로 alert 표시 
 						alert("당첨자 추첨 후 확인 가능합니다.");
 					} else {
 						window.open("ShowEventWinnerList?event_code=" + event_code, "당첨자리스트", "width=800, height=800 left=590 top=140");

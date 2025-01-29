@@ -176,7 +176,6 @@ public class AdminManageService {
 		return manageMapper.checkEventStatus(event_code);
 	}
 	
-	
 	// 이벤트 당첨자 포인트 발급
 	// 1. 회원에게 포인트 + 시키고
 	// 2. 포인트 테이블에 정보 저장
@@ -369,7 +368,8 @@ public class AdminManageService {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	// 이벤트 당첨자 출력
 	public List<EventWinnerVO> getAllEventWinnerList(int startRow, int listLimit, String searchKeyword, String searchContent) {
 		// TODO Auto-generated method stub
 		return manageMapper.getAllEventWinnerList(startRow, listLimit, searchKeyword, searchContent);

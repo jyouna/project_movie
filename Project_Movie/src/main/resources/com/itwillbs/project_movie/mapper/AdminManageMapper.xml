@@ -657,7 +657,7 @@
 						CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) LIKE '%${searchContent}%'
 					</when>
 					<when test="searchKeyword.equals('eventSubject')">
-						e.event_subject LIKE '%${searchContent}%'
+						e.event_code LIKE '%${searchContent}%'
 					</when>
 				</choose>		
 			</if>			
@@ -690,7 +690,7 @@
 						CONCAT(ifnull(c.member_id, ""), ifnull(p.point_holder,"")) LIKE '%${searchContent}%'
 					</when>
 					<when test="searchKeyword.equals('eventSubject')">
-						e.event_subject LIKE '%${searchContent}%'
+						e.event_code LIKE '%${searchContent}%'
 					</when>
 				</choose>		
 			</if>		
@@ -983,7 +983,12 @@
 		AND
 			event_status = 1
 	</update>
-
+	
+	<select id="checkEventStatus" resultType="eventboard">
+		SELECT *
+		FROM event_board
+		WHERE event_code = #{event_code}
+	</select>
 
 
 

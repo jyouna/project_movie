@@ -600,20 +600,27 @@ public class AdminEventManageController {
 		System.out.println("당첨자 컨트롤러 호출됨");
 		
 		List<EventWinnerVO> voList = adminService.getWinnerList(event_code);
+		System.out.println("당첨자 수 : " + voList.size());
 		System.out.println("당첨자 : " + voList);
 		model.addAttribute("voList", voList);
 		model.addAttribute("count", voList.size());
-		
 		return "adminpage/event_manage/event_winner_list_toShow";
 	}
 	
-	@GetMapping("GetWinnerCountForShow")
+	@GetMapping("CheckEventStatusForShowing")
 	@ResponseBody
-	public int getWinnerCount(int event_code) {
+	public Boolean getWinnerCount(int event_code) {
 		System.out.println("당첨자 수 출력 컨트롤러 호출");
-		int winnerCount = adminService.getSingEventWinnerCount(event_code);
-		System.out.println(winnerCount);
-		return winnerCount;
+		EventBoardVO event = adminService.checkEventStatus(event_code);
+//		int winnerCount = adminService.getSingEventWinnerCount(event_code);
+//		System.out.println(winnerCount);
+		System.out.println("이벤트 상태 : " + event.getEvent_status());
+		System.out.println("이벤트당첨자 추첨 상태 : " + event.getSet_winner_status());
+		if(event.getEvent_status() == 2 && event.getSet_winner_status() == true) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

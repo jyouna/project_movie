@@ -162,7 +162,8 @@ public interface AdminManageMapper {
 	// 2, 3번 차트 월 가입자 수 조회
 	int getMonthlyTotalNewMember(@Param("year")int year,
 								@Param("month")int month);
-
+	
+	// 이벤트 당첨자 목록 출력
 	List<EventWinnerVO> getAllEventWinnerList(@Param("startRow") int startRow, 
 											@Param("listLimit") int listLimit, 
 											@Param("searchKeyword") String searchKeyword, 
