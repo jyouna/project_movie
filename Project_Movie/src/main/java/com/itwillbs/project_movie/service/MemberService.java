@@ -124,15 +124,16 @@ public class MemberService {
 		return mapper.selectReviewList(startRow, listLimit, searchType, seachKeyword);
 	}
 	//관람한 영화 리뷰 수정 
-	public int modifyReview(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return mapper.getModifyReview(map);
+
+	public int modifyReview(String review_code, String review_content) {
+	    return mapper.getModifyReview(review_code, review_content);
 	}
+	
 	//관람한 영화 리뷰 삭제
-	public int deleteReview(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return mapper.getDeleteReview(map);
+	public int deleteReview(String review_code) {
+	    return mapper.getDeleteReview(review_code);
 	}
+
 	//관리자 후기 관리 - 장민기 20250123 끝 **********
 
 

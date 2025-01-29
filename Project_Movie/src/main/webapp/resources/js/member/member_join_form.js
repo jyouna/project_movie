@@ -34,7 +34,7 @@ $(document).ready(function() {
                     }
                 },
                 error: function() {
-                    $("#id-check-result").text("예외발생 js38)서버 오류 발생").css("color", "red");
+                    $("#id-check-result").text("서버 오류 발생").css("color", "red");
                 }
             });
         } else {

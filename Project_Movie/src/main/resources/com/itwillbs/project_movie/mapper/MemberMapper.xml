@@ -269,16 +269,17 @@
 
 	
 	<!-- 	관람한 영화 리뷰 수정 -->
-		<update id="updateReview">
-			UPDATE review
-			SET review_content = #{review_content},
-			review_recommend = #{review_recommend}
-			WHERE movie_code = #{movie_code}
+		<update id="getModifyReview">
+		    UPDATE review
+		    SET review_content = #{review_content}
+		    WHERE review_code = #{review_code}
 		</update>
+
+
 	<!-- 	관람한 영화 리뷰 삭제 -->
-		<delete id="deleteReview">
-			DELETE FROM review
-			WHERE movie_code = #{movie_code}
+		<delete id="getDeleteReview">
+		    DELETE FROM review
+		    WHERE review_code = #{review_code}  <!-- 🔹 review_code를 사용하도록 변경 -->
 		</delete>
 	<!--     관리자 후기 관리 - 장민기 20250123 끝 ******************************************-->	
 		

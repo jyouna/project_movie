@@ -341,13 +341,19 @@ public interface MemberMapper {
 		//관람평 시작번호 끝번호
 		List<Map<String, Object>> selectReviewList(@Param("startRow")int startRow, @Param("listLimit")int listLimit, @Param("searchType") String searchType, @Param("searchKeyword") String searchKeyword);
 		//관람한 영화 리뷰 수정 
-		int getModifyReview(Map<String, String> map);
+		//int getModifyReview(Map<String, String> map);
 		//관람한 영화 리뷰 삭제
-		int getDeleteReview(Map<String, String> map);
+		//int getDeleteReview(Map<String, String> map);
 		//관리자 후기 관리 - 장민기 20250123 끝 **********
 
 	
-	
+		// 관람한 영화 리뷰 수정 (review_code 기반)
+		int getModifyReview(@Param("review_code") String review_code, @Param("review_content") String review_content);
+
+
+		// 관람한 영화 리뷰 삭제 (review_code 기반)
+		int getDeleteReview(@Param("review_code") String review_code);
+
 	
 	
 }

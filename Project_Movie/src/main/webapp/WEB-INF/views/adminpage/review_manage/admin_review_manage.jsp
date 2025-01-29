@@ -64,10 +64,10 @@
 	         <table>
 	            <tr id="tr_top" align="center">
 	               <td width="1%">택</td>
-	               <td width="7%">리뷰코드</td> 
+	               <td width="9%">리뷰코드</td> 
 	               <td width="100">영화명</td>
 	               <td width="170">영화리뷰</td>
-	               <td width="6%">추천여부</td>
+	               <td width="6%">추천</td>
 	               <td width="15%">작성자</td>
 	            </tr>
 	               
@@ -78,7 +78,10 @@
 	               <c:otherwise>
 	                  <c:forEach var="review" items="${reviewList}" varStatus="status">
 	                     <tr>
-	                        <td><input type="radio" name="movie_code" value="${review.movie_code}" class="movie_code"></td>
+	                        <td>
+	                        	<input type="radio" name="movie_code" value="${review.movie_code}" class="movie_code"> 
+	                        	<input type="hidden" name="review_code" value="${review.review_code}" class="review_code"> <!-- 추가 -->
+	                        </td>
 	                        <td>${review.review_code}</td> <!-- 리뷰 코드 표시 -->
 	                        <td>${review.movie_name}</td>
 	                        <td>${review.review_content}</td>
