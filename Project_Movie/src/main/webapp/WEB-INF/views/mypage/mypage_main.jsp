@@ -25,21 +25,19 @@
 			<div id="noticeBoardMain" class="secitonBoard">
 				<table>
 					<tr class="tr01">
-						<th width="40px">예매번호</th>
-						<th width="150px">영화명</th>
+						<th width="130px">영화명</th>
 						<th width="70px">관람인원</th>
-						<th width="70px">관람일</th>
+						<th width="90px">관람일</th>
 					</tr>
 					<c:choose>
 						<c:when test="${empty reservationList}">
 							<tr>
-								<td colspan="4">예매내역이 존재하지 않습니다</td>
+								<td colspan="3">예매내역이 존재하지 않습니다</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="reservationDetail" items="${reservationList}" begin="0" end="5">
 								<tr>
-									<td>${reservationDetail.payment_code}</td>
 									<td>${reservationDetail.movie_name}</td>
 									<td>${reservationDetail.ticket_count}</td>
 									<td> <fmt:formatDate value="${reservationDetail.start_time}" pattern="yyyy-MM-dd HH:mm"/></td>
@@ -103,7 +101,6 @@
 				<table>
 					<tr class="tr01">
 						<th width="80px">적립날짜</th>
-						<th width="50px">상세내용</th>
 						<th width="100px">적립 포인트</th>
 						<th width="100px">인출 포인트</th>
 					</tr>
@@ -116,11 +113,9 @@
 						<c:otherwise>
 							<c:forEach var="point" items="${pointList}" >
 								<tr>
-									<td>${point.pointList}</td>
 									<td>
 									    <fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd"/>
 									</td>
-									<td>${point.event_subject}</td>
 									<td>
 										<c:choose>
 											<c:when test="${point.point_credited > 0}">
@@ -149,7 +144,6 @@
 				<table>
 					<tr class="tr01">
 						<th width="60px">쿠폰 상태</th>
-						<th width="60px">쿠폰 타입</th>
 						<th width="130px">쿠폰 상세 정보</th>
 						<th width="90px">사용기간</th>
 					</tr>
@@ -172,12 +166,6 @@
 						            		</c:otherwise>
 						            	</c:choose>
 					            	</td>
-									<td>
-										<c:choose>
-						            		<c:when test=" ${coupon.coupon_type == '0'}">금액</c:when>
-						            		<c:otherwise>할인</c:otherwise>
-					            		</c:choose>	
-									</td>
 									<td>
 									    <c:choose>
 						                    <c:when test="${coupon.discount_amount eq '0'}">

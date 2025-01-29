@@ -49,7 +49,6 @@
 	               <td width="5%"><input type="radio" name ="watchedMovie" disabled="disabled"></td>
 	               <td width="35%">영화명</td>
 	               <td width="25%">관람 일시</td>
-	               <td width="10%">관람 인원</td>
 	               <td width="25%">리뷰 등록 여부</td>
 	            </tr>
 	           
@@ -65,7 +64,6 @@
 	                        <td>
 	                        	<fmt:formatDate value="${watchedMovie.start_time}" pattern="yyyy-MM-dd"/>
                         	</td>
-	                        <td>${watchedMovie.ticket_count}명</td>
 	                        <td>
 	                        	<c:choose>
 	                        		<c:when test="${watchedMovie.isRegist == 0}">리뷰 등록 전</c:when>

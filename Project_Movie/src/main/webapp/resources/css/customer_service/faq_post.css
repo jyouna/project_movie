@@ -82,6 +82,8 @@ hr{
     font-weight: bold;
     color: black; /* 두 번째 열의 텍스트 색상 */
 }
+#faqPrevBtn,
+#faqNextBtn,
 #btn {
  -webkit-transition: all .25s ease-in-out;
     -ms-transition: all .25s ease-in-out;

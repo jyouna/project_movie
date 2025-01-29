@@ -104,40 +104,22 @@
 	 		</if>
 	</select>
 <!-- 	내가 본 영화 시작번호 끝번호 -->
-	<select id="selectWatchedMovie" resultType="map">
-		SELECT movie.movie_code, movie.movie_name, schedule.start_time, payment.ticket_count
-		FROM movie
-		JOIN schedule ON movie.movie_code = schedule.movie_code
-		JOIN payment ON schedule.schedule_code = payment.schedule_code
-		AND
-				schedule.end_time &lt; NOW()
-		<if test="!searchYear.equals('')">
-			AND 
-	 			<choose>
-	 				<when test="searchYear.equals('2025')">
-			 			 start_time LIKE CONCAT('%', #{searchYear},'%')
-	 				</when>
-	 				<when test="searchYear.equals('2024')">
-			 			 start_time LIKE CONCAT('%', #{searchYear},'%')
-	 				</when>
-	 				<when test="searchYear.equals('2023')">
-			 			start_time LIKE CONCAT('%', #{searchYear},'%')
-	 				</when>
-	 				<when test="searchYear.equals('2022')">
-			 			start_time LIKE CONCAT('%', #{searchYear},'%')
-	 				</when>
-	 				<when test="searchYear.equals('2021')">
-			 			start_time LIKE CONCAT('%', #{searchYear},'%')
-	 				</when>
-	 				<otherwise>
-	 					1=1
-	 				</otherwise>
-	 			</choose>
-	 		</if>
-		LIMIT 
-			#{startRow}
-			, #{listLimit}
-	</select>
+<select id="selectWatchedMovie" resultType="map">
+    SELECT movie.movie_code, movie.movie_name, 
+           MIN(schedule.start_time) AS start_time, 
+           SUM(payment.ticket_count) AS total_tickets
+    FROM movie
+    JOIN schedule ON movie.movie_code = schedule.movie_code
+    JOIN payment ON schedule.schedule_code = payment.schedule_code
+    WHERE payment.member_id = #{id}
+    AND schedule.end_time &lt; NOW()
+    <if test="!searchYear.equals('')">
+        AND start_time LIKE CONCAT('%', #{searchYear}, '%')
+    </if>
+    GROUP BY movie.movie_code, movie.movie_name
+    LIMIT #{startRow}, #{listLimit}
+</select>
+
 
 <!-- 	리뷰 총 개수 출력 -->
 	<select id="selectReviewListCount" resultType="int">
@@ -148,7 +130,7 @@
 	</select>
 <!-- 	리뷰 글 시작번호 끝번호 -->
 	<select id="selectReviewList" resultType="map">
-		SELECT review.*, movie.movie_name
+		SELECT movie.movie_name, review.review_content
 		FROM review
 		JOIN movie ON review.movie_code = movie.movie_code
 		WHERE review_writer = #{id}
@@ -182,7 +164,7 @@
 <!-- 	관람한 영화 리뷰 수정 -->
 	<update id="updateReview">
 		UPDATE review
-		SET review_content = #{review_content},
+		SET review_content = #{review_content}, 	
 		review_recommend = #{review_recommend}
 		WHERE movie_code = #{movie_code}
 	</update>
@@ -558,32 +540,75 @@
 		
 	</select>
 	
-<!-- 	이전글 다음글 -->
-	<select id="">
-	SELECT *
-FROM (
-   SELECT 
-      notice_code
-        , LAG(notice_code) 
-         OVER 
-            <choose>
-            <when test="board_type eq 'notice'">
-               (ORDER BY notice_code DESC) 
-            </when>
-                <when test="board_type eq 'free'">
-               (ORDER BY board_re_ref DESC, board_re_seq ASC) 
-            </when>
-                
-                
-                
-                
-                
-            </choose>
-            AS next_notice_code
-        , LEAD(notice_code) OVER (ORDER BY notice_code DESC) AS prev_notice_code
-    FROM notice_board
-) AS subquery
-WHERE notice_code = 13;
+	<!-- 	이전글 다음글 -->
+		<select id="">
+			SELECT *
+			FROM (
+			   SELECT 
+			      notice_code
+			        , LAG(notice_code) 
+			         OVER 
+			            <choose>
+			            <when test="board_type eq 'notice'">
+			               (ORDER BY notice_code DESC) 
+			            </when>
+			                <when test="board_type eq 'free'">
+			               (ORDER BY board_re_ref DESC, board_re_seq ASC) 
+			            </when>
+			            </choose>
+			            AS next_notice_code
+			        , LEAD(notice_code) OVER (ORDER BY notice_code DESC) AS prev_notice_code
+			    FROM notice_board
+			) AS subquery
+			WHERE notice_code = 13;
+		</select>
+<!-- 	마이페이지 메인 예매내역 -->
+	<select id="getReservationList">
+		SELECT payment.payment_code, payment.ticket_count, payment.total_payment, payment.total_seat_code, movie.movie_name, schedule.theater_code, schedule.start_time
+		FROM payment JOIN schedule 
+		ON payment.schedule_code = schedule.schedule_code
+		JOIN movie 
+		ON schedule.movie_code = movie.movie_code
+		WHERE member_id = #{id}
+		AND payment.payment_status = 1
+		AND schedule.end_time &gt; now()
+		ORDER BY 
+		 	start_time DESC
+	</select>
+<!-- 	마이페이지 메인 쿠폰 -->
+	<select id="getCouponList" resultType="map">
+		SELECT *
+		FROM coupon
+		WHERE member_id = #{id}
+	</select>
+<!-- 	마이페이지 메인 포인트 -->
+	<select id="getPointList" resultType="map">
+		SELECT po.point_credited, po.point_debited, po.point_holder, ev.event_subject, 
+	      		pa.payment_code, po.regis_date, re.refund_code, po.point_code
+		FROM point po 
+		LEFT JOIN payment pa ON po.payment_code = pa.payment_code
+		LEFT JOIN refund re ON po.refund_code = re.refund_code
+		LEFT JOIN event_board ev ON ev.event_code = po.event_code
+		WHERE point_holder = #{id}
+		ORDER BY po.regis_date DESC
 	</select>
 	
+<!-- 	마이페이지 메인 1:1문의 -->
+	<select id="getInquiryList" resultType="inquiry">
+	    SELECT *
+	    FROM Inquiry
+	    WHERE 
+	       inquiry_writer = #{id}
+	        OR (
+	          response_status = 2 
+	          AND inquiry_re_ref IN (
+	             SELECT inquiry_code
+	             FROM Inquiry
+	             WHERE inquiry_writer = #{id}
+	          )
+	        )
+ 		ORDER BY
+			inquiry_re_ref DESC
+			, inquiry_re_seq ASC
+ 	</select>
  </mapper>

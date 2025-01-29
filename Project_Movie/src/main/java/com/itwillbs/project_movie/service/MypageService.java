@@ -235,6 +235,23 @@ private MyPageMapper mapper;
 	public int updateMemberStatus(String member_id) {
 		return mapper.updateMemberstatus(member_id);
 	}
+	//마이페이지 메인 예매내역 출력
+	public List<Map<String, Object>> getReservationList(String id) {
+		// TODO Auto-generated method stub
+		return mapper.getReservationList(id);
+	}
+	public List<Map<String, String>> getCouponList(String id) {
+		// TODO Auto-generated method stub
+		return mapper.getCouponList(id);
+	}
+	public List<Map<String, String>> getPointList(String id) {
+		// TODO Auto-generated method stub
+		return mapper.getPointList(id);
+	}
+	public List<InquiryVO> getInquiryList(String id) {
+		// TODO Auto-generated method stub
+		return mapper.getInquiryList(id);
+	}
 
 
 

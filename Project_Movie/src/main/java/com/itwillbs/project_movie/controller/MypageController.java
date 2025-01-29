@@ -89,6 +89,7 @@ public class MypageController {
 		 
 		return "mypage/reservation/mypage_reservation_detail";
 	}
+
 	//1.1 결제내역 - 상세정보 창
 	@ResponseBody
 	@PostMapping("ReservationDetail")
@@ -829,11 +830,7 @@ public class MypageController {
 			return "result/process";
 		}
 	}
-	//top에 있는 마이페이지 연결
-	@GetMapping("MypageMain")
-	public String MypageMain() {
-		return"mypage/mypage_main";
-	}
+
 	
 	// 마이페이지 회원 정보란 이동
 	@GetMapping("ShowMyInfo")

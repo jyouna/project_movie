@@ -122,6 +122,15 @@ public interface MyPageMapper {
 	// 부모글만 남으므로 response_status 0으로 변경
 	// (부모글만 존재할 경우)
 	int selectRefCount(InquiryVO inquiry);
+	
+	//마이페이지 메인 예매내역 출력
+	List<Map<String, Object>> getReservationList(String id);
+	//마이페이지 메인 쿠폰 출력
+	List<Map<String, String>> getCouponList(String id);
+	//마이페이지 메인 포인트 출력
+	List<Map<String, String>> getPointList(String id);
+	//마이페이지 메인 1:1문의
+	List<InquiryVO> getInquiryList(String id);
 
 	
 	

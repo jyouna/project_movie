@@ -47,22 +47,22 @@
 	               </c:when>
 	               <c:otherwise>
 	                  <c:forEach var="review" items="${reviewList}" varStatus="status">
-	                     <tr>
-	                        <td><input type="radio" name="movie_code" value="${review.movie_code}" class="movie_code"></td>
-	                        <td>${review.movie_name}</td>
-	                        <td>${review.review_content}</td>
-	                        <td>
-	                        	<c:choose>
-								    <c:when test="${review.review_recommend eq 0}">
-								        추천
-								    </c:when>
-								    <c:otherwise>
-								        비추천
-								    </c:otherwise>
-								</c:choose>
-	                       </td>
-	                        <td>${review.review_writer}</td>
-	                     </tr>
+						<tr>
+						    <td><input type="radio" name="movie_code" value="${review.movie_code}" class="movie_code"></td>
+						    <td>${review.movie_name}</td>
+						    <td>${review.review_content}</td>
+						    <td>
+						        <c:choose>
+						            <c:when test="${review.review_recommend eq '0'}">
+						                추천
+						            </c:when>
+						            <c:otherwise>
+						                비추천
+						            </c:otherwise>
+						        </c:choose>
+						    </td>
+						    <td>${sessionScope.sMemberId}</td>
+						</tr>
 	                  </c:forEach>
 	               </c:otherwise>               
 	            </c:choose>

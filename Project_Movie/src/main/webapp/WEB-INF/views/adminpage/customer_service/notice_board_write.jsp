@@ -41,7 +41,7 @@
 			<div style="text-align: center;">
 				<input type="submit" value="등록하기" style="text-align: right;">
 				<input type="reset" value="다시쓰기">
-				<input type="button" value="뒤로가기" onclick="location.href='AdminFaq'">
+				<input type="button" value="뒤로가기" onclick="location.href='AdminNotice'">
 			</div>
 		</form>
 	</article>

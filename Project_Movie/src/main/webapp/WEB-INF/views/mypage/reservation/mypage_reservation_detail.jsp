@@ -105,7 +105,6 @@
 	        <label>상영관</label><input type="text" name="theater_code" readonly><br>
 	        <label>좌석</label><input type="text" name="total_seat_code" readonly><br>
 	        <label>관람인원</label><input type="text" name="ticket_count" readonly><br>
-	        <label>관람일</label><input type="datetime-local" name="start_time" readonly><br>
 	        <label>가격</label><input type="text" name="total_amount" readonly><br>
 	        <hr>
 			<h3>취소환불규정안내</h3>

@@ -62,6 +62,8 @@ hr{
     border: 1px solid #ccc; /* 각 셀의 테두리 */
 }
 
+#eventPrevBtn,
+#eventNextBtn,
 #btn {
  -webkit-transition: all .25s ease-in-out;
     -ms-transition: all .25s ease-in-out;

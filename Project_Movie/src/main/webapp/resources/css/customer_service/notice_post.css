@@ -83,6 +83,8 @@ hr{
     color: black; /* 두 번째 열의 텍스트 색상 */
 }
 
+#noticePrevBtn,
+#noticeNextBtn,
 #btn {
  -webkit-transition: all .25s ease-in-out;
     -ms-transition: all .25s ease-in-out;

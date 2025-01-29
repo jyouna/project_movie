@@ -41,7 +41,6 @@ $(function () {
 	            $("input[name='total_seat_code']").val(result.total_seat_code);
 	            $("input[name='theater_code']").val(result.theater_code);
 	            $("input[name='total_amount']").val(result.total_amount);
-	            $("input[name='r_date']").val(result.r_dateToString);
 	        }).fail(function () {
 	            alert("상세 정보를 가져오는 데 실패하였습니다.");
 	        });

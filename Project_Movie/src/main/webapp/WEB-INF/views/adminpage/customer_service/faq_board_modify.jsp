@@ -21,33 +21,32 @@
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
-	<section>
-		<article id="articleForm">
-			<h4>FAQ - 글 수정</h4>
-			<br>
-			<form action="AdminFaqModify" method="post">
-				<input type="hidden" name = "faq_code" value="${param.faq_code }">
-				<input type="hidden" name = "pageNum" value="${param.pageNum }">
-				<section id="basicInfoArea">
-					<table>
-						<tr>
-							<th width="13.46%">제목</th>
-							<td width="38.46%"><input type="text" name="faq_subject" value="${faq.faq_subject}"></td>
-							<th width="17.31%">등록일</th>
-							<td width="30.77%">	
-								<fmt:formatDate value="${faq.regis_date}" pattern="yyyy-MM-dd"/>
-							</td>
-						</tr>
-					</table>
-				</section>
-				<section id="articleContentArea">
-					<textarea rows="15" cols="70" name="faq_content" required="required">${faq.faq_content}</textarea>
-				</section>
-				<hr>
-				<input type="submit" value ="등록" style="text-align: right;">
-				<input type="button" value ="취소" onclick="location.href='AdminFaq'" style="text-align: right;">
-			</form>
-		</article>
-	</section>
+	
+	<article id="articleForm">
+		<h4>FAQ  - 글 수정</h4>
+		<br>
+		<form action="AdminFaqModify" method="post">
+			<input type="hidden" name ="faq_code" value="${param.faq_code }">
+			<input type="hidden" name ="pageNum" value="${param.pageNum }">
+			<section id="basicInfoArea">
+				<table>
+					<tr>
+						<th width="13.46%">제목</th>
+						<td width="38.46%"><input type="text" name="faq_subject" value="${faq.faq_subject}"></td>
+						<th width="17.31%">등록일</th>
+						<td width="30.77%">
+							<fmt:formatDate value="${faq.regis_date}" pattern="yyyy-MM-dd"/>
+						</td>
+					</tr>
+				</table>
+			</section>
+			<section id="articleContentArea">
+				<textarea rows="15" cols="70" name="faq_content" required="required">${faq.faq_content}</textarea>
+			</section>
+			<hr>
+			<input type="submit" value="등록" style="text-align: right;">
+			<input type="button" value ="취소" onclick="location.href='AdminFaq'" style="text-align: right;">
+		</form>
+	</article>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 </body>

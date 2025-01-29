@@ -27,14 +27,21 @@
 			<h1>1:1 문의 목록</h1>
 		</div>
 	    <div class="search-bar" style="text-align: right;">
-    		<form action="InquiryList" method="get">
-		      <select name="searchType">
-		        <option value="subject" <c:if test="${param.searchType eq subject}">selected</c:if>>제목</option>
-		        <option value="content" <c:if test="${param.searchType eq content}">selected</c:if>>내용</option>
-		      </select>
-		      <input type="text"  name="searchKeyWord" value="${param.searchKeyWord}" placeholder="검색어를 입력하세요.">
-	   		  <input type="submit" value="검색" id="searchButton">
-   		  	</form>
+    		<form action="InquiryList" method="get" name="searchForm">
+			    <select name="searchType">
+			        <option value="subject"
+			            <c:choose>
+			                <c:when test="${empty param.searchType or param.searchType eq 'subject'}">selected</c:when>
+			            </c:choose>>제목
+			        </option>
+			        <option value="content"
+			            <c:if test="${param.searchType eq 'content'}">selected</c:if>>내용
+			        </option>
+			    </select>
+			    <input type="text" name="searchKeyWord" value="${param.searchKeyWord}" placeholder="검색어를 입력하세요.">
+			    <input type="submit" value="검색" id="searchButton">
+			</form>
+
 	    </div>
 	    <input type="button" value="글쓰기" onclick="location.href='InquiryWrite'" style="text-align: right;">
 		<section id="listForm">

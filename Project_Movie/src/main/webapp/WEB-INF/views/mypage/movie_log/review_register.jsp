@@ -15,8 +15,8 @@
 				<td>영화 제목</td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="radio">추천</td>
-				<td><input type="radio" name="radio">비추천</td>
+			    <td><input type="radio" name="radio" value="0">추천</td>
+			    <td><input type="radio" name="radio" value="1">비추천</td>
 			</tr>
 			<tr>
 				<td>한줄평 </td>

@@ -70,7 +70,17 @@
 	                        <td>
 	                           <fmt:formatDate value="${point.regis_date}" pattern="yyyy-MM-dd"/>
 	                        </td>
-	                        <td>${point.event_subject}</td>
+	                        <td>
+	                        	<c:if test="${not empty point.event_subject}">
+	                        			${point.event_subject}
+                       			</c:if>
+	                        	<c:if test="${point.point_debited != null && empty point.event_subject}">
+	                        			영화 예매 포인트 차감
+                       			</c:if>
+	                        	<c:if test="${point.point_credited > 0 && empty point.event_subject}">
+	                        			영화 예매 취소 포인트 적립
+                       			</c:if>
+	                        </td>
 	                        <td>
 	                        	<c:choose>
 									<c:when test="${point.point_credited > 0}">
