@@ -63,15 +63,6 @@
 						<div class="header_mv">
 							<h4>영화</h4>
 						</div>
-						
-			<!-- 		셀렉트박스 -->
-						<div class="mv_sel">
-							<select>
-								<option value="" selected>선택</option>
-								<option value="movie_rating">별점순</option>
-								<option value="movie_name">가나다순</option>
-							</select>
-						</div>
 							
 				<!-- 		영화목록 -->
 						<div class="mv_list_container">

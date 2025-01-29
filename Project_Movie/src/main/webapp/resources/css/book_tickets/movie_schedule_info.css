@@ -26,10 +26,13 @@
 /* 년도와 월 스타일 */
 .year_month {
 	display: inline-block; /* 가로 크기 조정 가능 */
-    width: 100px; /* 원하는 가로 크기 설정 */
+    width: 50px; /* 원하는 가로 크기 설정 */
     font-size: 14px;
     font-weight: bold;
     color: #333;
+    margin: 0 10px;
+    text-align: center;
+    line-height: normal;
 }
 
 /* 날짜 항목 스타일 */
