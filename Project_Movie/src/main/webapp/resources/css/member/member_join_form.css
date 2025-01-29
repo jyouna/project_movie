@@ -53,14 +53,16 @@ element.style {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 30px;
+  
 }
 
 .form-table th, .form-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
+    padding: 10px;
+    border: 1px solid #eee;
+    text-align: left;
+    color: black; /* 글자 색상을 검은색으로 지정 */
+    font-weight : bold;
 }
-
 /* ===== 입력 필드 및 버튼 크기 조정 ===== */
 input, select, button {
 
@@ -359,7 +361,7 @@ input[type="checkbox"]:focus {
 input::placeholder, 
 textarea::placeholder {
   font-family: Arial, sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   color: #a9a9a9; /* 기본 placeholder 글씨 색 */
   font-style: normal; /* 기울이지 않음 */
 }

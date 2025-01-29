@@ -20,7 +20,7 @@ window.onload = function () {
 
      // 데이터에 따른 알림 표시
     if (email) {
-   	    alert("찾으려는 계정의 이메일 번호는  : \n" + "\n"+ email + "\n"+"입니다. \n  임시비밀번호를 메일로 발송했습니다.");
+   	    alert("찾으려는 계정의 이메일 : " + "\n"+ email +"로" + "\n"+"임시비밀번호가 5분내 발송됩니다.");
     } else if (errorMsg) {
         alert("에러 메시지: " + errorMsg + " 정보를 확인하여 다시 진행해주세요.");
     }

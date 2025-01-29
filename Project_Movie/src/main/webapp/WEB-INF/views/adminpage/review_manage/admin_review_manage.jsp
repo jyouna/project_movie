@@ -142,10 +142,12 @@
 		            <br> 
 		            
 		            <!-- 추천 여부 선택 (라디오 버튼) -->
-		            <label id="review_recommend0">추천</label>
-		            <input type="radio" name="review_recommend" value="0" required="required">
-		            <label id="review_recommend1">비추천</label>
-		            <input type="radio" name="review_recommend" value="1"><br>
+		           
+<!-- 		            <label id="review_recommend0">추천</label> -->
+<!-- 		            <input type="radio" name="review_recommend" value="0" required="required"> -->
+<!-- 		            <label id="review_recommend1">비추천</label> -->
+<!-- 		            <input type="radio" name="review_recommend" value="1"><br> -->
+		          
 		        </div>
 		        <hr>
 		        <div class="btnGroup">

@@ -23,7 +23,7 @@
 
     <!-- 메인 콘텐츠 -->
     <main class="content">
-      <h1>로그인</h1>
+      <h1></h1>
 
       <div class="split-box">
 
@@ -66,7 +66,7 @@
 
         <!-- 안내사항 섹션 -->
 		<div class="info-box">
-		    <h2 class="section-title">-영화관 안내사항-</h2>
+		    <h2 class="section-title">영화관 안내사항</h2>
 		
 		    <!-- YouTube 영상 삽입 -->
 		    <iframe 

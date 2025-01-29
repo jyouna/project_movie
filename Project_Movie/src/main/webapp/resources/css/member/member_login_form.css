@@ -6,9 +6,9 @@
 /*   box-sizing: border-box; 전체 박스 모델 설정 */
 /* }  */
 /* ========== 레이아웃 ========== */
-.container {
-  display: flex; /* Flexbox로 레이아웃 구성 */
-}
+
+
+
 
 /* ========== 사이드바 스타일 ========== */
 .sidebar {
@@ -27,35 +27,54 @@
 }
 
 /* ========== 메인 콘텐츠 스타일 ========== */
-.content {
-  flex-grow: 1; /* 남은 공간 모두 차지 */
-  padding: 0px;
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-.content h1 {
-	margin-bottom: 15px !important; /* h1과 .split-box 사이의 간격을 25px로 설정 */
-  padding-bottom: 5px;
-  border-bottom: 1px 0 rgb(33, 33, 33); /* 제목 아래 실선 */
+.content {
+  flex-grow: 1;
+  padding: 0 !important;
+  margin: 0 !important;
 }
+
 
 /* ========== 박스 섹션 스타일 ========== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .split-box {
-  gap: 2px !important; /* 우선순위 강제 적용 */
-/*   margin-top: 100px; */
+  gap: 2px !important;
   display: flex;
   align-items: stretch;
+  margin: 0;
+  padding: 0;
 }
 
 .login-box, .info-box {
-  flex: 1; /* 기본적으로 동일한 비율로 공간을 차지 */
+  flex: 1;
   padding: 10px;
   background: #e9e9e9;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(10, 10, 11, 0.1);
   position: relative;
-  height: 400px; /* 높이 증가 */
+  height: 400px;
+  margin: 0;
 }
+
 
 .login-box {
   display: flex;
@@ -80,7 +99,7 @@
 }
 
 .info-box iframe {
-  width: 100%;
+  width: 92%;
   height: auto;
   aspect-ratio: 16 / 9;
   
@@ -97,6 +116,7 @@
   font-size: 18px;        /* 글자 크기 조정 */
   font-weight: bold;      /* 글자 두껍게 */
 }
+
 
 /* ========== 입력 필드 스타일 ========== */
 label {
@@ -116,7 +136,23 @@ input::placeholder {
   overflow: hidden; /* 넘치는 텍스트 숨김 */
   white-space: nowrap; /* 줄바꿈 방지 */
   text-overflow: ellipsis; /* 말줄임표 적용 */
+  font-family: Arial, sans-serif !important; /* 글씨체를 Arial로 설정 */
+/*   color: #999; placeholder 텍스트 색상 (옵션) */
+/*   font-size: 14px; placeholder 텍스트 크기 (옵션) */
 }
+
+/* 특성 높이기 */
+.login-box input::placeholder {
+  font-family: Arial, sans-serif !important; /* Arial로 강제 적용 */
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #999;
+  
+}
+
+
 
 /* ========== 체크박스 스타일 ========== */
 .save-id {
@@ -167,7 +203,7 @@ button {
 
 #login-btn {
    width: 100%;
-    height: 18%;
+    height: 21%;
     max-width: 400PX;
     padding: 0px;
     text-align: center;
@@ -200,7 +236,7 @@ button {
 
 /* 로그인 및 인포 박스 사이 간격 제거 */
 .split-box {
-  margin-top: 100px; /* 상단 여백 유지 */
+  margin-top: 1px; /* 상단 여백 유지 */
   display: flex; /* Flexbox 사용 */
   align-items: stretch; /* 세로 길이 통일 */
   gap: 0; /* 사이 간격 완전 제거 */

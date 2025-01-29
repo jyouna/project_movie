@@ -27,7 +27,7 @@
    
    <article class="box post">
        <div class="container">
-    <h1>   회원가입</h1>
+    <h1>   회원가입    (*는 필수입력항목입니다)</h1>
     
     <hr class="section-line"> <!-- 실선 추가 -->
 
@@ -48,7 +48,7 @@
       <tr>
         <th>아이디 *</th> <!-- 필수 입력 항목 -->
         <td>
-          <input type="text" id="id" name="member_id" placeholder="영문자,숫자,_ 5자리이상" required>
+          <input type="text" id="id" name="member_id" placeholder="영문자,숫자_만 입력가능. 최소 5글자" required>
                   <div id="id-check-result"></div> 
         </td>
       </tr>
@@ -59,7 +59,7 @@
           <td>
           
 
-          <input type="password" id="password" name="member_passwd" placeholder=" 영문자,숫자,특수문자(!@#$%) 8글자이상" required>
+          <input type="password" id="password" name="member_passwd" placeholder=" 영문자,숫자,특수문자(!@#$%)사용. 최소 8글자" required>
                   <div id="password-check-result"></div> <!-- 비밀번호 복잡도 검사 결과 -->
           </td>
         </tr>
@@ -88,7 +88,7 @@
         <tr>
           <th>이메일 *</th>
           <td>
-            <input type="email" id="email" name="email" placeholder=" 이메일 입력" required>
+            <input type="email" id="email" name="email" placeholder=" xxx@xxx.com" required>
 <!--             <button type="button">발송</button> -->
 <!--             <input type="text" id="email-code" name="email-code" placeholder="인증번호 입력"> -->
 <!--             <button type="button">확인</button> -->
@@ -122,7 +122,7 @@
              <!-- 독립된 폼으로 분리 -->
              <form id="authCodeForm" onsubmit="return false;">
                <div class="phone-verification">
-                 <input type="text" id="phone" name="phone" placeholder=" 전화번호 입력 *주의* -없이 11자리" required>
+                 <input type="text" id="phone" name="phone" placeholder=" 전화번호  -없이 11자리" required>
                  <button type="button" id="sendAuthCodeBtn">전송</button>
                </div>
                <div class="auth-code-section">
