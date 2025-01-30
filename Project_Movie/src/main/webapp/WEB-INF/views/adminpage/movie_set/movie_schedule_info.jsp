@@ -62,7 +62,7 @@
 				<tr>
 					<c:forEach var="day" items="${calendar}" varStatus="status">
 						<td class="${day}">
-							<span class="day">${day}</span>
+							<span class="day"><c:if test="${not empty day and day < 10}">0</c:if>${day}</span>
 						</td>
 						<c:if test="${status.count % 7 == 0}">
 							</tr><tr>
