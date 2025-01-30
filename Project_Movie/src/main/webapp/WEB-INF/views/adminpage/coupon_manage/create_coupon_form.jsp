@@ -95,6 +95,7 @@ $(function(){
 	let time = new Date();
 	time.setHours(time.getHours() + 9); // UTC+9 적용
 	let today = time.toISOString().split('T')[0];
+	
 // 	let today2 = time.toLocaleString();
 	console.log("today : " + today);
 // 	console.log("today2 : " + today2);
@@ -108,11 +109,13 @@ $(function(){
 	        $("#thForDiscount").text("할인금액");
 	        $("#discount_amount").removeAttr("hidden"); // hidden 속성 제거
 	        $("#discount_rate").attr("hidden", true); // 다른 항목 숨기기
-	    
+	        $("#discount_rate").val("0"); 				// 다른 값이 중복으로 적용되지 못하게 차단
+	        
 	    } else if (coupon_type === "할인율") {
 	        $("#thForDiscount").text("할인율");
 	        $("#discount_rate").removeAttr("hidden");
 	        $("#discount_amount").attr("hidden", true);
+	        $("#discount_amount").val("0"); 
 	    
 	    } else {
 	        $("#thForDiscount").text(""); // 기본값 초기화
@@ -122,6 +125,8 @@ $(function(){
 	});
 	
 	$("#CreateCouponForm").on("click", function(){
+		let value = $("#discount_amount").val().trim();
+		let regex = /^[1-9][0-9]{0,4}$/;
 		
 		if(!confirm("해당 쿠폰을 지급하시겠습니까?")) {
 			return;
@@ -164,6 +169,12 @@ $(function(){
 			if(parseInt(discount_amount, 10) <= 0 || discount_amount === "") {
 				event.preventDefault();
 				alert("금액(1~99,999)을 입력해 주세요");
+				$("#discount_amount").focus();
+				return;
+			}
+			
+			if(!regex.test(value)) {
+				alert("할인금액(1~99,999)을 숫자로만 입력해주세요.");
 				$("#discount_amount").focus();
 				return;
 			}

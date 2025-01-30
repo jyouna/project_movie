@@ -169,12 +169,14 @@ $(function(){
 	        $("#thForDiscount").text("할인금액");
 	        $("#discount_amount").removeAttr("hidden"); // hidden 속성 제거
 	        $("#discount_rate").attr("hidden", true); // 다른 항목 숨기기
+	        $("#discount_rate").val("0"); // 다른 항목 숨기기
 	    
 	    } else if (coupon_type === "할인율") {
 	        $("#thForDiscount").text("할인율");
 	        $("#discount_rate").removeAttr("hidden");
 	        $("#discount_amount").attr("hidden", true);
-	    
+	        $("#discount_amount").val("0");
+	    	
 	    } else {
 	        $("#thForDiscount").text(""); // 기본값 초기화
 	        $("#discount_amount").attr("hidden", true);

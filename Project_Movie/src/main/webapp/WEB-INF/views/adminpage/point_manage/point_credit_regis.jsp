@@ -70,7 +70,10 @@
 $(function(){
 	$("#givePointForm").on("submit", function(event){
 		event.preventDefault();
-	
+		
+		let value = $("#point").val().trim();
+		let regex = /^[1-9][0-9]{0,4}$/;
+		
 		if(!confirm("포인트를 지급하시겠습니까?")) {
 			return;
 		}
@@ -79,6 +82,11 @@ $(function(){
 		// 포인트 금액 입력 여부 검증
 		if(parseInt($("#point").val().trim(), 10) <= 0 || $("#point").val().trim() === "") {
 			alert("금액(1~99,999)을 입력해 주세요");
+			return;
+		}
+		
+		if(!regex.test(value)) {
+			alert("금액(1~99,999)을 숫자로만 입력해 주세요");
 			return;
 		}
 		

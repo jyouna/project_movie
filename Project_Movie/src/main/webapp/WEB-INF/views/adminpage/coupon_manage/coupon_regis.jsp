@@ -130,13 +130,23 @@ $(function(){
 		
 		// 금액할인 선택 시 입력 여부 및 입력 값이 0인지 검증
 		if($("#coupon_type").val() === "금액할인") {
+			let value = $("#discount_amount").val().trim();
+			let regex = /^[1-9][0-9]{0,4}$/;
+			
+			$("#discount_rate").val("0"); // 금액할인 선택 시 할인율 값은 0으로 설정하여 값이 중복으로 넘어가지 못하게 설정
 			if($("#discount_amount").val().trim() === "" || $("#discount_amount").val().trim() <= "0") {
 				 alert("할인금액(1~99,999)을 입력해주세요.");
 				 $("#discount_amount").focus();
 				 return;
 			}
+			if(!regex.test(value)) {
+				alert("할인금액(1~99,999)을 숫자로만 입력해주세요.");
+				$("#discount_amount").focus();
+				return;
+			}
 		// 할인율 선택 시 할인비율 선택 검증
 		} else if($("#coupon_type").val() === "할인율") {
+			$("#discount_amount").val("0"); // 금액할인 선택 시 할인율 값은 0으로 설정하여 값이 중복으로 넘어가지 못하게 설정
 			if($("#discount_rate").val() === "0") {
 				 alert("할인율을 선택해주세요.");
 				 $("#discount_rate").focus();

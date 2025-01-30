@@ -53,4 +53,11 @@ $(function(){ // 관리자 정보 변경시 사용
 	        alert("제출된 양식을 다시 확인하세요.");
 	    }
 	});
+	
+	$("#accountModifyForm").on("reset", function () {
+	    setTimeout(function () {
+	        $("#name").trigger("blur");
+	        $("#passwd").trigger("blur");
+	    }, 0); // 초기화된 값을 반영한 뒤 실행
+	});
 });
