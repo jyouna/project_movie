@@ -104,21 +104,21 @@
 	 		</if>
 	</select>
 <!-- 	내가 본 영화 시작번호 끝번호 -->
-<select id="selectWatchedMovie" resultType="map">
-    SELECT movie.movie_code, movie.movie_name, 
-           MIN(schedule.start_time) AS start_time, 
-           SUM(payment.ticket_count) AS total_tickets
-    FROM movie
-    JOIN schedule ON movie.movie_code = schedule.movie_code
-    JOIN payment ON schedule.schedule_code = payment.schedule_code
-    WHERE payment.member_id = #{id}
-    AND schedule.end_time &lt; NOW()
-    <if test="!searchYear.equals('')">
-        AND start_time LIKE CONCAT('%', #{searchYear}, '%')
-    </if>
-    GROUP BY movie.movie_code, movie.movie_name
-    LIMIT #{startRow}, #{listLimit}
-</select>
+	<select id="selectWatchedMovie" resultType="map">
+	    SELECT movie.movie_code, movie.movie_name, 
+	           MIN(schedule.start_time) AS start_time, 
+	           SUM(payment.ticket_count) AS total_tickets
+	    FROM movie
+	    JOIN schedule ON movie.movie_code = schedule.movie_code
+	    JOIN payment ON schedule.schedule_code = payment.schedule_code
+	    WHERE payment.member_id = #{id}
+	    AND schedule.end_time &lt; NOW()
+	    <if test="!searchYear.equals('')">
+	        AND start_time LIKE CONCAT('%', #{searchYear}, '%')
+	    </if>
+	    GROUP BY movie.movie_code, movie.movie_name
+	    LIMIT #{startRow}, #{listLimit}
+	</select>
 
 
 <!-- 	리뷰 총 개수 출력 -->
@@ -326,12 +326,34 @@
 	<select id="selectNoticeListCount" resultType="int">
 		SELECT COUNT(*)
 		FROM notice_board
+		<if test="!searchKeyword.equals('')">
+			WHERE 
+			<choose>
+				<when test="searchType.equals('subject')">
+					notice_subject LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<when test="searchType.equals('content')">
+					notice_content LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+			</choose>
+		</if>
 		ORDER BY notice_code DESC
 	</select>
 <!-- 	공지사항 시작번호 끝번호 -->
 	<select id="selectNoticeList" resultType="notice_board">
 		SELECT *
 		FROM notice_board
+		<if test="!searchKeyword.equals('')">
+			WHERE 
+			<choose>
+				<when test="searchType.equals('subject')">
+					notice_subject LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<when test="searchType.equals('content')">
+					notice_content LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+			</choose>
+		</if>
 		ORDER BY notice_code DESC
 		LIMIT 
 			#{startRow}

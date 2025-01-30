@@ -23,7 +23,7 @@
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
 	<section>
-<article id="articleForm">
+	<article id="articleForm" class="box">
 		<h4>FAQ - 글</h4><br>
 		<section id="basicInfoArea">
 			<table style="text-align: center;">

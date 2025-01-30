@@ -81,11 +81,6 @@
  	</select>
 <!--  	faq 글 조회수 증가 -->
  	<update id="updateFaqReadCount">
-<!--  		<selectKey keyProperty ="view_count" resultType="int" order="AFTER"> -->
-<!--  			SELECT view_count -->
-<!--  			FROM faq_board -->
-<!--  			WHERE faq_code = #{faq_code} -->
-<!--  		</selectKey> -->
  		UPDATE faq_board 
  		SET view_count = view_count + 1
  		WHERE faq_code = #{faq_code}

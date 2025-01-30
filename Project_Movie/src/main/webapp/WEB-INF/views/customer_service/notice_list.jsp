@@ -28,7 +28,7 @@
 			<form action="NoticeList" method="get" name="searchForm">
 				<select id="searchType" name="searchType">
 					<option value="subject"<c:if test="${param.searchType eq 'subject'}">selected</c:if>>제목</option>
-					<option value="content"<c:if test="${param.searchType eq 'subject'}">selected</c:if>>내용</option>
+					<option value="content"<c:if test="${param.searchType eq 'content'}">selected</c:if>>내용</option>
 				</select>
 				<input type="text" name ="searchKeyword" value="${param.searchKeyword}" placeholder="검색어를 입력하세요." required="required">
 				<input type="submit" value="검색">

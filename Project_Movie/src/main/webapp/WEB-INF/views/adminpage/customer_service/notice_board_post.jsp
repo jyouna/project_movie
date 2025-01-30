@@ -22,7 +22,7 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	
-	<article id="articleForm">
+	<article id="articleForm" class="box">
 		<h4>공지사항 - 글</h4><br>
 		<section id="basicInfoArea">
 			<table>

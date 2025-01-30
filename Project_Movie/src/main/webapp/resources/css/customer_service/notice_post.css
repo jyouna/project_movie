@@ -1,4 +1,7 @@
-
+.box{
+	width: 100% !important;
+	height: 100% !important;
+}
 #articleForm {
     background-color: #fff;
     margin: 20px auto;

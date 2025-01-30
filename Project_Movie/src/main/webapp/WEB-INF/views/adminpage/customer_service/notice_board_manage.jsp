@@ -29,14 +29,14 @@
 		</div>
 		<div id="search-bar" style="text-align:	right;">
 <!-- 		여기서 선택하고 검색한 값을 넘겨줘야하니까 form 태그로 감싸고 action = NoticeList , 전달방식 - get -->
-			<form action="NoticeList" method="get" name="searchForm">
-				<select id="searchType">
+			<form action="AdminNotice" method="get" name="searchForm">
+				<select id="searchType"  name="searchType">
 	<!-- 			옵션에 각각 값을 넣어준다 -->
-					<option value="subject">제목</option>
-					<option value="content">내용</option>
+					<option value="subject"<c:if test="${param.searchType eq 'subject'}">selected</c:if>>제목</option>
+					<option value="content"<c:if test="${param.searchType eq 'content'}">selected</c:if>>내용</option>
 				</select>
 	<!-- 			검색어에는 name값을 searchKeyword로 준다 -->
-				<input type="text" name ="searchKeyword" placeholder="검색어를 입력하세요.">
+				<input type="text" name ="searchKeyword" placeholder="검색어를 입력하세요." required="required">
 				<input type="submit" value="검색">
 			</form>
 		</div>

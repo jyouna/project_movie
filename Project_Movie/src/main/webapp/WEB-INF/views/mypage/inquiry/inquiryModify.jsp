@@ -39,7 +39,7 @@
 				</table>
 		</section>
 		<section id="articleContentArea">
-				<textarea rows="15" cols="70" name="notice_content" required="required">${inquriy.inquiry_content}</textarea>
+			<textarea rows="15" cols="70" name="inquiry_content" required="required">${inquiry.inquiry_content}</textarea>
 		</section>
 		<hr>
 			<input type="submit" value ="등록">

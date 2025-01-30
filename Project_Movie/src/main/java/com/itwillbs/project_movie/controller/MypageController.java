@@ -49,7 +49,7 @@ public class MypageController {
 	@Autowired
 	private AdminManageService adminService;
 	
-	//1.결제내역 - 예매 내역
+	//1. 결제내역 - 예매 내역
 	@GetMapping("ReservationDetail")
 	public String reservationDetail(@RequestParam (defaultValue="1") int pageNum, Model model, HttpSession session) {
 		//로그인 여부 확인
@@ -83,7 +83,7 @@ public class MypageController {
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
-		
+		//예매내역 객체 전달 
 		List<Map<String, Object>> reservationList = service.getReservationList(startRow, listLimit,id);
 		model.addAttribute("reservationList", reservationList);
 		 
@@ -130,7 +130,7 @@ public class MypageController {
 		}
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
-		
+		//취소내역 전달 
 		List<Map<String, Object>> reservationCancel = service.getReservationCancel(startRow, listLimit, id);
 		model.addAttribute("reservationCancel", reservationCancel);
 		return "mypage/reservation/mypage_reservation_cancel";
@@ -195,6 +195,7 @@ public class MypageController {
 		int reviewRecommend = Integer.parseInt(map.get("review_recommend"));
 		int movieCode = Integer.parseInt(map.get("movie_code"));
 		String id = (String)session.getAttribute("sMemberId");
+		
 		// 등록 여부 판별 
 		int insertCount = service.getReview(movieName, reviewContent, reviewRecommend, movieCode, id);
 		if(insertCount > 0) {
@@ -209,12 +210,14 @@ public class MypageController {
 	//4. 무비로그 - 관람평 
 	@GetMapping("Review")
 	public String review(Model model, HttpSession session,@RequestParam(defaultValue="1") int pageNum ) {
+		
 		// 로그인 여부 판별 
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
+		
 		// 페이징 처리
 		int listCount = service.getReviewListCount(id);
 		int listLimit = 10;
@@ -239,6 +242,7 @@ public class MypageController {
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageinfo);
 		
+		//리뷰 객체 전달
 		List<Map<String, Object>> reviewList = service.getReviewList(startRow, listLimit, id);
 		model.addAttribute("reviewList", reviewList);
 		
@@ -274,7 +278,7 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
-		//
+		//페이징 처리 
 		int listCount = service.getCouponListCount(id);
 		model.addAttribute("listCount", listCount);
 		int listLimit = 10;
@@ -284,6 +288,7 @@ public class MypageController {
 		if (maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
@@ -297,7 +302,7 @@ public class MypageController {
 		}
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
-		
+		//쿠폰 리스트 전달 
 		List<Map<String, String>> couponList = service.getCouponList(startRow, listLimit, id);
 		model.addAttribute("couponList", couponList);
 		return "mypage/mycoupon/mycoupon_registration";
@@ -306,6 +311,7 @@ public class MypageController {
 	//6. 포인트
 	@GetMapping("MypointReward")
 	public String mypointReward(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
+		//로그인 판별 
 		String id = (String)session.getAttribute("sMemberId");
 		MemberVO member = memberService.getMember(id);
 		model.addAttribute("member", member);
@@ -314,6 +320,8 @@ public class MypageController {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
+		
+		//페이징 처리 
 		int listCount = service.getPointListCount(id);
 		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
@@ -322,6 +330,7 @@ public class MypageController {
 		if (maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
@@ -333,24 +342,28 @@ public class MypageController {
 			model.addAttribute("targetURL", "MypointReward?pageNum=1");
 			return "result/process";
 		}
+		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
+		//포인트 리스트 jsp로 전달 
 		List<Map<String, String>> pointList = service.getPointList(startRow, listLimit, id);
 		model.addAttribute("pointList", pointList);
-		
 		return "mypage/mypoint/mypoint_reward";
 	}
 	//7. 1:1 문의 - 글 목록
 	@GetMapping("InquiryList")
 	public String inquiryList(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session, 
 			@RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="")String searchKeyWord) {
+		
+		// 로그인 유무 판별 
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "로그인 후 이용해주세요.");
 			return "result/process";
 		}
 		
+		//페이징 처리 
 		int listCount = service.getInquiryListCount(searchType, searchKeyWord, id);
 		int listLimit = 10;
 		int startRow = (pageNum - 1) * listLimit; 
@@ -359,6 +372,7 @@ public class MypageController {
 		if (maxPage == 0) {
 			maxPage = 1;
 		}
+		
 		int startPage = (pageNum -1) / pageListLimit * pageListLimit +1;
 		int endPage = startPage + pageListLimit -1;
 		if (endPage > maxPage) {
@@ -370,34 +384,40 @@ public class MypageController {
 			model.addAttribute("targetURL", "InquiryList?pageNum=1");
 			return "result/process";
 		}
+		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum );
 		model.addAttribute("pageInfo", pageInfo);
 		
+		//1:1문의 리스트 전달 
 		List<InquiryVO> inquiryList = service.getInquiryList(startRow, listLimit, searchType, searchKeyWord, id);
-		System.out.println(inquiryList);
 		model.addAttribute("inquiryList", inquiryList);
 		return "mypage/inquiry/inquiry_list";
 	}
 	//7-1. 1:1문의 - 글 보기
 	@GetMapping("InquiryPost")
 	public String inquiryPost(Model model, int inquiry_code, InquiryVO inquiry) {
+		//해당 글에 관한 코드 받아오기 
 		inquiry = service.getInquiry(inquiry_code);
+		
+		//1:1문의 코드가 없으면 존재하지 않는 게시물로 알림띄우기 
 		if(inquiry == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
 			return "result/process";
 		}
-
+		//해당 코드에 맞는 1:1문의 
 		model.addAttribute("inquiry", inquiry);
 		return "mypage/inquiry/inquiry_post";
 	}
 	//7-2. 1:1문의 - 글 작성 폼
 	@GetMapping("InquiryWrite")
 	public String inquiryWrite(HttpSession session, Model model) {
+		//로그인 판별 
 		String id = (String)session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			return "result/process";
 		}
+		//작성 폼으로 리턴 
 		return "mypage/inquiry/inquiryWrite";
 	}
 	//7-3. 1:1문의 - 글 작성 post폼 
@@ -427,7 +447,6 @@ public class MypageController {
 	@GetMapping("InquiryModify")
 	public String inquiryModify(HttpSession session, Model model, int inquiry_code) {
 		//아이디 가져와서 로그인 여부 판별
-		//null이면 접근권한이 없습니다
 		String id = (String) session.getAttribute("sMemberId");
 		if(id == null) {
 			model.addAttribute("msg", "접근 권한이 없습니다.");
@@ -481,8 +500,9 @@ public class MypageController {
 	//8. 회원 탈퇴 
 	@GetMapping("MemberWithDraw")
 	public String MemberWithDraw(MemberVO member, Model model, HttpSession session) {
-		
+		//탈퇴할 아이디 받아오기 
 		String member_id = member.getMember_id();
+		//탈퇴하면 회원 정보 업데이트 = 탈퇴 상태로 
 		int updateCount =service.updateMemberStatus(member_id);
 		if(updateCount > 0) {
 			session.invalidate();
@@ -543,11 +563,13 @@ public class MypageController {
 		
 		PageInfo pageinfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageinfo);
+		
+		//공지사항 리스트 전달
 		List<NoticeBoardVO> noticeList = service.getNoticeList(startRow, listLimit, searchType, searchKeyword);
 		model.addAttribute("noticeList", noticeList);
 		return "adminpage/customer_service/notice_board_manage";
 	}
-	//관리자 페이지 - 공지사항 작성
+	//관리자 페이지 - 공지사항 작성 폼으로 연결
 	@GetMapping("AdminNoticeWrite")
 	public String adminNoticeWrite() {
 		return "adminpage/customer_service/notice_board_write";
@@ -557,6 +579,7 @@ public class MypageController {
 	public String adminNoticeWrite2(HttpServletRequest request, HttpSession session, Model model, NoticeBoardVO notice) {
 		notice.setNotice_writer_ip(getClientIp(request));
 		notice.setNotice_writer((String)session.getAttribute("admin_sId"));
+		// 작성한 내용을 insert 
 		int insertNoticeCount = service.registNotice(notice);
 		if(insertNoticeCount > 0) {
 			return "redirect:/AdminNotice";
@@ -569,6 +592,7 @@ public class MypageController {
 	// 관리자페이지 - 공지사항 자세히보기
 	@GetMapping("AdminNoticePost")
 	public String adminNoticePost(NoticeBoardVO notice, Model model, int notice_code, String type) {
+		// 해당 공지사항에 대한 코드 가져오기 및 조회수 증가 방지 false
 		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
@@ -582,6 +606,7 @@ public class MypageController {
 	// 관리자페이지 - 공지사항 수정
 	@GetMapping("AdminNoticeModify")
 	public String adminNoticeModify(@RequestParam(defaultValue="1") int pageNum,int notice_code, Model model, NoticeBoardVO notice) {
+		// 해당 공지사항에 대한 코드 가져오기 및 조회수 증가 방지 false
 		notice = service.getNotice(notice_code, false);
 		if(notice == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물 입니다.");
@@ -594,6 +619,7 @@ public class MypageController {
 	// 관리자페이지 - 공지사항 수정 post
 	@PostMapping("AdminNoticeModify")
 	public String adminNoticeModify2(@RequestParam(defaultValue="1") int pageNum,int notice_code, Model model, NoticeBoardVO notice) {
+		//해당 코드 가져와서 수정 
 		int updateCount = service.getNoticeUpdate(notice);
 		if(updateCount > 0) {
 			return "redirect:/AdminNoticePost?notice_code=" + notice_code + "&pageNum=" + pageNum;
@@ -605,6 +631,7 @@ public class MypageController {
 	// 관리자페이지 - 공지사항 삭제
 	@GetMapping("AdminNoticeDelete")
 	public String adminNoticeDelete(NoticeBoardVO notice, Model model) {
+		//해당 공지사항 삭제 
 		int deleteCount = service.getNoticeDelete(notice);
 		if(deleteCount > 0) {
 			return "redirect:/AdminNotice";
@@ -653,6 +680,7 @@ public class MypageController {
 		
 		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage, pageNum);
 		model.addAttribute("pageInfo", pageInfo);
+		// 자주하는 문의 목록 넘기기 
 		List<FaqBoardVO> faqList = service.getFaqList(startRow, listLimit);
 		model.addAttribute("faqList", faqList);
 		return "adminpage/customer_service/faq_board_manage";
@@ -665,6 +693,7 @@ public class MypageController {
 	//faq 글 작성 - post
 	@PostMapping("AdminFaqWrite")
 	public String adminFaqWrite2(FaqBoardVO faq, Model model) {
+		// 자주하는 문의 작성 
 		int faqInsertCount = service.faqWrite(faq);
 		if(faqInsertCount > 0) {
 			return "redirect:/AdminFaq";
@@ -677,6 +706,7 @@ public class MypageController {
 	// 관리자 페이지 - 고객지원 관리 - Faq 글 보기 
 	@GetMapping("AdminFaqPost")
 	public String adminFaqPost(FaqBoardVO faq , int faq_code, Model model) {
+		// 해당 글 조회 및 조회수 증가 방지로 false 
 		faq = service.getFaq(faq_code, false);
 		if(faq == null) {
 			model.addAttribute("msg", "존재하지 않는 게시물입니다.");
@@ -688,6 +718,7 @@ public class MypageController {
 //	 관리자 페이지 - 고객지원 관리 -faq 글 수정 
 	@GetMapping("AdminFaqModify")
 	public String adminFaqModify(Model model, int faq_code, FaqBoardVO faq) {
+		// 해당 글 조회 및 조회수 증가 방지로 false 
 		faq = service.getFaq(faq_code, false);
 		if(faq == null) {
 			model.addAttribute("msg", "해당 게시물은 존재하지 않습니다.");
@@ -700,7 +731,7 @@ public class MypageController {
 	@PostMapping("AdminFaqModify")
 	public String adminFaqModify2(@RequestParam(defaultValue="1") int pageNum, Model model, FaqBoardVO faq) {
 		int updateCount = service.getFaqModify(faq);
-		
+		//수정한 내용 업데이트
 		if(updateCount > 0 ) {
 			return "redirect:/AdminFaqPost?faq_code=" + faq.getFaq_code() + "&pageNum=" + pageNum;
 		} else {
@@ -711,6 +742,7 @@ public class MypageController {
 	//관리자 페이지 - 고객지원 관리 -faq 글 삭제
 	@GetMapping("AdminFaqDelete")
 	public String adminFaqDelete(FaqBoardVO faq, Model model, int faq_code, int pageNum) {
+		//해당 글 코드 가져오고 조회수 방지를 위해 false
 		faq = service.getFaq(faq_code, false);
 		if(faq == null) {
 			model.addAttribute("msg", "해당 글은 존재하지 않습니다.");
