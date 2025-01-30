@@ -23,7 +23,7 @@
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_sidebar.jsp"></jsp:include>
 	<article id="testArticle">
-		<div id="time"></div>
+<!-- 		<div id="time"></div> -->
 		<section id="sec01" class="secMain">
 			<h5>공지사항
 				<span>
@@ -118,8 +118,8 @@
 			</div>
 		</section>
 		<hr>
+		<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 	</article>
-	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
 <script type="text/javascript">
 </script>	
 
