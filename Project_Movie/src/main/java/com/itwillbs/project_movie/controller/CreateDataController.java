@@ -37,8 +37,6 @@ import com.itwillbs.project_movie.vo.PointVO;
 
 import kotlinx.serialization.json.JsonObject;
 import retrofit2.http.GET;
-
-
 // 데이터 자동 생성을 위한 컨트롤러
 // 결제일, 가입일 모두 다르게 설정하여 연->월->일 반복횟수를 난수로 생성하여 반복 작업 수행
 
@@ -54,10 +52,10 @@ public class CreateDataController {
 		LocalDate localDate = LocalDate.of(2002, 2, 2);
 		Date date = Date.valueOf(localDate);
 		
-		int year = 2023;
+		int year = 2020;
 		int month = 0;
 		
-		for(int i = 1; i <= 2; i++) { // 4년
+		for(int i = 0; i < 4; i++) { // 4년
 			for(int j = 1; j <= 12; j++) { // 12개월
 				month = j; // 1~12월 
 				int repetitionCount = (int) ((Math.random()*400)+100);

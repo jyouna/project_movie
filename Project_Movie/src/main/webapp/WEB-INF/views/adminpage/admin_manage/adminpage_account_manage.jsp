@@ -34,7 +34,7 @@ input[type="checkbox"] {
 	<h3>관리자 계정관리</h3>
 	<div id="divTop" class="view">
 		<div id="divTopLeft">
-			<input type="button" value="회원생성" id="createMember">
+<!-- 			<input type="button" value="회원생성" id="createMember"> -->
 <!-- 			<input type="button" value="매출생성" id="createSalesRecord"> -->
 <!-- 			<input type="button" value="권한설정" id="setAuth"> -->
 			<input type="button" value="관리자등록" id="createId">
@@ -51,7 +51,7 @@ input[type="checkbox"] {
 				<th width="90">ID</th>
 				<th width="90">비밀번호</th>
 				<th width="150">등록일</th>
-				<th width="80">상태</th>
+<!-- 				<th width="80">상태</th> -->
 				<th width="80">담당자</th>
 				<th width="90">계정|<br>통계관리</th>
 				<th width="80">결제관리</th>
@@ -74,7 +74,7 @@ input[type="checkbox"] {
 				            <td><a href="AdminAccountModify?admin_id=${vo.admin_id}" id="admin_id_link">${vo.admin_id}</a></td>
 				            <td>${vo.admin_passwd}</td>
 				            <td><fmt:formatDate value="${vo.start_date}" pattern="yyyy-MM-dd"/></td>
-				            <td>${vo.user_status ? '사용중' : '비사용'}</td>
+<%-- 				            <td>${vo.user_status ? '사용중' : '비사용'}</td> --%>
 				            <td>${vo.user_name}</td>
 				            <td>${vo.member_manage ? 'O' : 'X'}</td>
 				            <td>${vo.payment_manage ? 'O' : 'X'}</td>
