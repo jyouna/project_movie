@@ -70,7 +70,7 @@
       </section>
       <br>
 	<div id="underButton" style="text-align: right;">
-      <input type="button" value="상세보기" id="detail">
+<!--       <input type="button" value="상세보기" id="detail"> -->
       <input type="button" value="예매취소" id="cancel">
 	</div>
          <section id="pageList">
@@ -96,29 +96,29 @@
              <c:if test="${pageInfo.pageNum eq pageInfo.maxPage}">disabled</c:if>>
       </section>
 	</article>
-	<div id="reservation_detail_modal" class="modal">
-		<div class="reservation_detail">
-		    <h2>상세 정보</h2>
-		    <hr>
-	        <label>예매번호</label><input type="text" name="payment_code" readonly><br>
-	        <label>영화명</label><input type="text" name="movie_name" readonly><br>
-	        <label>상영관</label><input type="text" name="theater_code" readonly><br>
-	        <label>좌석</label><input type="text" name="total_seat_code" readonly><br>
-	        <label>관람인원</label><input type="text" name="ticket_count" readonly><br>
-	        <label>가격</label><input type="text" name="total_amount" readonly><br>
-	        <hr>
-			<h3>취소환불규정안내</h3>
-			<div id= "content">
-				<b>취소 마감시간</b>은 상영 시작 시간 30분 전입니다.<br>
-				<b>관람일 전일 오후 5시 이후</b>(일요일은 오전 11시) 또는 <b>관람일 당일</b> 예매하신 건에 대해서는 예매 후 취소∙변경∙환불이 불가합니다.<br>
-				<b>토요일이 공휴일인 경우</b>, 토요일 오전 11시 기준으로 적용됩니다.<br>
+<!-- 	<div id="reservation_detail_modal" class="modal"> -->
+<!-- 		<div class="reservation_detail"> -->
+<!-- 		    <h2>상세 정보</h2> -->
+<!-- 		    <hr> -->
+<!-- 	        <label>예매번호</label><input type="text" name="payment_code" readonly><br> -->
+<!-- 	        <label>영화명</label><input type="text" name="movie_name" readonly><br> -->
+<!-- 	        <label>상영관</label><input type="text" name="theater_code" readonly><br> -->
+<!-- 	        <label>좌석</label><input type="text" name="total_seat_code" readonly><br> -->
+<!-- 	        <label>관람인원</label><input type="text" name="ticket_count" readonly><br> -->
+<!-- 	        <label>가격</label><input type="text" name="total_amount" readonly><br> -->
+<!-- 	        <hr> -->
+<!-- 			<h3>취소환불규정안내</h3> -->
+<!-- 			<div id= "content"> -->
+<!-- 				<b>취소 마감시간</b>은 상영 시작 시간 30분 전입니다.<br> -->
+<!-- 				<b>관람일 전일 오후 5시 이후</b>(일요일은 오전 11시) 또는 <b>관람일 당일</b> 예매하신 건에 대해서는 예매 후 취소∙변경∙환불이 불가합니다.<br> -->
+<!-- 				<b>토요일이 공휴일인 경우</b>, 토요일 오전 11시 기준으로 적용됩니다.<br> -->
 
-			</div>
-	        <div class="btnGroup">
-	        	<button type="button" class="close_modal">닫기</button>
-	        </div>
-		</div>
-	</div>
+<!-- 			</div> -->
+<!-- 	        <div class="btnGroup"> -->
+<!-- 	        	<button type="button" class="close_modal">닫기</button> -->
+<!-- 	        </div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 	
 
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
