@@ -18,7 +18,7 @@
 						<label>${movieList[i].movie_name}</label>(${movieList[i].movie_rating})<br>
 						<a href=""><img src="${movieList[i].movie_img1}"></a><br>
 						<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
-						<input type="button" value="예매하기" onclick="location.href='BookTickets'">
+						<input type="button" value="예매하기" onclick="location.href='BookTickets'" <c:if test="${movieList[i].movie_status == '상영예정작'}">disabled</c:if>>
 						<div class="movie_info">
 	            			&lt;${movieList[i].movie_name}&gt;
 				            <ul>
@@ -44,7 +44,7 @@
 				<label>${movieList[i].movie_name}</label>(${movieList[i].movie_rating})<br>
 				<a href=""><img src="${movieList[i].movie_img1}"></a><br>
 				<input type="button" value="자세히보기" onclick="location.href='MovieInfoDetail?movie_code=${movieList[i].movie_code}'">
-				<input type="button" id="bookingBtn" value="예매하기" onclick="location.href='BookTickets'">
+				<input type="button" id="bookingBtn" value="예매하기" onclick="location.href='BookTickets'" <c:if test="${movieList[i].movie_status == '상영예정작'}">disabled</c:if>>
 				<div class="movie_info">
 	           		<${movieList[i].movie_name}>
 		            <ul>
