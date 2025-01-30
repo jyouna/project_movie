@@ -71,7 +71,7 @@
 					<c:otherwise>
 						<c:forEach var="payment" items="${paymentList}">
 							<tr> 
-				                <td><input type="radio" name="reservationRadio" <c:if test="${minutesUntilStart <= 20}">disabled</c:if>></td>
+				                <td><input type="radio" name="reservationRadio"></td>
 				                <td>${payment.payment_code}</td>
 				                <td>${payment.member_name}<br>(${payment.member_id})</td>
 				                <td>${payment.movie_name}</td>
@@ -116,15 +116,6 @@
 	
     </section>
     
-    <script>
-    	
-    	$(".search_box").click(function() {
-	    	if($("input[name='searchKeyword']").val() != "") {
-	    		$("input[name='searchKeyword']").val("");
-	    	}
-		});
-    	
-    </script>
     
     <jsp:include page="/WEB-INF/views/inc/adminpage_mypage/movie_set/movie_regist_modal.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

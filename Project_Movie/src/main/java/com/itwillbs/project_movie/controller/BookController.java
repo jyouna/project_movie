@@ -37,7 +37,6 @@ import com.itwillbs.project_movie.vo.TicketVO;
 @Controller
 public class BookController {
 	@Autowired private BookService bookService;
-	@Autowired private MypageService myPageService;
 	@Autowired private AdminManageService adminService;
 	
 	@GetMapping("MovieScheduleInfo")

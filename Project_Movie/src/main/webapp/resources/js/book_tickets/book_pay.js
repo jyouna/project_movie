@@ -151,7 +151,7 @@ $(function() {
 	}
 	
 	// 10분 후에 sessionExpired 메서드를 호출합니다.
-	setTimeout(sessionExpired, 600 * 1000);
+	setTimeout(sessionExpired, 120 * 1000);
 
 
 });

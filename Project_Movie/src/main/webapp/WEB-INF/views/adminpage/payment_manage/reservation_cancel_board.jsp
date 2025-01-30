@@ -107,13 +107,6 @@
 	
     </section>
     
-    <script>
-    	$(".search_box").click(function() {
-	    	if($("input[name='searchKeyword']").val() != "") {
-	    		$("input[name='searchKeyword']").val("");
-	    	}
-		});
-    </script>
     
     <jsp:include page="/WEB-INF/views/inc/adminpage_mypage/movie_set/movie_regist_modal.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>
