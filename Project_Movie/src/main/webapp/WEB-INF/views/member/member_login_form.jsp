@@ -37,11 +37,11 @@
           <!-- $$$$$ 수정 1: name 속성 추가 및 쿠키 값 처리 $$$$$ -->
           <label for="member_id">로그인</label>
           <input type="text" id="member_id" name="member_id" 
-                 value="<c:out value='${cookie.rememberId.value}' default=''/>" placeholder="아이디 입력" />
+                 value="<c:out value='${cookie.rememberId.value}' default=''/>" placeholder="아이디" />
 
           <!-- $$$$$ 수정 1: name 속성 추가 $$$$$ -->
           <label for="member_passwd"></label>
-          <input type="password" id="member_passwd" name="member_passwd" placeholder="비밀번호 입력" />
+          <input type="password" id="member_passwd" name="member_passwd" placeholder="비밀번호" />
 
          <!-- 아이디 저장 체크박스 -->
          <!-- $$$$$ 수정 1: 체크박스 checked 속성 수정 $$$$$ -->

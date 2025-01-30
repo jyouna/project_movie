@@ -411,7 +411,9 @@ textarea::-ms-input-placeholder {
     background-color: #f4f4f4;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    margin-right: 10px; /* 기존 20px에서 30px 더 가까워지도록 10px로 설정 */
+    margin-top: 20px; 
+    margin-left: 30px; 
+    
     transform: translateX(50px); /* 우측으로 30px 이동 */
 }
 

@@ -15,6 +15,8 @@
   width: 200px; /* 사이드바 너비 */
   background: #f4f4f4;
   padding: 0px;
+  margin-left: 360px; 
+  
 }
 
 .sidebar ul {
@@ -41,6 +43,7 @@
   flex-grow: 1;
   padding: 0 !important;
   margin: 0 !important;
+  width: 1100px
 }
 
 
@@ -62,7 +65,11 @@ html, body {
   align-items: stretch;
   margin: 0;
   padding: 0;
+  margin-left: 360px;
+  margin-top: 1px; /* 상단 여백 유지 */
+  
 }
+
 
 .login-box, .info-box {
   flex: 1;
@@ -83,7 +90,6 @@ html, body {
   justify-content: flex-start;
   gap: 1px;
   flex-wrap: nowrap;
-  width: 400px; /* .login-box의 너비를 명시적으로 설정 (원하는 값으로 변경 가능) */
   padding-top: 30px;
 }
 
@@ -95,7 +101,6 @@ html, body {
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 가로 중앙 정렬 */
   padding: 10px; /* 내부 여백 유지 */
-  width: 400px; /* .login-box와 동일한 너비로 설정 */
 }
 
 .info-box iframe {
@@ -235,13 +240,7 @@ button {
   transform-origin: top left; /* 기준점 좌상단 */
 }
 
-/* 로그인 및 인포 박스 사이 간격 제거 */
-.split-box {
-  margin-top: 1px; /* 상단 여백 유지 */
-  display: flex; /* Flexbox 사용 */
-  align-items: stretch; /* 세로 길이 통일 */
-  gap: 0; /* 사이 간격 완전 제거 */
-}
+
 
 /* 인포 박스 이미지 크기 축소 */
 .info-box img {
@@ -260,9 +259,4 @@ button {
 }
 
 
-@media screen and (max-width: 1680px) {
-    .row.gtr-150 > * {
-        padding: 75px 0 0 200px !important; /* !important를 사용하여 우선순위를 높임 */
-    }
-}
 

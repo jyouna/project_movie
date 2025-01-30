@@ -95,30 +95,49 @@
 
 
 <div class="button-section">
-   <button class="btn naver" id="submit-btn" onclick="submitForm()">네이버</button>
-   <button class="btn kakao" id="submit-btn" onclick="submitForm()">카카오톡</button>
-   <button class="btn normal" id="submit-btn" onclick="submitForm()">일반 회원가입</button>
+  <!--<button class="btn naver" id="submit-btn" onclick="submitForm(event)">네이버</button> 수정: event 객체 전달 -->
+  <!-- <button class="btn kakao" id="submit-btn" onclick="submitForm(event)">카카오톡</button>  수정: event 객체 전달 -->
+   <button class="btn normal" id="submit-btn" onclick="submitForm(event)">회원가입</button> <!-- 수정: event 객체 전달 -->
 </div>
 
 
 </form>
 
-
+ 
 <script>
-    function submitForm() {
-      const termsAgree = document.getElementById("terms-agree").checked;
-      const privacyAgree = document.getElementById("privacy-agree").checked;
+    function submitForm(event) { // 수정: event 매개변수 추가
+        event.preventDefault(); // 수정: 폼 제출 방지
 
-      if (!termsAgree || !privacyAgree) {
-        alert("모든 약관에 동의해야 합니다.");
-        return;
-      }
+        const termsAgree = document.getElementById("terms-agree").checked;
+        const privacyAgree = document.getElementById("privacy-agree").checked;
 
-      // 체크박스가 모두 체크된 경우 페이지 이동
-      window.location.href = "http://localhost:8081/project_movie/MemberJoin";
+        if (!termsAgree || !privacyAgree) {
+            alert("모든 약관에 동의해야 합니다.");
+            return; // 약관 동의가 안 되어 있으면 함수 종료
+        }
+
+        // 약관 동의가 완료되면 서버로 동의 여부 전송
+        fetch("MemberAgree", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "termsAgreed=true" // 서버에 약관 동의 여부 전송
+        })
+        .then(response => {
+            if (response.redirected) {
+                // 서버에서 리다이렉트를 요청한 경우, 해당 URL로 이동
+                window.location.href = response.url;
+            } else {
+                alert("약관 동의 처리 중 오류가 발생했습니다.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+        });
     }
 </script>
-  
   
   
   
