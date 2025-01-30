@@ -94,7 +94,7 @@ public class MoviePickController {
 	// 투표등록완료 리다이렉트 후 투표완료 알람창 출력
 	@GetMapping("JoinMovieVoteSuccess")
 	public String joinMovieVoteSuccess(Model model) {
-		model.addAttribute("msg", "투표등록 완료 되었습니다.");
+		model.addAttribute("msg", "투표등록 완료 되었습니다.\n투표이벤트로 1000p 적립되었습니다.");
 		model.addAttribute("targetURL", "MoivePick");
 		return "result/process";
 	}
