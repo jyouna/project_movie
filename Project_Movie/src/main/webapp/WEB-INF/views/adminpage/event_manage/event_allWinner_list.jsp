@@ -34,7 +34,7 @@
 				<input type="hidden" name="pageNum" value="${param.pageNum}">
 				<select name="searchKeyword">
 					<option value="winnerId" <c:if test="${param.searchKeyword eq 'winnerId'}">selected</c:if>>아이디</option>
-					<option value="eventSubject" <c:if test="${param.searchKeyword eq 'eventSubject'}">selected</c:if>>이벤트</option>
+					<option value="eventSubject" <c:if test="${param.searchKeyword eq 'eventSubject'}">selected</c:if>>이벤트번호</option>
 				</select>
 				<input type="text" placeholder="검색어를입력하세요" name="searchContent" value="${param.searchContent}"> 
 				<input type="submit" value="검색">
