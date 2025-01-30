@@ -224,10 +224,10 @@
     // 컨텍스트 경로를 JavaScript 변수에 전달
     const contextPath = "/";
 	</script>
-	
-	
    <jsp:include page="/WEB-INF/views/inc/page/page_bottom.jsp"></jsp:include>
    <script src="${pageContext.request.contextPath}/resources/js/member/member_join_form.js"></script>
+   
 </body>
+
 </html>
 

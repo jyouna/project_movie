@@ -43,7 +43,7 @@ element.style {
   max-width: 100%;
   margin: 20px auto;
   padding: 20px;
-  background: white;
+
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -225,7 +225,7 @@ input[type="checkbox"] {
   padding: 1px;
 }
 .submit-btn {
-  width: 13%;   
+  width: 10%;   
   background-color: #007BFF;
   color: #ffffff;
   padding: 1px;
@@ -419,4 +419,9 @@ textarea::-ms-input-placeholder {
 
 .article-box-post {
     margin-left: 210px; /* 기존 220px에서 30px 가까워지도록 210px로 조정 */
+    
 }
+
+
+
+

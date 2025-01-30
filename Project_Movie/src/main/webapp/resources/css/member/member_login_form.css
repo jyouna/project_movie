@@ -15,7 +15,7 @@
   width: 200px; /* 사이드바 너비 */
   background: #f4f4f4;
   padding: 0px;
-  margin-left: 360px; 
+  margin-left: 120px; 
   
 }
 
@@ -258,5 +258,21 @@ button {
   cursor: pointer; /* 클릭 가능하도록 설정 */
 }
 
+#footer .container {
+  display: flex;
+  flex-direction: row; /* 가로 정렬 */
+  justify-content: space-between; /* 요소들 사이 간격을 동일하게 설정 */
+  align-items: center; /* 세로 중앙 정렬 */
+  flex-wrap: wrap; /* 가로 공간이 부족하면 줄 바꿈 (해제하려면 nowrap) */
+  width: 100%; /* 전체 너비 적용 */
+}
 
+#footer section {
+  flex: 1; /* 모든 섹션이 동일한 크기를 가지도록 설정 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  padding: 10px; /* 내부 여백 추가 */
+  min-width: 150px; /* 최소 너비 설정 (너무 좁아지지 않도록) */
+  font-size: 13px; /* 텍스트 크기를 14px로 설정 */
+  
+}
 
