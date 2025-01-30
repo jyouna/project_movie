@@ -380,10 +380,10 @@ $(function(){
 						},
 						y: {
 							min : 0,
-							max : 400000000,
+							max : 500000000,
 							ticks: {
 								color: 'rgba(75, 192, 192, 1)',
-								stepSize: 40000000
+								stepSize: 50000000
 							}
 							
 						}
