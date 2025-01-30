@@ -55,9 +55,11 @@ public class MemberController {
    }
    
    @PostMapping("MemberAgree")
-   public String memberAgree() {
-      
-      return "redirect:/MemberJoin";
+   public String memberAgree(HttpSession session) {
+	   
+       // 약관 동의가 완료되면 세션에 동의 여부 저장
+       session.setAttribute("termsAgreed", true);
+       return "redirect:/MemberJoin";
    }
    
    @PostMapping("checkId")
@@ -71,64 +73,85 @@ public class MemberController {
    }
    
 
+   
+   
+   
    @GetMapping("MemberJoin")
-   public String memberJoinForm() {
-      return "member/member_join_form";
+   public String memberJoinForm(HttpSession session, Model model) {
+       // 세션에서 약관 동의 여부 확인
+       Boolean termsAgreed = (Boolean) session.getAttribute("termsAgreed");
+
+       // 동의하지 않은 경우, 약관 동의 페이지로 리다이렉트
+       if (termsAgreed == null || !termsAgreed) {
+    	   System.out.println("url강제이동 시도 /project_movie/MemberJoin");
+    	   System.out.println("redirect:/MemberAgree 했습니다.");
+           return "redirect:/MemberAgree";
+       }
+
+       // 동의한 경우, 회원가입 폼 페이지로 이동
+       return "member/member_join_form";
    }
+   
    
    // 회원 가입 
    @PostMapping("MemberJoin")
-   public String memberJoin(MemberVO member, Model model, BCryptPasswordEncoder passwordEncoder) {
-      
-      //***** 수정전: passwd ----> 수정후: member_passwd *****
-      String securedPasswd = passwordEncoder.encode(member.getMember_passwd());
-      System.out.println("평문 : " + member.getMember_passwd());
-      System.out.println("암호문 : " + securedPasswd);
-      member.setMember_passwd(securedPasswd);
-       
-       // ***** 디버깅 코드 - 최종 SQL 데이터 확인 (DB 저장 직전) *****
+   public String memberJoin(
+       MemberVO member, 
+       Model model, 
+       BCryptPasswordEncoder passwordEncoder, 
+       HttpSession session // 세션 객체 추가
+   ) {
+       // 세션에서 약관 동의 여부 확인
+       Boolean termsAgreed = (Boolean) session.getAttribute("termsAgreed");
+
+       // 약관 동의를 하지 않은 경우, 약관 동의 페이지로 리다이렉트
+       //사용자가 직접 post요청 하는것을 방지
+       if (termsAgreed == null || !termsAgreed) {
+           model.addAttribute("msg", "약관 동의가 필요합니다.");
+           return "redirect:/MemberAgree";
+       }
+
+       // 비밀번호 암호화
+       String securedPasswd = passwordEncoder.encode(member.getMember_passwd());
+       System.out.println("평문 : " + member.getMember_passwd());
+       System.out.println("암호문 : " + securedPasswd);
+       member.setMember_passwd(securedPasswd);
+
+       // 디버깅 코드 - 최종 SQL 데이터 확인 (DB 저장 직전)
        System.out.println("최종 저장 SQL 데이터 - 생년월일: " + member.getBirth_date());
-       System.out.println("최종 저장 SQL 데이터 - 전화번호: " + member.getPhone());   
-      
-      
-   int insertCount = 0;
-    
-    try {
-       insertCount = memberService.registMember(member);
-       
-    } catch (Exception e) {
-       e.printStackTrace();
-       model.addAttribute("msg", "오류가 발생했습니다. 다시 시도해주세요");
-       return "result/process";
-    }
-    
-    // ***** 디버깅 코드 - 저장 결과 확인 (DB 저장 후) *****
-    System.out.println("DB 저장 완료 여부: " + (insertCount > 0 ? "성공" : "실패"));
-    
-    // 회원가입 결과 판별하여 포워딩 처리
-    
-    if(insertCount > 0) {
-      //***** 수정전: MailAuthInfo ----> 수정후: EmailAuthVO *****
-      EmailAuthVO emailAuthVO = mailService.sendAuthMail(member);
-      mailService.registMailAuthInfo(emailAuthVO);
-      System.out.println("c143)인증메일 정보 :" + emailAuthVO );
-      
-      
-      
-      mailService.registMailAuthInfo(emailAuthVO);
-   
-      
-      model.addAttribute("msg", "입력하신 주소로 메일을 전송했습니다.  \\n메일은 5분내로 전송됩니다. \\n인증을 완료하신후 로그인해주세요.");
-      model.addAttribute("targetURL", "MemberLogin");
-      return "result/process";
-      //return "redirect:/";
-   } else {
-       // fail.jsp 페이지에서 출력할 메세지("회원가입 실패!")를 Model 객체에 저장(속성명 msg)
-       model.addAttribute("msg", "회원가입에 실패했습니다. 재가입을 시도해주세요 \\n문제 재발시 관리자에게 문의해주세요!");
-       return "result/process";
-    }
-    
- }
+       System.out.println("최종 저장 SQL 데이터 - 전화번호: " + member.getPhone());
+
+       int insertCount = 0;
+
+       try {
+           insertCount = memberService.registMember(member);
+       } catch (Exception e) {
+           e.printStackTrace();
+           model.addAttribute("msg", "오류가 발생했습니다. 다시 시도해주세요");
+           return "result/process";
+       }
+
+       // 디버깅 코드 - 저장 결과 확인 (DB 저장 후)
+       System.out.println("DB 저장 완료 여부: " + (insertCount > 0 ? "성공" : "실패"));
+
+       // 회원가입 결과 판별하여 포워딩 처리
+       if (insertCount > 0) {
+           // 이메일 인증 메일 발송
+           EmailAuthVO emailAuthVO = mailService.sendAuthMail(member);
+           mailService.registMailAuthInfo(emailAuthVO);
+           System.out.println("c143)인증메일 정보 :" + emailAuthVO);
+
+           // 세션에서 약관 동의 여부 초기화 (중복 가입 방지)
+           session.removeAttribute("termsAgreed");
+
+           model.addAttribute("msg", "입력하신 주소로 메일을 전송했습니다.  \\n메일은 5분내로 전송됩니다. \\n인증을 완료하신 후 로그인해주세요.");
+           model.addAttribute("targetURL", "MemberLogin");
+           return "result/process";
+       } else {
+           model.addAttribute("msg", "회원가입에 실패했습니다. 재가입을 시도해주세요 \\n문제 재발시 관리자에게 문의해주세요!");
+           return "result/process";
+       }
+   }
    
 
    

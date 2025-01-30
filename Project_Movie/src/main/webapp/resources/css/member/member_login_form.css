@@ -110,7 +110,7 @@ html, body {
 /* ========== 섹션 타이틀 공통 스타일 ========== */
 .section-title {
   position: absolute;     /* 절대 위치 설정 */
-  top: 20px;              /* 상단 여백 */
+  top: 30px;              /* 상단 여백 */
   left: 20px;             /* 좌측 여백 */
   margin: 0;              /* 기본 마진 제거 */
   font-size: 18px;        /* 글자 크기 조정 */
@@ -121,6 +121,7 @@ html, body {
 /* ========== 입력 필드 스타일 ========== */
 label {
   align-self: flex-start; /* 라벨 좌측 정렬 */
+  font-size: 18px;
 }
 
 /* 기존 입력 필드 스타일 유지 */
@@ -257,3 +258,11 @@ button {
   height: 16px; /* 체크박스 크기 */
   cursor: pointer; /* 클릭 가능하도록 설정 */
 }
+
+
+@media screen and (max-width: 1680px) {
+    .row.gtr-150 > * {
+        padding: 75px 0 0 200px !important; /* !important를 사용하여 우선순위를 높임 */
+    }
+}
+

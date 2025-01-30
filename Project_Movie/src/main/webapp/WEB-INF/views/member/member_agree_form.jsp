@@ -21,8 +21,9 @@
 	
 	<main class="content">
 	<h1></h1>
+	<form id="agreeForm" action="MemberAgree" method="post">
+	
     <div class= area1>	
- 
  
   
   <h2 class="section-title">*회원 가입 약관</h2>
@@ -53,7 +54,7 @@
 
     본 약관은 회원가입일로부터 적용됩니다
   </textarea>
-  
+
   <label class="checkbox-label" for="terms-agree">
     <input type="checkbox" id="terms-agree" /> 동의합니다(필수)
   </label>
@@ -100,7 +101,7 @@
 </div>
 
 
-
+</form>
 
 
 <script>
