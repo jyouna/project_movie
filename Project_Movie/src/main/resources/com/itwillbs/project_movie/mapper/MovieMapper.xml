@@ -141,12 +141,16 @@
 		UPDATE movie
 		SET 
 			movie_status = #{movie_status}
+		<if test="movie_status.equals('대기')">
+			, start_screening_date = null
+			, end_screening_date = null
+		</if>			
 		<choose>
 			<when test="movie_type == null or movie_type == ''">
 				, movie_type = null	
 			</when>
 			<otherwise>
-				, movie_type = #{movie_type}			
+				, movie_type = #{movie_type}
 			</otherwise>		
 		</choose>
 		WHERE movie_code = #{movie_code}
