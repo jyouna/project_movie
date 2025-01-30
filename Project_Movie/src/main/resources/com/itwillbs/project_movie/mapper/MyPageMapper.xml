@@ -185,6 +185,7 @@
 		SELECT *
 		FROM coupon
 		WHERE member_id = #{id}
+		ORDER BY coupon_status 
 		LIMIT #{startRow}, #{listLimit}
 	</select>
 	
