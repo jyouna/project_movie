@@ -18,7 +18,7 @@ $(document).ready(function() {
         if (regex.test(id)) {
             // 서버에 아이디 중복 확인 요청
             $.ajax({
-           	    url: "checkId", // 
+           	    url: "checkId",
                 type: "POST",
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 data: {
