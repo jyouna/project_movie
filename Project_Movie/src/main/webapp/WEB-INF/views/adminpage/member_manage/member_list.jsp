@@ -129,9 +129,9 @@ th, td {
 							<fmt:formatNumber value="${member.coupon_num}" pattern="#,##0" />
 						</td>
 						<td>
-							<c:if test="${member.member_status eq '1'}">정상</c:if>						
-							<c:if test="${member.member_status eq '2'}">정지</c:if>						
-							<c:if test="${member.member_status eq '3'}">탈퇴</c:if>						
+							<c:if test="${member.member_status eq '0'}">정상</c:if>						
+							<c:if test="${member.member_status eq '1'}">정지</c:if>						
+							<c:if test="${member.member_status eq '2'}">탈퇴</c:if>						
 						</td>
 					</tr>
 				</c:forEach>
