@@ -57,8 +57,8 @@
 		<choose>
 			<when test="vote_code == null">
 				WHERE 
-					now() BETWEEN start_date AND end_date
-					AND winner_movie_code IS NULL
+<!-- 					now() BETWEEN start_date AND end_date -->
+					winner_movie_code IS NULL
 			</when>
 			<otherwise>
 				WHERE

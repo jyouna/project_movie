@@ -85,7 +85,7 @@ public class MovieController {
 	public String pastMovieInfo(@RequestParam(defaultValue = "1") int pageNum, Model model,
 			@RequestParam(defaultValue="") String howSearch, @RequestParam(defaultValue="") String searchKeyword) {
 		// 페이징처리 메서드 
-		if(!pagingMethod("pastMovie", model, pageNum, 10, howSearch, searchKeyword)) {
+		if(!pagingMethod("pastMovie", model, pageNum, 9, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
@@ -138,7 +138,7 @@ public class MovieController {
 		if(!isHaveAuth(model, session)) {return "result/process";}
 		
 		//페이징 처리 메서드
-		if(!pagingMethod("allMovie", model, pageNum, 9, howSearch, searchKeyword)) {
+		if(!pagingMethod("allMovie", model, pageNum, 8, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
@@ -436,7 +436,7 @@ public class MovieController {
 		if(!isHaveAuth(model, session)) {return "result/process";}
 		
 		// 페이징처리 메서드 
-		if(!pagingMethod("pastMovie", model, pageNum, 9, howSearch, searchKeyword)) {
+		if(!pagingMethod("pastMovie", model, pageNum, 8, howSearch, searchKeyword)) {
 			return "result/process";
 		}
 		
