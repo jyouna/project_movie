@@ -130,7 +130,7 @@
 	</select>
 <!-- 	리뷰 글 시작번호 끝번호 -->
 	<select id="selectReviewList" resultType="map">
-		SELECT movie.movie_name, review.review_content
+		SELECT movie.movie_name, review.review_content, review.movie_code, review.review_recommend
 		FROM review
 		JOIN movie ON review.movie_code = movie.movie_code
 		WHERE review_writer = #{id}

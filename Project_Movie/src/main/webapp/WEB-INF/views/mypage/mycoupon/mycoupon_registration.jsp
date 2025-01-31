@@ -56,12 +56,11 @@
 	<h6>${sessionScope.sMemberId} 님의 사용 가능한 쿠폰은 
 	    <c:set var="usableCouponCount" value="0"/>
 	    <c:forEach var="coupon" items="${couponList}">
-	        <c:if test="${coupon.coupon_status eq true}">
+	        <c:if test="${coupon.coupon_status eq false}">
 	            <c:set var="usableCouponCount" value="${usableCouponCount + 1}"/>
 	        </c:if>
 	    </c:forEach>
-	    ${usableCouponCount}장 입니다.
-	</h6>
+	    ${usableCouponCount}장 입니다.</h6>
 
 
 	<section id="listForm">
@@ -135,33 +134,33 @@
 	</article>
 	<script type="text/javascript">
 		// jQuery UI Datepicker 적용
-		$(function () {
-		  $("#stdt, #eddt").datepicker({
-		    dateFormat: "yy.mm.dd", // 날짜 형식
-		    changeMonth: true,
-		    changeYear: true,
-		    yearRange: "-2:+0", // 최근 2년 범위
-		    maxDate: 0 // 오늘까지 선택 가능
-		  });
-		});
+// 		$(function () {
+// 		  $("#stdt, #eddt").datepicker({
+// 		    dateFormat: "yy.mm.dd", // 날짜 형식
+// 		    changeMonth: true,
+// 		    changeYear: true,
+// 		    yearRange: "-2:+0", // 최근 2년 범위
+// 		    maxDate: 0 // 오늘까지 선택 가능
+// 		  });
+// 		});
 
-		// 조회 버튼 클릭 이벤트
-		function searchDates() {
-		  const startDate = $("#stdt").val();
-		  const endDate = $("#eddt").val();
+// 		// 조회 버튼 클릭 이벤트
+// 		function searchDates() {
+// 		  const startDate = $("#stdt").val();
+// 		  const endDate = $("#eddt").val();
 		  
-		  if (!startDate || !endDate) {
-		    alert("시작 날짜와 종료 날짜를 선택해주세요.");
-		    return;
-		  }
+// 		  if (!startDate || !endDate) {
+// 		    alert("시작 날짜와 종료 날짜를 선택해주세요.");
+// 		    return;
+// 		  }
 
-		  if (new Date(startDate) > new Date(endDate)) {
-		    alert("종료 날짜는 시작 날짜 이후여야 합니다.");
-		    return;
-		  }
+// 		  if (new Date(startDate) > new Date(endDate)) {
+// 		    alert("종료 날짜는 시작 날짜 이후여야 합니다.");
+// 		    return;
+// 		  }
 
-		  alert(`선택된 기간: ${startDate} ~ ${endDate}`);
-		}
+// 		  alert(`선택된 기간: ${startDate} ~ ${endDate}`);
+// 		}
 
 	</script>
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/adminpage_mypage_bottom.jsp"></jsp:include>

@@ -53,7 +53,7 @@
 						    <td>${review.review_content}</td>
 						    <td>
 						        <c:choose>
-						            <c:when test="${review.review_recommend eq '0'}">
+						            <c:when test="${review.review_recommend eq 0}">
 						                추천
 						            </c:when>
 						            <c:otherwise>

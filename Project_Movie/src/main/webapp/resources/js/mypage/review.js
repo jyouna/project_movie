@@ -13,6 +13,30 @@ $(function() {
         console.log("movie_code 선택됨:", $(this).find("input[type=radio]:checked").val());  // 선택된 movie_code 값 확인
     });
 
+	    // 수정 버튼 클릭 시
+    $("#Modify").on("click", function() {
+        if (movie_name == "") {
+            alert("수정 할 리뷰의 영화를 선택해주세요.");
+        } else {
+            $("#watched_movie_modify_modal").css("display", "block");
+            $(".watched_movie_modify input[name='movie_name']").val(movie_name);
+            $(".watched_movie_modify textarea[name='review']").val(review_content);
+        }
+    });
+
+    $(".close_modal").click(function() {
+        location.reload();
+    });
+
+    $(".movie_code").on("click", function() {
+        let movie_code = $(".movie_code").val();
+    });
+
+
+
+
+
+
     // 리뷰 수정 모달에서 제출 버튼 클릭 시
     $(".submit_modal").click(function() {
         let movie_code = $("input[name='movie_code']:checked").val();  // 체크된 라디오 버튼 값 가져오기
@@ -37,7 +61,7 @@ $(function() {
         // AJAX 요청
         $.ajax({
             type: "POST",
-            url: "${pageContext.request.contextPath}/ReviewModify",  // 경로 확인
+            url: "ReviewModify",  // 경로 확인
             data: {
                 movie_code: movie_code,
                 review_content: review_content,
@@ -65,7 +89,7 @@ $(function() {
             alert("삭제할 리뷰의 영화를 선택해주세요.");
             return;
         }
-        
+       
         if (confirm("관람평을 삭제하시겠습니까?")) {
             $.ajax({
                 type: "GET",
