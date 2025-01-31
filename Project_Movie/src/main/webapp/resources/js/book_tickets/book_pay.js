@@ -56,16 +56,19 @@ $(function() {
 		let regex = /^[1-9][0-9]{0,3}$/;
 		let thisVal =$(this).val();
 		let myPoint = parseInt($(".point02").text().replace(" p", ""));
+		if(thisVal == "") {
+			thisVal = 0
+		}
 		let regexPoint = parseInt(thisVal, 10);
 		
 		console.log(thisVal);
-		if (!regex.exec(thisVal)) {
+		if (!regex.exec(thisVal) && thisVal != "") {
 	        alert("숫자만 입력 가능합니다");
 	        $(this).val("");
 	        $(".div02 .price").text(0);
 	        $(".div03 .price").text($(".div01 .price").text());
         	return;
-	    } 
+	    }  
 			
 		if(regexPoint > 5000) { // 입력값이 5000보다 클 때
 			alert("최대 5000p 사용 가능합니다.")
