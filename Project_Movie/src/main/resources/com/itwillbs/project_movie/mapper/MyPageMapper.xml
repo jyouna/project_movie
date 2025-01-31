@@ -117,6 +117,7 @@
 	        AND start_time LIKE CONCAT('%', #{searchYear}, '%')
 	    </if>
 	    GROUP BY movie.movie_code, movie.movie_name
+	    ORDER BY start_time DESC
 	    LIMIT #{startRow}, #{listLimit}
 	</select>
 
