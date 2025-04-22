@@ -15,6 +15,9 @@ body {
     padding: 20px;
    	width: 1075px;
 	height: 500px;
+	position: absolute;
+	top: 50px;
+	left: 300px;
 }
 
 #articleForm h1 {
@@ -44,55 +47,55 @@ body {
     border: 1px solid #ccc;
     text-align: center;
 }
-/* #content{ */
-/* 	padding: 20px; */
-/* 	font-size: 15px; */
-/* } */
+
 
 #articleContentArea{
 	padding: 27px;
 }
+
 #listButton{
-	transition: all .25s ease-in-out !important;
-    display: inline-block !important;
-    text-align: center !important;
-    text-transform: uppercase !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.25em !important;
-    text-decoration: none !important;
-    border-radius: 0.35em !important;
-    background-color: #858585;
-    color: white;
-    border: 0 !important;
-    outline: 0 !important;
-    cursor: pointer !important;
-    padding: 0 1.25em 0 1.25em !important;
-    font-size: 0.9em !important;
-    min-width: 1em !important;
-    height: 4em !important;
-    line-height: 4em !important;
+	margin: 5px;
+	padding: 10px;
+    border: 0;
+	border-radius: 8px;
+	background-color:#858585;
+	color: white;
+	padding-left: 15px;
+	padding-right: 15px;
+	position: absolute;
+	top: 258px;
+	left: 560px; 
 }
 
-#tableButton {
-    transition: all .25s ease-in-out !important;
-    display: inline-block !important;
-    text-align: center !important;
-    text-transform: uppercase !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.25em !important;
-    text-decoration: none !important;
-    border-radius: 0.35em !important;
-    border: 0 !important;
-    outline: 0 !important;
-    cursor: pointer !important;
-    padding: 0 1.25em 0 1.25em !important;
-    font-size: 0.9em !important;
-    min-width: 1em !important;
-    height: 4em !important;
-    line-height: 4em !important;
-    background-color: #858585;
-    color: white;
+#modify-btn{
+	margin: 5px;
+	padding: 10px;
+    border: 0;
+	border-radius: 8px;
+	background-color:#858585;
+	color: white;
+	padding-left: 15px;
+	padding-right: 15px;
+	position: absolute;
+	top: 258px;
+	left: 400px; 
 }
+
+#delete-btn{
+	margin: 5px;
+	padding: 10px;
+    border: 0;
+	border-radius: 8px;
+	background-color:#858585;
+	color: white;
+	padding-left: 15px;
+	padding-right: 15px;
+	position: absolute;
+	top: 258px;
+	left: 480px; 
+}
+
+
 
 
 hr{
@@ -132,27 +135,5 @@ hr{
     font-weight: bold;
     color: black; /* 두 번째 열의 텍스트 색상 */
 }
-#inquiryPrevBtn
-#inquiryNextBtn {
- -webkit-transition: all .25s ease-in-out;
-    -ms-transition: all .25s ease-in-out;
-    transition: all .25s ease-in-out;
-    display: inline-block;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-decoration: none;
-    border-radius: 0.35em;
-    border: 0;
-    outline: 0;
-    cursor: pointer;
-    font-size: 0.9em;
-    min-width: 1em;
-    height: 4em;
-    line-height: 2.5em;
-    background-color:#ccc;
-    color: #5D3A1A;
-    padding: revert;
-    height: 40px;
-   }
+
+   

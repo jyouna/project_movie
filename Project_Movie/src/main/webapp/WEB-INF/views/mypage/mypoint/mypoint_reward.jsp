@@ -22,34 +22,7 @@
 		<div id="title">
 			<h1>포인트</h1>
 		</div>
-<!-- 		<div class="dateSearch_sec all_point"> -->
-<!-- 		  <div class="in_sec"> -->
-<!-- 		    <dl class="search_list"> -->
-<!-- 		      <dd class="select_btn"> -->
-<!-- 		        <ul class="period_tab" data-control="dateDiff" data-handler="[data-control='datepicker']" data-selected-text="선택됨"> -->
-<!-- 		          <li class="on"><button type="button" data-val="7d" title="선택됨">1주일</button></li> -->
-<!-- 		          <li><button type="button" data-val="1m">1개월</button></li> -->
-<!-- 		          <li><button type="button" data-val="3m">3개월</button></li> -->
-<!-- 		          <li><button type="button" data-val="6m">6개월</button></li> -->
-<!-- 		        </ul> -->
-<!-- 		      </dd> -->
-<!-- 		      <dd class="select_datepicker"> -->
-<!-- 		        <div class="datepicker_wrap" style="display: flex; align-items: center; gap: 8px;"> -->
-<!-- 		          <div class="inp_datepicker"> -->
-<!-- 		          <input type="date" class="text hasDatepicker" title="시작 날짜 선택 yyyy.mm.dd" name="stdt" id="stdt" autocomplete="off"> -->
-<!-- 		          </div> -->
-<!-- 		          <span class="hyphen">-</span> -->
-<!-- 		          <div class="inp_datepicker"> -->
-<!-- 		            <input type="date" class="text hasDatepicker" title="종료 날짜 선택 yyyy.mm.dd" name="eddt" id="eddt" autocomplete="off"> -->
-<!-- 		          </div> -->
-<!-- 		          <button type="button" class="btn btn_search" id="search_btn" onclick="searchDates();">조회</button> -->
-<!-- 				    <p class="bul_list"><span class="dot_arr">최근 2년 이내로 조회 가능</span></p> -->
-<!-- 		        </div> -->
-<!-- 		      </dd> -->
-<!-- 		    </dl> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-		<h6>${sessionScope.sMemberId } 님의 사용 가능한 포인트는 ${member.point}원 입니다.</h6>
+		<h6>${sessionScope.sMemberId } 님의 사용 가능한 포인트는 <fmt:formatNumber pattern="#,###" value="${member.point}"></fmt:formatNumber>포인트 입니다.</h6>
         <p>* 포인트는 소멸되지 않습니다.</p>
 	      <section id="listForm">
 	         <table>
@@ -84,14 +57,14 @@
 	                        <td>
 	                        	<c:choose>
 									<c:when test="${point.point_credited > 0}">
-									 +${point.point_credited}
+									 +<fmt:formatNumber pattern="#,###" value="${point.point_credited}"></fmt:formatNumber>
 									</c:when>                        
 	                        	</c:choose>
 	                       </td>
 	                        <td>
                              	<c:choose>
 									<c:when test="${point.point_debited != null}">
-									  -${point.point_debited}
+									  -<fmt:formatNumber pattern="#,###" value="${point.point_debited}"></fmt:formatNumber>
 									</c:when>                        
 	                        	</c:choose>
 	                       </td>

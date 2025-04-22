@@ -71,6 +71,7 @@
       <br>
 	<div id="underButton" style="text-align: right;">
 <!--       <input type="button" value="상세보기" id="detail"> -->
+      <input type="button" value="예매하기" id="book" onclick="location.href='http://localhost:8081/project_movie/BookTickets'">
       <input type="button" value="예매취소" id="cancel">
 	</div>
          <section id="pageList">

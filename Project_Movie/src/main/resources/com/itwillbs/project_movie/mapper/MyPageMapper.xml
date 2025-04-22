@@ -604,6 +604,7 @@
 		SELECT *
 		FROM coupon
 		WHERE member_id = #{id}
+		AND coupon_status = 0;
 	</select>
 <!-- 	마이페이지 메인 포인트 -->
 	<select id="getPointList" resultType="map">

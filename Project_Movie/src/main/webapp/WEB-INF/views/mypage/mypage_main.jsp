@@ -18,19 +18,19 @@
 </head>
 <body class="sb-nav-fixed">
 	<jsp:include page="/WEB-INF/views/inc/adminpage_mypage/mypage_sidebar.jsp"></jsp:include>
-	<section>
+	<section class="sectionWrapper">
 		<div id="time"></div>
 		<section id="sec01" class="secMain">
 			<h5>${sessionScope.sMemberId}님의 예매내역 </h5>
 			<div id="noticeBoardMain" class="secitonBoard">
 				<table>
 					<tr class="tr01">
-						<th width="130px">영화명</th>
-						<th width="70px">관람인원</th>
+						<th width="100px">영화명</th>
+						<th width="60px">관람인원</th>
 						<th width="90px">관람일</th>
 					</tr>
 					<c:choose>
-						<c:when test="${empty reservationList}">
+						<c:when test="${empty reservationList}">	
 							<tr>
 								<td colspan="3">예매내역이 존재하지 않습니다</td>
 							</tr>
@@ -96,7 +96,7 @@
 			</div>			
 		</section>
 		<section id="sec03" class="secMain">
-			<h5>${sessionScope.sMemberId}님의 포인트</h5>
+			<h5>${sessionScope.sMemberId}님의 포인트 - <fmt:formatNumber pattern="#,###" value="${member.point}"></fmt:formatNumber>포인트</h5>
 				<div class="secitonBoard">
 				<table>
 					<tr class="tr01">
@@ -119,14 +119,14 @@
 									<td>
 										<c:choose>
 											<c:when test="${point.point_credited > 0}">
-											 +${point.point_credited}
+											 +<fmt:formatNumber pattern="#,###" value="${point.point_credited}"></fmt:formatNumber>
 											</c:when>                        
 		                        		</c:choose>
 	                        	</td>
 	                        	 <td>
 	                             	<c:choose>
 										<c:when test="${point.point_debited != null}">
-										  -${point.point_debited}
+										  -<fmt:formatNumber pattern="#,###" value="${point.point_debited}"></fmt:formatNumber>
 										</c:when>                        
 		                        	</c:choose>
 	                       		</td>
@@ -139,7 +139,13 @@
 		</section>
 		
 		<section id="sec04" class="secMain">
-			<h5>${sessionScope.sMemberId}님의 쿠폰</h5>
+			<h5>${sessionScope.sMemberId}님의 쿠폰 - 	    <c:set var="usableCouponCount" value="0"/>
+	    <c:forEach var="coupon" items="${couponList}">
+	        <c:if test="${coupon.coupon_status eq false}">
+	            <c:set var="usableCouponCount" value="${usableCouponCount + 1}"/>
+	        </c:if>
+	    </c:forEach>
+	    ${usableCouponCount}장</h5>
 				<div class="secitonBoard">
 				<table>
 					<tr class="tr01">
